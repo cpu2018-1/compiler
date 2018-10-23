@@ -34,8 +34,11 @@ let rec g env = function (* β簡約ルーチン本体 (caml2html: beta_g) *)
   | App(g, xs) -> App(find g env, List.map (fun x -> find x env) xs)
   | ExtArray(x) -> ExtArray(x)
   | ExtFunApp(x, ys) -> ExtFunApp(x, List.map (fun y -> find y env) ys)
+<<<<<<< HEAD
   | Sll(x, y) -> Sll(find x env, find y env)
   | Srl(x, y) -> Srl(find x env, find y env)
   | Sra(x, y) -> Sra(find x env, find y env)
+=======
+>>>>>>> 61ac9c2cc2f4e8691b9c56204d8674ef40355a1e
 
 let f = g M.empty

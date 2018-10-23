@@ -186,11 +186,19 @@ and g' oc = function (* 各命令のアセンブリ生成 (caml2html: emit_gprime) *)
   | Tail, CallCls(x, ys, zs) -> (* 末尾呼び出し (caml2html: emit_tailcall) *)
       g'_args oc [(x, reg_cl)] ys zs;
       Printf.fprintf oc "\tlw\t%s, 0(%s)\n" (reg reg_sw) (reg reg_cl);
+<<<<<<< HEAD
       Printf.fprintf oc "\tjar\t%s\n" (reg reg_sw);
 (*      Printf.fprintf oc "\tmtctr\t%s\n\tbctr\n" (reg reg_sw);*)                  (***** きちんと代替できているか怪しい *****)
   | Tail, CallDir(Id.L(x), ys, zs) -> (* 末尾呼び出し *)
       g'_args oc [] ys zs;
       Printf.fprintf oc "\tj\t%s\n" x
+=======
+      Printf.fprintf oc "\tjalr\t%s\n" (reg reg_sw);
+(*      Printf.fprintf oc "\tmtctr\t%s\n\tbctr\n" (reg reg_sw);*)                  (***** きちんと代替できているか怪しい *****)
+  | Tail, CallDir(Id.L(x), ys, zs) -> (* 末尾呼び出し *)
+      g'_args oc [] ys zs;
+      Printf.fprintf oc "\tble\tr0, r0, %s\n" x
+>>>>>>> 61ac9c2cc2f4e8691b9c56204d8674ef40355a1e
 (*      Printf.fprintf oc "\tb\t%s\n" x*) (* 単なるジャンプ ble r0 r31 で代用 *)
   | NonTail(a), CallCls(x, ys, zs) ->
       Printf.fprintf oc "\taddi\t%s, %s, 0\t\t\t\t#mflr\t%s\n" (reg reg_tmp) (reg reg_lr) (reg reg_tmp);
@@ -199,7 +207,11 @@ and g' oc = function (* 各命令のアセンブリ生成 (caml2html: emit_gprime) *)
       Printf.fprintf oc "\tsw\t%s, %d(%s)\n" (reg reg_tmp) (ss - 4) (reg reg_sp);
       Printf.fprintf oc "\taddi\t%s, %s, %d\n" (reg reg_sp) (reg reg_sp) ss;
       Printf.fprintf oc "\tlw\t%s, 0(%s)\n" (reg reg_tmp) (reg reg_cl);
+<<<<<<< HEAD
       Printf.fprintf oc "\tjalr\t%s\n" (reg reg_tmp);
+=======
+      Printf.fprintf oc "\tjalr\t%s\n" (reg reg_tmp);   (** これ戻ってこれんくない？？？？？ **)
+>>>>>>> 61ac9c2cc2f4e8691b9c56204d8674ef40355a1e
 (*    Printf.fprintf oc "\tmtctr\t%s\n" (reg reg_tmp);*)
 (*      Printf.fprintf oc "\tbctrl\n";*)
       Printf.fprintf oc "\taddi\t%s, r0, %d\n" (reg reg_tmp) ss;
@@ -225,12 +237,15 @@ and g' oc = function (* 各命令のアセンブリ生成 (caml2html: emit_gprime) *)
       else if List.mem a allfregs && a <> fregs.(0) then
         Printf.fprintf oc "\tfadd\t%s, f0, %s\t\t\t\t# fmr\t%s, %s\n" (reg a) (reg fregs.(0)) (reg a) (reg fregs.(0));
       Printf.fprintf oc "\tadd\t%s, r0, %s\t\t\t\t#mtlr\t%s\n" (reg reg_lr) (reg reg_tmp) (reg reg_tmp)
+<<<<<<< HEAD
   | NonTail(x), Sll(y, V(z)) -> Printf.fprintf oc "\tsll\t%s, %s, %s\n" (reg x) (reg y) (reg z) (**)
   | NonTail(x), Sll(y, C(z)) -> Printf.fprintf oc "\tslli\t%s, %s, %d\n" (reg x) (reg y) z      (**)
   | NonTail(x), Srl(y, V(z)) -> Printf.fprintf oc "\tsrl\t%s, %s, %s\n" (reg x) (reg y) (reg z) (**)
   | NonTail(x), Srl(y, C(z)) -> Printf.fprintf oc "\tsrli\t%s, %s, %d\n" (reg x) (reg y) z      (**)
   | NonTail(x), Sra(y, V(z)) -> Printf.fprintf oc "\tsra\t%s, %s, %s\n" (reg x) (reg y) (reg z) (**)
   | NonTail(x), Sra(y, C(z)) -> Printf.fprintf oc "\tsrai\t%s, %s, %d\n" (reg x) (reg y) z      (**)
+=======
+>>>>>>> 61ac9c2cc2f4e8691b9c56204d8674ef40355a1e
 and g'_tail_if oc e1 e2 b bn x y =
   let b_then = Id.genid (b ^ "_then") in
   Printf.fprintf oc "\t%s\t%s, %s, %s\n" b (reg x) (reg y) b_then;
@@ -246,7 +261,11 @@ and g'_non_tail_if oc dest e1 e2 b bn x y =
   let stackset_back = !stackset in
   g oc (dest, e2);
   let stackset1 = !stackset in
+<<<<<<< HEAD
   Printf.fprintf oc "\tj\t%s\n" b_cont;
+=======
+  Printf.fprintf oc "\tble\tr0, r31, %s\n" b_cont;
+>>>>>>> 61ac9c2cc2f4e8691b9c56204d8674ef40355a1e
   Printf.fprintf oc "%s:\n" b_then;
   stackset := stackset_back;
   g oc (dest, e1);
@@ -277,6 +296,7 @@ let h oc { name = Id.L(x); args = _; fargs = _; body = e; ret = _ } =
   stackmap := [];
   g oc (Tail, e)
 
+<<<<<<< HEAD
 let cat ic oc =
   let rec cat_sub () =
     output_char oc (input_char ic);
@@ -287,6 +307,9 @@ let cat ic oc =
 
 let f oc (Prog(data, fundefs, e)) =
   let lib = open_in "lib.s" in
+=======
+let f oc (Prog(data, fundefs, e)) =
+>>>>>>> 61ac9c2cc2f4e8691b9c56204d8674ef40355a1e
   Format.eprintf "generating assembly...@.";
 (*  if data <> [] then
     (Printf.fprintf oc "\t.data\n\t.literal8\n";
@@ -297,11 +320,17 @@ let f oc (Prog(data, fundefs, e)) =
          Printf.fprintf oc "\t.long\t%ld\n" (gethi d);
          Printf.fprintf oc "\t.long\t%ld\n" (getlo d))
        data);
+<<<<<<< HEAD
     *)
   Printf.fprintf oc "\t.text\n";
   Printf.fprintf oc "\t.globl _min_caml_start\n";
   cat lib oc;
   Printf.fprintf oc "# library ends\n";
+=======
+  Printf.fprintf oc "\t.text\n";
+  Printf.fprintf oc "\t.globl _min_caml_start\n";
+*)
+>>>>>>> 61ac9c2cc2f4e8691b9c56204d8674ef40355a1e
 (*  Printf.fprintf oc "\t.align 2\n";*)
   List.iter (fun fundef -> h oc fundef) fundefs;
   Printf.fprintf oc "_min_caml_start: # main entry point\n";
