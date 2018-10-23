@@ -80,9 +80,10 @@ piyo : min-caml
 	cp min-caml ../cpuex2018
 	cp min-caml ../simulation
 	cp min-caml ../rep
+	./min-caml genlib
+	./combinelib.sh 
 	cp lib.s ../cpuex2018/raytracer/
 	cp lib.s ../
 	cp lib.s ../cpuex2018
 	cp lib.s ../simulation
 	cp lib.s ../rep
-	./min-caml genlib

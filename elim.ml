@@ -22,6 +22,7 @@ let rec f = function (* 不要定義削除ルーチン本体 (caml2html: elim_f) *)
       else
         (Format.eprintf "eliminating function %s@." x;
          e2')
+        
   | LetTuple(xts, y, e) ->
       let xs = List.map fst xts in
       let e' = f e in

@@ -35,7 +35,9 @@ and g' env = function (* 各命令の16bit即値最適化 (caml2html: simm13_gprime) *)
 (* | IfGE(x, y', e1, e2) -> IfGE(x, y', g env e1, g env e2)*)
   | IfFEq(x, y, e1, e2) -> IfFEq(x, y, g env e1, g env e2)
   | IfFLE(x, y, e1, e2) -> IfFLE(x, y, g env e1, g env e2)
-  | Sra(x, V(y)) when M.mem x env -> Sra(y, C(M.find x env))
+  | Sll(x, V(y)) when M.mem y env -> Sll(x, C(M.find y env))
+  | Srl(x, V(y)) when M.mem y env -> Srl(x, C(M.find y env))
+  | Sra(x, V(y)) when M.mem y env -> Sra(x, C(M.find y env))
   | e -> e
 
 let h { name = l; args = xs; fargs = ys; body = e; ret = t } = (* トップレベル関数の16bit即値最適化 *)

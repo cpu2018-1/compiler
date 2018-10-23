@@ -51,7 +51,7 @@ let regs = (* Array.init 27 (fun i -> Printf.sprintf "_R_%d" i) *)
   [| "%r1"; "%r2"; "%r5"; "%r6"; "%r7"; "%r8"; "%r9"; "%r10";
      "%r11"; "%r12"; "%r13"; "%r14"; "%r15"; "%r16"; "%r17"; "%r18";
      "%r19"; "%r20"; "%r21"; "%r22"; "%r23"; "%r24"; "%r25"; "%r26";
-     "%r27"; "%r28"; "%r29" |]
+     "%r27"; "%r28" |]
 let fregs = 
 [| "%f1"; "%f2"; "%f3"; "%f4"; "%f5"; "%f6"; "%f7"; "%f8"; "%f9"; "%f10";   
    "%f11"; "%f12"; "%f13"; "%f14"; "%f15"; "%f16"; "%f17"; "%f18"; "%f19";       
@@ -65,6 +65,7 @@ let reg_fsw = fregs.(Array.length fregs - 1) (* temporary for swap *)
 let reg_sp = "%r3" (* stack pointer *)
 let reg_hp = "%r4" (* heap pointer (caml2html: sparcasm_reghp) *)
 let reg_tmp = "%r30" (* [XX] ad hoc *)
+let reg_tmp2 = "%r29" (* [XX] ad hoc *)
 let reg_lr = "%r31"
 let is_reg x = (x.[0] = '%')
 
