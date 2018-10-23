@@ -1,0 +1,30 @@
+let rec keta_sub n k =
+  if n < 10 then 
+    k + 1
+  else
+    let a = (n/10) in
+    keta_sub a (k + 1)
+let rec keta n =
+  keta_sub n 0
+
+let rec iter_div10 n k =
+  if k = 0 then
+    n
+  else 
+    iter_div10 (n/10) (k - 1)
+let rec iter_mul10 n k =
+  if k = 0 then
+    n
+  else 
+    iter_mul10 (n*10) (k - 1)
+
+
+let rec print_uint n =
+  if (n < 10) then
+    print_int n
+  else
+    let a = keta n in
+    let b = iter_div10 n (a - 1) in
+    print_int b;
+    print_uint (n - (iter_mul10 b (a - 1)))
+
