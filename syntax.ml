@@ -27,12 +27,9 @@ type t = (* MinCamlの構文を表現するデータ型 (caml2html: syntax_t) *)
   | Array of t * t * debug
   | Get of t * t * debug
   | Put of t * t * t * debug
-<<<<<<< HEAD
   | Sll of t * t * debug    (* shift left logical *)
   | Srl of t * t * debug    (* shift right logical *)
   | Sra of t * t * debug    (* shift right arithmetical *)
-=======
->>>>>>> 61ac9c2cc2f4e8691b9c56204d8674ef40355a1e
 and fundef = { name : Id.t * Type.t; args : (Id.t * Type.t) list; body : t;
                deb : debug }
 

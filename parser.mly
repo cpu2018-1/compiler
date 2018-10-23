@@ -38,10 +38,7 @@ let addtyp x = (x, Type.gentyp ())
 %token LPAREN
 %token RPAREN
 %token EOF
-<<<<<<< HEAD
 %token SLL SRL SRA
-=======
->>>>>>> 61ac9c2cc2f4e8691b9c56204d8674ef40355a1e
 
 /* (* 優先順位とassociativityの定義（低い方から高い方へ） (caml2html: parser_prior) *) */
 %nonassoc IN
@@ -52,10 +49,7 @@ let addtyp x = (x, Type.gentyp ())
 %nonassoc prec_tuple
 %left COMMA
 %left EQUAL LESS_GREATER LESS GREATER LESS_EQUAL GREATER_EQUAL
-<<<<<<< HEAD
 %left SLL SRL SRA
-=======
->>>>>>> 61ac9c2cc2f4e8691b9c56204d8674ef40355a1e
 %left PLUS MINUS PLUS_DOT MINUS_DOT
 %left AST SLASH AST_DOT SLASH_DOT
 %right prec_unary_minus
@@ -100,7 +94,6 @@ exp: /* (* 一般の式 (caml2html: parser_exp) *) */
 | exp MINUS exp
     { Sub($1, $3, { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)}) }
 | exp AST exp
-<<<<<<< HEAD
     { 
       match $1, $3 with
       | Int (10, d), e | e, Int (10, d) -> App(Var ("mul10", { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)}), [e], { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)}) 
@@ -113,11 +106,6 @@ exp: /* (* 一般の式 (caml2html: parser_exp) *) */
       Sra($1, Int (1, d), { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)})
       | _ -> 
       App(Var ("div", { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)}), [$1; $3], { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)}) }
-=======
-    { App(Var ("mul", { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)}), [$1; $3], { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)}) }
-| exp SLASH exp
-    { App(Var ("div", { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)}), [$1; $3], { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)}) }
->>>>>>> 61ac9c2cc2f4e8691b9c56204d8674ef40355a1e
 | exp EQUAL exp
     { Eq($1, $3, { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)}) }
 | exp LESS_GREATER exp
@@ -167,15 +155,12 @@ exp: /* (* 一般の式 (caml2html: parser_exp) *) */
 | ARRAY_CREATE simple_exp simple_exp
     %prec prec_app
     { Array($2, $3, { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)}) }
-<<<<<<< HEAD
 | exp SLL exp 
     { Sll($1, $3, { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)}) }
 | exp SRL exp 
     { Sll($1, $3, { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)}) }
 | exp SRA exp 
     { Sll($1, $3, { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)}) }
-=======
->>>>>>> 61ac9c2cc2f4e8691b9c56204d8674ef40355a1e
 | error
     { failwith
         (let s = (Parsing.symbol_start_pos ()) in

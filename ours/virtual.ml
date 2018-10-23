@@ -27,11 +27,7 @@ let expand xts ini addf addi =
     ini
     (fun (offset, acc) x ->
       let offset = align offset in
-<<<<<<< HEAD
       (offset + 4, addf x offset acc))   (* offset + 4にすべき? → した*)
-=======
-      (offset + 8, addf x offset acc))   (* offset + 4にすべき? *)
->>>>>>> 61ac9c2cc2f4e8691b9c56204d8674ef40355a1e
     (fun (offset, acc) x t ->
       (offset + 4, addi x t offset acc))
 
@@ -128,11 +124,7 @@ let rec g env = function (* 式の仮想マシンコード生成 (caml2html: virtual_g) *)
       (match M.find x env with
       | Type.Array(Type.Unit) -> Ans(Nop)
       | Type.Array(Type.Float) ->
-<<<<<<< HEAD
           Let((offset, Type.Int), Slw(y, C(2)),
-=======
-          Let((offset, Type.Int), Slw(y, C(3)),
->>>>>>> 61ac9c2cc2f4e8691b9c56204d8674ef40355a1e
               Ans(Lfd(x, V(offset))))
       | Type.Array(_) ->
           Let((offset, Type.Int), Slw(y, C(2)),
@@ -143,23 +135,16 @@ let rec g env = function (* 式の仮想マシンコード生成 (caml2html: virtual_g) *)
       (match M.find x env with
       | Type.Array(Type.Unit) -> Ans(Nop)
       | Type.Array(Type.Float) ->
-<<<<<<< HEAD
           Let((offset, Type.Int), Slw(y, C(2)),
-=======
-          Let((offset, Type.Int), Slw(y, C(3)),
->>>>>>> 61ac9c2cc2f4e8691b9c56204d8674ef40355a1e
               Ans(Stfd(z, x, V(offset))))
       | Type.Array(_) ->
           Let((offset, Type.Int), Slw(y, C(2)),
               Ans(Stw(z, x, V(offset))))
       | _ -> assert false)
   | Closure.ExtArray(Id.L(x)) -> Ans(SetL(Id.L("min_caml_" ^ x)))
-<<<<<<< HEAD
   | Closure.Sll(x, y) -> Ans(Sll(x, V(y)))
   | Closure.Srl(x, y) -> Ans(Srl(x, V(y)))
   | Closure.Sra(x, y) -> Ans(Sra(x, V(y)))
-=======
->>>>>>> 61ac9c2cc2f4e8691b9c56204d8674ef40355a1e
 
 (* 関数の仮想マシンコード生成 (caml2html: virtual_h) *)
 let h { Closure.name = (Id.L(x), t); Closure.args = yts; Closure.formal_fv = zts; Closure.body = e } =

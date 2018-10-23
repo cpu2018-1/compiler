@@ -49,12 +49,9 @@ let rec deref_term = function
   | Array(e1, e2, d) -> Array(deref_term e1, deref_term e2, d)
   | Get(e1, e2, d) -> Get(deref_term e1, deref_term e2, d)
   | Put(e1, e2, e3, d) -> Put(deref_term e1, deref_term e2, deref_term e3, d)
-<<<<<<< HEAD
   | Sll(e1, e2, d) -> Sll(deref_term e1, deref_term e2, d)
   | Srl(e1, e2, d) -> Srl(deref_term e1, deref_term e2, d)
   | Sra(e1, e2, d) -> Sra(deref_term e1, deref_term e2, d)
-=======
->>>>>>> 61ac9c2cc2f4e8691b9c56204d8674ef40355a1e
   | e -> e
 
 let rec occur r1 = function (* occur check (caml2html: typing_occur) *)
@@ -175,13 +172,10 @@ let rec g env e = (* ∑øø‰œ¿•Î°º•¡•Û (caml2html: typing_g) *)
         unify (Type.Array(t)) (g env e1) d;
         unify Type.Int (g env e2) d;
         Type.Unit
-<<<<<<< HEAD
     | Sll (e1, e2, d) | Srl(e1, e2, d) | Sra(e1, e2, d) -> (* ªªΩ—•∑•’•»§Œ∑øø‰œ¿ *)
         unify Type.Int (g env e1) d;
         unify Type.Int (g env e2) d;
         Type.Int
-=======
->>>>>>> 61ac9c2cc2f4e8691b9c56204d8674ef40355a1e
   with Unify(t1, t2, d) -> 
         Printf.printf "Typing error!! line %d near character %d-%d\n" d.lnum d.bchar d.echar; 
         Printf.printf "Cannot unify type \"%s\" and \"%s\"\n" 

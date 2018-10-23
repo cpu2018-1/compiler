@@ -98,15 +98,12 @@ rule token = parse
     { set_pos lexbuf; token lexbuf }
 | '\r'
     { set_pos lexbuf; token lexbuf }
-<<<<<<< HEAD
 | "<<"
     { SLL }
 | ">>"
     { SRL }
 | ">>>"
     { SRA }
-=======
->>>>>>> 61ac9c2cc2f4e8691b9c56204d8674ef40355a1e
 | _
     { failwith
         (Printf.sprintf "unknown token %s near characters %d-%d"

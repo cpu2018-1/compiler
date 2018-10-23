@@ -23,12 +23,9 @@ type t =
   | Get of Id.t * Id.t
   | Put of Id.t * Id.t * Id.t
   | ExtArray of Id.l
-<<<<<<< HEAD
   | Sll of Id.t * Id.t
   | Srl of Id.t * Id.t
   | Sra of Id.t * Id.t
-=======
->>>>>>> 61ac9c2cc2f4e8691b9c56204d8674ef40355a1e
 type fundef = { name : Id.l * Type.t;
                 args : (Id.t * Type.t) list;
                 formal_fv : (Id.t * Type.t) list;
