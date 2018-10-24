@@ -346,9 +346,6 @@ let f oc (Prog(data, fundefs, e)) =
   Printf.fprintf oc "\tsw\tr1, -96(r1)\n"; (*Printf.fprintf oc "\tswu\tr1, -96(r1)\n";*)
 *)
   Printf.fprintf oc "#\tmain program starts\n";
-  Printf.fprintf oc "\taddi\t%s, r0, 0\n" (reg reg_sp);
-  Printf.fprintf oc "\taddi\t%s, r0, 30000\n" (reg reg_hp);
-  Printf.fprintf oc "\tadd\t%s, %s, %s\n" (reg reg_hp) (reg reg_hp) (reg reg_hp);
   stackset := S.empty;
   stackmap := [];
   g oc (NonTail("_R_0"), e);

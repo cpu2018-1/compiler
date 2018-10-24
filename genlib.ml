@@ -1,5 +1,5 @@
 let rec print_num n =
-  putchar (n + 48)
+  print_char (n + 48)
 in 
 
 let rec mul10 n =
@@ -73,12 +73,13 @@ in
 
 let rec print_int n =
   if n < 0 then (
-    putchar 45;
+    print_char 45;
     print_uint (-n) 
   )
   else
     print_uint n 
 in 
+
 
 let rec abs_float a =
   if (a < 0.0) then
@@ -88,7 +89,69 @@ let rec abs_float a =
 in
 
 
+(* float (1) *)
+(* fequal -> 使われていない(正直良くわからない) *)
+let rec fless x y =
+  if (x < y) then
+    1
+  else
+    0
+in
 
+
+let rec fispos x = x > 0.0 in
+let rec fisneg x = x < 0.0 in
+let rec fiszero x = (x = 0.0) in
+
+
+(* int -> 特に実装するところはなさそう *)
+
+
+(* logic *)
+let rec xor x y =
+  if (x <> y) then
+    1
+  else
+    0
+in
+
+(* not -> パースでなんとかできる *)
+(* float (2) *)
+let rec fhalf x = x *. 0.5 in
+let rec fsqr x = x *. x in
+
+let rec fabs a =
+  if (a < 0.0) then
+    (-.a)
+  else
+    a
+in
+
+let rec fneg a =
+  (-.a)
+in
+
+
+(* sqrt -> 直接アセンブリ書いた *)
+
+
+let rec floor x =
+  let y = itof (ftoi x) in
+  if x < y then
+    y -. 1.0
+  else
+    y
+in
+
+let rec int_of_float a = 
+  ftoi a
+in
+
+let rec float_of_int a =
+  itof a
+in
+
+(* sin / cos / atan *)
 let rec modulo_2pi x =
   let pi = 3.1415926535893 in
   let p = 2.0 *. pi in
@@ -110,6 +173,7 @@ let rec modulo_2pi x =
     in
       fuga x p pi
 in
+
 
 let rec sin_body x =
   x -. 0.16666668 *. x *. x *. x +. 0.008332824 *. x *. x *. x *. x *. x 
@@ -187,6 +251,8 @@ let rec cos x =
         sin_body (pi /. 2.0 -. x) *. f
 in
 
+
+
 let rec atan_body x =
   x -. 0.3333333 *. x *. x *. x +. 0.2 *. x *. x *. x *. x *. x
     -. 0.142857142 *. x *. x *. x *. x *. x *. x *. x +. 0.111111104 *. x *. x *. x *. x *. x *. x *. x *. x *. x
@@ -206,22 +272,48 @@ let rec atan x =
     (pi /. 2.0 +. atan_body (1.0 /. x)) *. f
 in
 
-let rec floor x =
-  let y = itof (ftoi x) in
-  if x < y then
-    y -. 1.0
-  else
-    y
+(* create_array -> 直接アセンブリ書いた *)
 
+
+(* I/O *)
+let rec read_token in_token =
+  let c = read_char () in
+  if c = 32 then
+    if in_token then 
+      ()
+    else 
+      read_token 0
+  else if c = 9 then
+      if in_token then 
+        ()
+      else
+      read_token 0
+  else if c = 13 then
+    if in_token then 
+      ()
+    else
+      read_token 0
+  else if c = 10 then
+    if in_token then 
+      ()
+    else
+      read_token 0
+  else if c = 26 then
+    ()
+  else (
+    buffer_add_char c;
+    read_token 1
+  )
 in
 
-let rec int_of_float a = 
-  ftoi a
+
+let rec read_int x =
+  let _ = read_token 0 in
+  buffer_to_int ()
 in
 
-let rec float_of_int a =
-  itof a
-in
+
+
 
 let rec truncate a = 
   ftoi a

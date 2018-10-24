@@ -1,23 +1,30 @@
 cat lib_tegaki.s > lib.s
 
+TEMP=$IFS
+IFS='
+'
 for i in $(cat ourlib.txt);
 do
-  sed "s/${i}\.[0-9]*/${i}/g" genlib.s > ___hoge
-  sed "s/${i}/lib_${i}/g" ___hoge > genlib.s
+  if [ $(echo $i | grep "\/\/") ]; then
+    continue
+  fi
+  echo $i
+  sed "s/${i}\.[0-9]*/${i}/g" genlib.s > ___hoge; mv ___hoge genlib.s
+  sed -e "s/^${i}/lib_${i}/g" genlib.s > ___hoge; mv ___hoge genlib.s
+  sed -e "s/\s${i}/ lib_${i}/g" genlib.s > ___hoge; mv ___hoge genlib.s
 done
 
-sed "s/lib_lib_/lib_/g" genlib.s > ___hoge
+sed "s/lib_lib_/lib_/g" genlib.s > __hoge; mv __hoge genlib.s
 
 for i in ble beq bne blt feq flt fle;
 do
-  sed "s/${i}_then/_${i}_then/g" ___hoge > genlib.s
+  sed "s/${i}_then/_${i}_then/g" genlib.s > ___hoge; mv ___hoge genlib.s
   cat genlib.s > ___hoge
 done
 
-sed "s/__/_/g" ___hoge > genlib.s
+sed "s/__/_/g" genlib.s > ___hoge; mv ___hoge genlib.s
 
-rm ___hoge
-
+IFS=$TEMP
 
 f=0
 cat genlib.s | while IFS= read line

@@ -79,6 +79,7 @@ piyo : min-caml
 	cp min-caml ../
 	cp min-caml ../cpuex2018
 	cp min-caml ../simulation
+	cp min-caml ../simulation/test
 	cp min-caml ../rep
 	./min-caml genlib
 	./combinelib.sh 
