@@ -56,7 +56,7 @@ let fregs =
 [| "%f1"; "%f2"; "%f3"; "%f4"; "%f5"; "%f6"; "%f7"; "%f8"; "%f9"; "%f10";   
    "%f11"; "%f12"; "%f13"; "%f14"; "%f15"; "%f16"; "%f17"; "%f18"; "%f19";       
    "%f20"; "%f21"; "%f22"; "%f23"; "%f24"; "%f25"; "%f26"; "%f27"; "%f28";
-   "%f29"; "%f30"; "%f31"|]
+   "%f29"; "%f30"; "%f30" |]
 let allregs = Array.to_list regs
 let allfregs = Array.to_list fregs
 let reg_cl = regs.(Array.length regs - 1) (* closure address (caml2html: sparcasm_regcl) *)
@@ -99,6 +99,8 @@ let rec concat e1 xt e2 =
   | Let(yt, exp, e1') -> Let(yt, exp, concat e1' xt e2)
 
 let align i = (if i mod 8 = 0 then i else i + 4)
+(*let align i = i*)
+
 
 
 

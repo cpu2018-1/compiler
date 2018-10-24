@@ -166,11 +166,11 @@ match t with
           let _, t2 as g_e2 = g env e2 in
           insert_let g_e2
             (fun y ->
-              let l =
+              (let l =
                 match t2 with
-                | Type.Float -> "create_float_array"
-                | _ -> "create_array" in
-              ExtFunApp(l, [x; y]), Type.Array(t2)))
+                | Type.Float -> "create_float_array" 
+                | _ ->  "create_array" in
+              ExtFunApp(l, [x; y]), Type.Array(t2))))
   | Syntax.Get(e1, e2, d) ->
       (match g env e1 with
       |        _, Type.Array(t) as g_e1 ->

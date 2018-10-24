@@ -149,13 +149,13 @@ and g' oc = function (* 各命令のアセンブリ生成 (caml2html: emit_gprime) *)
       | _ -> assert false);
       Printf.fprintf oc "\tjr\t%s\t\t\t\t#\tblr\n" (reg reg_lr);
   | Tail, IfEq(x, V(y), e1, e2) -> (**)
-      g'_tail_if oc e1 e2 "feq" "fne" x y
+      g'_tail_if oc e1 e2 "beq" "bne" x y
 (*  | Tail, IfEq(x, C(y), e1, e2) ->
       Printf.fprintf oc "\tcmpwi\tcr7, %s, %d\n" (reg x) y;
       g'_tail_if oc e1 e2 "beq" "bne"
 *)
   | Tail, IfLE(x, V(y), e1, e2) -> (**)
-      g'_tail_if oc e1 e2 "fle" "fgt" x y
+      g'_tail_if oc e1 e2 "ble" "bgt" x y
 (* | Tail, IfLE(x, C(y), e1, e2) ->
       Printf.fprintf oc "\tcmpwi\tcr7, %s, %d\n" (reg x) y;
       g'_tail_if oc e1 e2 "ble" "bgt"
@@ -167,17 +167,17 @@ and g' oc = function (* 各命令のアセンブリ生成 (caml2html: emit_gprime) *)
       g'_tail_if oc e1 e2 "bge" "blt"
 *)
   | Tail, IfFEq(x, y, e1, e2) -> (**)
-      g'_tail_if oc e1 e2 "feq" "fne" x y
+      g'_tail_if_f oc e1 e2 "feq" "fne" x y
   | Tail, IfFLE(x, y, e1, e2) -> (**)
-      g'_tail_if oc e1 e2 "fle" "fgt" x y
+      g'_tail_if_f oc e1 e2 "fle" "fgt" x y
   | NonTail(z), IfEq(x, V(y), e1, e2) -> (**)
-      g'_non_tail_if oc (NonTail(z)) e1 e2 "feq" "fne" x y
+      g'_non_tail_if oc (NonTail(z)) e1 e2 "beq" "bne" x y
 (* | NonTail(z), IfEq(x, C(y), e1, e2) ->
       Printf.fprintf oc "\tcmpwi\tcr7, %s, %d\n" (reg x) y;
       g'_non_tail_if oc (NonTail(z)) e1 e2 "beq" "bne"
 *)
   | NonTail(z), IfLE(x, V(y), e1, e2) -> (**)
-      g'_non_tail_if oc (NonTail(z)) e1 e2 "fle" "fgt" x y
+      g'_non_tail_if oc (NonTail(z)) e1 e2 "ble" "bgt" x y
 (* | NonTail(z), IfLE(x, C(y), e1, e2) ->
       Printf.fprintf oc "\tcmpwi\tcr7, %s, %d\n" (reg x) y;
       g'_non_tail_if oc (NonTail(z)) e1 e2 "ble" "bgt"
@@ -189,9 +189,9 @@ and g' oc = function (* 各命令のアセンブリ生成 (caml2html: emit_gprime) *)
       g'_non_tail_if oc (NonTail(z)) e1 e2 "bge" "blt"
 *)
   | NonTail(z), IfFEq(x, y, e1, e2) -> (**)
-      g'_non_tail_if oc (NonTail(z)) e1 e2 "feq" "fne" x y
+      g'_non_tail_if_f oc (NonTail(z)) e1 e2 "feq" "fne" x y
   | NonTail(z), IfFLE(x, y, e1, e2) -> (**)
-      g'_non_tail_if oc (NonTail(z)) e1 e2 "fle" "fgt" x y
+      g'_non_tail_if_f oc (NonTail(z)) e1 e2 "fle" "fgt" x y
   (* 関数呼び出しの仮想命令の実装 (caml2html: emit_call) *)
   | Tail, CallCls(x, ys, zs) -> (* 末尾呼び出し (caml2html: emit_tailcall) *)
       g'_args oc [(x, reg_cl)] ys zs;
@@ -263,6 +263,31 @@ and g'_non_tail_if oc dest e1 e2 b bn x y =
   Printf.fprintf oc "%s:\n" b_cont;
   let stackset2 = !stackset in
   stackset := S.inter stackset1 stackset2
+and g'_tail_if_f oc e1 e2 b bn x y =
+  let b_then = Id.genid (b ^ "_then") in
+  Printf.fprintf oc "\t%s\t%s, %s, %s\n" b (reg reg_tmp) (reg x) (reg y);
+  Printf.fprintf oc "\tbne\tr0, %s, %s\n" (reg reg_tmp) b_then;
+  let stackset_back = !stackset in
+  g oc (Tail, e2);
+  Printf.fprintf oc "%s:\n" b_then;
+  stackset := stackset_back;
+  g oc (Tail, e1)
+and g'_non_tail_if_f oc dest e1 e2 b bn x y = 
+  let b_then = Id.genid (b ^ "_then") in
+  let b_cont = Id.genid (b ^ "_cont") in
+  Printf.fprintf oc "\t%s\t%s, %s, %s\n" b (reg reg_tmp) (reg x) (reg y);
+  Printf.fprintf oc "\tbne\tr0, %s, %s\n" (reg reg_tmp) b_then;
+  let stackset_back = !stackset in
+  g oc (dest, e2);
+  let stackset1 = !stackset in
+  Printf.fprintf oc "\tj\t%s\n" b_cont;
+  Printf.fprintf oc "%s:\n" b_then;
+  stackset := stackset_back;
+  g oc (dest, e1);
+  Printf.fprintf oc "%s:\n" b_cont;
+  let stackset2 = !stackset in
+  stackset := S.inter stackset1 stackset2
+
 and g'_args oc x_reg_cl ys zs =
   let (i, yrs) =
     List.fold_left
@@ -282,9 +307,7 @@ and g'_args oc x_reg_cl ys zs =
     (shuffle reg_fsw zfrs)
 
 let h oc { name = Id.L(x); args = _; fargs = _; body = e; ret = _ } =
-  Printf.printf "%s\n" x;
   Printf.fprintf oc "%s:\n" x;
-  Printf.printf "%s:\n" x;
   stackset := S.empty;
   stackmap := [];
   g oc (Tail, e)
@@ -323,6 +346,7 @@ let f oc (Prog(data, fundefs, e)) =
   Printf.fprintf oc "\tsw\tr1, -96(r1)\n"; (*Printf.fprintf oc "\tswu\tr1, -96(r1)\n";*)
 *)
   Printf.fprintf oc "#\tmain program starts\n";
+  Printf.fprintf oc "\taddi\t%s, r0, 0\n" (reg reg_sp);
   Printf.fprintf oc "\taddi\t%s, r0, 30000\n" (reg reg_hp);
   Printf.fprintf oc "\tadd\t%s, %s, %s\n" (reg reg_hp) (reg reg_hp) (reg reg_hp);
   stackset := S.empty;

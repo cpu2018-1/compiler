@@ -80,15 +80,35 @@ let rec print_int n =
     print_uint n 
 in 
 
-
-let rec modulo_pi x =
-  let pi = 3.14159265358979 in
-  if pi < x then
-    modulo_pi (x -. pi)
-  else if x <= -.pi then
-    modulo_pi (x +. pi)
+let rec abs_float a =
+  if (a < 0.0) then
+    (-.a)
   else
-    x
+    a
+in
+
+
+
+let rec modulo_2pi x =
+  let pi = 3.1415926535893 in
+  let p = 2.0 *. pi in
+  let rec hoge x y = 
+    if x >= y then
+      hoge x (2. *. y) 
+    else
+      y
+  in
+    let p = hoge x p in
+    let rec fuga x y z =
+      if x >= z *. 2.0 then
+        if x >= y then
+          fuga (x -. y) (y /. 2.0) z
+        else
+          fuga x (y /. 2.0) z
+      else
+        x
+    in
+      fuga x p pi
 in
 
 let rec sin_body x =
@@ -104,49 +124,67 @@ in
 let rec sin x =
   let pi = 3.14159265358979 in
   let f = (if (x < 0.0) then -.1.0 else 1.0) in
-  let x = modulo_pi x in
-  (if x >= pi then
-     let x = x -. pi in
-     let f = (1.0 -. f) in
-     ()
+  let x = modulo_2pi (abs_float x) in
+  if x >= pi then 
+    let x = x -. pi in
+    let f = (-.f) in
+    if (x >= pi /. 2.0) then
+      let x = pi -. x in
+      if (x <= pi /. 4.0) then
+        sin_body(x) *. f
+      else
+        cos_body (pi /. 2.0 -. x) *. f
+    else
+      if (x <= pi /. 4.0) then
+        sin_body(x) *. f
+      else
+        cos_body (pi /. 2.0 -. x) *. f
    else
-     ());
-  (if x >= pi /. 2.0 then
-     let x = x -. pi in
-     ()
-   else
-     ());
-  if (x <= pi /. 4.0) then
-    (sin_body x) *. f
-  else
-    (cos_body (pi /. 2.0 -. x)) *. f
+    if (x >= pi /. 2.0) then
+      let x = pi -. x in
+      if (x <= pi /. 4.0) then
+        sin_body(x) *. f
+      else
+        cos_body (pi /. 2.0 -. x) *. f
+    else
+      if (x <= pi /. 4.0) then
+        sin_body(x) *. f
+      else
+        cos_body (pi /. 2.0 -. x) *. f
 in
   
 let rec cos x =
   let pi = 3.14159265358979 in
-  let f = 
-  (if x < 0.0 then
-    1
-   else 
-    0)
-  in
-  let x = modulo_pi x in
-  (if x >= pi then
-     let x = x -. pi in
-     let f = (1 - f) in
-     ()
-   else
-     ());
-  (if x >= pi /. 2.0 then
-     let x = x -. pi in
-     let f = (1 - f) in
-     ()
-   else
-     ());
-  if (x <= pi /. 4.0) then
-    cos_body x
+  let f = 1.0 in
+  let x = modulo_2pi (abs_float x) in
+  if x >= pi then 
+    let x = x -. pi in
+    let f = (-.f) in
+    if (x >= pi /. 2.0) then
+      let x = pi -. x in
+      let f = (-.f) in
+      if (x <= pi /. 4.0) then
+        cos_body(x) *. f
+      else
+        sin_body (pi /. 2.0 -. x) *. f
+    else
+      if (x <= pi /. 4.0) then
+        cos_body(x) *. f
+      else
+        sin_body (pi /. 2.0 -. x) *. f
   else
-    sin_body (pi /. 2.0 -. x)
+    if (x >= pi /. 2.0) then
+      let x = pi -. x in
+      let f = (-.f) in
+      if (x <= pi /. 4.0) then
+        cos_body(x) *. f
+      else
+        sin_body (pi /. 2.0 -. x) *. f
+    else
+      if (x <= pi /. 4.0) then
+        cos_body(x) *. f
+      else
+        sin_body (pi /. 2.0 -. x) *. f
 in
 
 let rec atan_body x =
@@ -177,6 +215,17 @@ let rec floor x =
 
 in
 
+let rec int_of_float a = 
+  ftoi a
+in
+
+let rec float_of_int a =
+  itof a
+in
+
+let rec truncate a = 
+  ftoi a
+in
 
 (*print_float (sin 121.2);
 print_float (cos 121.2);

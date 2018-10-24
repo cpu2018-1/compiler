@@ -101,7 +101,7 @@ let rec g env known = function (* クロージャ変換ルーチン本体 (caml2html: closure
   | KNormal.Get(x, y) -> Get(x, y)
   | KNormal.Put(x, y, z) -> Put(x, y, z)
   | KNormal.ExtArray(x) -> ExtArray(Id.L(x))
-  | KNormal.ExtFunApp(x, ys) -> AppDir(Id.L(x), ys)
+  | KNormal.ExtFunApp(x, ys) -> AppDir(Id.L("lib_"^x), ys)
   | KNormal.Sll(x, y) -> Sll(x, y)
   | KNormal.Srl(x, y) -> Srl(x, y)
   | KNormal.Sra(x, y) -> Sra(x, y)

@@ -86,4 +86,5 @@ piyo : min-caml
 	cp lib.s ../
 	cp lib.s ../cpuex2018
 	cp lib.s ../simulation
+	cp lib.s ../simulation/test
 	cp lib.s ../rep

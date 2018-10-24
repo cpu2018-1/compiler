@@ -9,10 +9,15 @@ keta
 print_uint_keta
 print_int
 print_uint
-modulo_pi
+modulo_2pi
 sin_body
 cos_body
 sin
 cos
 atan_body
 atan
+floor
+int_of_float
+float_of_int
+abs_float
+truncate
