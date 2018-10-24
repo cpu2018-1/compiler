@@ -19,4 +19,4 @@
   sw  r0, 56(r4)
   sw  r0, 60(r4)
   sw  r0, 64(r4)
-  addi  r4, r4, 544
+  addi  r4, r4, 68

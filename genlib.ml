@@ -308,6 +308,7 @@ in
 
 
 let rec read_int x =
+  buffer_clear ();
   let _ = read_token 0 in
   buffer_to_int ()
 in

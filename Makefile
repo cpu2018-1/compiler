@@ -89,3 +89,9 @@ piyo : min-caml
 	cp lib.s ../simulation
 	cp lib.s ../simulation/test
 	cp lib.s ../rep
+	cp init.s ../cpuex2018/raytracer/
+	cp init.s ../
+	cp init.s ../cpuex2018
+	cp init.s ../simulation
+	cp init.s ../simulation/test
+	cp init.s ../rep

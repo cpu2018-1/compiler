@@ -322,6 +322,7 @@ let cat ic oc =
 
 let f oc (Prog(data, fundefs, e)) =
   let lib = open_in "lib.s" in
+  let init = open_in "init.s" in
   Format.eprintf "generating assembly...@.";
 (*  if data <> [] then
     (Printf.fprintf oc "\t.data\n\t.literal8\n";
@@ -345,6 +346,7 @@ let f oc (Prog(data, fundefs, e)) =
   Printf.fprintf oc "\tsw\tr0, 8(r1)\n";
   Printf.fprintf oc "\tsw\tr1, -96(r1)\n"; (*Printf.fprintf oc "\tswu\tr1, -96(r1)\n";*)
 *)
+  cat init oc;
   Printf.fprintf oc "#\tmain program starts\n";
   stackset := S.empty;
   stackmap := [];
