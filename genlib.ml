@@ -1,102 +1,9 @@
-let rec print_num n =
-  print_char (n + 48)
-in 
-
-let rec mul10 n =
-  let a = n << 3 in
-  let b = n << 1 in
-  a + b
-in
-
-let rec div10_sub n l r = 
-  let k = (l + r)/2 in
-  if (10 * k > n) then
-    div10_sub n l k
-  else if 10 * k + 9 < n then
-    div10_sub n k r
-  else
-    k
-in
-
-let rec div10 n =
-  div10_sub n 0 n
-in
-
-let rec iter_mul10 n k =
-  if k = 0 then
-    n
-  else 
-    iter_mul10 (mul10 n) (k - 1)
-in
-
-let rec iter_div10 n k =
-  if k = 0 then
-    n
-  else 
-    iter_div10 (div10 n) (k - 1)
-in
-
-let rec keta_sub n k =
-  if n < 10 then 
-    k + 1
-  else
-    let a = div10 n in
-    keta_sub a (k + 1)
-in 
-
-let rec keta n =
-  keta_sub n 0
-in
-
-let rec print_uint_keta n k =
-  if (k = 1) then
-    print_num n
-  else (
-    if (n < iter_mul10 1 (k - 1)) then
-      (
-      print_num 0;
-      print_uint_keta n (k - 1)
-      )
-    else (
-      let b = iter_div10 n (k - 1) in
-      print_num b;
-      print_uint_keta (n - (iter_mul10 b (k - 1))) (k - 1)
-    )
-  )
-in
-
-
-let rec print_uint n =
-  print_uint_keta n (keta n)
-in
-
-
-let rec print_int n =
-  if n < 0 then (
-    print_char 45;
-    print_uint (-n) 
-  )
-  else
-    print_uint n 
-in 
-
-
-let rec abs_float a =
-  if (a < 0.0) then
-    (-.a)
-  else
-    a
-in
 
 
 (* float (1) *)
 (* fequal -> 使われていない(正直良くわからない) *)
-let rec fless x y =
-  if (x < y) then
-    1
-  else
-    0
-in
+(* fless -> 型推論で整数演算にみなされるので
+            アセンブリ書いた *)
 
 
 let rec fispos x = x > 0.0 in
@@ -109,10 +16,7 @@ let rec fiszero x = (x = 0.0) in
 
 (* logic *)
 let rec xor x y =
-  if (x <> y) then
-    1
-  else
-    0
+  x <> y
 in
 
 (* not -> パースでなんとかできる *)
@@ -276,6 +180,90 @@ in
 
 
 (* I/O *)
+let rec print_num n =
+  print_char (n + 48)
+in 
+
+let rec mul10 n =
+  let a = n << 3 in
+  let b = n << 1 in
+  a + b
+in
+
+let rec div10_sub n l r = 
+  let k = (l + r)/2 in
+  if (10 * k > n) then
+    div10_sub n l k
+  else if 10 * k + 9 < n then
+    div10_sub n k r
+  else
+    k
+in
+
+let rec div10 n =
+  div10_sub n 0 n
+in
+
+let rec iter_mul10 n k =
+  if k = 0 then
+    n
+  else 
+    iter_mul10 (mul10 n) (k - 1)
+in
+
+let rec iter_div10 n k =
+  if k = 0 then
+    n
+  else 
+    iter_div10 (div10 n) (k - 1)
+in
+
+let rec keta_sub n k =
+  if n < 10 then 
+    k + 1
+  else
+    let a = div10 n in
+    keta_sub a (k + 1)
+in 
+
+let rec keta n =
+  keta_sub n 0
+in
+
+let rec print_uint_keta n k =
+  if (k = 1) then
+    print_num n
+  else (
+    if (n < iter_mul10 1 (k - 1)) then
+      (
+      print_num 0;
+      print_uint_keta n (k - 1)
+      )
+    else (
+      let b = iter_div10 n (k - 1) in
+      print_num b;
+      print_uint_keta (n - (iter_mul10 b (k - 1))) (k - 1)
+    )
+  )
+in
+
+
+let rec print_uint n =
+  print_uint_keta n (keta n)
+in
+
+
+let rec print_int n =
+  if n < 0 then (
+    print_char 45;
+    print_uint (-n) 
+  )
+  else
+    print_uint n 
+in 
+
+
+
 let rec read_token in_token =
   let c = read_char () in
   if c = 32 then
@@ -313,15 +301,50 @@ let rec read_int x =
   buffer_to_int ()
 in
 
+let rec iter_div10_float a b =
+  if b = 0 then a else iter_div10_float (a /. 10.0) (b - 1)
+in
 
+let rec read_float x =
+  buffer_clear ();
+  let _ = read_token 0 in
+  let c = buffer_get 0 in
+  let i = buffer_to_int_of_float () in
+  let d = buffer_to_dec_of_float () in
+  let k = buffer_to_ika_keta_of_float () in (* 小数点以下の桁 *)
+  if (c = 45) then
+    (-.1.0) *. (float_of_int i +. (iter_div10_float (float_of_int d) k))
+  else
+    float_of_int i +. (iter_div10_float (float_of_int d) k)
+in
 
 
 let rec truncate a = 
   ftoi a
 in
 
-(*print_float (sin 121.2);
-print_float (cos 121.2);
-print_float (atan 121.2);
-*)
+let rec abs_float a =
+  if (a < 0.0) then
+    (-.a)
+  else
+    a
+in
+
+let rec print_dec x =
+  if (x = 0.0) then
+    ()
+  else (
+    let y = 10.0 *. x in
+    print_int (int_of_float y);
+    print_dec (y -. float_of_int (int_of_float y))
+  )
+in
+
+
+let rec print_float x =
+  print_int (int_of_float x);
+  print_char (46);
+  print_dec (x -. float_of_int (int_of_float x))
+in
+
 print_int 32

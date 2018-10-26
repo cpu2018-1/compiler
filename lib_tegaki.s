@@ -88,6 +88,9 @@ lib_buffer_to_int:
   add r30, r30, r30
   lw  r2, 64(r30)
   addi  r1, r0, 0
+  lw  r5, 0(r30)
+  addi  r29, r0, 45
+  ble r5, r29, lib_buffer_to_int_minus
 lib_buffer_to_int_cont:
   beq r2, r0, lib_buffer_to_int_exit
   sw  r1, 0(r3)
@@ -110,3 +113,106 @@ lib_buffer_to_int_cont:
   j lib_buffer_to_int_cont:
 lib_buffer_to_int_exit:
   jr  r31
+lib_buffer_to_int_minus:
+  addi  r30, r30, 4
+  addi  r2, r2, -1
+lib_buffer_to_int_minus_cont:
+  beq r2, r0, lib_buffer_to_int_minus_exit
+  sw  r1, 0(r3)
+  sw  r2, 4(r3)
+  sw  r30, 8(r3)
+  sw  r31, 12(r3)
+  lw  r1, 0(r30)
+  addi  r1, r1, -48
+  addi  r2, r2, -1
+  addi  r3, r3, 16
+  jal lib_iter_mul10
+  addi  r3, r3, -16
+  lw  r5, 0(r3)
+  lw  r2, 4(r3)
+  lw  r30, 8(r3)
+  lw  r31, 12(r3)
+  addi  r30, r30, 4
+  add r1, r1, r5
+  addi  r2, r2, -1
+  j lib_buffer_to_int_minus_cont:
+lib_buffer_to_int_minus_exit:
+  sub r1, r0, r1
+  jr  r31
+lib_buffer_to_int_of_float:
+  addi  r30, r0, 30000
+  add r30, r30, r30
+  addi  r1, r0, 0
+  addi  r5, r0, 46
+  addi  r7, r0, 45
+  addi  r8, r0, 0
+  addi  r2, r0, 0
+lib_buffer_to_pos_loop:
+  lw  r6, 0(r30)
+  beq r6, r5, lib_buffer_to_int_cont_ready
+  beq r6, r0, lib_buffer_to_int_cont_ready
+  beq r6, r7, lib_buffer_to_int_of_float_minus
+  addi  r2, r2, 1
+  addi r30, r30, 4
+  j lib_buffer_to_pos_loop
+lib_buffer_to_int_of_float_minus:
+  addi  r30, r30, 4
+  addi  r8, r0, 4
+  j lib_buffer_to_pos_loop
+lib_buffer_to_int_cont_ready:
+  addi r30, r0, 30000
+  add r30, r30, r30
+  add r30, r30, r8
+  j lib_buffer_to_int_cont
+# for read_float
+lib_buffer_to_dec_of_float:
+  addi  r30, r0, 30000
+  add r30, r30, r30
+  addi  r1, r0, 0
+  addi  r5, r0, 46
+  addi  r2, r0, 0
+lib_buffer_to_pos_loop_dec:
+  lw  r6, 0(r30)
+  beq r6, r5, lib_buffer_to_dec_of_float_cont
+  beq r6, r0, lib_buffer_to_dec_zero
+  addi  r2, r2, 1
+  addi r30, r30, 4
+  j lib_buffer_to_pos_loop_dec
+lib_buffer_to_dec_zero:
+  addi r1, r0, 0
+  jr  r31
+lib_buffer_to_dec_of_float_cont:
+  addi  r29, r0, 30000
+  add r29, r29, r29
+  addi  r2, r2, 1
+  lw  r7, 64(r29)
+  sub r2, r7, r2
+  addi  r1, r0, 0
+  addi  r30, r30, 4
+  j lib_buffer_to_int_cont
+lib_buffer_to_ika_keta_of_float:
+  addi  r30, r0, 30000
+  add r30, r30, r30
+  addi  r1, r0, 0
+  addi  r5, r0, 46
+  addi  r2, r0, 0
+lib_buffer_to_pos_loop_keta:
+  lw  r6, 0(r30)
+  beq r6, r5, lib_buffer_to_ika_keta_of_float_cont
+  beq r6, r0, lib_buffer_to_ika_keta_zero
+  addi  r2, r2, 1
+  addi r30, r30, 4
+  j lib_buffer_to_pos_loop_keta
+lib_buffer_to_ika_keta_zero:
+  addi r1, r0, 0
+  jr  r31
+lib_buffer_to_ika_keta_of_float_cont:
+  addi  r29, r0, 30000
+  add r29, r29, r29
+  addi  r2, r2, 1
+  lw  r7, 64(r29)
+  sub r1, r7, r2
+  jr  r31
+lib_fless:
+	flt r1, f1, f2
+	jr	r31				#	blr
