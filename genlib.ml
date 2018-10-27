@@ -249,7 +249,13 @@ in
 
 
 let rec print_uint n =
-  print_uint_keta n (keta n)
+  if (n < 10) then
+    print_num n
+  else (
+    let a = div10 n in
+    print_uint a;
+    print_num (n - (mul10 a))
+  )
 in
 
 
