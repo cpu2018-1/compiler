@@ -23,8 +23,8 @@ let locate x =
     | y :: zs when x = y -> 0 :: List.map succ (loc zs)
     | y :: zs -> List.map succ (loc zs) in
   loc !stackmap
-let offset x = 4 * List.hd (locate x)
-let stacksize () = align ((List.length !stackmap + 1) * 4)
+let offset x = List.hd (locate x)
+let stacksize () = align ((List.length !stackmap + 1))
 
 let reg r =
   if is_reg r
@@ -206,7 +206,7 @@ and g' oc = function (* 各命令のアセンブリ生成 (caml2html: emit_gprime) *)
       Printf.fprintf oc "\taddi\t%s, %s, 0\t\t\t\t#mflr\t%s\n" (reg reg_tmp) (reg reg_lr) (reg reg_tmp);
       g'_args oc [(x, reg_cl)] ys zs;
       let ss = stacksize () in
-      Printf.fprintf oc "\tsw\t%s, %d(%s)\n" (reg reg_tmp) (ss - 4) (reg reg_sp);
+      Printf.fprintf oc "\tsw\t%s, %d(%s)\n" (reg reg_tmp) (ss - 1) (reg reg_sp);
       Printf.fprintf oc "\taddi\t%s, %s, %d\n" (reg reg_sp) (reg reg_sp) ss;
       Printf.fprintf oc "\tlw\t%s, 0(%s)\n" (reg reg_tmp) (reg reg_cl);
       Printf.fprintf oc "\tjalr\t%s\n" (reg reg_tmp);
@@ -214,7 +214,7 @@ and g' oc = function (* 各命令のアセンブリ生成 (caml2html: emit_gprime) *)
 (*      Printf.fprintf oc "\tbctrl\n";*)
       Printf.fprintf oc "\taddi\t%s, r0, %d\n" (reg reg_tmp) ss;
       Printf.fprintf oc "\tsub\t%s, %s, %s\n" (reg reg_sp) (reg reg_sp) (reg reg_tmp);
-      Printf.fprintf oc "\tlw\t%s, %d(%s)\n" (reg reg_tmp) (ss - 4) (reg reg_sp);
+      Printf.fprintf oc "\tlw\t%s, %d(%s)\n" (reg reg_tmp) (ss - 1) (reg reg_sp);
       if List.mem a allregs && a <> regs.(0) then
         Printf.fprintf oc "\tadd\t%s, r0, %s\t\t\t\t# mr\t%s, %s\n" (reg a) (reg regs.(0)) (reg a) (reg regs.(0))
       else if List.mem a allfregs && a <> fregs.(0) then
@@ -224,12 +224,12 @@ and g' oc = function (* 各命令のアセンブリ生成 (caml2html: emit_gprime) *)
       Printf.fprintf oc "\taddi\t%s, %s, 0\t\t\t\t#mflr\t%s\n" (reg reg_tmp) (reg reg_lr) (reg reg_tmp);
       g'_args oc [] ys zs;
       let ss = stacksize () in
-      Printf.fprintf oc "\tsw\t%s, %d(%s)\n" (reg reg_tmp) (ss - 4) (reg reg_sp);
+      Printf.fprintf oc "\tsw\t%s, %d(%s)\n" (reg reg_tmp) (ss - 1) (reg reg_sp);
       Printf.fprintf oc "\taddi\t%s, %s, %d\n" (reg reg_sp) (reg reg_sp) ss;
       Printf.fprintf oc "\tjal\t%s\t\t\t\t#\tbl\t%s\n" x x;
       Printf.fprintf oc "\taddi\t%s, r0, %d\n" (reg reg_tmp) ss;
       Printf.fprintf oc "\tsub\t%s, %s, %s\n" (reg reg_sp) (reg reg_sp) (reg reg_tmp);
-      Printf.fprintf oc "\tlw\t%s, %d(%s)\n" (reg reg_tmp) (ss - 4) (reg reg_sp);
+      Printf.fprintf oc "\tlw\t%s, %d(%s)\n" (reg reg_tmp) (ss - 1) (reg reg_sp);
       if List.mem a allregs && a <> regs.(0) then
         Printf.fprintf oc "\tadd\t%s, r0, %s\t\t\t\t# mr\t%s, %s\n" (reg a) (reg regs.(0)) (reg a) (reg regs.(0))
       else if List.mem a allfregs && a <> fregs.(0) then
