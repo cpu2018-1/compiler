@@ -42,3 +42,4 @@ truncate
 iter_div10_float
 print_dec
 print_float
+print_ufloat

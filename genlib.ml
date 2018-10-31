@@ -40,15 +40,17 @@ in
 
 
 let rec floor x =
-  let y = itof (ftoi x) in
+  let y = float_of_int (int_of_float x) in
   if x < y then
-    y -. 1.0
+    y -. 1.0 
   else
     y
 in
 
 let rec int_of_float a = 
-  if (a >= 0.0) then
+  if (a = 0.0) then
+    0
+  else if (a >= 0.0) then
     ftoi (a -. 0.5)
   else
     ftoi (a +. 0.5)
@@ -350,10 +352,21 @@ let rec print_dec x =
 in
 
 
-let rec print_float x =
+let rec print_ufloat x =
   print_int (int_of_float x);
   print_char (46);
   print_dec (x -. float_of_int (int_of_float x))
 in
+
+let rec print_float x =
+  if x < 0.0 then (
+    print_char 45;
+    print_ufloat (-.x) 
+  )
+  else
+    print_ufloat x 
+in 
+
+
 
 print_int 32
