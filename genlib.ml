@@ -48,7 +48,10 @@ let rec floor x =
 in
 
 let rec int_of_float a = 
-  ftoi a
+  if (a >= 0.0) then
+    ftoi (a -. 0.5)
+  else
+    ftoi (a +. 0.5)
 in
 
 let rec float_of_int a =
@@ -326,7 +329,7 @@ in
 
 
 let rec truncate a = 
-  ftoi a
+  int_of_float (a)
 in
 
 let rec abs_float a =

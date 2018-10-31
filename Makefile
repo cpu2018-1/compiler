@@ -76,32 +76,26 @@ fuga : piyo clean
 
 piyo : min-caml
 	cp min-caml ../cpuex2018/raytracer/
-	cp min-caml ../
 	cp min-caml ../cpuex2018
 	cp min-caml ../simulation
 	cp min-caml ../simulation/test
 	cp min-caml ../rep
 	cp min-caml shootout
 	cp min-caml ../simulation/raytrace
-	cp min-caml ../test
 	./my-min-caml genlib
 	./combinelib.sh 
 	cp lib.s ../cpuex2018/raytracer/
-	cp lib.s ../
 	cp lib.s ../cpuex2018
 	cp lib.s ../simulation
 	cp lib.s ../simulation/test
 	cp lib.s ../rep
 	cp lib.s shootout
-	cp lib.s ../test
 	cp lib.s ../simulation/raytrace
 	cp init.s ../cpuex2018/raytracer/
-	cp init.s ../
 	cp init.s ../cpuex2018
 	cp init.s ../simulation
 	cp init.s ../simulation/test
 	cp init.s ../rep
 	cp init.s shootout
-	cp init.s ../test
 	cp init.s ../simulation/raytrace/
 	cp init.s ../cpuex2018/raytracer/
