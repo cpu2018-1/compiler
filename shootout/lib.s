@@ -204,6 +204,33 @@ lib_buffer_to_ika_keta_of_float_cont:
 lib_fless:
 	flt r1, f1, f2
 	jr	r31				#	blr
+lib_read_int:
+  in  r30
+  slli  r30, r30, 24
+  add r1, r0, r30
+  in  r30
+  slli  r30, r30, 16
+  add r1, r1, r30
+  in  r30
+  slli  r30, r30, 8
+  add r1, r1, r30
+  in  r30
+  add r1, r1, r30
+  jr  r31
+lib_read_float:
+  in  r30
+  slli  r30, r30, 24
+  add r1, r0, r30
+  in  r30
+  slli  r30, r30, 16
+  add r1, r1, r30
+  in  r30
+  slli  r30, r30, 8
+  add r1, r1, r30
+  in  r30
+  add r1, r1, r30
+  fmvfr f1, r1
+  jr  r31
 lib_fispos:
 	addi	r30, r0, 0	# to load float		0.000000
 	lui	r30, r30, 0
@@ -1401,7 +1428,7 @@ _beq_then.892:
 _beq_then.904:
 	addi	r1, r0, 0				# li	r1, 0
 	j lib_read_token
-lib_read_int:
+lib_read_int_ascii:
 	addi	r30, r31, 0				#mflr	r30
 	sw	r30, 0(r3)
 	addi	r3, r3, 1
@@ -1432,7 +1459,7 @@ lib_iter_div10_float:
 	j lib_iter_div10_float
 _beq_then.906:
 	jr	r31				#	blr
-lib_read_float:
+lib_read_float_ascii:
 	addi	r30, r31, 0				#mflr	r30
 	sw	r30, 0(r3)
 	addi	r3, r3, 1

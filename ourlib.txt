@@ -35,8 +35,8 @@ print_uint_keta
 print_uint
 print_int
 read_token
-read_int
-read_float
+read_int_ascii
+read_float_ascii
 abs_float
 truncate
 iter_div10_float

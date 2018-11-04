@@ -204,3 +204,30 @@ lib_buffer_to_ika_keta_of_float_cont:
 lib_fless:
 	flt r1, f1, f2
 	jr	r31				#	blr
+lib_read_int:
+  in  r30
+  slli  r30, r30, 24
+  add r1, r0, r30
+  in  r30
+  slli  r30, r30, 16
+  add r1, r1, r30
+  in  r30
+  slli  r30, r30, 8
+  add r1, r1, r30
+  in  r30
+  add r1, r1, r30
+  jr  r31
+lib_read_float:
+  in  r30
+  slli  r30, r30, 24
+  add r1, r0, r30
+  in  r30
+  slli  r30, r30, 16
+  add r1, r1, r30
+  in  r30
+  slli  r30, r30, 8
+  add r1, r1, r30
+  in  r30
+  add r1, r1, r30
+  fmvfr f1, r1
+  jr  r31

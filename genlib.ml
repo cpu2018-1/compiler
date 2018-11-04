@@ -1,5 +1,4 @@
 
-
 (* float (1) *)
 (* fequal -> 使われていない(正直良くわからない) *)
 (* fless -> 型推論で整数演算にみなされるので
@@ -306,7 +305,7 @@ let rec read_token in_token =
 in
 
 
-let rec read_int x =
+let rec read_int_ascii x =
   buffer_clear ();
   let _ = read_token 0 in
   buffer_to_int ()
@@ -316,7 +315,7 @@ let rec iter_div10_float a b =
   if b = 0 then a else iter_div10_float (a /. 10.0) (b - 1)
 in
 
-let rec read_float x =
+let rec read_float_ascii x =
   buffer_clear ();
   let _ = read_token 0 in
   let c = buffer_get 0 in
@@ -330,6 +329,9 @@ let rec read_float x =
 in
 
 
+
+
+(** 色々 **)
 let rec truncate a = 
   int_of_float (a)
 in
