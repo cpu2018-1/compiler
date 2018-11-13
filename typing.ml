@@ -52,6 +52,7 @@ let rec deref_term = function
   | Sll(e1, e2, d) -> Sll(deref_term e1, deref_term e2, d)
   | Srl(e1, e2, d) -> Srl(deref_term e1, deref_term e2, d)
   | Sra(e1, e2, d) -> Sra(deref_term e1, deref_term e2, d)
+  | Fun(xs, e, d) -> Fun(List.map deref_id_typ xs, deref_term e, d)
   | e -> e
 
 let rec occur r1 = function (* occur check (caml2html: typing_occur) *)
@@ -63,11 +64,23 @@ let rec occur r1 = function (* occur check (caml2html: typing_occur) *)
   | Type.Var({ contents = Some(t2) }) -> occur r1 t2
   | _ -> false
 
+
+let rec currying = function
+  | Type.Fun(t2s, t2) -> 
+    (match t2s with 
+    | [x] -> Type.Fun([x], currying t2)
+    | x :: xs -> Type.Fun([x], currying (Type.Fun(xs, t2)))
+    )
+  | t -> t
+
+
 let rec unify t1 t2 d = (* 型が合うように、型変数への代入をする (caml2html: typing_unify) *)
   match t1, t2 with
   | Type.Unit, Type.Unit | Type.Bool, Type.Bool | Type.Int, Type.Int | Type.Bool, Type.Int | Type.Int, Type.Bool | Type.Float, Type.Float -> ()
+  | Type.Fun(t1s, t1'), Type.Fun(t2s, t2') when List.length t1s <> 1 || List.length t2s <> 1 ->
+    unify (currying t1) (currying t2) d
   | Type.Fun(t1s, t1'), Type.Fun(t2s, t2') ->
-      (try List.iter2 (fun x y -> unify x y d) t1s t2s
+      (try List.iter2 (fun x y -> unify x y d) (t1s) (t2s) (* 部分適用のために，カリー化したものをunifyする *)
       with Invalid_argument(_) -> raise (Unify(t1, t2, d)));
       unify t1' t2' d
   | Type.Tuple(t1s), Type.Tuple(t2s) ->
@@ -176,6 +189,10 @@ let rec g env e = (* 型推論ルーチン (caml2html: typing_g) *)
         unify Type.Int (g env e1) d;
         unify Type.Int (g env e2) d;
         Type.Int
+    | Fun (xs, e, d) ->
+        let t = g (M.add_list xs env) e in
+        Type.Fun(List.map snd xs, t) 
+
   with Unify(t1, t2, d) -> 
         Printf.printf "Typing error!! line %d near character %d-%d\n" d.lnum d.bchar d.echar; 
         Printf.printf "Cannot unify type \"%s\" and \"%s\"\n" 

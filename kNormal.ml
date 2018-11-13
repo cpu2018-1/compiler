@@ -52,12 +52,7 @@ let insert_let (e, t) k = (* letを挿入する補助関数 (caml2html: knormal_insert) *
       let e', t' = k x in
       Let((x, t), e, e'), t'
 
-let rec g env t=(*= function (* K正規化ルーチン本体 (caml2html: knormal_g) *)*)
-(*
-print_string "hoge!\n";
-Syntax.print_syntax t;
-*)
-match t with
+let rec g env = function (* K正規化ルーチン本体 (caml2html: knormal_g) *)
   | Syntax.Unit(d) -> Unit, Type.Unit
   | Syntax.Bool(b, d) -> Int(if b then 1 else 0), Type.Int (* 論理値true, falseを整数1, 0に変換 (caml2html: knormal_bool) *)
   | Syntax.Int(i, d) -> Int(i), Type.Int
@@ -137,15 +132,26 @@ match t with
       | _ -> assert false)
   | Syntax.App(e1, e2s, d) ->
       (match g env e1 with
-      | _, Type.Fun(_, t) as g_e1 ->
-          insert_let g_e1
-            (fun f ->
-              let rec bind xs = function (* "xs" are identifiers for the arguments *)
-                | [] -> App(f, xs), t
-                | e2 :: e2s ->
-                    insert_let (g env e2)
-                      (fun x -> bind (xs @ [x]) e2s) in
-              bind [] e2s) (* left-to-right evaluation *)
+      | _, Type.Fun(ts, t) as g_e1 ->
+          if (List.length ts = List.length e2s) then
+            insert_let g_e1
+              (fun f ->
+                let rec bind xs = function (* "xs" are identifiers for the arguments *)
+                  | [] -> App(f, xs), t
+                  | e2 :: e2s ->
+                      insert_let (g env e2)
+                        (fun x -> bind (xs @ [x]) e2s) in
+                bind [] e2s) (* left-to-right evaluation *)
+          else
+            let rec gen_var_and_typ_list n =
+              if n = 0 then
+                []
+              else
+                (Id.gentmp Type.Unit, Type.gentyp ()) :: (gen_var_and_typ_list (n - 1))
+            in
+            let xs = gen_var_and_typ_list (List.length ts - List.length e2s) in
+            g env (Syntax.Fun(xs, Syntax.App(e1, e2s @ (List.map (fun x -> Syntax.Var(fst x, d)) xs), d), d))
+
       | _ -> assert false)
   | Syntax.Tuple(es, d) ->
       let rec bind xs ts = function (* "xs" and "ts" are identifiers and types for the elements *)
@@ -195,6 +201,14 @@ match t with
       insert_let (g env e1)
         (fun x -> insert_let (g env e2)
             (fun y -> Sra(x, y), Type.Int))
+  | Syntax.Fun(xs, e, d) ->
+      let _, t = g (M.add_list xs env) e in
+      let f = Id.gentmp (Type.Fun ([], Type.Unit)) in
+        g (M.add_list xs (M.add f (Type.Fun(List.map snd xs, t)) env)) 
+          (Syntax.LetRec({ Syntax.name = (f, Type.Fun(List.map snd xs, t));
+                          Syntax.args = xs; 
+                          Syntax.body = e;
+                          Syntax.deb = d }, Var (f, d), d))
 
 let f e = fst (g M.empty e)
 

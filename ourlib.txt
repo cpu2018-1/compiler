@@ -19,6 +19,8 @@ cos
 sin
 atan
 modulo_2pi
+hoge
+fuga
 sin_body
 cos_body
 atan_body

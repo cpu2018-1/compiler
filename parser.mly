@@ -2,6 +2,8 @@
 (* parserが利用する変数、関数、型などの定義 *)
 open Syntax
 let addtyp x = (x, Type.gentyp ())
+
+
 %}
 
 /* (* 字句を表すデータ型の定義 (caml2html: parser_token) *) */
@@ -38,7 +40,8 @@ let addtyp x = (x, Type.gentyp ())
 %token LPAREN
 %token RPAREN
 %token EOF
-%token SLL SRL SRA
+%token SLL SRL SRA       /* (* シフト演算 *) */
+%token FUN MINUS_GREATER /* (* ラムダ抽象 *) */
 
 /* (* 優先順位とassociativityの定義（低い方から高い方へ） (caml2html: parser_prior) *) */
 %nonassoc IN
@@ -172,12 +175,15 @@ exp: /* (* 一般の式 (caml2html: parser_exp) *) */
            (s.Lexing.pos_cnum - s.Lexing.pos_bol)
            (e.Lexing.pos_cnum - e.Lexing.pos_bol)
         else
-          Printf.sprintf "parse error frome line %d characters %d to line %d characters %d" 
+          Printf.sprintf "parse error from line %d characters %d to line %d characters %d" 
            s.Lexing.pos_lnum 
            (s.Lexing.pos_cnum - s.Lexing.pos_bol)
            e.Lexing.pos_lnum 
            (e.Lexing.pos_cnum - e.Lexing.pos_bol))
     }
+| FUN formal_args MINUS_GREATER exp
+    { Fun($2, $4, { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol) }) }
+
 fundef:
 | IDENT formal_args EQUAL exp
     { { name = addtyp $1; args = $2; body = $4; deb = { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol) } } }
@@ -207,3 +213,6 @@ pat:
     { $1 @ [addtyp $3] }
 | IDENT COMMA IDENT
     { [addtyp $1; addtyp $3] }
+
+
+

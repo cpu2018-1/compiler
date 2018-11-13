@@ -90,6 +90,16 @@ rule token = parse
     { LESS_MINUS }
 | ';'
     { SEMICOLON }
+| "<<"
+    { SLL }
+| ">>"
+    { SRL }
+| ">>>"
+    { SRA }
+| "fun"
+    { FUN } (* ラムダ抽象 *)
+| "->"
+    { MINUS_GREATER }
 | eof
     { EOF }
 | lower (digit|lower|upper|'_')* (* 他の「予約語」より後でないといけない *)
@@ -98,12 +108,6 @@ rule token = parse
     { set_pos lexbuf; token lexbuf }
 | '\r'
     { set_pos lexbuf; token lexbuf }
-| "<<"
-    { SLL }
-| ">>"
-    { SRL }
-| ">>>"
-    { SRA }
 | _
     { failwith
         (Printf.sprintf "unknown token %s near characters %d-%d"

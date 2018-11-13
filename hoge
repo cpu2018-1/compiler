@@ -1,30 +1,17 @@
-let rec keta_sub n k =
-  if n < 10 then 
-    k + 1
-  else
-    let a = (n/10) in
-    keta_sub a (k + 1)
-let rec keta n =
-  keta_sub n 0
-
-let rec iter_div10 n k =
-  if k = 0 then
-    n
-  else 
-    iter_div10 (n/10) (k - 1)
-let rec iter_mul10 n k =
-  if k = 0 then
-    n
-  else 
-    iter_mul10 (n*10) (k - 1)
-
-
-let rec print_uint n =
-  if (n < 10) then
-    print_int n
-  else
-    let a = keta n in
-    let b = iter_div10 n (a - 1) in
-    print_int b;
-    print_uint (n - (iter_mul10 b (a - 1)))
-
+./alpha.ml:      let x' = Id.genid x in
+./alpha.ml:      let env = M.add x (Id.genid x) env in
+./alpha.ml:      let env' = M.add_list2 ys (List.map Id.genid ys) env in
+./alpha.ml:      let env' = M.add_list2 xs (List.map Id.genid xs) env in
+./emit.ml:  let b_then = Id.genid (b ^ "_then") in
+./emit.ml:  let b_then = Id.genid (b ^ "_then") in
+./emit.ml:  let b_cont = Id.genid (b ^ "_cont") in
+./emit.ml:  let b_then = Id.genid (b ^ "_then") in
+./emit.ml:  let b_then = Id.genid (b ^ "_then") in
+./emit.ml:  let b_cont = Id.genid (b ^ "_cont") in
+./id.ml:let genid s =
+バイナリファイル ./my-min-caml に一致しました
+./virtual.ml:          let l = Id.L(Id.genid "l") in
+./virtual.ml:              let z = Id.genid "l" in
+./virtual.ml:      let y = Id.genid "t" in
+./virtual.ml:      let offset = Id.genid "o" in
+./virtual.ml:      let offset = Id.genid "o" in

@@ -1,1 +1,1 @@
-x86/globals.s
+ours/globals.s
