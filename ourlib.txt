@@ -1,0 +1,47 @@
+// float (1)
+fispos
+fisneg
+fiszero
+// int
+// logic
+xor
+not
+// float (2)
+fhalf
+fsqr
+fabs
+fneg
+sqrt
+floor
+int_of_float
+float_of_int
+cos
+sin
+atan
+modulo_2pi
+hoge
+fuga
+sin_body
+cos_body
+atan_body
+// I/O
+print_num
+iter_mul10
+iter_div10
+mul10
+div10_sub
+div10
+keta_sub
+keta
+print_uint_keta
+print_uint
+print_int
+read_token
+read_int_ascii
+read_float_ascii
+abs_float
+truncate
+iter_div10_float
+print_dec
+print_float
+print_ufloat
