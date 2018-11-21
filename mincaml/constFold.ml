@@ -45,6 +45,9 @@ let rec g env = function (* 定数畳み込みルーチン本体 (caml2html: constfold_g) *)
         xts
         (findt y env)
   | LetTuple(xts, y, e) -> LetTuple(xts, y, g env e)
+  | Sll(x, y) when memi x env && memi y env -> Int(findi x env lsl findi y env)
+  | Srl(x, y) when memi x env && memi y env -> Int(findi x env lsr findi y env)
+  | Sra(x, y) when memi x env && memi y env -> Int(findi x env asr findi y env)
   | e -> e
 
 let f = g M.empty

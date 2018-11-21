@@ -26,6 +26,8 @@ type t =
   | Sll of Id.t * Id.t
   | Srl of Id.t * Id.t
   | Sra of Id.t * Id.t
+  | In of Id.t
+  | Out of Id.t
 type fundef = { name : Id.l * Type.t;
                 args : (Id.t * Type.t) list;
                 formal_fv : (Id.t * Type.t) list;

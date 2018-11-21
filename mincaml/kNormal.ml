@@ -52,10 +52,7 @@ let insert_let (e, t) k = (* letを挿入する補助関数 (caml2html: knormal_insert) *
       let e', t' = k x in
       Let((x, t), e, e'), t'
 
-(* let rec g env = function (* K正規化ルーチン本体 (caml2html: knormal_g) *) *)
-let rec g env t = 
-(*  print_endline "start kNormaling";*)
-  match t with
+ let rec g env = function (* K正規化ルーチン本体 (caml2html: knormal_g) *) 
   | Syntax.Unit(d) -> Unit, Type.Unit
   | Syntax.Bool(b, d) -> Int(if b then 1 else 0), Type.Int (* 論理値true, falseを整数1, 0に変換 (caml2html: knormal_bool) *)
   | Syntax.Int(i, d) -> Int(i), Type.Int
@@ -137,43 +134,14 @@ let rec g env t =
   | Syntax.App(e1, e2s, d) ->
       (match g env e1 with
       | _, Type.Fun(ts, t) as g_e1 ->
-          if (List.length ts = List.length e2s) then (
-            insert_let g_e1
-              (fun f ->
-                let rec bind xs = function (* "xs" are identifiers for the arguments *)
-                  | [] -> App(f, xs), t
-                  | e2 :: e2s ->
-                      insert_let (g env e2)
-                        (fun x -> bind (xs @ [x]) e2s) in
-                bind [] e2s) (* left-to-right evaluation *)
-          )
-          else if (List.length ts > List.length e2s) then (
-            let rec gen_var_and_typ_list n =
-              if n = 0 then
-                []
-              else
-                (Id.gentmp Type.Unit, Type.gentyp ()) :: (gen_var_and_typ_list (n - 1))
-            in
-            let xs = gen_var_and_typ_list (List.length ts - List.length e2s) in
-            g env (Syntax.Fun(xs, Syntax.App(e1, e2s @ (List.map (fun x -> Syntax.Var(fst x, d)) xs), d), d))
-          )
-          else (
-            let rec head_n l n =
-              match l with
-              | [] -> []
-              | _ when n = 0 -> []
-              | x :: xs -> x :: (head_n xs (n - 1))
-            in
-            let rec elm_head_n l n =
-              match l with
-              | [] -> []
-              | l when n = 0 -> l
-              | x :: xs -> elm_head_n xs (n - 1)
-            in
-            g env (Syntax.App(Syntax.App(e1, head_n e2s (List.length ts), d), elm_head_n e2s (List.length ts), d))
-          )
-
-
+          insert_let g_e1
+            (fun f ->
+              let rec bind xs = function (* "xs" are identifiers for the arguments *)
+                | [] -> App(f, xs), t
+               | e2 :: e2s ->
+                    insert_let (g env e2)
+                     (fun x -> bind (xs @ [x]) e2s) in
+              bind [] e2s) (* left-to-right evaluation *)
       | _ -> assert false)
   | Syntax.Tuple(es, d) ->
       let rec bind xs ts = function (* "xs" and "ts" are identifiers and types for the elements *)
@@ -223,14 +191,6 @@ let rec g env t =
       insert_let (g env e1)
         (fun x -> insert_let (g env e2)
             (fun y -> Sra(x, y), Type.Int))
-  | Syntax.Fun(xs, e, d) ->
-      let _, t = g (M.add_list xs env) e in
-      let f = Id.gentmp (Type.Fun ([], Type.Unit)) in
-        g (M.add_list xs (M.add f (Type.Fun(List.map snd xs, t)) env)) 
-          (Syntax.LetRec({ Syntax.name = (f, Type.Fun(List.map snd xs, t));
-                          Syntax.args = xs; 
-                          Syntax.body = e;
-                          Syntax.deb = d }, Syntax.Var (f, d), d))
 let f e = 
   fst (g M.empty e)
 
@@ -320,6 +280,9 @@ let rec print_kNormal_sub t i =
   | ExtFunApp (t, tl) -> print_endline "EXTFUNAPP";
                          print_indent (i + 1); Id.print_id t; print_newline ();
                          print_indent (i + 1); Id.print_id_list tl " "; print_newline ()
+  | Sll (n, m) -> print_string "SLL"; print_space (); Id.print_id n; print_space (); Id.print_id m; print_newline ()
+  | Srl (n, m) -> print_string "SRL"; print_space (); Id.print_id n; print_space (); Id.print_id m; print_newline ()
+  | Sra (n, m) -> print_string "SRA"; print_space (); Id.print_id n; print_space (); Id.print_id m; print_newline ()
 and 
 print_kNormal_sub_list tl i = 
   List.iter ((fun j x -> print_kNormal_sub x j) i) tl

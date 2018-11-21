@@ -41,7 +41,6 @@ let addtyp x = (x, Type.gentyp ())
 %token RPAREN
 %token EOF
 %token SLL SRL SRA       /* (* シフト演算 *) */
-%token FUN MINUS_GREATER /* (* ラムダ抽象 *) */
 
 /* (* 優先順位とassociativityの定義（低い方から高い方へ） (caml2html: parser_prior) *) */
 %nonassoc IN
@@ -106,7 +105,7 @@ exp: /* (* 一般の式 (caml2html: parser_exp) *) */
 | exp SLASH exp
     { 
       match $3 with
-      | Int (2, d) as e -> 
+      | Int (2, d) -> 
       Sra($1, Int (1, d), { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)})
       | _ -> 
       App(Var ("div", { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)}), [$1; $3], { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)}) }
@@ -181,8 +180,6 @@ exp: /* (* 一般の式 (caml2html: parser_exp) *) */
            e.Lexing.pos_lnum 
            (e.Lexing.pos_cnum - e.Lexing.pos_bol))
     }
-| FUN formal_args MINUS_GREATER exp
-    { Fun($2, $4, { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol) }) }
 
 fundef:
 | IDENT formal_args EQUAL exp

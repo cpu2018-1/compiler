@@ -30,7 +30,6 @@ type t = (* MinCamlの構文を表現するデータ型 (caml2html: syntax_t) *)
   | Sll of t * t * debug    (* shift left logical *)
   | Srl of t * t * debug    (* shift right logical *)
   | Sra of t * t * debug    (* shift right arithmetical *)
-  | Fun of (Id.t * Type.t) list * t * debug 
 and fundef = { name : Id.t * Type.t; args : (Id.t * Type.t) list; body : t;
                deb : debug }
 
@@ -146,13 +145,6 @@ let rec print_syntax_sub t i =
   | Sra (t1, t2, _) ->  print_endline "SRA";
                         print_syntax_sub t1 (i + 1);
                         print_syntax_sub t2 (i + 1)
-  | Fun (xs, t, _) -> print_endline "FUN";
-                      print_indent (i + 1); 
-                      List.iter (fun x -> print_string " ";
-                                         Id.print_id x;
-                                         ) (List.map fst (xs));
-                      print_newline (); print_indent (i); print_endline "->";
-                      print_syntax_sub t (i + 1)
 and 
 (* リストに対する出力 *)
 print_syntax_sub_list tl i = 

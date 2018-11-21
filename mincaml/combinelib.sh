@@ -19,6 +19,7 @@ sed "s/lib_lib_/lib_/g" genlib.s > __hoge; mv __hoge genlib.s
 for i in ble beq bne blt feq flt fle;
 do
   sed "s/${i}_then/_${i}_then/g" genlib.s > ___hoge; mv ___hoge genlib.s
+  sed "s/${i}_else/_${i}_else/g" genlib.s > ___hoge; mv ___hoge genlib.s
   sed "s/${i}_cont/_${i}_cont/g" genlib.s > ___hoge; mv ___hoge genlib.s
 done
 

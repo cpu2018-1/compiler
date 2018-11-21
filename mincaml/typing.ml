@@ -9,19 +9,6 @@ let extenv = ref M.empty
 
 (* for pretty printing (and type normalization) *)
 
-(* 部分適用のために作ったが，不要(むしろ邪魔)でした
-let rec uncurrying = function
-  | Type.Fun(t1s, t2) -> 
-    (match t2 with
-     | Type.Fun(t1s', t2') -> uncurrying (Type.Fun(t1s @ t1s', t2'))
-     | Type.Tuple(ts) -> Type.Tuple(List.map uncurrying ts)
-     | Type.Array(t) -> Type.Array(uncurrying t)
-     | t -> (Type.Fun(t1s, t2))
-    )
-  | Type.Tuple(ts) -> Type.Tuple(List.map uncurrying ts)
-  | Type.Array(t) -> Type.Array(uncurrying t)
-  | t -> t
-*)
 
 let rec deref_typ = function (* 型変数を中身でおきかえる関数 (caml2html: typing_deref) *)
   | Type.Fun(t1s, t2) -> Type.Fun(List.map deref_typ t1s, deref_typ t2)
@@ -67,7 +54,6 @@ let rec deref_term = function
   | Sll(e1, e2, d) -> Sll(deref_term e1, deref_term e2, d)
   | Srl(e1, e2, d) -> Srl(deref_term e1, deref_term e2, d)
   | Sra(e1, e2, d) -> Sra(deref_term e1, deref_term e2, d)
-  | Fun(xs, e, d) -> Fun(List.map deref_id_typ xs, deref_term e, d)
   | e -> e
 
 let rec occur r1 = function (* occur check (caml2html: typing_occur) *)
@@ -80,13 +66,6 @@ let rec occur r1 = function (* occur check (caml2html: typing_occur) *)
   | _ -> false
 
 
-let rec currying = function
-  | Type.Fun(t2s, t2) -> 
-    (match t2s with 
-    | [x] -> Type.Fun([x], currying t2)
-    | x :: xs -> Type.Fun([x], currying (Type.Fun(xs, t2)))
-    )
-  | t -> t
 
 let rec head_n l n = 
   match l with
@@ -103,10 +82,6 @@ let rec elm_head_n l n =
 let rec unify t1 t2 d = (* 型が合うように、型変数への代入をする (caml2html: typing_unify) *)
   match t1, t2 with
   | Type.Unit, Type.Unit | Type.Bool, Type.Bool | Type.Int, Type.Int | Type.Bool, Type.Int | Type.Int, Type.Bool | Type.Float, Type.Float -> ()
-  | Type.Fun(t1s, t1'), Type.Fun(t2s, t2') when List.length t1s > List.length t2s -> (* 部分的にカリー化 *)
-    unify (Type.Fun(head_n t1s (List.length t2s), Type.Fun(elm_head_n t1s (List.length t2s), t1'))) (Type.Fun(t2s, t2')) d
-  | Type.Fun(t1s, t1'), Type.Fun(t2s, t2') when List.length t1s < List.length t2s ->
-    unify (Type.Fun(head_n t2s (List.length t1s), Type.Fun(elm_head_n t2s (List.length t1s), t2'))) (Type.Fun(t1s, t1')) d
   | Type.Fun(t1s, t1'), Type.Fun(t2s, t2') ->
       (try List.iter2 (fun x y -> unify x y d) (t1s) (t2s)
       with Invalid_argument(_) -> raise (Unify(t1, t2, d)));
@@ -220,9 +195,6 @@ let rec g env e = (* 型推論ルーチン (caml2html: typing_g) *)
         unify Type.Int (g env e1) d;
         unify Type.Int (g env e2) d;
         Type.Int
-    | Fun (xs, e, d) ->
-        let t = g (M.add_list xs env) e in
-        Type.Fun(List.map snd xs, t) 
 
   with Unify(t1, t2, d) -> 
         Printf.printf "Typing error!! line %d near character %d-%d\n" d.lnum d.bchar d.echar; 

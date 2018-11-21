@@ -20,8 +20,6 @@ let hoge = fuga in
 (*MINCAML*) let false = 0 in
 
 
-
-
 (********************これはズル**********************)
 let n_objects = create_array 1 0
 in

@@ -96,10 +96,6 @@ rule token = parse
     { SRL }
 | ">>>"
     { SRA }
-| "fun"
-    { FUN } (* ラムダ抽象 *)
-| "->"
-    { MINUS_GREATER }
 | eof
     { EOF }
 | lower (digit|lower|upper|'_')* (* 他の「予約語」より後でないといけない *)
