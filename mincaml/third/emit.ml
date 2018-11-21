@@ -149,44 +149,36 @@ and g' oc = function (* 各命令のアセンブリ生成 (caml2html: emit_gprime) *)
       Printf.fprintf oc "\tjr\t%s\t\t\t\t#\tblr\n" (reg reg_lr);
   | Tail, IfEq(x, V(y), e1, e2) -> (**)
       g'_tail_if oc e1 e2 "beq" x y
-(*  | Tail, IfEq(x, C(y), e1, e2) ->
-      Printf.fprintf oc "\tcmpwi\tcr7, %s, %d\n" (reg x) y;
-      g'_tail_if oc e1 e2 "beq" "bne"
-*)
+  | Tail, IfEq(x, C(y), e1, e2) ->
+      g'_tail_if_i oc e1 e2 "beq" x y
+
   | Tail, IfLE(x, V(y), e1, e2) -> (**)
       g'_tail_if oc e1 e2 "ble" x y
-(* | Tail, IfLE(x, C(y), e1, e2) ->
-      Printf.fprintf oc "\tcmpwi\tcr7, %s, %d\n" (reg x) y;
-      g'_tail_if oc e1 e2 "ble" "bgt"
-*)
+  | Tail, IfLE(x, C(y), e1, e2) ->
+      g'_tail_if_i oc e1 e2 "ble" x y
+
   | Tail, IfGE(x, V(y), e1, e2) -> (**)
-      g'_tail_if oc e1 e2 "bge" x y
-(* | Tail, IfGE(x, C(y), e1, e2) ->
-      Printf.fprintf oc "\tcmpwi\tcr7, %s, %d\n" (reg x) y;
-      g'_tail_if oc e1 e2 "bge" "blt"
-*)
+      g'_tail_if oc e2 e1 "blt" x y
+  | Tail, IfGE(x, C(y), e1, e2) ->
+      g'_tail_if_i oc e1 e2 "bge" x y
+
   | Tail, IfFEq(x, y, e1, e2) -> (**)
       g'_tail_if_f oc e1 e2 "feq" x y
   | Tail, IfFLE(x, y, e1, e2) -> (**)
       g'_tail_if_f oc e1 e2 "fle" x y
   | NonTail(z), IfEq(x, V(y), e1, e2) -> (**)
       g'_non_tail_if oc (NonTail(z)) e1 e2 "beq" x y
-(* | NonTail(z), IfEq(x, C(y), e1, e2) ->
-      Printf.fprintf oc "\tcmpwi\tcr7, %s, %d\n" (reg x) y;
-      g'_non_tail_if oc (NonTail(z)) e1 e2 "beq" "bne"
-*)
+  | NonTail(z), IfEq(x, C(y), e1, e2) ->
+      g'_non_tail_if_i oc (NonTail(z)) e1 e2 "beq" x y
   | NonTail(z), IfLE(x, V(y), e1, e2) -> (**)
       g'_non_tail_if oc (NonTail(z)) e1 e2 "ble" x y
-(* | NonTail(z), IfLE(x, C(y), e1, e2) ->
-      Printf.fprintf oc "\tcmpwi\tcr7, %s, %d\n" (reg x) y;
-      g'_non_tail_if oc (NonTail(z)) e1 e2 "ble" "bgt"
-*)
+  | NonTail(z), IfLE(x, C(y), e1, e2) ->
+      g'_non_tail_if_i oc (NonTail(z)) e1 e2 "ble" x y
   | NonTail(z), IfGE(x, V(y), e1, e2) -> (**)
       g'_non_tail_if oc (NonTail(z)) e1 e2 "bge" x y
-(* | NonTail(z), IfGE(x, C(y), e1, e2) ->
+  | NonTail(z), IfGE(x, C(y), e1, e2) ->
       Printf.fprintf oc "\tcmpwi\tcr7, %s, %d\n" (reg x) y;
-      g'_non_tail_if oc (NonTail(z)) e1 e2 "bge" "blt"
-*)
+      g'_non_tail_if_i oc (NonTail(z)) e1 e2 "bge" x y
   | NonTail(z), IfFEq(x, y, e1, e2) -> (**)
       g'_non_tail_if_f oc (NonTail(z)) e1 e2 "feq" x y
   | NonTail(z), IfFLE(x, y, e1, e2) -> (**)
@@ -246,10 +238,32 @@ and g'_tail_if oc e1 e2 b x y =
   Printf.fprintf oc "%s:\n" b_then;
   stackset := stackset_back;
   g oc (Tail, e1)
+and g'_tail_if_i oc e1 e2 b x y =
+  let b_then = Id.genid (b ^ "_then") in
+  Printf.fprintf oc "\t%s\t%s, %d, %s\n" (b^"i") (reg x) y b_then;
+  let stackset_back = !stackset in
+  g oc (Tail, e2);
+  Printf.fprintf oc "%s:\n" b_then;
+  stackset := stackset_back;
+  g oc (Tail, e1)
 and g'_non_tail_if oc dest e1 e2 b x y = 
   let b_then = Id.genid (b ^ "_then") in
   let b_cont = Id.genid (b ^ "_cont") in
   Printf.fprintf oc "\t%s\t%s, %s, %s\n" b (reg x) (reg y) b_then;
+  let stackset_back = !stackset in
+  g oc (dest, e2);
+  let stackset1 = !stackset in
+  Printf.fprintf oc "\tj\t%s\n" b_cont;
+  Printf.fprintf oc "%s:\n" b_then;
+  stackset := stackset_back;
+  g oc (dest, e1);
+  Printf.fprintf oc "%s:\n" b_cont;
+  let stackset2 = !stackset in
+  stackset := S.inter stackset1 stackset2
+and g'_non_tail_if_i oc dest e1 e2 b x y = 
+  let b_then = Id.genid (b ^ "_then") in
+  let b_cont = Id.genid (b ^ "_cont") in
+  Printf.fprintf oc "\t%s\t%s, %d, %s\n" (b^"i") (reg x) y b_then;
   let stackset_back = !stackset in
   g oc (dest, e2);
   let stackset1 = !stackset in

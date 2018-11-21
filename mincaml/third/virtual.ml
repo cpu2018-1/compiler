@@ -141,6 +141,8 @@ let rec g env = function (* 式の仮想マシンコード生成 (caml2html: virtual_g) *)
   | Closure.Sll(x, y) -> Ans(Sll(x, V(y)))
   | Closure.Srl(x, y) -> Ans(Srl(x, V(y)))
   | Closure.Sra(x, y) -> Ans(Sra(x, V(y)))
+  | Closure.In(x) -> Ans(In(x))
+  | Closure.Out(x) -> Ans(Out(x))
 
 (* 関数の仮想マシンコード生成 (caml2html: virtual_h) *)
 let h { Closure.name = (Id.L(x), t); Closure.args = yts; Closure.formal_fv = zts; Closure.body = e } =
