@@ -335,7 +335,7 @@ let f oc (Prog(data, fundefs, e)) =
   let lib = open_in "lib.s" in
   let init = open_in "init.s" in
   Format.eprintf "generating assembly...@.";
-(*  if data <> [] then
+  if data <> [] then
     (Printf.fprintf oc "\t.data\n\t.literal8\n";
      List.iter
        (fun (Id.L(x), d) ->
@@ -344,7 +344,7 @@ let f oc (Prog(data, fundefs, e)) =
          Printf.fprintf oc "\t.long\t%ld\n" (gethi d);
          Printf.fprintf oc "\t.long\t%ld\n" (getlo d))
        data);
-    *)
+    
   Printf.fprintf oc "\t.text\n";
   Printf.fprintf oc "\t.globl _min_caml_start\n";
   cat lib oc;

@@ -1,5 +1,26 @@
 let limit = ref 1000
 
+let rec sprint_binary_sub b n =
+  if n < 0 then
+    ""
+  else (
+    let b' = Int32.shift_right b 1 in
+    (sprint_binary_sub b' (n - 1))^(
+    if (Int32.logand b (Int32.of_int 1) = Int32.of_int 1) then
+      "1"
+    else 
+      "0"
+    )
+  )
+
+
+let rec sprint_binary b =
+  sprint_binary_sub b 31
+
+let rec print_ftable () =
+  Ftable.iter (fun f i -> 
+            Printf.printf "ftable[%d] = (%s, %f)\n" i (sprint_binary (Int32.bits_of_float f)) f) !(Virtual.ftable)
+
 let rec iter n e = (* 最適化処理をくりかえす (caml2html: main_iter) *)
   Format.eprintf "iteration %d@." n;
   if n = 0 then e else
@@ -26,7 +47,7 @@ let lexbuf outchan l = (* バッファをコンパイルしてチャンネルへ出力する (caml2htm
                             a)) in
 (*                     KNormal.print_kNormal b; *)
                        b)
-                      )))))) in (*Asm.print_t 0 t;*) Prog(fl, funlist, t))
+                      )))))) in (*Asm.print_t 0 t;*) print_ftable (); Asm.Prog(fl, funlist, t))
 
 let string s = lexbuf stdout (Lexing.from_string s) (* 文字列をコンパイルして標準出力に表示する (caml2html: main_string) *)
 
@@ -38,6 +59,7 @@ let file f = (* ファイルをコンパイルしてファイルに出力する (caml2html: main_file
     close_in inchan;
     close_out outchan;
   with e -> (close_in inchan; close_out outchan; raise e)
+
 
 let () = (* ここからコンパイラの実行が開始される (caml2html: main_entry) *)
   let files = ref [] in

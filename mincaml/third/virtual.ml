@@ -2,6 +2,8 @@
 
 open Asm
 
+let ftable = ref Ftable.empty
+
 let data = ref [] (* 浮動小数点数の定数テーブル (caml2html: virtual_data) *)
 
 let classify xts ini addf addi =
@@ -35,7 +37,7 @@ let rec g env = function (* 式の仮想マシンコード生成 (caml2html: virtual_g) *)
   | Closure.Unit -> Ans(Nop)
   | Closure.Int(i) -> Ans(Li(i))
   | Closure.Float(d) ->
-(*      let l =
+      let l =
         try
           (* すでに定数テーブルにあったら再利用 *)
           let (l, _) = List.find (fun (_, d') -> d = d') !data in
@@ -43,8 +45,8 @@ let rec g env = function (* 式の仮想マシンコード生成 (caml2html: virtual_g) *)
         with Not_found ->
           let l = Id.L(Id.genid "l") in
           data := (l, d) :: !data;
+          ftable := Ftable.add_float d !ftable;
           l in
-*)
       Ans(FLi(d))
   | Closure.Neg(x) -> Ans(Neg(x))
   | Closure.Add(x, y) -> Ans(Add(x, V(y)))
@@ -120,7 +122,6 @@ let rec g env = function (* 式の仮想マシンコード生成 (caml2html: virtual_g) *)
             Let((x, t), Lwz(y, C(offset)), load)) in
       load
   | Closure.Get(x, y) -> (* 配列の読み出し (caml2html: virtual_get) *)
-      let offset = Id.genid "o" in
       (match M.find x env with
       | Type.Array(Type.Unit) -> Ans(Nop)
       | Type.Array(Type.Float) ->
@@ -129,7 +130,6 @@ let rec g env = function (* 式の仮想マシンコード生成 (caml2html: virtual_g) *)
               Ans(Lwz(x, V(y)))
       | _ -> assert false)
   | Closure.Put(x, y, z) ->
-      let offset = Id.genid "o" in
       (match M.find x env with
       | Type.Array(Type.Unit) -> Ans(Nop)
       | Type.Array(Type.Float) ->
