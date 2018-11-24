@@ -79,12 +79,16 @@ and g' oc = function (* 各命令のアセンブリ生成 (caml2html: emit_gprime) *)
 (*      let s = load_label (reg reg_tmp) l in
       Printf.fprintf oc "%s\tlfd\t%s, 0(%s)\n" s (reg x) (reg reg_tmp)
 *)
-      let f = internal_of_float d in
-      let n = (Int32.shift_right_logical (Int32.shift_left f 16) 16) in        (** 15かも? **)
-      let m = Int32.shift_right_logical f 16 in
-      Printf.fprintf oc "\taddi\t%s, r0, %ld\n" (reg reg_tmp) n;
-      Printf.fprintf oc "\tlui\t%s, %s, %ld\t# to load float\t\t%f\n" (reg reg_tmp) (reg reg_tmp) m d;
-      Printf.fprintf oc "\tfmvfr\t%s, %s\n" (reg x) (reg reg_tmp)
+      if (Ftable.mem d (!Virtual.ftable)) then
+        Printf.fprintf oc "\tflup\t%s, %d\n" (reg x) (Ftable.find d (!Virtual.ftable))
+      else (
+        let f = internal_of_float d in
+        let n = (Int32.shift_right_logical (Int32.shift_left f 16) 16) in        (** 15かも? **)
+        let m = Int32.shift_right_logical f 16 in
+        Printf.fprintf oc "\taddi\t%s, r0, %ld\n" (reg reg_tmp) n;
+        Printf.fprintf oc "\tlui\t%s, %s, %ld\t# to load float\t\t%f\n" (reg reg_tmp) (reg reg_tmp) m d;
+        Printf.fprintf oc "\tfmvfr\t%s, %s\n" (reg x) (reg reg_tmp)
+      )
   | NonTail(x), SetL(Id.L(y)) ->
       let s = load_label x y in
       Printf.fprintf oc "%s" s

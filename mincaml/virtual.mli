@@ -1,2 +1,2 @@
 val f : Closure.prog -> Asm.prog
-val ftable : float Ftable.t ref
+val ftable : int Ftable.t ref

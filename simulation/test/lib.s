@@ -11,6 +11,9 @@ lib_itof:
 lib_ftoi:
   ftoi  r1, f1
   jr  r31
+lib_fneg:
+  fneg  f1, f1
+  jr  r31
 lib_sqrt:
   fsqrt  f1, f1
   jr  r31
@@ -232,65 +235,52 @@ lib_read_float:
   fmvfr f1, r1
   jr  r31
 lib_fispos:
-	addi	r30, r0, 0
-	lui	r30, r30, 0	# to load float		0.000000
-	fmvfr	f2, r30
+	flup	f2, 0
 	fle	r30, f1, f2
-	bne	r0, r30, _fle_then.851
-	addi	r1, r0, 1				# li	r1, 1
-	jr	r31				#	blr
-_fle_then.851:
+	beq	r0, r30, _fle_else.874
 	addi	r1, r0, 0				# li	r1, 0
+	jr	r31				#	blr
+_fle_else.874:
+	addi	r1, r0, 1				# li	r1, 1
 	jr	r31				#	blr
 lib_fisneg:
-	addi	r30, r0, 0
-	lui	r30, r30, 0	# to load float		0.000000
-	fmvfr	f2, r30
+	flup	f2, 0
 	fle	r30, f2, f1
-	bne	r0, r30, _fle_then.852
-	addi	r1, r0, 1				# li	r1, 1
-	jr	r31				#	blr
-_fle_then.852:
+	beq	r0, r30, _fle_else.875
 	addi	r1, r0, 0				# li	r1, 0
+	jr	r31				#	blr
+_fle_else.875:
+	addi	r1, r0, 1				# li	r1, 1
 	jr	r31				#	blr
 lib_fiszero:
-	addi	r30, r0, 0
-	lui	r30, r30, 0	# to load float		0.000000
-	fmvfr	f2, r30
+	flup	f2, 0
 	feq	r30, f1, f2
-	bne	r0, r30, _feq_then.853
+	beq	r0, r30, _feq_else.876
+	addi	r1, r0, 1				# li	r1, 1
+	jr	r31				#	blr
+_feq_else.876:
 	addi	r1, r0, 0				# li	r1, 0
 	jr	r31				#	blr
-_feq_then.853:
-	addi	r1, r0, 1				# li	r1, 1
-	jr	r31				#	blr
 lib_xor:
-	beq	r1, r2, _beq_then.854
+	beq	r1, r2, _beq_then.877
 	addi	r1, r0, 1				# li	r1, 1
 	jr	r31				#	blr
-_beq_then.854:
+_beq_then.877:
 	addi	r1, r0, 0				# li	r1, 0
 	jr	r31				#	blr
 lib_fhalf:
-	addi	r30, r0, 0
-	lui	r30, r30, 16128	# to load float		0.500000
-	fmvfr	f2, r30
+	flup	f2, 1
 	fmul	f1, f1, f2
 	jr	r31				#	blr
 lib_fsqr:
 	fmul	f1, f1, f1
 	jr	r31				#	blr
 lib_fabs:
-	addi	r30, r0, 0
-	lui	r30, r30, 0	# to load float		0.000000
-	fmvfr	f2, r30
+	flup	f2, 0
 	fle	r30, f2, f1
-	bne	r0, r30, _fle_then.855
- lib_fneg	f1, f1
+	beq	r0, r30, _fle_else.878
 	jr	r31				#	blr
-_fle_then.855:
-	jr	r31				#	blr
-lib_fneg:
+_fle_else.878:
  lib_fneg	f1, f1
 	jr	r31				#	blr
 lib_floor:
@@ -313,91 +303,69 @@ lib_floor:
 	lw	r30, 0(r3)				#lfd	f2, 0(r3)
 	fmvfr	f2, r30
 	fle	r30, f1, f2
-	bne	r0, r30, _fle_then.856
-	addi	r30, r0, 0
-	lui	r30, r30, 16256	# to load float		1.000000
-	fmvfr	f2, r30
-	fsub	f1, f1, f2
+	beq	r0, r30, _fle_else.879
 	jr	r31				#	blr
-_fle_then.856:
+_fle_else.879:
+	flup	f2, 2
+	fsub	f1, f1, f2
 	jr	r31				#	blr
 lib_int_of_float:
-	addi	r30, r0, 0
-	lui	r30, r30, 0	# to load float		0.000000
-	fmvfr	f2, r30
+	flup	f2, 0
 	feq	r30, f1, f2
-	bne	r0, r30, _feq_then.857
-	addi	r30, r0, 0
-	lui	r30, r30, 0	# to load float		0.000000
-	fmvfr	f2, r30
-	fle	r30, f2, f1
-	bne	r0, r30, _fle_then.858
-	addi	r30, r0, 0
-	lui	r30, r30, 16128	# to load float		0.500000
-	fmvfr	f2, r30
-	fadd	f1, f1, f2
-	j	lib_ftoi
-_fle_then.858:
-	addi	r30, r0, 0
-	lui	r30, r30, 16128	# to load float		0.500000
-	fmvfr	f2, r30
-	fsub	f1, f1, f2
-	j	lib_ftoi
-_feq_then.857:
+	beq	r0, r30, _feq_else.880
 	addi	r1, r0, 0				# li	r1, 0
 	jr	r31				#	blr
+_feq_else.880:
+	flup	f2, 0
+	fle	r30, f2, f1
+	beq	r0, r30, _fle_else.881
+	flup	f2, 1
+	fsub	f1, f1, f2
+	j	lib_ftoi
+_fle_else.881:
+	flup	f2, 1
+	fadd	f1, f1, f2
+	j	lib_ftoi
 lib_float_of_int:
 	j	lib_itof
 lib_hoge:
 	fle	r30, f2, f1
-	bne	r0, r30, _fle_then.859
-	fadd	f1, f0, f2				# fmr	f1, f2
-	jr	r31				#	blr
-_fle_then.859:
-	addi	r30, r0, 0
-	lui	r30, r30, 16384	# to load float		2.000000
-	fmvfr	f3, r30
+	beq	r0, r30, _fle_else.882
+	flup	f3, 3
 	fmul	f2, f3, f2
 	fle	r30, f2, f1
-	bne	r0, r30, _fle_then.860
-	fadd	f1, f0, f2				# fmr	f1, f2
-	jr	r31				#	blr
-_fle_then.860:
-	addi	r30, r0, 0
-	lui	r30, r30, 16384	# to load float		2.000000
-	fmvfr	f3, r30
+	beq	r0, r30, _fle_else.883
+	flup	f3, 3
 	fmul	f2, f3, f2
 	j lib_hoge
+_fle_else.883:
+	fadd	f1, f0, f2				# fmr	f1, f2
+	jr	r31				#	blr
+_fle_else.882:
+	fadd	f1, f0, f2				# fmr	f1, f2
+	jr	r31				#	blr
 lib_fuga:
-	addi	r30, r0, 0
-	lui	r30, r30, 16384	# to load float		2.000000
-	fmvfr	f4, r30
+	flup	f4, 3
 	fmul	f4, f3, f4
 	fle	r30, f4, f1
-	bne	r0, r30, _fle_then.861
-	jr	r31				#	blr
-_fle_then.861:
+	beq	r0, r30, _fle_else.884
 	fle	r30, f2, f1
-	bne	r0, r30, _fle_then.862
-	addi	r30, r0, 0
-	lui	r30, r30, 16384	# to load float		2.000000
-	fmvfr	f4, r30
-	fdiv	f2, f2, f4
-	j lib_fuga
-_fle_then.862:
+	beq	r0, r30, _fle_else.885
 	fsub	f1, f1, f2
-	addi	r30, r0, 0
-	lui	r30, r30, 16384	# to load float		2.000000
-	fmvfr	f4, r30
+	flup	f4, 3
 	fdiv	f2, f2, f4
 	j lib_fuga
+_fle_else.885:
+	flup	f4, 3
+	fdiv	f2, f2, f4
+	j lib_fuga
+_fle_else.884:
+	jr	r31				#	blr
 lib_modulo_2pi:
 	addi	r30, r0, 4059
 	lui	r30, r30, 16457	# to load float		3.141593
 	fmvfr	f3, r30
-	addi	r30, r0, 0
-	lui	r30, r30, 16384	# to load float		2.000000
-	fmvfr	f2, r30
+	flup	f2, 3
 	addi	r30, r0, 4059
 	lui	r30, r30, 16585	# to load float		6.283185
 	fmvfr	f2, r30
@@ -406,12 +374,8 @@ lib_modulo_2pi:
 	fmvtr	r30, f1
 	sw	r30, 2(r3)				#stfd	f1, 2(r3)
 	fle	r30, f2, f1
-	bne	r0, r30, _fle_then.863
-	j	_fle_cont.864
-_fle_then.863:
-	addi	r30, r0, 0
-	lui	r30, r30, 16384	# to load float		2.000000
-	fmvfr	f2, r30
+	beq	r0, r30, _fle_else.886
+	flup	f2, 3
 	addi	r30, r0, 4059
 	lui	r30, r30, 16713	# to load float		12.566371
 	fmvfr	f2, r30
@@ -423,7 +387,9 @@ _fle_then.863:
 	lw	r30, 4(r3)
 	fadd	f2, f0, f1				# fmr	f2, f1
 	add	r31, r0, r30				#mtlr	r30
-_fle_cont.864:
+	j	_fle_cont.887
+_fle_else.886:
+_fle_cont.887:
 	lw	r30, 2(r3)				#lfd	f1, 2(r3)
 	fmvfr	f1, r30
 	lw	r30, 0(r3)				#lfd	f3, 0(r3)
@@ -455,12 +421,8 @@ lib_sin_body:
 	jr	r31				#	blr
 lib_cos_body:
 	fmul	f1, f1, f1
-	addi	r30, r0, 0
-	lui	r30, r30, 16256	# to load float		1.000000
-	fmvfr	f2, r30
-	addi	r30, r0, 0
-	lui	r30, r30, 16128	# to load float		0.500000
-	fmvfr	f3, r30
+	flup	f2, 2
+	flup	f3, 1
 	addi	r30, r0, 42889
 	lui	r30, r30, 15658	# to load float		0.041664
 	fmvfr	f4, r30
@@ -478,23 +440,15 @@ lib_sin:
 	addi	r30, r0, 4059
 	lui	r30, r30, 16457	# to load float		3.141593
 	fmvfr	f2, r30
-	addi	r30, r0, 0
-	lui	r30, r30, 0	# to load float		0.000000
-	fmvfr	f3, r30
+	flup	f3, 0
 	fle	r30, f3, f1
-	bne	r0, r30, _fle_then.865
-	addi	r30, r0, 0
-	lui	r30, r30, 16256	# to load float		1.000000
-	fmvfr	f3, r30
-	addi	r30, r0, 0
-	lui	r30, r30, 49024	# to load float		-1.000000
-	fmvfr	f3, r30
-	j	_fle_cont.866
-_fle_then.865:
-	addi	r30, r0, 0
-	lui	r30, r30, 16256	# to load float		1.000000
-	fmvfr	f3, r30
-_fle_cont.866:
+	beq	r0, r30, _fle_else.888
+	flup	f3, 2
+	j	_fle_cont.889
+_fle_else.888:
+	flup	f3, 2
+	flup	f3, 11
+_fle_cont.889:
 	fmvtr	r30, f3
 	sw	r30, 0(r3)				#stfd	f3, 0(r3)
 	fmvtr	r30, f2
@@ -516,106 +470,18 @@ _fle_cont.866:
 	lw	r30, 2(r3)				#lfd	f2, 2(r3)
 	fmvfr	f2, r30
 	fle	r30, f2, f1
-	bne	r0, r30, _fle_then.867
-	addi	r30, r0, 0
-	lui	r30, r30, 16384	# to load float		2.000000
-	fmvfr	f3, r30
-	addi	r30, r0, 4059
-	lui	r30, r30, 16329	# to load float		1.570796
-	fmvfr	f3, r30
-	fle	r30, f3, f1
-	bne	r0, r30, _fle_then.868
-	addi	r30, r0, 0
-	lui	r30, r30, 16512	# to load float		4.000000
-	fmvfr	f2, r30
-	addi	r30, r0, 4059
-	lui	r30, r30, 16201	# to load float		0.785398
-	fmvfr	f2, r30
-	fle	r30, f1, f2
-	bne	r0, r30, _fle_then.869
-	addi	r30, r0, 0
-	lui	r30, r30, 16384	# to load float		2.000000
-	fmvfr	f2, r30
-	addi	r30, r0, 4059
-	lui	r30, r30, 16329	# to load float		1.570796
-	fmvfr	f2, r30
-	fsub	f1, f2, f1
-	addi	r30, r31, 0				#mflr	r30
-	sw	r30, 4(r3)
-	addi	r3, r3, 5
-	jal lib_cos_body				#	bl lib_cos_body
-	addi	r3, r3, -5
-	lw	r30, 4(r3)
-	add	r31, r0, r30				#mtlr	r30
-	lw	r30, 0(r3)				#lfd	f2, 0(r3)
-	fmvfr	f2, r30
-	fmul	f1, f1, f2
-	jr	r31				#	blr
-_fle_then.869:
-	addi	r30, r31, 0				#mflr	r30
-	sw	r30, 4(r3)
-	addi	r3, r3, 5
-	jal lib_sin_body				#	bl lib_sin_body
-	addi	r3, r3, -5
-	lw	r30, 4(r3)
-	add	r31, r0, r30				#mtlr	r30
-	lw	r30, 0(r3)				#lfd	f2, 0(r3)
-	fmvfr	f2, r30
-	fmul	f1, f1, f2
-	jr	r31				#	blr
-_fle_then.868:
-	fsub	f1, f2, f1
-	addi	r30, r0, 0
-	lui	r30, r30, 16512	# to load float		4.000000
-	fmvfr	f2, r30
-	addi	r30, r0, 4059
-	lui	r30, r30, 16201	# to load float		0.785398
-	fmvfr	f2, r30
-	fle	r30, f1, f2
-	bne	r0, r30, _fle_then.870
-	addi	r30, r0, 0
-	lui	r30, r30, 16384	# to load float		2.000000
-	fmvfr	f2, r30
-	addi	r30, r0, 4059
-	lui	r30, r30, 16329	# to load float		1.570796
-	fmvfr	f2, r30
-	fsub	f1, f2, f1
-	addi	r30, r31, 0				#mflr	r30
-	sw	r30, 4(r3)
-	addi	r3, r3, 5
-	jal lib_cos_body				#	bl lib_cos_body
-	addi	r3, r3, -5
-	lw	r30, 4(r3)
-	add	r31, r0, r30				#mtlr	r30
-	lw	r30, 0(r3)				#lfd	f2, 0(r3)
-	fmvfr	f2, r30
-	fmul	f1, f1, f2
-	jr	r31				#	blr
-_fle_then.870:
-	addi	r30, r31, 0				#mflr	r30
-	sw	r30, 4(r3)
-	addi	r3, r3, 5
-	jal lib_sin_body				#	bl lib_sin_body
-	addi	r3, r3, -5
-	lw	r30, 4(r3)
-	add	r31, r0, r30				#mtlr	r30
-	lw	r30, 0(r3)				#lfd	f2, 0(r3)
-	fmvfr	f2, r30
-	fmul	f1, f1, f2
-	jr	r31				#	blr
-_fle_then.867:
+	beq	r0, r30, _fle_else.890
 	fsub	f1, f1, f2
 	lw	r30, 0(r3)				#lfd	f3, 0(r3)
 	fmvfr	f3, r30
  lib_fneg	f3, f3
-	addi	r30, r0, 0
-	lui	r30, r30, 16384	# to load float		2.000000
-	fmvfr	f4, r30
+	flup	f4, 3
 	addi	r30, r0, 4059
 	lui	r30, r30, 16329	# to load float		1.570796
 	fmvfr	f4, r30
 	fle	r30, f4, f1
-	bne	r0, r30, _fle_then.871
+	beq	r0, r30, _fle_else.891
+	fsub	f1, f2, f1
 	addi	r30, r0, 0
 	lui	r30, r30, 16512	# to load float		4.000000
 	fmvfr	f2, r30
@@ -623,10 +489,22 @@ _fle_then.867:
 	lui	r30, r30, 16201	# to load float		0.785398
 	fmvfr	f2, r30
 	fle	r30, f1, f2
-	bne	r0, r30, _fle_then.872
-	addi	r30, r0, 0
-	lui	r30, r30, 16384	# to load float		2.000000
+	beq	r0, r30, _fle_else.892
+	fmvtr	r30, f3
+	sw	r30, 4(r3)				#stfd	f3, 4(r3)
+	addi	r30, r31, 0				#mflr	r30
+	sw	r30, 6(r3)
+	addi	r3, r3, 7
+	jal lib_sin_body				#	bl lib_sin_body
+	addi	r3, r3, -7
+	lw	r30, 6(r3)
+	add	r31, r0, r30				#mtlr	r30
+	lw	r30, 4(r3)				#lfd	f2, 4(r3)
 	fmvfr	f2, r30
+	fmul	f1, f1, f2
+	jr	r31				#	blr
+_fle_else.892:
+	flup	f2, 3
 	addi	r30, r0, 4059
 	lui	r30, r30, 16329	# to load float		1.570796
 	fmvfr	f2, r30
@@ -644,7 +522,15 @@ _fle_then.867:
 	fmvfr	f2, r30
 	fmul	f1, f1, f2
 	jr	r31				#	blr
-_fle_then.872:
+_fle_else.891:
+	addi	r30, r0, 0
+	lui	r30, r30, 16512	# to load float		4.000000
+	fmvfr	f2, r30
+	addi	r30, r0, 4059
+	lui	r30, r30, 16201	# to load float		0.785398
+	fmvfr	f2, r30
+	fle	r30, f1, f2
+	beq	r0, r30, _fle_else.893
 	fmvtr	r30, f3
 	sw	r30, 4(r3)				#stfd	f3, 4(r3)
 	addi	r30, r31, 0				#mflr	r30
@@ -658,19 +544,8 @@ _fle_then.872:
 	fmvfr	f2, r30
 	fmul	f1, f1, f2
 	jr	r31				#	blr
-_fle_then.871:
-	fsub	f1, f2, f1
-	addi	r30, r0, 0
-	lui	r30, r30, 16512	# to load float		4.000000
-	fmvfr	f2, r30
-	addi	r30, r0, 4059
-	lui	r30, r30, 16201	# to load float		0.785398
-	fmvfr	f2, r30
-	fle	r30, f1, f2
-	bne	r0, r30, _fle_then.873
-	addi	r30, r0, 0
-	lui	r30, r30, 16384	# to load float		2.000000
-	fmvfr	f2, r30
+_fle_else.893:
+	flup	f2, 3
 	addi	r30, r0, 4059
 	lui	r30, r30, 16329	# to load float		1.570796
 	fmvfr	f2, r30
@@ -688,9 +563,22 @@ _fle_then.871:
 	fmvfr	f2, r30
 	fmul	f1, f1, f2
 	jr	r31				#	blr
-_fle_then.873:
-	fmvtr	r30, f3
-	sw	r30, 4(r3)				#stfd	f3, 4(r3)
+_fle_else.890:
+	flup	f3, 3
+	addi	r30, r0, 4059
+	lui	r30, r30, 16329	# to load float		1.570796
+	fmvfr	f3, r30
+	fle	r30, f3, f1
+	beq	r0, r30, _fle_else.894
+	fsub	f1, f2, f1
+	addi	r30, r0, 0
+	lui	r30, r30, 16512	# to load float		4.000000
+	fmvfr	f2, r30
+	addi	r30, r0, 4059
+	lui	r30, r30, 16201	# to load float		0.785398
+	fmvfr	f2, r30
+	fle	r30, f1, f2
+	beq	r0, r30, _fle_else.895
 	addi	r30, r31, 0				#mflr	r30
 	sw	r30, 6(r3)
 	addi	r3, r3, 7
@@ -698,7 +586,61 @@ _fle_then.873:
 	addi	r3, r3, -7
 	lw	r30, 6(r3)
 	add	r31, r0, r30				#mtlr	r30
-	lw	r30, 4(r3)				#lfd	f2, 4(r3)
+	lw	r30, 0(r3)				#lfd	f2, 0(r3)
+	fmvfr	f2, r30
+	fmul	f1, f1, f2
+	jr	r31				#	blr
+_fle_else.895:
+	flup	f2, 3
+	addi	r30, r0, 4059
+	lui	r30, r30, 16329	# to load float		1.570796
+	fmvfr	f2, r30
+	fsub	f1, f2, f1
+	addi	r30, r31, 0				#mflr	r30
+	sw	r30, 6(r3)
+	addi	r3, r3, 7
+	jal lib_cos_body				#	bl lib_cos_body
+	addi	r3, r3, -7
+	lw	r30, 6(r3)
+	add	r31, r0, r30				#mtlr	r30
+	lw	r30, 0(r3)				#lfd	f2, 0(r3)
+	fmvfr	f2, r30
+	fmul	f1, f1, f2
+	jr	r31				#	blr
+_fle_else.894:
+	addi	r30, r0, 0
+	lui	r30, r30, 16512	# to load float		4.000000
+	fmvfr	f2, r30
+	addi	r30, r0, 4059
+	lui	r30, r30, 16201	# to load float		0.785398
+	fmvfr	f2, r30
+	fle	r30, f1, f2
+	beq	r0, r30, _fle_else.896
+	addi	r30, r31, 0				#mflr	r30
+	sw	r30, 6(r3)
+	addi	r3, r3, 7
+	jal lib_sin_body				#	bl lib_sin_body
+	addi	r3, r3, -7
+	lw	r30, 6(r3)
+	add	r31, r0, r30				#mtlr	r30
+	lw	r30, 0(r3)				#lfd	f2, 0(r3)
+	fmvfr	f2, r30
+	fmul	f1, f1, f2
+	jr	r31				#	blr
+_fle_else.896:
+	flup	f2, 3
+	addi	r30, r0, 4059
+	lui	r30, r30, 16329	# to load float		1.570796
+	fmvfr	f2, r30
+	fsub	f1, f2, f1
+	addi	r30, r31, 0				#mflr	r30
+	sw	r30, 6(r3)
+	addi	r3, r3, 7
+	jal lib_cos_body				#	bl lib_cos_body
+	addi	r3, r3, -7
+	lw	r30, 6(r3)
+	add	r31, r0, r30				#mtlr	r30
+	lw	r30, 0(r3)				#lfd	f2, 0(r3)
 	fmvfr	f2, r30
 	fmul	f1, f1, f2
 	jr	r31				#	blr
@@ -706,9 +648,7 @@ lib_cos:
 	addi	r30, r0, 4059
 	lui	r30, r30, 16457	# to load float		3.141593
 	fmvfr	f2, r30
-	addi	r30, r0, 0
-	lui	r30, r30, 16256	# to load float		1.000000
-	fmvfr	f3, r30
+	flup	f3, 2
 	fmvtr	r30, f3
 	sw	r30, 0(r3)				#stfd	f3, 0(r3)
 	fmvtr	r30, f2
@@ -730,113 +670,58 @@ lib_cos:
 	lw	r30, 2(r3)				#lfd	f2, 2(r3)
 	fmvfr	f2, r30
 	fle	r30, f2, f1
-	bne	r0, r30, _fle_then.874
-	addi	r30, r0, 0
-	lui	r30, r30, 16384	# to load float		2.000000
-	fmvfr	f3, r30
-	addi	r30, r0, 4059
-	lui	r30, r30, 16329	# to load float		1.570796
-	fmvfr	f3, r30
-	fle	r30, f3, f1
-	bne	r0, r30, _fle_then.875
-	addi	r30, r0, 0
-	lui	r30, r30, 16512	# to load float		4.000000
-	fmvfr	f2, r30
-	addi	r30, r0, 4059
-	lui	r30, r30, 16201	# to load float		0.785398
-	fmvfr	f2, r30
-	fle	r30, f1, f2
-	bne	r0, r30, _fle_then.876
-	addi	r30, r0, 0
-	lui	r30, r30, 16384	# to load float		2.000000
-	fmvfr	f2, r30
-	addi	r30, r0, 4059
-	lui	r30, r30, 16329	# to load float		1.570796
-	fmvfr	f2, r30
-	fsub	f1, f2, f1
-	addi	r30, r31, 0				#mflr	r30
-	sw	r30, 4(r3)
-	addi	r3, r3, 5
-	jal lib_sin_body				#	bl lib_sin_body
-	addi	r3, r3, -5
-	lw	r30, 4(r3)
-	add	r31, r0, r30				#mtlr	r30
-	lw	r30, 0(r3)				#lfd	f2, 0(r3)
-	fmvfr	f2, r30
-	fmul	f1, f1, f2
-	jr	r31				#	blr
-_fle_then.876:
-	addi	r30, r31, 0				#mflr	r30
-	sw	r30, 4(r3)
-	addi	r3, r3, 5
-	jal lib_cos_body				#	bl lib_cos_body
-	addi	r3, r3, -5
-	lw	r30, 4(r3)
-	add	r31, r0, r30				#mtlr	r30
-	lw	r30, 0(r3)				#lfd	f2, 0(r3)
-	fmvfr	f2, r30
-	fmul	f1, f1, f2
-	jr	r31				#	blr
-_fle_then.875:
-	fsub	f1, f2, f1
-	addi	r30, r0, 0
-	lui	r30, r30, 49024	# to load float		-1.000000
-	fmvfr	f2, r30
-	addi	r30, r0, 0
-	lui	r30, r30, 16512	# to load float		4.000000
-	fmvfr	f3, r30
-	addi	r30, r0, 4059
-	lui	r30, r30, 16201	# to load float		0.785398
-	fmvfr	f3, r30
-	fle	r30, f1, f3
-	bne	r0, r30, _fle_then.877
-	addi	r30, r0, 0
-	lui	r30, r30, 16384	# to load float		2.000000
-	fmvfr	f3, r30
-	addi	r30, r0, 4059
-	lui	r30, r30, 16329	# to load float		1.570796
-	fmvfr	f3, r30
-	fsub	f1, f3, f1
-	fmvtr	r30, f2
-	sw	r30, 4(r3)				#stfd	f2, 4(r3)
-	addi	r30, r31, 0				#mflr	r30
-	sw	r30, 6(r3)
-	addi	r3, r3, 7
-	jal lib_sin_body				#	bl lib_sin_body
-	addi	r3, r3, -7
-	lw	r30, 6(r3)
-	add	r31, r0, r30				#mtlr	r30
-	lw	r30, 4(r3)				#lfd	f2, 4(r3)
-	fmvfr	f2, r30
-	fmul	f1, f1, f2
-	jr	r31				#	blr
-_fle_then.877:
-	fmvtr	r30, f2
-	sw	r30, 4(r3)				#stfd	f2, 4(r3)
-	addi	r30, r31, 0				#mflr	r30
-	sw	r30, 6(r3)
-	addi	r3, r3, 7
-	jal lib_cos_body				#	bl lib_cos_body
-	addi	r3, r3, -7
-	lw	r30, 6(r3)
-	add	r31, r0, r30				#mtlr	r30
-	lw	r30, 4(r3)				#lfd	f2, 4(r3)
-	fmvfr	f2, r30
-	fmul	f1, f1, f2
-	jr	r31				#	blr
-_fle_then.874:
+	beq	r0, r30, _fle_else.897
 	fsub	f1, f1, f2
-	addi	r30, r0, 0
-	lui	r30, r30, 49024	# to load float		-1.000000
-	fmvfr	f3, r30
-	addi	r30, r0, 0
-	lui	r30, r30, 16384	# to load float		2.000000
-	fmvfr	f4, r30
+	flup	f3, 11
+	flup	f4, 3
 	addi	r30, r0, 4059
 	lui	r30, r30, 16329	# to load float		1.570796
 	fmvfr	f4, r30
 	fle	r30, f4, f1
-	bne	r0, r30, _fle_then.878
+	beq	r0, r30, _fle_else.898
+	fsub	f1, f2, f1
+	flup	f2, 2
+	addi	r30, r0, 0
+	lui	r30, r30, 16512	# to load float		4.000000
+	fmvfr	f3, r30
+	addi	r30, r0, 4059
+	lui	r30, r30, 16201	# to load float		0.785398
+	fmvfr	f3, r30
+	fle	r30, f1, f3
+	beq	r0, r30, _fle_else.899
+	fmvtr	r30, f2
+	sw	r30, 4(r3)				#stfd	f2, 4(r3)
+	addi	r30, r31, 0				#mflr	r30
+	sw	r30, 6(r3)
+	addi	r3, r3, 7
+	jal lib_cos_body				#	bl lib_cos_body
+	addi	r3, r3, -7
+	lw	r30, 6(r3)
+	add	r31, r0, r30				#mtlr	r30
+	lw	r30, 4(r3)				#lfd	f2, 4(r3)
+	fmvfr	f2, r30
+	fmul	f1, f1, f2
+	jr	r31				#	blr
+_fle_else.899:
+	flup	f3, 3
+	addi	r30, r0, 4059
+	lui	r30, r30, 16329	# to load float		1.570796
+	fmvfr	f3, r30
+	fsub	f1, f3, f1
+	fmvtr	r30, f2
+	sw	r30, 4(r3)				#stfd	f2, 4(r3)
+	addi	r30, r31, 0				#mflr	r30
+	sw	r30, 6(r3)
+	addi	r3, r3, 7
+	jal lib_sin_body				#	bl lib_sin_body
+	addi	r3, r3, -7
+	lw	r30, 6(r3)
+	add	r31, r0, r30				#mtlr	r30
+	lw	r30, 4(r3)				#lfd	f2, 4(r3)
+	fmvfr	f2, r30
+	fmul	f1, f1, f2
+	jr	r31				#	blr
+_fle_else.898:
 	addi	r30, r0, 0
 	lui	r30, r30, 16512	# to load float		4.000000
 	fmvfr	f2, r30
@@ -844,10 +729,22 @@ _fle_then.874:
 	lui	r30, r30, 16201	# to load float		0.785398
 	fmvfr	f2, r30
 	fle	r30, f1, f2
-	bne	r0, r30, _fle_then.879
-	addi	r30, r0, 0
-	lui	r30, r30, 16384	# to load float		2.000000
+	beq	r0, r30, _fle_else.900
+	fmvtr	r30, f3
+	sw	r30, 6(r3)				#stfd	f3, 6(r3)
+	addi	r30, r31, 0				#mflr	r30
+	sw	r30, 8(r3)
+	addi	r3, r3, 9
+	jal lib_cos_body				#	bl lib_cos_body
+	addi	r3, r3, -9
+	lw	r30, 8(r3)
+	add	r31, r0, r30				#mtlr	r30
+	lw	r30, 6(r3)				#lfd	f2, 6(r3)
 	fmvfr	f2, r30
+	fmul	f1, f1, f2
+	jr	r31				#	blr
+_fle_else.900:
+	flup	f2, 3
 	addi	r30, r0, 4059
 	lui	r30, r30, 16329	# to load float		1.570796
 	fmvfr	f2, r30
@@ -865,25 +762,15 @@ _fle_then.874:
 	fmvfr	f2, r30
 	fmul	f1, f1, f2
 	jr	r31				#	blr
-_fle_then.879:
-	fmvtr	r30, f3
-	sw	r30, 6(r3)				#stfd	f3, 6(r3)
-	addi	r30, r31, 0				#mflr	r30
-	sw	r30, 8(r3)
-	addi	r3, r3, 9
-	jal lib_cos_body				#	bl lib_cos_body
-	addi	r3, r3, -9
-	lw	r30, 8(r3)
-	add	r31, r0, r30				#mtlr	r30
-	lw	r30, 6(r3)				#lfd	f2, 6(r3)
-	fmvfr	f2, r30
-	fmul	f1, f1, f2
-	jr	r31				#	blr
-_fle_then.878:
+_fle_else.897:
+	flup	f3, 3
+	addi	r30, r0, 4059
+	lui	r30, r30, 16329	# to load float		1.570796
+	fmvfr	f3, r30
+	fle	r30, f3, f1
+	beq	r0, r30, _fle_else.901
 	fsub	f1, f2, f1
-	addi	r30, r0, 0
-	lui	r30, r30, 16256	# to load float		1.000000
-	fmvfr	f2, r30
+	flup	f2, 11
 	addi	r30, r0, 0
 	lui	r30, r30, 16512	# to load float		4.000000
 	fmvfr	f3, r30
@@ -891,10 +778,22 @@ _fle_then.878:
 	lui	r30, r30, 16201	# to load float		0.785398
 	fmvfr	f3, r30
 	fle	r30, f1, f3
-	bne	r0, r30, _fle_then.880
-	addi	r30, r0, 0
-	lui	r30, r30, 16384	# to load float		2.000000
-	fmvfr	f3, r30
+	beq	r0, r30, _fle_else.902
+	fmvtr	r30, f2
+	sw	r30, 8(r3)				#stfd	f2, 8(r3)
+	addi	r30, r31, 0				#mflr	r30
+	sw	r30, 10(r3)
+	addi	r3, r3, 11
+	jal lib_cos_body				#	bl lib_cos_body
+	addi	r3, r3, -11
+	lw	r30, 10(r3)
+	add	r31, r0, r30				#mtlr	r30
+	lw	r30, 8(r3)				#lfd	f2, 8(r3)
+	fmvfr	f2, r30
+	fmul	f1, f1, f2
+	jr	r31				#	blr
+_fle_else.902:
+	flup	f3, 3
 	addi	r30, r0, 4059
 	lui	r30, r30, 16329	# to load float		1.570796
 	fmvfr	f3, r30
@@ -912,9 +811,15 @@ _fle_then.878:
 	fmvfr	f2, r30
 	fmul	f1, f1, f2
 	jr	r31				#	blr
-_fle_then.880:
-	fmvtr	r30, f2
-	sw	r30, 8(r3)				#stfd	f2, 8(r3)
+_fle_else.901:
+	addi	r30, r0, 0
+	lui	r30, r30, 16512	# to load float		4.000000
+	fmvfr	f2, r30
+	addi	r30, r0, 4059
+	lui	r30, r30, 16201	# to load float		0.785398
+	fmvfr	f2, r30
+	fle	r30, f1, f2
+	beq	r0, r30, _fle_else.903
 	addi	r30, r31, 0				#mflr	r30
 	sw	r30, 10(r3)
 	addi	r3, r3, 11
@@ -922,7 +827,24 @@ _fle_then.880:
 	addi	r3, r3, -11
 	lw	r30, 10(r3)
 	add	r31, r0, r30				#mtlr	r30
-	lw	r30, 8(r3)				#lfd	f2, 8(r3)
+	lw	r30, 0(r3)				#lfd	f2, 0(r3)
+	fmvfr	f2, r30
+	fmul	f1, f1, f2
+	jr	r31				#	blr
+_fle_else.903:
+	flup	f2, 3
+	addi	r30, r0, 4059
+	lui	r30, r30, 16329	# to load float		1.570796
+	fmvfr	f2, r30
+	fsub	f1, f2, f1
+	addi	r30, r31, 0				#mflr	r30
+	sw	r30, 10(r3)
+	addi	r3, r3, 11
+	jal lib_sin_body				#	bl lib_sin_body
+	addi	r3, r3, -11
+	lw	r30, 10(r3)
+	add	r31, r0, r30				#mtlr	r30
+	lw	r30, 0(r3)				#lfd	f2, 0(r3)
 	fmvfr	f2, r30
 	fmul	f1, f1, f2
 	jr	r31				#	blr
@@ -934,9 +856,7 @@ lib_atan_body:
 	fmul	f2, f2, f1
 	fmul	f2, f2, f1
 	fsub	f2, f1, f2
-	addi	r30, r0, 52429
-	lui	r30, r30, 15948	# to load float		0.200000
-	fmvfr	f3, r30
+	flup	f3, 18
 	fmul	f3, f3, f1
 	fmul	f3, f3, f1
 	fmul	f3, f3, f1
@@ -1004,50 +924,27 @@ lib_atan:
 	addi	r30, r0, 4059
 	lui	r30, r30, 16457	# to load float		3.141593
 	fmvfr	f2, r30
-	addi	r30, r0, 0
-	lui	r30, r30, 0	# to load float		0.000000
-	fmvfr	f2, r30
+	flup	f2, 0
 	fle	r30, f2, f1
-	bne	r0, r30, _fle_then.881
-	addi	r30, r0, 0
-	lui	r30, r30, 16256	# to load float		1.000000
-	fmvfr	f2, r30
-	addi	r30, r0, 0
-	lui	r30, r30, 49024	# to load float		-1.000000
-	fmvfr	f2, r30
-	j	_fle_cont.882
-_fle_then.881:
-	addi	r30, r0, 0
-	lui	r30, r30, 16256	# to load float		1.000000
-	fmvfr	f2, r30
-_fle_cont.882:
+	beq	r0, r30, _fle_else.904
+	flup	f2, 2
+	j	_fle_cont.905
+_fle_else.904:
+	flup	f2, 2
+	flup	f2, 11
+_fle_cont.905:
 	fmul	f1, f1, f2
-	addi	r30, r0, 0
-	lui	r30, r30, 16524	# to load float		4.375000
-	fmvfr	f3, r30
+	flup	f3, 23
 	fle	r30, f3, f1
-	bne	r0, r30, _fle_then.883
-	j lib_atan_body
-_fle_then.883:
-	addi	r30, r0, 0
-	lui	r30, r30, 16412	# to load float		2.437500
-	fmvfr	f3, r30
+	beq	r0, r30, _fle_else.906
+	flup	f3, 24
 	fle	r30, f3, f1
-	bne	r0, r30, _fle_then.884
-	addi	r30, r0, 0
-	lui	r30, r30, 16512	# to load float		4.000000
-	fmvfr	f3, r30
+	beq	r0, r30, _fle_else.907
+	flup	f3, 3
 	addi	r30, r0, 4059
-	lui	r30, r30, 16201	# to load float		0.785398
+	lui	r30, r30, 16329	# to load float		1.570796
 	fmvfr	f3, r30
-	addi	r30, r0, 0
-	lui	r30, r30, 16256	# to load float		1.000000
-	fmvfr	f4, r30
-	fsub	f4, f1, f4
-	addi	r30, r0, 0
-	lui	r30, r30, 16256	# to load float		1.000000
-	fmvfr	f5, r30
-	fadd	f1, f1, f5
+	flup	f4, 2
 	fdiv	f1, f4, f1
 	fmvtr	r30, f2
 	sw	r30, 0(r3)				#stfd	f2, 0(r3)
@@ -1067,16 +964,17 @@ _fle_then.883:
 	fmvfr	f2, r30
 	fmul	f1, f1, f2
 	jr	r31				#	blr
-_fle_then.884:
+_fle_else.907:
 	addi	r30, r0, 0
-	lui	r30, r30, 16384	# to load float		2.000000
+	lui	r30, r30, 16512	# to load float		4.000000
 	fmvfr	f3, r30
 	addi	r30, r0, 4059
-	lui	r30, r30, 16329	# to load float		1.570796
+	lui	r30, r30, 16201	# to load float		0.785398
 	fmvfr	f3, r30
-	addi	r30, r0, 0
-	lui	r30, r30, 16256	# to load float		1.000000
-	fmvfr	f4, r30
+	flup	f4, 2
+	fsub	f4, f1, f4
+	flup	f5, 2
+	fadd	f1, f1, f5
 	fdiv	f1, f4, f1
 	fmvtr	r30, f2
 	sw	r30, 0(r3)				#stfd	f2, 0(r3)
@@ -1096,6 +994,8 @@ _fle_then.884:
 	fmvfr	f2, r30
 	fmul	f1, f1, f2
 	jr	r31				#	blr
+_fle_else.906:
+	j lib_atan_body
 lib_print_num:
 	addi	r1, r1, 48
 	j	lib_print_char
@@ -1110,18 +1010,18 @@ lib_div10_sub:
 	slli	r7, r6, 3
 	slli	r8, r6, 1
 	add	r7, r7, r8
-	ble	r7, r1, _ble_then.885
+	ble	r7, r1, _ble_then.908
 	add	r5, r0, r6				# mr	r5, r6
 	j lib_div10_sub
-_ble_then.885:
+_ble_then.908:
 	slli	r2, r6, 3
 	slli	r7, r6, 1
 	add	r2, r2, r7
 	addi	r2, r2, 9
-	ble	r1, r2, _ble_then.886
+	ble	r1, r2, _ble_then.909
 	add	r2, r0, r6				# mr	r2, r6
 	j lib_div10_sub
-_ble_then.886:
+_ble_then.909:
 	add	r1, r0, r6				# mr	r1, r6
 	jr	r31				#	blr
 lib_div10:
@@ -1129,19 +1029,16 @@ lib_div10:
 	add	r5, r0, r1				# mr	r5, r1
 	j lib_div10_sub
 lib_iter_mul10:
-	addi	r5, r0, 0				# li	r5, 0
-	beq	r2, r5, _beq_then.887
+	beqi	r2, 0, _beq_then.910
 	slli	r5, r1, 3
 	slli	r1, r1, 1
 	add	r1, r5, r1
-	addi	r5, r0, 1				# li	r5, 1
-	sub	r2, r2, r5
+	addi	r2, r2, -1
 	j lib_iter_mul10
-_beq_then.887:
+_beq_then.910:
 	jr	r31				#	blr
 lib_iter_div10:
-	addi	r5, r0, 0				# li	r5, 0
-	beq	r2, r5, _beq_then.888
+	beqi	r2, 0, _beq_then.911
 	addi	r5, r0, 0				# li	r5, 0
 	sw	r2, 0(r3)
 	addi	r30, r31, 0				#mflr	r30
@@ -1153,18 +1050,17 @@ lib_iter_div10:
 	addi	r3, r3, -2
 	lw	r30, 1(r3)
 	add	r31, r0, r30				#mtlr	r30
-	addi	r2, r0, 1				# li	r2, 1
-	lw	r5, 0(r3)
-	sub	r2, r5, r2
+	lw	r2, 0(r3)
+	addi	r2, r2, -1
 	j lib_iter_div10
-_beq_then.888:
+_beq_then.911:
 	jr	r31				#	blr
 lib_keta_sub:
 	addi	r5, r0, 10				# li	r5, 10
-	ble	r5, r1, _ble_then.889
+	ble	r5, r1, _ble_then.912
 	addi	r1, r2, 1
 	jr	r31				#	blr
-_ble_then.889:
+_ble_then.912:
 	addi	r5, r0, 0				# li	r5, 0
 	sw	r2, 0(r3)
 	addi	r30, r31, 0				#mflr	r30
@@ -1183,11 +1079,9 @@ lib_keta:
 	addi	r2, r0, 0				# li	r2, 0
 	j lib_keta_sub
 lib_print_uint_keta:
+	beqi	r2, 1, _beq_then.913
 	addi	r5, r0, 1				# li	r5, 1
-	beq	r2, r5, _beq_then.890
-	addi	r5, r0, 1				# li	r5, 1
-	addi	r6, r0, 1				# li	r6, 1
-	sub	r6, r2, r6
+	addi	r6, r2, -1
 	sw	r2, 0(r3)
 	sw	r1, 1(r3)
 	addi	r30, r31, 0				#mflr	r30
@@ -1200,7 +1094,7 @@ lib_print_uint_keta:
 	lw	r30, 2(r3)
 	add	r31, r0, r30				#mtlr	r30
 	lw	r2, 1(r3)
-	ble	r1, r2, _ble_then.891
+	ble	r1, r2, _ble_then.914
 	addi	r1, r0, 48				# li	r1, 48
 	addi	r30, r31, 0				#mflr	r30
 	sw	r30, 2(r3)
@@ -1209,19 +1103,16 @@ lib_print_uint_keta:
 	addi	r3, r3, -3
 	lw	r30, 2(r3)
 	add	r31, r0, r30				#mtlr	r30
-	addi	r1, r0, 1				# li	r1, 1
-	lw	r2, 0(r3)
-	sub	r2, r2, r1
+	lw	r1, 0(r3)
+	addi	r2, r1, -1
 	lw	r1, 1(r3)
 	j lib_print_uint_keta
-_ble_then.891:
-	addi	r1, r0, 1				# li	r1, 1
-	lw	r5, 0(r3)
-	sub	r1, r5, r1
+_ble_then.914:
+	lw	r1, 0(r3)
+	addi	r5, r1, -1
 	addi	r30, r31, 0				#mflr	r30
-	add	r27, r0, r2				# mr	r27, r2
-	add	r2, r0, r1				# mr	r2, r1
-	add	r1, r0, r27				# mr	r1, r27
+	add	r1, r0, r2				# mr	r1, r2
+	add	r2, r0, r5				# mr	r2, r5
 	sw	r30, 2(r3)
 	addi	r3, r3, 3
 	jal lib_iter_div10				#	bl lib_iter_div10
@@ -1238,12 +1129,10 @@ _ble_then.891:
 	addi	r3, r3, -4
 	lw	r30, 3(r3)
 	add	r31, r0, r30				#mtlr	r30
-	addi	r1, r0, 1				# li	r1, 1
-	lw	r2, 0(r3)
-	sub	r1, r2, r1
+	lw	r1, 0(r3)
+	addi	r2, r1, -1
 	lw	r5, 2(r3)
 	addi	r30, r31, 0				#mflr	r30
-	add	r2, r0, r1				# mr	r2, r1
 	add	r1, r0, r5				# mr	r1, r5
 	sw	r30, 3(r3)
 	addi	r3, r3, 4
@@ -1253,19 +1142,18 @@ _ble_then.891:
 	add	r31, r0, r30				#mtlr	r30
 	lw	r2, 1(r3)
 	sub	r1, r2, r1
-	addi	r2, r0, 1				# li	r2, 1
-	lw	r5, 0(r3)
-	sub	r2, r5, r2
+	lw	r2, 0(r3)
+	addi	r2, r2, -1
 	j lib_print_uint_keta
-_beq_then.890:
+_beq_then.913:
 	addi	r1, r1, 48
 	j	lib_print_char
 lib_print_uint:
 	addi	r2, r0, 10				# li	r2, 10
-	ble	r2, r1, _ble_then.892
+	ble	r2, r1, _ble_then.915
 	addi	r1, r1, 48
 	j	lib_print_char
-_ble_then.892:
+_ble_then.915:
 	addi	r2, r0, 0				# li	r2, 0
 	sw	r1, 0(r3)
 	addi	r30, r31, 0				#mflr	r30
@@ -1294,7 +1182,7 @@ _ble_then.892:
 	j	lib_print_char
 lib_print_int:
 	addi	r2, r0, 0				# li	r2, 0
-	ble	r2, r1, _ble_then.893
+	ble	r2, r1, _ble_then.916
 	addi	r2, r0, 45				# li	r2, 45
 	sw	r1, 0(r3)
 	addi	r30, r31, 0				#mflr	r30
@@ -1308,7 +1196,7 @@ lib_print_int:
 	lw	r1, 0(r3)
 	sub	r1, r0, r1
 	j lib_print_uint
-_ble_then.893:
+_ble_then.916:
 	j lib_print_uint
 lib_read_token:
 	sw	r1, 0(r3)
@@ -1320,15 +1208,12 @@ lib_read_token:
 	lw	r30, 1(r3)
 	add	r31, r0, r30				#mtlr	r30
 	addi	r2, r0, 32				# li	r2, 32
-	beq	r1, r2, _beq_then.894
-	addi	r2, r0, 9				# li	r2, 9
-	beq	r1, r2, _beq_then.895
-	addi	r2, r0, 13				# li	r2, 13
-	beq	r1, r2, _beq_then.896
-	addi	r2, r0, 10				# li	r2, 10
-	beq	r1, r2, _beq_then.897
+	beq	r1, r2, _beq_then.917
+	beqi	r1, 9, _beq_then.918
+	beqi	r1, 13, _beq_then.919
+	beqi	r1, 10, _beq_then.920
 	addi	r2, r0, 26				# li	r2, 26
-	beq	r1, r2, _beq_then.898
+	beq	r1, r2, _beq_then.921
 	addi	r30, r31, 0				#mflr	r30
 	sw	r30, 1(r3)
 	addi	r3, r3, 2
@@ -1338,38 +1223,34 @@ lib_read_token:
 	add	r31, r0, r30				#mtlr	r30
 	addi	r1, r0, 1				# li	r1, 1
 	j lib_read_token
-_beq_then.898:
+_beq_then.921:
 	jr	r31				#	blr
-_beq_then.897:
-	addi	r1, r0, 0				# li	r1, 0
-	lw	r2, 0(r3)
-	beq	r2, r1, _beq_then.900
+_beq_then.920:
+	lw	r1, 0(r3)
+	beqi	r1, 0, _beq_then.923
 	jr	r31				#	blr
-_beq_then.900:
+_beq_then.923:
 	addi	r1, r0, 0				# li	r1, 0
 	j lib_read_token
-_beq_then.896:
-	addi	r1, r0, 0				# li	r1, 0
-	lw	r2, 0(r3)
-	beq	r2, r1, _beq_then.902
+_beq_then.919:
+	lw	r1, 0(r3)
+	beqi	r1, 0, _beq_then.925
 	jr	r31				#	blr
-_beq_then.902:
+_beq_then.925:
 	addi	r1, r0, 0				# li	r1, 0
 	j lib_read_token
-_beq_then.895:
-	addi	r1, r0, 0				# li	r1, 0
-	lw	r2, 0(r3)
-	beq	r2, r1, _beq_then.904
+_beq_then.918:
+	lw	r1, 0(r3)
+	beqi	r1, 0, _beq_then.927
 	jr	r31				#	blr
-_beq_then.904:
+_beq_then.927:
 	addi	r1, r0, 0				# li	r1, 0
 	j lib_read_token
-_beq_then.894:
-	addi	r1, r0, 0				# li	r1, 0
-	lw	r2, 0(r3)
-	beq	r2, r1, _beq_then.906
+_beq_then.917:
+	lw	r1, 0(r3)
+	beqi	r1, 0, _beq_then.929
 	jr	r31				#	blr
-_beq_then.906:
+_beq_then.929:
 	addi	r1, r0, 0				# li	r1, 0
 	j lib_read_token
 lib_read_int_ascii:
@@ -1390,16 +1271,12 @@ lib_read_int_ascii:
 	add	r31, r0, r30				#mtlr	r30
 	j	lib_buffer_to_int
 lib_iter_div10_float:
-	addi	r2, r0, 0				# li	r2, 0
-	beq	r1, r2, _beq_then.908
-	addi	r30, r0, 0
-	lui	r30, r30, 16672	# to load float		10.000000
-	fmvfr	f2, r30
+	beqi	r1, 0, _beq_then.931
+	flup	f2, 39
 	fdiv	f1, f1, f2
-	addi	r2, r0, 1				# li	r2, 1
-	sub	r1, r1, r2
+	addi	r1, r1, -1
 	j lib_iter_div10_float
-_beq_then.908:
+_beq_then.931:
 	jr	r31				#	blr
 lib_read_float_ascii:
 	addi	r30, r31, 0				#mflr	r30
@@ -1451,7 +1328,7 @@ lib_read_float_ascii:
 	add	r31, r0, r30				#mtlr	r30
 	addi	r2, r0, 45				# li	r2, 45
 	lw	r5, 0(r3)
-	beq	r5, r2, _beq_then.909
+	beq	r5, r2, _beq_then.932
 	lw	r2, 1(r3)
 	sw	r1, 3(r3)
 	addi	r30, r31, 0				#mflr	r30
@@ -1484,13 +1361,9 @@ lib_read_float_ascii:
 	fmvfr	f2, r30
 	fadd	f1, f2, f1
 	jr	r31				#	blr
-_beq_then.909:
-	addi	r30, r0, 0
-	lui	r30, r30, 16256	# to load float		1.000000
-	fmvfr	f1, r30
-	addi	r30, r0, 0
-	lui	r30, r30, 49024	# to load float		-1.000000
-	fmvfr	f1, r30
+_beq_then.932:
+	flup	f1, 2
+	flup	f1, 11
 	lw	r2, 1(r3)
 	fmvtr	r30, f1
 	sw	r30, 6(r3)				#stfd	f1, 6(r3)
@@ -1531,24 +1404,20 @@ _beq_then.909:
 lib_truncate:
 	j lib_int_of_float
 lib_abs_float:
-	addi	r30, r0, 0
-	lui	r30, r30, 0	# to load float		0.000000
-	fmvfr	f2, r30
+	flup	f2, 0
 	fle	r30, f2, f1
-	bne	r0, r30, _fle_then.910
+	beq	r0, r30, _fle_else.933
+	jr	r31				#	blr
+_fle_else.933:
  lib_fneg	f1, f1
 	jr	r31				#	blr
-_fle_then.910:
-	jr	r31				#	blr
 lib_print_dec:
-	addi	r30, r0, 0
-	lui	r30, r30, 0	# to load float		0.000000
-	fmvfr	f2, r30
+	flup	f2, 0
 	feq	r30, f1, f2
-	bne	r0, r30, _feq_then.911
-	addi	r30, r0, 0
-	lui	r30, r30, 16672	# to load float		10.000000
-	fmvfr	f2, r30
+	beq	r0, r30, _feq_else.934
+	jr	r31				#	blr
+_feq_else.934:
+	flup	f2, 39
 	fmul	f1, f2, f1
 	fmvtr	r30, f1
 	sw	r30, 0(r3)				#stfd	f1, 0(r3)
@@ -1586,8 +1455,6 @@ lib_print_dec:
 	fmvfr	f2, r30
 	fsub	f1, f2, f1
 	j lib_print_dec
-_feq_then.911:
-	jr	r31				#	blr
 lib_print_ufloat:
 	fmvtr	r30, f1
 	sw	r30, 0(r3)				#stfd	f1, 0(r3)
@@ -1634,11 +1501,11 @@ lib_print_ufloat:
 	fsub	f1, f2, f1
 	j lib_print_dec
 lib_print_float:
-	addi	r30, r0, 0
-	lui	r30, r30, 0	# to load float		0.000000
-	fmvfr	f2, r30
+	flup	f2, 0
 	fle	r30, f2, f1
-	bne	r0, r30, _fle_then.913
+	beq	r0, r30, _fle_else.936
+	j lib_print_ufloat
+_fle_else.936:
 	addi	r1, r0, 45				# li	r1, 45
 	fmvtr	r30, f1
 	sw	r30, 0(r3)				#stfd	f1, 0(r3)
@@ -1652,6 +1519,4 @@ lib_print_float:
 	lw	r30, 0(r3)				#lfd	f1, 0(r3)
 	fmvfr	f1, r30
  lib_fneg	f1, f1
-	j lib_print_ufloat
-_fle_then.913:
 	j lib_print_ufloat

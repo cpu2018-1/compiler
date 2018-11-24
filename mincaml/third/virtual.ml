@@ -4,6 +4,60 @@ open Asm
 
 let ftable = ref Ftable.empty
 
+(* Ftableに値を設定 *)
+let set_ftable () = 
+ftable := Ftable.add_float 0.000000 !ftable;
+ftable := Ftable.add_float 0.500000 !ftable;
+ftable := Ftable.add_float 1.000000 !ftable;
+ftable := Ftable.add_float 2.000000 !ftable;
+ftable := Ftable.add_float 3.141593 !ftable;
+ftable := Ftable.add_float 6.283185 !ftable;
+ftable := Ftable.add_float 0.166667 !ftable;
+ftable := Ftable.add_float 0.008333 !ftable;
+ftable := Ftable.add_float 0.000196 !ftable;
+ftable := Ftable.add_float 0.041664 !ftable;
+ftable := Ftable.add_float 0.001370 !ftable;
+ftable := Ftable.add_float (-1.000000) !ftable;
+ftable := Ftable.add_float 1.570796 !ftable;
+ftable := Ftable.add_float 0.785398 !ftable;
+ftable := Ftable.add_float 3.141597 !ftable;
+ftable := Ftable.add_float 1.570798 !ftable;
+ftable := Ftable.add_float 0.785399 !ftable;
+ftable := Ftable.add_float 0.333333 !ftable;
+ftable := Ftable.add_float 0.200000 !ftable;
+ftable := Ftable.add_float 0.142857 !ftable;
+ftable := Ftable.add_float 0.111111 !ftable;
+ftable := Ftable.add_float 0.089764 !ftable;
+ftable := Ftable.add_float 0.060035 !ftable;
+ftable := Ftable.add_float 4.375000 !ftable;
+ftable := Ftable.add_float 2.437500 !ftable;
+ftable := Ftable.add_float 0.017453 !ftable;
+ftable := Ftable.add_float 200.000000 !ftable;
+ftable := Ftable.add_float (-200.000000) !ftable;
+ftable := Ftable.add_float (-0.200000) !ftable;
+ftable := Ftable.add_float 0.010000 !ftable;
+ftable := Ftable.add_float (-0.100000) !ftable;
+ftable := Ftable.add_float 1000000000.000000 !ftable;
+ftable := Ftable.add_float 100000000.000000 !ftable;
+ftable := Ftable.add_float 0.000100 !ftable;
+ftable := Ftable.add_float 15.000000 !ftable;
+ftable := Ftable.add_float 30.000000 !ftable;
+ftable := Ftable.add_float 0.150000 !ftable;
+ftable := Ftable.add_float 255.000000 !ftable;
+ftable := Ftable.add_float 0.300000 !ftable;
+ftable := Ftable.add_float 10.000000 !ftable;
+ftable := Ftable.add_float 0.250000 !ftable;
+ftable := Ftable.add_float 0.050000 !ftable;
+ftable := Ftable.add_float 20.000000 !ftable;
+ftable := Ftable.add_float 0.003906 !ftable;
+ftable := Ftable.add_float (-2.000000) !ftable;
+ftable := Ftable.add_float 0.100000 !ftable;
+ftable := Ftable.add_float (-150.000000) !ftable;
+ftable := Ftable.add_float 150.000000 !ftable;
+ftable := Ftable.add_float 0.900000 !ftable;
+ftable := Ftable.add_float 128.000000 !ftable
+(* ここまで *)
+
 let data = ref [] (* 浮動小数点数の定数テーブル (caml2html: virtual_data) *)
 
 let classify xts ini addf addi =
@@ -45,7 +99,7 @@ let rec g env = function (* 式の仮想マシンコード生成 (caml2html: virtual_g) *)
         with Not_found ->
           let l = Id.L(Id.genid "l") in
           data := (l, d) :: !data;
-          ftable := Ftable.add_float d !ftable;
+          ftable := Ftable.add_float d !ftable; 
           l in
       Ans(FLi(d))
   | Closure.Neg(x) -> Ans(Neg(x))
@@ -161,6 +215,7 @@ let h { Closure.name = (Id.L(x), t); Closure.args = yts; Closure.formal_fv = zts
 (* プログラム全体の仮想マシンコード生成 (caml2html: virtual_f) *)
 let f (Closure.Prog(fundefs, e)) =
   data := [];
+(*  set_ftable ();*)
   let fundefs = List.map h fundefs in
   let e = g M.empty e in
   Prog(!data, fundefs, e)

@@ -11,6 +11,9 @@ lib_itof:
 lib_ftoi:
   ftoi  r1, f1
   jr  r31
+lib_fneg:
+  fneg  f1, f1
+  jr  r31
 lib_sqrt:
   fsqrt  f1, f1
   jr  r31
