@@ -1,1 +1,1 @@
-ours/manyargs.ml
+x86/manyargs.ml

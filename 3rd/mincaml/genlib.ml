@@ -63,7 +63,7 @@ in
 
 (* sin / cos / atan *)
 let rec modulo_2pi x =
-  let pi = 3.1415927 in
+  let pi = 3.141593 in
   let p = 2.0 *. pi in
   let rec hoge x y = 
     if x >= y then
@@ -107,7 +107,7 @@ let rec cos_body x =
 in
 
 let rec sin x =
-  let pi = 3.1415927 in
+  let pi = 3.141593 in
   let f = (if (x < 0.0) then -.1.0 else 1.0) in
   let x = modulo_2pi (abs_float x) in
   if x >= pi then 
@@ -139,7 +139,7 @@ let rec sin x =
 in
   
 let rec cos x =
-  let pi = 3.1415927 in
+  let pi = 3.141593 in
   let f = 1.0 in
   let x = modulo_2pi (abs_float x) in
   if x >= pi then 

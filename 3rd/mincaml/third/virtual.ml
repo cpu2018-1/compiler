@@ -99,7 +99,7 @@ let rec g env = function (* 式の仮想マシンコード生成 (caml2html: virtual_g) *)
         with Not_found ->
           let l = Id.L(Id.genid "l") in
           data := (l, d) :: !data;
-          ftable := Ftable.add_float d !ftable; 
+(*          ftable := Ftable.add_float d !ftable; *)
           l in
       Ans(FLi(d))
   | Closure.Neg(x) -> Ans(Neg(x))
@@ -215,7 +215,7 @@ let h { Closure.name = (Id.L(x), t); Closure.args = yts; Closure.formal_fv = zts
 (* プログラム全体の仮想マシンコード生成 (caml2html: virtual_f) *)
 let f (Closure.Prog(fundefs, e)) =
   data := [];
-(*  set_ftable ();*)
+  set_ftable ();
   let fundefs = List.map h fundefs in
   let e = g M.empty e in
   Prog(!data, fundefs, e)

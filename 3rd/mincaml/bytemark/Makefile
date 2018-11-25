@@ -1,1 +1,1 @@
-ours/Makefile
+x86/Makefile

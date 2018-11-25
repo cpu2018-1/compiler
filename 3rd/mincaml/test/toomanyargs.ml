@@ -1,1 +1,1 @@
-ours/toomanyargs.ml
+x86/toomanyargs.ml

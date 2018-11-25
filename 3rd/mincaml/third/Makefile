@@ -75,7 +75,7 @@ include OCamlMakefile
 fuga : piyo clean
 
 
-COPY_MINCAML=../cpuex2018/raytracer ../simulation/test \
+COPY_MINCAML=../../cpuex2018/raytracer ../simulation/test \
 						 ../simulation/raytrace ../simulation/library shootout
 
 
