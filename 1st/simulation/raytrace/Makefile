@@ -15,7 +15,7 @@ simulator : $(SIMDIR)/main.c $(SIMDIR)/float.c
 	gcc -w -O3 -o simulator $^ -lm
 
 $(SOURCE).s : min-caml $(SOURCE).ml
-	./min-caml $(SOURCE) -inline 100 2> /dev/null
+	./min-caml $(SOURCE) -inline 10 2> /dev/null
 
 
 bytecode.b : $(SOURCE).s

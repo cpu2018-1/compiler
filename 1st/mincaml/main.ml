@@ -17,14 +17,11 @@ let rec sprint_binary_sub b n =
 let rec sprint_binary b =
   sprint_binary_sub b 31
 
-let rec print_ftable () =
-  Ftable.iter (fun f i -> 
-            Printf.printf "ftable[%d] = (%s, %f)\n" i (sprint_binary (Int32.bits_of_float f)) f) !(Virtual.ftable)
 
 let rec iter n e = (* 最適化処理をくりかえす (caml2html: main_iter) *)
   Format.eprintf "iteration %d@." n;
   if n = 0 then e else
-  let e' = Commelm.commelm (Elim.f (ConstFold.f (Inline.f (Assoc.f (Beta.f e))))) in
+  let e' =  Commelm.commelm (Elim.f (ConstFold.f (Inline.f (Assoc.f (Beta.f e))))) in
   if e = e' then e else
   iter (n - 1) e'
 
@@ -47,7 +44,7 @@ let lexbuf outchan l = (* バッファをコンパイルしてチャンネルへ出力する (caml2htm
                             a)) in
 (*                     KNormal.print_kNormal b; *)
                        b)
-                      )))))) in (*Asm.print_t 0 t;*) print_ftable (); Asm.Prog(fl, funlist, t))
+                      )))))) in Asm.print_t 0 t; Asm.Prog(fl, funlist, t))
 
 let string s = lexbuf stdout (Lexing.from_string s) (* 文字列をコンパイルして標準出力に表示する (caml2html: main_string) *)
 

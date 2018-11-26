@@ -408,7 +408,7 @@ in
 let rec print_ufloat x =
   print_int (int_of_float x);
   print_char (46);
-  print_dec (x -. float_of_int (int_of_float x))
+  print_dec (x -. (floor x))
 in
 
 let rec print_float x =

@@ -13,9 +13,6 @@
 (*NOMINCAML open Globals;;*)
 
 (*
-let hoge = fuga in
-*)
-
 
 let rec fispos x = x > 0.0 in
 let rec fisneg x = x < 0.0 in
@@ -429,6 +426,7 @@ let rec print_float x =
   else
     print_ufloat x 
 in 
+*)
 
 
 

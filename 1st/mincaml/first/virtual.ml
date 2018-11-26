@@ -4,7 +4,6 @@ open Asm
 
 let data = ref [] (* 浮動小数点数の定数テーブル (caml2html: virtual_data) *)
 
-let ftable = ref Ftable.empty
 
 let classify xts ini addf addi =
   List.fold_left

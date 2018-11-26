@@ -42,5 +42,5 @@
 (*MINCAML*)   xloop 0 y;
 (*NOMINCAML   done; *)
 (*MINCAML*)   yloop (y + 1)) in
-(*MINCAML*) yloop 0
+(*MINCAML*) yloop 0; print_newline ()
 (*NOMINCAML done; *)

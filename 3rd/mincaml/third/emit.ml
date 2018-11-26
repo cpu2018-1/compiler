@@ -77,7 +77,7 @@ and g' oc = function (* 各命令のアセンブリ生成 (caml2html: emit_gprime) *)
       Printf.fprintf oc "\tlui\t%s, %s, %d\n" r r n
   | NonTail(x), FLi(d) ->
       if (Ftable.mem d (!Virtual.ftable)) then
-        Printf.fprintf oc "\tflup\t%s, %d\n" (reg x) (Ftable.find d (!Virtual.ftable))
+        Printf.fprintf oc "\tflup\t%s, %d\t\t# fli\t%s, %f\n" (reg x) (Ftable.find d (!Virtual.ftable)) (reg x) (d)
       else (
         let f = internal_of_float d in
         let n = (Int32.shift_right_logical (Int32.shift_left f 16) 16) in        (** 15かも? **)
@@ -113,8 +113,8 @@ and g' oc = function (* 各命令のアセンブリ生成 (caml2html: emit_gprime) *)
                                 Printf.fprintf oc "\tflw\t%s, 0(%s)\n" (reg x) (reg reg_tmp)
   | NonTail(x), FLw(y, C(z)) -> Printf.fprintf oc "\tflw\t%s, %d(%s)\n" (reg x) z (reg y)
   | NonTail(_), FSw(x, y, V(z)) -> Printf.fprintf oc "\tadd\t%s, %s, %s\n" (reg reg_tmp) (reg y) (reg z);
-                                    Printf.fprintf oc "\tsw\t%s, 0(%s)\n" (reg x) (reg reg_tmp)
-  | NonTail(_), FSw(x, y, C(z)) -> Printf.fprintf oc "\tfsw\t%s, %d(%s)\n" (reg reg_tmp) z (reg y)
+                                    Printf.fprintf oc "\tfsw\t%s, 0(%s)\n" (reg x) (reg reg_tmp)
+  | NonTail(_), FSw(x, y, C(z)) -> Printf.fprintf oc "\tfsw\t%s, %d(%s)\n" (reg x) z (reg y)
   | NonTail(_), Comment(s) -> Printf.fprintf oc "#\t%s\n" s
   (* 退避の仮想命令の実装 (caml2html: emit_save) *)
   | NonTail(_), Save(x, y) when List.mem x allregs && not (S.mem y !stackset) ->
@@ -193,34 +193,38 @@ and g' oc = function (* 各命令のアセンブリ生成 (caml2html: emit_gprime) *)
       Printf.fprintf oc "\tj\t%s\n" x
 (*      Printf.fprintf oc "\tb\t%s\n" x*) (* 単なるジャンプ ble r0 r31 で代用 *)
   | NonTail(a), CallCls(x, ys, zs) ->
-      Printf.fprintf oc "\taddi\t%s, %s, 0\t\t\t\t#mflr\t%s\n" (reg reg_tmp) (reg reg_lr) (reg reg_tmp);
+(*      Printf.fprintf oc "\taddi\t%s, %s, 0\t\t\t\t#mflr\t%s\n" (reg reg_tmp) (reg reg_lr) (reg reg_tmp); *)
       g'_args oc [(x, reg_cl)] ys zs;
       let ss = stacksize () in
-      Printf.fprintf oc "\tsw\t%s, %d(%s)\n" (reg reg_tmp) (ss - 1) (reg reg_sp);
+(*      Printf.fprintf oc "\tsw\t%s, %d(%s)\n" (reg reg_tmp) (ss - 1) (reg reg_sp); *)
+      Printf.fprintf oc "\tsw\t%s, %d(%s)\n" (reg reg_lr) (ss - 1) (reg reg_sp); 
       Printf.fprintf oc "\taddi\t%s, %s, %d\n" (reg reg_sp) (reg reg_sp) ss;
       Printf.fprintf oc "\tlw\t%s, 0(%s)\n" (reg reg_tmp) (reg reg_cl);
       Printf.fprintf oc "\tjalr\t%s\n" (reg reg_tmp);
       Printf.fprintf oc "\taddi\t%s, %s, %d\n" (reg reg_sp) (reg reg_sp) (-ss);
-      Printf.fprintf oc "\tlw\t%s, %d(%s)\n" (reg reg_tmp) (ss - 1) (reg reg_sp);
+(*      Printf.fprintf oc "\tlw\t%s, %d(%s)\n" (reg reg_tmp) (ss - 1) (reg reg_sp); *)
+      Printf.fprintf oc "\tlw\t%s, %d(%s)\n" (reg reg_lr) (ss - 1) (reg reg_sp);
       if List.mem a allregs && a <> regs.(0) then
         Printf.fprintf oc "\tadd\t%s, r0, %s\t\t\t\t# mr\t%s, %s\n" (reg a) (reg regs.(0)) (reg a) (reg regs.(0))
       else if List.mem a allfregs && a <> fregs.(0) then
         Printf.fprintf oc "\tfadd\t%s, f0, %s\t\t\t\t# fmr\t%s, %s\n" (reg a) (reg fregs.(0)) (reg a) (reg fregs.(0));
-      Printf.fprintf oc "\tadd\t%s, r0, %s\t\t\t\t#mtlr\t%s\n" (reg reg_lr) (reg reg_tmp) (reg reg_tmp)
+(*      Printf.fprintf oc "\tadd\t%s, r0, %s\t\t\t\t#mtlr\t%s\n" (reg reg_lr) (reg reg_tmp) (reg reg_tmp) *)
   | (NonTail(a), CallDir(Id.L(x), ys, zs)) ->
-      Printf.fprintf oc "\taddi\t%s, %s, 0\t\t\t\t#mflr\t%s\n" (reg reg_tmp) (reg reg_lr) (reg reg_tmp);
+(*      Printf.fprintf oc "\taddi\t%s, %s, 0\t\t\t\t#mflr\t%s\n" (reg reg_tmp) (reg reg_lr) (reg reg_tmp); *)
       g'_args oc [] ys zs;
       let ss = stacksize () in
-      Printf.fprintf oc "\tsw\t%s, %d(%s)\n" (reg reg_tmp) (ss - 1) (reg reg_sp);
+(*      Printf.fprintf oc "\tsw\t%s, %d(%s)\n" (reg reg_tmp) (ss - 1) (reg reg_sp); *)
+      Printf.fprintf oc "\tsw\t%s, %d(%s)\n" (reg reg_lr) (ss - 1) (reg reg_sp);
       Printf.fprintf oc "\taddi\t%s, %s, %d\n" (reg reg_sp) (reg reg_sp) ss;
       Printf.fprintf oc "\tjal\t%s\t\t\t\t#\tbl\t%s\n" x x;
       Printf.fprintf oc "\taddi\t%s, %s, %d\n" (reg reg_sp) (reg reg_sp) (-ss);
-      Printf.fprintf oc "\tlw\t%s, %d(%s)\n" (reg reg_tmp) (ss - 1) (reg reg_sp);
+(*      Printf.fprintf oc "\tlw\t%s, %d(%s)\n" (reg reg_tmp) (ss - 1) (reg reg_sp); *)
+      Printf.fprintf oc "\tlw\t%s, %d(%s)\n" (reg reg_lr) (ss - 1) (reg reg_sp);
       if List.mem a allregs && a <> regs.(0) then
         Printf.fprintf oc "\tadd\t%s, r0, %s\t\t\t\t# mr\t%s, %s\n" (reg a) (reg regs.(0)) (reg a) (reg regs.(0))
       else if List.mem a allfregs && a <> fregs.(0) then
         Printf.fprintf oc "\tfadd\t%s, f0, %s\t\t\t\t# fmr\t%s, %s\n" (reg a) (reg fregs.(0)) (reg a) (reg fregs.(0));
-      Printf.fprintf oc "\tadd\t%s, r0, %s\t\t\t\t#mtlr\t%s\n" (reg reg_lr) (reg reg_tmp) (reg reg_tmp)
+(*      Printf.fprintf oc "\tadd\t%s, r0, %s\t\t\t\t#mtlr\t%s\n" (reg reg_lr) (reg reg_tmp) (reg reg_tmp) *)
   | NonTail(x), Sll(y, V(z)) -> Printf.fprintf oc "\tsll\t%s, %s, %s\n" (reg x) (reg y) (reg z) (**)
   | NonTail(x), Sll(y, C(z)) -> Printf.fprintf oc "\tslli\t%s, %s, %d\n" (reg x) (reg y) z      (**)
   | NonTail(x), Srl(y, V(z)) -> Printf.fprintf oc "\tsrl\t%s, %s, %s\n" (reg x) (reg y) (reg z) (**)
@@ -239,7 +243,7 @@ and g'_tail_if oc e1 e2 b x y =
   g oc (Tail, e1)
 and g'_tail_if_i oc e1 e2 b x y =
   let b_then = Id.genid (b ^ "_then") in
-  Printf.fprintf oc "\t%s\t%s, %d, %s\n" (b^"i") (reg x) y b_then;
+  Printf.fprintf oc "\t%s\t%d, %s, %s\n" (b^"i") y (reg x) b_then;
   let stackset_back = !stackset in
   g oc (Tail, e2);
   Printf.fprintf oc "%s:\n" b_then;
@@ -262,7 +266,7 @@ and g'_non_tail_if oc dest e1 e2 b x y =
 and g'_non_tail_if_i oc dest e1 e2 b x y = 
   let b_then = Id.genid (b ^ "_then") in
   let b_cont = Id.genid (b ^ "_cont") in
-  Printf.fprintf oc "\t%s\t%s, %d, %s\n" (b^"i") (reg x) y b_then;
+  Printf.fprintf oc "\t%s\t%d, %s, %s\n" (b^"i") y (reg x) b_then;
   let stackset_back = !stackset in
   g oc (dest, e2);
   let stackset1 = !stackset in
@@ -334,6 +338,7 @@ let f oc (Prog(data, fundefs, e)) =
   let lib = open_in "lib.s" in
   let init = open_in "init.s" in
   Format.eprintf "generating assembly...@.";
+  (*
   if data <> [] then
     (Printf.fprintf oc "\t.data\n\t.literal8\n";
      List.iter
@@ -344,12 +349,14 @@ let f oc (Prog(data, fundefs, e)) =
          Printf.fprintf oc "\t.long\t%ld\n" (getlo d))
        data);
     
+  *)
   Printf.fprintf oc "\t.text\n";
   Printf.fprintf oc "\t.globl _min_caml_start\n";
   cat lib oc;
   Printf.fprintf oc "# library ends\n";
 (*  Printf.fprintf oc "\t.align 2\n";*)
   List.iter (fun fundef -> h oc fundef) fundefs;
+  Printf.fprintf oc "_R_0:\n";
   Printf.fprintf oc "_min_caml_start: # main entry point\n";
 (*  Printf.fprintf oc "\tadd\tr0, r0, %s\t\t\t\t#mflr\tr0\n" (reg reg_lr);
   Printf.fprintf oc "\tstmw\tr30, -8(r1)\n";

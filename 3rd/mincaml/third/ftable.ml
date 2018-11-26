@@ -12,7 +12,7 @@ let add key value table =
 
 (* 等価判定 *)
 let is_equal k key =
-  (abs_float (k -. key)) < 0.001
+  (abs_float (k -. key)) < 0.00001
 
 let rec mem key table =
   match table with
