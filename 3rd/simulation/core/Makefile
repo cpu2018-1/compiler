@@ -1,22 +1,22 @@
 OPT=
 SOURCE=minrt
-INPUT=contest.bin
 ASMDIR=../simu-assem3rd/assembly
 SIMDIR=../simu-assem3rd/simulator
 
 
+.PHONY: $(SOURCE).s
 
-all : simulate
+all : $(SOURCE).s simulate
 
 assembler : $(ASMDIR)/lex.c
 	gcc -o $@ $< -lfl
 
 simulator : $(SIMDIR)/main.c $(SIMDIR)/float.c
-	gcc -w -O3 -o simulator $^ -lm
+	gcc -w -O2 -o simulator $^ -lm
 
-$(SOURCE).s : min-caml $(SOURCE).ml
-	./min-caml $(SOURCE) -inline 50 2> /dev/null
-#	./min-caml $(SOURCE) 2> /dev/null
+$(SOURCE).s : 
+	#./min-caml $(SOURCE) -inline 1 2> /dev/null
+	./min-caml $(SOURCE) 2> /dev/null
 
 
 bytecode.b : $(SOURCE).s
@@ -24,4 +24,8 @@ bytecode.b : $(SOURCE).s
 
 
 simulate : assembler simulator bytecode.b 
-	./simulator bytecode.b -i $(INPUT) $(OPT)
+	./simulator bytecode.b $(OPT)
+
+
+clean :
+	rm *mine* *utop*

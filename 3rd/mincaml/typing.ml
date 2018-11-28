@@ -54,6 +54,11 @@ let rec deref_term = function
   | Sll(e1, e2, d) -> Sll(deref_term e1, deref_term e2, d)
   | Srl(e1, e2, d) -> Srl(deref_term e1, deref_term e2, d)
   | Sra(e1, e2, d) -> Sra(deref_term e1, deref_term e2, d)
+  | In(e, d) -> In(deref_term e, d)
+  | Out(e, d) -> Out(deref_term e, d)
+  | FSqrt(e, d) -> FSqrt(deref_term e, d)
+  | FtoI(e, d) -> FtoI(deref_term e, d)
+  | ItoF(e, d) -> ItoF(deref_term e, d)
   | e -> e
 
 let rec occur r1 = function (* occur check (caml2html: typing_occur) *)
@@ -195,6 +200,18 @@ let rec g env e = (* 型推論ルーチン (caml2html: typing_g) *)
         unify Type.Int (g env e1) d;
         unify Type.Int (g env e2) d;
         Type.Int
+    | In (e, d) | Out (e, d) ->
+        unify Type.Int (g env e) d;
+        Type.Unit
+    | FSqrt(e, d) -> 
+        unify Type.Float (g env e) d;
+        Type.Float
+    | FtoI(e, d) ->
+        unify Type.Float (g env e) d;
+        Type.Int
+    | ItoF(e, d) ->
+        unify Type.Int (g env e) d;
+        Type.Float
 
   with Unify(t1, t2, d) -> 
         Printf.printf "Typing error!! line %d near character %d-%d\n" d.lnum d.bchar d.echar; 

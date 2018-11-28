@@ -94,6 +94,11 @@ let find' x' regenv =
   | V(x) -> V(find x Type.Int regenv)
   | c -> c
 
+let find_f' x' regenv =
+  match x' with
+  | V(x) -> V(find x Type.Float regenv)
+  | c -> c
+
 let rec g dest cont regenv = function (* 命令列のレジスタ割り当て (caml2html: regalloc_g) *)
   | Ans(exp) -> g'_and_restore dest cont regenv exp
   | Let((x, t) as xt, exp, e) ->
@@ -135,8 +140,8 @@ and g' dest cont regenv = function (* 各命令のレジスタ割り当て (caml2html: regal
   | IfEq(x, y', e1, e2) as exp -> g'_if dest cont regenv exp (fun e1' e2' -> IfEq(find x Type.Int regenv, find' y' regenv, e1', e2')) e1 e2
   | IfLE(x, y', e1, e2) as exp -> g'_if dest cont regenv exp (fun e1' e2' -> IfLE(find x Type.Int regenv, find' y' regenv, e1', e2')) e1 e2
   | IfGE(x, y', e1, e2) as exp -> g'_if dest cont regenv exp (fun e1' e2' -> IfGE(find x Type.Int regenv, find' y' regenv, e1', e2')) e1 e2
-  | IfFEq(x, y, e1, e2) as exp -> g'_if dest cont regenv exp (fun e1' e2' -> IfFEq(find x Type.Float regenv, find y Type.Float regenv, e1', e2')) e1 e2
-  | IfFLE(x, y, e1, e2) as exp -> g'_if dest cont regenv exp (fun e1' e2' -> IfFLE(find x Type.Float regenv, find y Type.Float regenv, e1', e2')) e1 e2
+  | IfFEq(x', y', e1, e2) as exp -> g'_if dest cont regenv exp (fun e1' e2' -> IfFEq(find_f' x' regenv, find_f' y' regenv, e1', e2')) e1 e2
+  | IfFLE(x', y', e1, e2) as exp -> g'_if dest cont regenv exp (fun e1' e2' -> IfFLE(find_f' x' regenv, find_f' y' regenv, e1', e2')) e1 e2
   | CallCls(x, ys, zs) as exp ->
       if List.length ys > Array.length regs - 2 || List.length zs > Array.length fregs - 1 then
         failwith (Format.sprintf "cannot allocate registers for arugments to %s" x)
@@ -153,6 +158,9 @@ and g' dest cont regenv = function (* 各命令のレジスタ割り当て (caml2html: regal
   | Sra(x, y') -> (Ans(Sra(find x Type.Int regenv, find' y' regenv)), regenv)
   | In(x) -> (Ans(In(find x Type.Int regenv)), regenv)
   | Out(x) -> (Ans(Out(find x Type.Int regenv)), regenv)
+  | FSqrt(x) -> (Ans(FSqrt(find x Type.Float regenv)), regenv)
+  | FtoI(x) -> (Ans(FtoI(find x Type.Int regenv)), regenv)
+  | ItoF(x) -> (Ans(ItoF(find x Type.Int regenv)), regenv)
 and g'_if dest cont regenv exp constr e1 e2 = (* ifのレジスタ割り当て (caml2html: regalloc_if) *)
   let (e1', regenv1) = g dest cont regenv e1 in
   let (e2', regenv2) = g dest cont regenv e2 in

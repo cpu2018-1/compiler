@@ -25,6 +25,11 @@ type t =
   | Sll of Id.t * Id.t
   | Srl of Id.t * Id.t
   | Sra of Id.t * Id.t
+  | In of Id.t
+  | Out of Id.t
+  | FSqrt of Id.t
+  | FtoI of Id.t
+  | ItoF of Id.t
 and fundef = { name : Id.t * Type.t; args : (Id.t * Type.t) list; body : t }
 
 val fv : t -> S.t

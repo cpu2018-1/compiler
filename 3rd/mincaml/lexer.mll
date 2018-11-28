@@ -96,6 +96,18 @@ rule token = parse
     { SRL }
 | ">>>"
     { SRA }
+| "fneg"
+    { MINUS_DOT }
+| "sqrt" 
+    { SQRT }
+| "asm_ftoi" | "ftoi" 
+    { FTOI }
+| "asm_itof" | "itof"
+    { ITOF }
+| "asm_in" 
+    { ASM_IN }
+| "asm_out" | "out"
+    { ASM_OUT }
 | eof
     { EOF }
 | lower (digit|lower|upper|'_')* (* 他の「予約語」より後でないといけない *)
@@ -110,6 +122,7 @@ rule token = parse
            (Lexing.lexeme lexbuf)
            (Lexing.lexeme_start lexbuf)
            (Lexing.lexeme_end lexbuf)) }
+
 and comment = parse
 | "*)"
     { () }

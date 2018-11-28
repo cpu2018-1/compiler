@@ -13,7 +13,6 @@ let rec sprint_binary_sub b n =
     )
   )
 
-
 let rec sprint_binary b =
   sprint_binary_sub b 31
 

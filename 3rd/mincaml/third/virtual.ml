@@ -83,7 +83,7 @@ let expand xts ini addf addi =
     ini
     (fun (offset, acc) x ->
       let offset = align offset in
-      (offset + 1, addf x offset acc))   (* offset + 4にすべき? → した*)
+      (offset + 1, addf x offset acc))
     (fun (offset, acc) x t ->
       (offset + 1, addi x t offset acc))
 
@@ -91,7 +91,7 @@ let rec g env = function (* 式の仮想マシンコード生成 (caml2html: virtual_g) *)
   | Closure.Unit -> Ans(Nop)
   | Closure.Int(i) -> Ans(Li(i))
   | Closure.Float(d) ->
-      let l =
+(*      let l =
         try
           (* すでに定数テーブルにあったら再利用 *)
           let (l, _) = List.find (fun (_, d') -> d = d') !data in
@@ -101,6 +101,7 @@ let rec g env = function (* 式の仮想マシンコード生成 (caml2html: virtual_g) *)
           data := (l, d) :: !data;
 (*          ftable := Ftable.add_float d !ftable; *)
           l in
+*)
       Ans(FLi(d))
   | Closure.Neg(x) -> Ans(Neg(x))
   | Closure.Add(x, y) -> Ans(Add(x, V(y)))
@@ -113,12 +114,12 @@ let rec g env = function (* 式の仮想マシンコード生成 (caml2html: virtual_g) *)
   | Closure.IfEq(x, y, e1, e2) ->
       (match M.find x env with
       | Type.Bool | Type.Int -> Ans(IfEq(x, V(y), g env e1, g env e2))
-      | Type.Float -> Ans(IfFEq(x, y, g env e1, g env e2))
+      | Type.Float -> Ans(IfFEq(V(x), V(y), g env e1, g env e2))
       | _ -> failwith "equality supported only for bool, int, and float")
   | Closure.IfLE(x, y, e1, e2) ->
       (match M.find x env with
       | Type.Bool | Type.Int -> Ans(IfLE(x, V(y), g env e1, g env e2))
-      | Type.Float -> Ans(IfFLE(x, y, g env e1, g env e2))
+      | Type.Float -> Ans(IfFLE(V(x), V(y), g env e1, g env e2))
       | _ -> failwith "inequality supported only for bool, int, and float")
   | Closure.Let((x, t1), e1, e2) ->
       let e1' = g env e1 in
@@ -197,6 +198,9 @@ let rec g env = function (* 式の仮想マシンコード生成 (caml2html: virtual_g) *)
   | Closure.Sra(x, y) -> Ans(Sra(x, V(y)))
   | Closure.In(x) -> Ans(In(x))
   | Closure.Out(x) -> Ans(Out(x))
+  | Closure.FSqrt(x) -> Ans(FSqrt(x))
+  | Closure.FtoI(x) -> Ans(FtoI(x))
+  | Closure.ItoF(x) -> Ans(ItoF(x))
 
 (* 関数の仮想マシンコード生成 (caml2html: virtual_h) *)
 let h { Closure.name = (Id.L(x), t); Closure.args = yts; Closure.formal_fv = zts; Closure.body = e } =

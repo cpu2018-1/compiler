@@ -17,6 +17,9 @@ let hoge = fuga in
 *)
 
 
+
+let rec print_char x = out x in
+
 let rec fispos x = x > 0.0 in
 let rec fisneg x = x < 0.0 in
 let rec fiszero x = (x = 0.0) in
@@ -42,21 +45,9 @@ let rec fabs a =
     a
 in
 
-let rec fneg a =
-  (-.a)
-in
-
 
 (* sqrt -> 直接アセンブリ書いた *)
 
-
-let rec floor x =
-  let y = float_of_int (int_of_float x) in
-  if x < y then
-    y -. 1.0
-  else
-    y
-in
 
 let rec int_of_float a = 
   if (a = 0.0) then
@@ -68,30 +59,40 @@ let rec int_of_float a =
 in
 
 let rec float_of_int a =
-  itof a
+  asm_itof a
+in
+
+let rec floor x =
+  let y = float_of_int (int_of_float x) in
+  if x < y then
+    y -. 1.0
+  else
+    y
+in
+
+let rec hoge x y = 
+  if x >= y then
+    hoge x (2. *. y) 
+  else
+    y
+in
+
+let rec fuga x y z =
+  if x >= z *. 2.0 then
+    if x >= y then
+      fuga (x -. y) (y /. 2.0) z
+    else
+      fuga x (y /. 2.0) z
+  else
+    x
 in
 
 (* sin / cos / atan *)
 let rec modulo_2pi x =
   let pi = 3.141593 in
   let p = 2.0 *. pi in
-  let rec hoge x y = 
-    if x >= y then
-      hoge x (2. *. y) 
-    else
-      y
-  in
-    let p = hoge x p in
-    let rec fuga x y z =
-      if x >= z *. 2.0 then
-        if x >= y then
-          fuga (x -. y) (y /. 2.0) z
-        else
-          fuga x (y /. 2.0) z
-      else
-        x
-    in
-      fuga x p pi
+  let p = hoge x p in
+  fuga x p pi
 in
 
 
@@ -187,13 +188,15 @@ in
 let rec atan_body x =
 (*  x *. (1.0 -. x *. x *. (0.3333333 -. x *. x *. (0.2 -. x *. x *. 
        (0.142857142 -. x *. x *. (0.111111104 -. x *. x *. (0.08976446 -. x *. x *. (0.060035485 *. x *. x)))))))*)
+(*
   x -. 0.3333333   *. x *. x *. x 
     +. 0.2         *. x *. x *. x *. x *. x
     -. 0.142857142 *. x *. x *. x *. x *. x *. x *. x 
     +. 0.111111104 *. x *. x *. x *. x *. x *. x *. x *. x *. x
     -. 0.08976446  *. x *. x *. x *. x *. x *. x *. x *. x *. x *. x *. x 
     +. 0.060035485 *. x *. x *. x *. x *. x *. x *. x *. x *. x *. x *. x *. x *. x
-(*
+    *)
+
   let y = x *. x in
   let z = y *. y in
   let w = z *. z in
@@ -201,7 +204,7 @@ let rec atan_body x =
     -. 0.142857142 *. x *. y *. z +. 0.111111104 *. x *. z *. z
     -. 0.08976446 *. x *. y *. w
     +. 0.060035485 *. x *. z *. w
-*)
+
 in
 
 let rec atan x =
@@ -221,7 +224,7 @@ in
 
 (* I/O *)
 let rec print_num n =
-  print_char (n + 48)
+  out (n + 48)
 in 
 
 let rec mul10 n =

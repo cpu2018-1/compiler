@@ -24,6 +24,7 @@ let rec fhalf x = x *. 0.5 in
 let rec fsqr x = x *. x in
 
 let rec fabs a =
+  asm_out (48);
   if (a < 0.0) then
     (-.a)
   else
@@ -40,25 +41,25 @@ in
 (* sqrt -> 直接アセンブリ書いた *)
 
 
+let rec int_of_float a = 
+  if (a = 0.0) then
+    0
+  else if (a >= 0.0) then
+    asm_ftoi (a -. 0.5)
+  else
+    asm_ftoi (a +. 0.5)
+in
+
+let rec float_of_int a =
+  asm_itof a
+in
+
 let rec floor x =
   let y = float_of_int (int_of_float x) in
   if x < y then
     y -. 1.0
   else
     y
-in
-
-let rec int_of_float a = 
-  if (a = 0.0) then
-    0
-  else if (a >= 0.0) then
-    ftoi (a -. 0.5)
-  else
-    ftoi (a +. 0.5)
-in
-
-let rec float_of_int a =
-  itof a
 in
 
 (* sin / cos / atan *)
@@ -104,6 +105,13 @@ let rec cos_body x =
   1.0 -. y *. (0.5 -. y *. (0.04166368 -. y *. 0.0013695068))
 (*  1.0 -. x *. x *. (0.5 -. x *. x *. (0.04166368 -. x *. x *. 0.0013695068)) *)
 (*  1.0 -. 0.5 *. x *. x +. 0.04166368 *. x *. x *. x *. x -. 0.0013695068 *. x *. x *. x *. x *. x *. x  *) (* こっちは命令数が増える *)
+in
+
+let rec abs_float a =
+  if (a < 0.0) then
+    (-.a)
+  else
+    a
 in
 
 let rec sin x =
@@ -387,12 +395,6 @@ let rec truncate a =
   int_of_float (a)
 in
 
-let rec abs_float a =
-  if (a < 0.0) then
-    (-.a)
-  else
-    a
-in
 
 let rec print_dec x =
   if (x = 0.0) then
@@ -422,4 +424,5 @@ in
 
 
 
-print_int 32
+print_int 32;
+print_float (floor (3.1))

@@ -45,5 +45,10 @@ let rec g env = function (* α変換ルーチン本体 (caml2html: alpha_g) *)
   | Sll(x, y) -> Sll(find x env, find y env)
   | Srl(x, y) -> Srl(find x env, find y env)
   | Sra(x, y) -> Sra(find x env, find y env)
+  | In(x) -> In(find x env)
+  | Out(x) -> Out(find x env)
+  | FSqrt(x) -> FSqrt(find x env)
+  | FtoI(x) -> FtoI(find x env)
+  | ItoF(x) -> ItoF(find x env)
 
 let f = g M.empty

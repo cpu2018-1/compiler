@@ -1,4 +1,4 @@
-type id_or_imm = V of Id.t | C of int
+type id_or_imm = V of Id.t | C of int | FC of float
 type t =
   | Ans of exp
   | Let of (Id.t * Type.t) * exp * t
@@ -26,8 +26,8 @@ and exp =
   | IfEq of Id.t * id_or_imm * t * t
   | IfLE of Id.t * id_or_imm * t * t
   | IfGE of Id.t * id_or_imm * t * t
-  | IfFEq of Id.t * Id.t * t * t
-  | IfFLE of Id.t * Id.t * t * t
+  | IfFEq of id_or_imm * id_or_imm * t * t
+  | IfFLE of id_or_imm * id_or_imm * t * t
   (* closure address, integer arguments, and float arguments *)
   | CallCls of Id.t * Id.t list * Id.t list
   | CallDir of Id.l * Id.t list * Id.t list
@@ -38,6 +38,9 @@ and exp =
   | Sra of Id.t * id_or_imm
   | In of Id.t
   | Out of Id.t
+  | FSqrt of Id.t
+  | FtoI of Id.t
+  | ItoF of Id.t
 type fundef = { name : Id.l; args : Id.t list; fargs : Id.t list; body : t; ret : Type.t }
 type prog = Prog of (Id.l * float) list * fundef list * t
 

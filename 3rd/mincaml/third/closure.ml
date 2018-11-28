@@ -28,6 +28,9 @@ type t = (* クロージャ変換後の式 (caml2html: closure_t) *)
   | Sra of Id.t * Id.t
   | In of Id.t
   | Out of Id.t
+  | FSqrt of Id.t
+  | FtoI of Id.t
+  | ItoF of Id.t
 type fundef = { name : Id.l * Type.t;
                 args : (Id.t * Type.t) list;
                 formal_fv : (Id.t * Type.t) list;
@@ -36,7 +39,7 @@ type prog = Prog of fundef list * t
 
 let rec fv = function
   | Unit | Int(_) | Float(_) | ExtArray(_) -> S.empty
-  | Neg(x) | FNeg(x) | In(x) | Out(x) -> S.singleton x
+  | Neg(x) | FNeg(x) | In(x) | Out(x) | FSqrt(x) | FtoI(x) | ItoF(x) -> S.singleton x
   | Add(x, y) | Sub(x, y) | FAdd(x, y) | FSub(x, y) | FMul(x, y) | FDiv(x, y) | Get(x, y) | Sll(x, y) | Srl(x, y) | Sra(x, y) -> S.of_list [x; y]
   | IfEq(x, y, e1, e2)| IfLE(x, y, e1, e2) -> S.add x (S.add y (S.union (fv e1) (fv e2)))
   | Let((x, t), e1, e2) -> S.union (fv e1) (S.remove x (fv e2))
@@ -103,13 +106,16 @@ let rec g env known = function (* クロージャ変換ルーチン本体 (caml2html: closure
   | KNormal.Get(x, y) -> Get(x, y)
   | KNormal.Put(x, y, z) -> Put(x, y, z)
   | KNormal.ExtArray(x) -> ExtArray(Id.L(x))
-  | KNormal.ExtFunApp(x, [y]) when x = "asm_in" -> In(y)
-  | KNormal.ExtFunApp(x, [y]) when x = "asm_out" -> Out(y)
-  | KNormal.ExtFunApp(x, ys) -> 
-                AppDir(Id.L("lib_"^x), ys)
+  | KNormal.ExtFunApp(x, ys) -> AppDir(Id.L("lib_"^x), ys)
   | KNormal.Sll(x, y) -> Sll(x, y)
   | KNormal.Srl(x, y) -> Srl(x, y)
   | KNormal.Sra(x, y) -> Sra(x, y)
+  | KNormal.In(x) -> In(x)
+  | KNormal.Out(x) -> Out(x)
+  | KNormal.FSqrt(x) -> FSqrt(x)
+  | KNormal.FtoI(x) -> FtoI(x)
+  | KNormal.ItoF(x) -> ItoF(x)
+
 
 let f e =
   toplevel := [];

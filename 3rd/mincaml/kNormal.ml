@@ -27,11 +27,16 @@ type t = (* K正規化後の式 (caml2html: knormal_t) *)
   | Sll of Id.t * Id.t
   | Srl of Id.t * Id.t
   | Sra of Id.t * Id.t
+  | In of Id.t
+  | Out of Id.t
+  | FSqrt of Id.t
+  | FtoI of Id.t
+  | ItoF of Id.t
 and fundef = { name : Id.t * Type.t; args : (Id.t * Type.t) list; body : t }
 
 let rec fv = function (* 式に出現する（自由な）変数 (caml2html: knormal_fv) *)
   | Unit | Int(_) | Float(_) | ExtArray(_) -> S.empty
-  | Neg(x) | FNeg(x) -> S.singleton x
+  | Neg(x) | FNeg(x) | In(x) | Out(x) | FSqrt(x) | FtoI(x) | ItoF(x) -> S.singleton x
   | Add(x, y) | Sub(x, y) | FAdd(x, y) | FSub(x, y) | FMul(x, y) | FDiv(x, y) | Get(x, y) | Sll(x, y) | Srl(x, y) | Sra(x, y) -> S.of_list [x; y]
   | IfEq(x, y, e1, e2) | IfLE(x, y, e1, e2) -> S.add x (S.add y (S.union (fv e1) (fv e2)))
   | Let((x, t), e1, e2) -> S.union (fv e1) (S.remove x (fv e2))
@@ -191,6 +196,21 @@ let insert_let (e, t) k = (* letを挿入する補助関数 (caml2html: knormal_insert) *
       insert_let (g env e1)
         (fun x -> insert_let (g env e2)
             (fun y -> Sra(x, y), Type.Int))
+  | Syntax.In(e, d) ->
+      insert_let (g env e)
+        (fun x -> In(x), Type.Unit)
+  | Syntax.Out(e, d) ->
+      insert_let (g env e)
+        (fun x -> Out(x), Type.Unit)
+  | Syntax.FSqrt(e, d) ->
+      insert_let (g env e)
+        (fun x -> FSqrt(x), Type.Float)
+  | Syntax.FtoI(e, d) ->
+      insert_let (g env e)
+        (fun x -> FtoI(x), Type.Int)
+  | Syntax.ItoF(e, d) ->
+      insert_let (g env e)
+        (fun x -> ItoF(x), Type.Float)
 let f e = 
   fst (g M.empty e)
 
@@ -283,6 +303,11 @@ let rec print_kNormal_sub t i =
   | Sll (n, m) -> print_string "SLL"; print_space (); Id.print_id n; print_space (); Id.print_id m; print_newline ()
   | Srl (n, m) -> print_string "SRL"; print_space (); Id.print_id n; print_space (); Id.print_id m; print_newline ()
   | Sra (n, m) -> print_string "SRA"; print_space (); Id.print_id n; print_space (); Id.print_id m; print_newline ()
+  | In n -> print_string "IN"; print_space (); Id.print_id n; print_newline ()
+  | Out n -> print_string "OUT"; print_space (); Id.print_id n; print_newline ()
+  | FSqrt f -> print_string "FSQRT"; print_space (); Id.print_id f; print_newline ()
+  | FtoI f -> print_string "FTOI"; print_space (); Id.print_id f; print_newline ()
+  | ItoF n -> print_string "ITOF"; print_space (); Id.print_id n; print_newline ()
 and 
 print_kNormal_sub_list tl i = 
   List.iter ((fun j x -> print_kNormal_sub x j) i) tl

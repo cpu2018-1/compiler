@@ -1,6 +1,6 @@
 (* PowerPC assembly with a few virtual instructions *)
 
-type id_or_imm = V of Id.t | C of int
+type id_or_imm = V of Id.t | C of int | FC of float
 type t = (* 命令の列 (caml2html: sparcasm_t) *)
   | Ans of exp
   | Let of (Id.t * Type.t) * exp * t
@@ -29,8 +29,8 @@ and exp = (* 一つ一つの命令に対応する式 (caml2html: sparcasm_exp) *)
   | IfEq of Id.t * id_or_imm * t * t
   | IfLE of Id.t * id_or_imm * t * t
   | IfGE of Id.t * id_or_imm * t * t (* 左右対称ではないので必要 *)
-  | IfFEq of Id.t * Id.t * t * t
-  | IfFLE of Id.t * Id.t * t * t
+  | IfFEq of id_or_imm * id_or_imm * t * t
+  | IfFLE of id_or_imm * id_or_imm * t * t
   (* closure address, integer arguments, and float arguments *)
   | CallCls of Id.t * Id.t list * Id.t list
   | CallDir of Id.l * Id.t list * Id.t list
@@ -41,6 +41,9 @@ and exp = (* 一つ一つの命令に対応する式 (caml2html: sparcasm_exp) *)
   | Sra of Id.t * id_or_imm
   | In of Id.t
   | Out of Id.t
+  | FSqrt of Id.t
+  | FtoI of Id.t
+  | ItoF of Id.t
 type fundef = { name : Id.l; args : Id.t list; fargs : Id.t list; body : t; ret : Type.t }
 (* プログラム全体 = 浮動小数点数テーブル + トップレベル関数 + メインの式 (caml2html: sparcasm_prog) *)
 type prog = Prog of (Id.l * float) list * fundef list * t
@@ -79,12 +82,12 @@ let rec remove_and_uniq xs = function
 let fv_id_or_imm = function V(x) -> [x] | _ -> []
 let rec fv_exp = function
   | Nop | Li(_) | FLi(_) | SetL(_) | Comment(_) | Restore(_) -> []
-  | Mr(x) | Neg(x) | FMr(x) | FNeg(x) | Save(x, _) | In(x) | Out(x) -> [x]
+  | Mr(x) | Neg(x) | FMr(x) | FNeg(x) | Save(x, _) | In(x) | Out(x) | FSqrt(x) | FtoI(x) | ItoF(x) -> [x]
   | Add(x, y') | Sub(x, y') | FLw(x, y') | Lwz(x, y') | Sll(x, y') | Srl(x, y') | Sra(x, y') -> x :: fv_id_or_imm y'
   | Stw(x, y, z') | FSw(x, y, z') -> x :: y :: fv_id_or_imm z'
   | FAdd(x, y) | FSub(x, y) | FMul(x, y) | FDiv(x, y) -> [x; y]
   | IfEq(x, y', e1, e2) | IfLE(x, y', e1, e2) | IfGE(x, y', e1, e2) ->  x :: fv_id_or_imm y' @ remove_and_uniq S.empty (fv e1 @ fv e2) (* uniq here just for efficiency *)
-  | IfFEq(x, y, e1, e2) | IfFLE(x, y, e1, e2) -> x :: y :: remove_and_uniq S.empty (fv e1 @ fv e2) (* uniq here just for efficiency *)
+  | IfFEq(x, y', e1, e2) | IfFLE(x, y', e1, e2) -> fv_id_or_imm x @ fv_id_or_imm y' @ remove_and_uniq S.empty (fv e1 @ fv e2) (* uniq here just for efficiency *)
   | CallCls(x, ys, zs) -> x :: ys @ zs
   | CallDir(_, ys, zs) -> ys @ zs
 and fv = function
@@ -124,6 +127,7 @@ let print_space () = print_string " "
 let rec print_id_or_imm = function
   | V s -> Id.print_id s
   | C a -> print_int a
+  | FC f -> print_float f
 
 let rec print_t i = function
   | Ans e -> print_exp i e
@@ -214,16 +218,16 @@ and print_exp i exp = (* 一つ一つの命令に対応する式 (caml2html: sparcasm_exp) *)
           print_t (i + 1) e2
   | IfFEq (x, y, e1, e2) ->
           print_endline "IfFEq";
-          print_indent (i + 1); Id.print_id x; print_newline ();
-          print_indent (i + 1); Id.print_id y; print_newline ();
+          print_indent (i + 1); print_id_or_imm x; print_newline ();
+          print_indent (i + 1); print_id_or_imm y; print_newline ();
           print_indent i; print_endline "then";
           print_t (i + 1) e1;
           print_indent i; print_endline "else";
           print_t (i + 1) e2
   | IfFLE (x, y, e1, e2) ->
           print_endline "IfFLE";
-          print_indent (i + 1); Id.print_id x; print_newline ();
-          print_indent (i + 1); Id.print_id y; print_newline ();
+          print_indent (i + 1); print_id_or_imm x; print_newline ();
+          print_indent (i + 1); print_id_or_imm y; print_newline ();
           print_indent i; print_endline "then";
           print_t (i + 1) e1;
           print_indent i; print_endline "else";
@@ -263,4 +267,13 @@ and print_exp i exp = (* 一つ一つの命令に対応する式 (caml2html: sparcasm_exp) *)
           print_indent (i + 1); Id.print_id x; print_newline ()
   | Out (x) -> 
           print_endline "Out";
+          print_indent (i + 1); Id.print_id x; print_newline ()
+  | FSqrt (x) -> 
+          print_endline "FSqrt";
+          print_indent (i + 1); Id.print_id x; print_newline ()
+  | FtoI (x) -> 
+          print_endline "FtoI";
+          print_indent (i + 1); Id.print_id x; print_newline ()
+  | ItoF (x) -> 
+          print_endline "ItoF";
           print_indent (i + 1); Id.print_id x; print_newline ()
