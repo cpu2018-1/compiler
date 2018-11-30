@@ -1200,35 +1200,19 @@ _fle_else.958:
 	j lib_print_ufloat
 _R_0:
 # library ends
-odd.17:
-	blei	0, r1, ble_then.39
-	addi	r1, r1, -1
-	add	r29, r0, r2				# mr	r29, r2
-	lw	r28, 0(r29)
-	jr	r28
-ble_then.39:
-	addi	r5, r0, 0
-	ble	r5, r1, ble_then.40
-	addi	r1, r1, 1
-	add	r29, r0, r2				# mr	r29, r2
-	lw	r28, 0(r29)
-	jr	r28
-ble_then.40:
-	addi	r1, r0, 456
+h.5.25:
+	addi	r1, r1, 3
 	jr	r31				#
-even.20:
-	blei	0, r1, ble_then.41
-	addi	r1, r1, -1
-	add	r2, r0, r29				# mr	r2, r29
-	j	odd.17
-ble_then.41:
-	addi	r2, r0, 0
-	ble	r2, r1, ble_then.42
-	addi	r1, r1, 1
-	add	r2, r0, r29				# mr	r2, r29
-	j	odd.17
-ble_then.42:
-	addi	r1, r0, 123
+app_h.7.15.27:
+	add	r29, r0, r1				# mr	r29, r1
+	add	r1, r0, r2				# mr	r1, r2
+	sw	r31, 0(r3)
+	addi	r3, r3, 1
+	lw	r30, 0(r29)
+	jalr	r30
+	addi	r3, r3, -1
+	lw	r31, 0(r3)
+	addi	r1, r1, 5
 	jr	r31				#
 _R_0:
 _min_caml_start: # main entry point
@@ -1254,19 +1238,13 @@ _min_caml_start: # main entry point
   sw  r0, 16(r4)
   addi  r4, r4, 17
 #	main program starts
-	add	r29, r0, r4
+	add	r1, r0, r4
 	addi	r4, r4, 1
-	addi	r1, r0, even.20
-	sw	r1, 0(r29)
-	addi	r1, r0, 789
+	addi	r2, r0, h.5.25
+	sw	r2, 0(r1)
+	addi	r2, r0, 2
 	sw	r31, 0(r3)
 	addi	r3, r3, 1
-	lw	r30, 0(r29)
-	jalr	r30
-	addi	r3, r3, -1
-	lw	r31, 0(r3)
-	sw	r31, 0(r3)
-	addi	r3, r3, 1
-	jal	lib_print_int				#	bl	lib_print_int
+	jal	app_h.7.15.27				#	bl	app_h.7.15.27
 	addi	r3, r3, -1
 	lw	r31, 0(r3)

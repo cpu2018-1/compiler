@@ -27,6 +27,7 @@ let rec iter n e = (* 最適化処理をくりかえす (caml2html: main_iter) *)
   if e = e' then e else
   iter (n - 1) e'
 
+
 let lexbuf outchan l = (* バッファをコンパイルしてチャンネルへ出力する (caml2html: main_lexbuf) *)
   Id.counter := 0;
   Typing.extenv := M.empty;
@@ -44,8 +45,8 @@ let lexbuf outchan l = (* バッファをコンパイルしてチャンネルへ出力する (caml2htm
                       (KNormal.f
                          (Typing.f
                             a)) in
-                     KNormal.print_kNormal b; 
-                       let c = (Lifting.lifting [] b) in KNormal.print_kNormal c; c)
+                     KNormal.print_kNormal b;
+                       let c = (Lifting.lifting b) in KNormal.print_kNormal c; c)
                       )))))) in (*Asm.print_t 0 t;*) print_ftable (); Asm.Prog(fl, funlist, t))
 
 let string s = lexbuf stdout (Lexing.from_string s) (* 文字列をコンパイルして標準出力に表示する (caml2html: main_string) *)

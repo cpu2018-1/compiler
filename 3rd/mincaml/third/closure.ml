@@ -89,11 +89,12 @@ let rec g env known = function (* クロージャ変換ルーチン本体 (caml2html: closure
          let e1' = g (M.add_list yts env') known e1 in
          known, e1') in
       let zs = S.elements (S.diff (fv e1') (S.add x (S.of_list (List.map fst yts)))) in (* 自由変数のリスト *)
-      let zts = List.map (fun z -> (z, M.find z env')) zs in (* ここで自由変数zの型を引くために引数envが必要 *)
+      let zts = List.map (fun z -> print_endline ("attempt to find "^z); (z, M.find z env')) zs in (* ここで自由変数zの型を引くために引数envが必要 *)
       toplevel := { name = (Id.L(x), t); args = yts; formal_fv = zts; body = e1' } :: !toplevel; (* トップレベル関数を追加 *)
       let e2' = g env' known' e2 in
       if S.mem x (fv e2') then (* xが変数としてe2'に出現するか *)
-        MakeCls((x, t), { entry = Id.L(x); actual_fv = zs }, e2') (* 出現していたら削除しない *)
+        (Format.eprintf "create closure(s) %s@." x;
+        MakeCls((x, t), { entry = Id.L(x); actual_fv = zs }, e2') (* 出現していたら削除しない *))
       else
         (Format.eprintf "eliminating closure(s) %s@." x;
          e2') (* 出現しなければMakeClsを削除 *)

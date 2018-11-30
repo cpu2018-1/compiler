@@ -1200,11 +1200,17 @@ _fle_else.958:
 	j lib_print_ufloat
 _R_0:
 # library ends
-adder.5:
+adder.11:
+	lw	r2, 1(r29)
 	add	r1, r2, r1
 	jr	r31				#
-make_adder.8:
-	lw	r1, 1(r29)
+make_adder.5:
+	add	r2, r0, r4
+	addi	r4, r4, 2
+	addi	r5, r0, adder.11
+	sw	r5, 0(r2)
+	sw	r1, 1(r2)
+	add	r1, r0, r2
 	jr	r31				#
 _R_0:
 _min_caml_start: # main entry point
@@ -1230,20 +1236,10 @@ _min_caml_start: # main entry point
   sw  r0, 16(r4)
   addi  r4, r4, 17
 #	main program starts
-	add	r1, r0, r4
-	addi	r4, r4, 1
-	addi	r2, r0, adder.5
-	sw	r2, 0(r1)
-	add	r29, r0, r4
-	addi	r4, r4, 2
-	addi	r2, r0, make_adder.8
-	sw	r2, 0(r29)
-	sw	r1, 1(r29)
 	addi	r1, r0, 3
 	sw	r31, 0(r3)
 	addi	r3, r3, 1
-	lw	r30, 0(r29)
-	jalr	r30
+	jal	make_adder.5				#	bl	make_adder.5
 	addi	r3, r3, -1
 	lw	r31, 0(r3)
 	add	r29, r0, r1				# mr	r29, r1
