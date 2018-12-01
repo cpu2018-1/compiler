@@ -108,6 +108,8 @@ rule token = parse
     { ASM_IN }
 | "asm_out" | "out"
     { ASM_OUT }
+| "fless"
+    { FLESS }
 | eof
     { EOF }
 | lower (digit|lower|upper|'_')* (* 他の「予約語」より後でないといけない *)

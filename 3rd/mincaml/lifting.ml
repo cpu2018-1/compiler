@@ -3,7 +3,7 @@ open KNormal
 
 let rec is_used_as_var x = function
   | Var(h) when h = x -> true
-  | IfEq(a, b, e1, e2) | IfEq(a, b, e1, e2) -> is_used_as_var x e1 || is_used_as_var x e2
+  | IfEq(a, b, e1, e2) | IfLE(a, b, e1, e2) -> is_used_as_var x e1 || is_used_as_var x e2
   | Let((a, t), e1, e2) when a <> x -> is_used_as_var x e1 || is_used_as_var x e2
   | Let((a, t), e1, e2) -> is_used_as_var x e1
   | LetRec({ name = (a, t); args = yts; body = e1 }, e2) when a <> x ->
@@ -88,7 +88,6 @@ let rec lifting_fun = function
     let defs, e1'' = lifted free e1' in
     concat defs ((LetRec({ name = (x, t); args = yts; body = e1'' }, lifting_fun e2)))
   | Let ((x, t), e1, e2) ->
-    let free = [(x, t)] in
     let e1' = lifting_fun e1 in
     Let ((x, t), e1', lifting_fun e2)
   | IfLE (x, y, e1, e2) -> IfLE (x, y, lifting_fun e1, lifting_fun e2)

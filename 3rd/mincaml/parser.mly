@@ -43,6 +43,7 @@ let addtyp x = (x, Type.gentyp ())
 %token SLL SRL SRA       /* (* シフト演算 *) */
 %token FTOI ITOF SQRT
 %token ASM_IN ASM_OUT
+%token FLESS
 
 /* (* 優先順位とassociativityの定義（低い方から高い方へ） (caml2html: parser_prior) *) */
 %nonassoc IN
@@ -52,7 +53,7 @@ let addtyp x = (x, Type.gentyp ())
 %right LESS_MINUS
 %nonassoc prec_tuple
 %left COMMA
-%left EQUAL LESS_GREATER LESS GREATER LESS_EQUAL GREATER_EQUAL
+%left EQUAL LESS_GREATER LESS GREATER LESS_EQUAL GREATER_EQUAL 
 %left SLL SRL SRA
 %left PLUS MINUS PLUS_DOT MINUS_DOT
 %left AST SLASH AST_DOT SLASH_DOT
@@ -181,6 +182,9 @@ exp: /* (* 一般の式 (caml2html: parser_exp) *) */
 | ITOF exp 
     %prec prec_app
     { ItoF($2, { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)}) }
+| FLESS simple_exp simple_exp
+    %prec prec_app
+    { Not(LE($3, $2, { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)}), { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)}) }
 | error
     { failwith
         (let s = (Parsing.symbol_start_pos ()) in
