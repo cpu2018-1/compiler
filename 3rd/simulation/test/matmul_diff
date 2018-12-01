@@ -4,4 +4,4 @@
 < 139
 < 154
 ---
-> make: *** [matmul_mine.s] エラー 2
+> make: *** [simulate] Segmentation fault (コアダンプしました)

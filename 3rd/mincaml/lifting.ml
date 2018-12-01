@@ -1,13 +1,5 @@
 open KNormal
 
-let rec list_diff l1 l2 = 
-  match l1 with
-  | [] -> []
-  | x :: xs -> 
-    if (List.mem x l2) then
-      list_diff xs l2
-    else
-      x :: (list_diff xs l2) 
 
 let rec is_used_as_var x = function
   | Var(h) when h = x -> true
@@ -66,7 +58,7 @@ let rec lifted free = function (* lambda liftingされるべき関数をその�
         (({ name = (x, (type_fun_ext t (List.map (fun x -> snd x) zts))); args = yts; body = e1 }, zts) :: lifted_list, add_arguments x (List.map (fun x -> fst x) zts) e2')
   | Let ((x, t), e1, e2) ->
     let l1, e1' = lifted free e1 in
-    let l2, e2' = lifted free e2 in
+    let l2, e2' = lifted ((x, t) :: free) e2 in
     (l1 @ l2, Let((x, t), e1', e2'))
   | IfEq (x, y, e1, e2) ->
     let l1, e1' = lifted free e1 in
@@ -77,7 +69,7 @@ let rec lifted free = function (* lambda liftingされるべき関数をその�
     let l2, e2' = lifted free e2 in
     (l1 @ l2, IfLE(x, y, e1', e2'))
   | LetTuple(xts, y, e) ->
-    let l, e' = lifted free e in
+    let l, e' = lifted (xts @ free) e in
     (l, LetTuple(xts, y, e'))
   | e -> ([], e)
 
@@ -90,17 +82,15 @@ let concat defs e =
   List.fold_right f defs e
 
 let rec lifting_fun = function
-  | LetRec ({ name = (x, t); args = yts; fun = e1 }, e2) -> 
-    let free = yts in
+  | LetRec ({ name = (x, t); args = yts; body = e1 }, e2) -> 
+    let free = ((x, t) :: yts) in
     let e1' = lifting_fun e1 in
     let defs, e1'' = lifted free e1' in
-    concat defs ((LetRec({ name = (x, t); args = yts; fun = e1'' }, lifting_fun e2)))
+    concat defs ((LetRec({ name = (x, t); args = yts; body = e1'' }, lifting_fun e2)))
   | Let ((x, t), e1, e2) ->
     let free = [(x, t)] in
     let e1' = lifting_fun e1 in
-    let e2' = lifting_fun e2 in
-    let defs, e1'' = lifted free e1' in
-    concat defs (Let ((x, t), e1'', e2'))
+    Let ((x, t), e1', lifting_fun e2)
   | IfLE (x, y, e1, e2) -> IfLE (x, y, lifting_fun e1, lifting_fun e2)
   | IfEq (x, y, e1, e2) -> IfEq (x, y, lifting_fun e1, lifting_fun e2)
   | LetTuple(xts, y, e) ->
@@ -111,15 +101,7 @@ let rec lifting_fun = function
   | e -> e
 
 
-let rec lifting_formula env = function
-  | LetRec ({ name = (x, t); args = yts; fun = e1 }, e2) -> 
 
-
-let rec iter f e = (* 式をliftingするのを繰り返す *)
-  Format.eprintf "iteration %d@." n;
-  let e' = f e in
-  if e = e' then e else
-  iter f e'
 
 let rec lifting e = 
-  iter lifting_furmula (lifting_fun (Alpha.f e))
+  lifting_fun (Alpha.f e)
