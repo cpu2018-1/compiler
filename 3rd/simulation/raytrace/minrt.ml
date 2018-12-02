@@ -535,7 +535,6 @@ in
 (* 直接光追跡で使う光方向ベクトル *)
 let ptrace_dirvec  = create_array 3 0.0
 in
-*)
 
 (* 間接光サンプリングに使う方向ベクトル *)
 let dirvecs = 
@@ -544,6 +543,7 @@ let dirvecs =
   let dummy_vs = create_array 0 (dummyf, dummyff) in
   create_array 5 dummy_vs
 in
+*)
 
 (* 光源光の前処理済み方向ベクトル *)
 let light_dirvec =
@@ -553,6 +553,7 @@ let light_dirvec =
   (v3, consts)
 in
 
+(*
 (* 鏡平面の反射情報 *)
 let reflections =
   let dummyf3 = create_array 0 0.0 in
@@ -565,6 +566,7 @@ in
 
 let n_reflections = create_array 1 0
 in
+*)
 (********************************************************)
 
 
