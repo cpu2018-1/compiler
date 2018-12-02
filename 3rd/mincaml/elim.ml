@@ -20,8 +20,11 @@ let rec f = function (* 不要定義削除ルーチン本体 (caml2html: elim_f) *)
       if S.mem x (fv e2') then
         LetRec({ name = (x, t); args = yts; body = f e1 }, e2')
       else
+        LetRec({ name = (x, t); args = yts; body = f e1 }, e2')
+        (*
         (Format.eprintf "eliminating function %s@." x;
          e2') 
+        *)
         
         
         

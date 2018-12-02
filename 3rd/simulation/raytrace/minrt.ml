@@ -307,13 +307,15 @@ in
 
 
 let rec print_int n =
+(*
   if n < 0 then (
     print_char 45;
     print_uint (-n) 
   )
   else
     print_uint n 
-(*  if (n < 0) then
+    *)
+  if (n < 0) then
     print_char 45;
     print_int (-n)
   else (
@@ -333,7 +335,7 @@ let rec print_int n =
         print_num(n - ((a << 3) + (a << 1)))
       )
     )
-  )*) 
+  ) 
 in 
 
 
