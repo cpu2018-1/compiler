@@ -41,6 +41,7 @@ and exp =
   | FSqrt of Id.t
   | FtoI of Id.t
   | ItoF of Id.t
+  | SetGlb of Id.l
 type fundef = { name : Id.l; args : Id.t list; fargs : Id.t list; body : t; ret : Type.t }
 type prog = Prog of (Id.l * float) list * fundef list * t
 

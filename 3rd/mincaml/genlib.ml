@@ -332,7 +332,7 @@ let rec print_int n =
 in 
 
 
-
+(*
 let rec read_token in_token =
   let c = read_char () in
   if c = 32 then
@@ -386,6 +386,7 @@ let rec read_float_ascii x =
   else
     float_of_int i +. (iter_div10_float (float_of_int d) k)
 in
+*)
 
 
 

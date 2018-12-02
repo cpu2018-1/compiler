@@ -39,6 +39,13 @@ let load_label r label =
   let r' = reg r in
   Printf.sprintf
   "\taddi\t%s, r0, %s\n" r' label
+
+
+let load_globals_label r label =
+  let r' = reg r in
+  print_endline ("find "^label);
+  Printf.sprintf
+  "\taddi\t%s, r0, %d\n" r' (M.find label Glbarray.table)
 (*  "\tlis\t%s, ha16(%s)\n\taddi\t%s, %s, lo16(%s)\n"
     r' label r' r' label
 *)
@@ -88,6 +95,9 @@ and g' oc = function (* 各命令のアセンブリ生成 (caml2html: emit_gprime) *)
       )
   | NonTail(x), SetL(Id.L(y)) ->
       let s = load_label x y in
+      Printf.fprintf oc "%s" s
+  | NonTail(x), SetGlb(Id.L(y)) ->
+      let s = load_globals_label x y in
       Printf.fprintf oc "%s" s
   | NonTail(x), Mr(y) when x = y -> ()
   | NonTail(x), Mr(y) -> Printf.fprintf oc "\tadd\t%s, r0, %s\n" (reg x) (reg y)

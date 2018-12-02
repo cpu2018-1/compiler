@@ -44,6 +44,7 @@ and exp = (* 一つ一つの命令に対応する式 (caml2html: sparcasm_exp) *)
   | FSqrt of Id.t
   | FtoI of Id.t
   | ItoF of Id.t
+  | SetGlb of Id.l
 type fundef = { name : Id.l; args : Id.t list; fargs : Id.t list; body : t; ret : Type.t }
 (* プログラム全体 = 浮動小数点数テーブル + トップレベル関数 + メインの式 (caml2html: sparcasm_prog) *)
 type prog = Prog of (Id.l * float) list * fundef list * t
@@ -81,7 +82,7 @@ let rec remove_and_uniq xs = function
 (* free variables in the order of use (for spilling) (caml2html: sparcasm_fv) *)
 let fv_id_or_imm = function V(x) -> [x] | _ -> []
 let rec fv_exp = function
-  | Nop | Li(_) | FLi(_) | SetL(_) | Comment(_) | Restore(_) -> []
+  | Nop | Li(_) | FLi(_) | SetL(_) | Comment(_) | Restore(_) | SetGlb(_) -> []
   | Mr(x) | Neg(x) | FMr(x) | FNeg(x) | Save(x, _) | In(x) | Out(x) | FSqrt(x) | FtoI(x) | ItoF(x) -> [x]
   | Add(x, y') | Sub(x, y') | FLw(x, y') | Lwz(x, y') | Sll(x, y') | Srl(x, y') | Sra(x, y') -> x :: fv_id_or_imm y'
   | Stw(x, y, z') | FSw(x, y, z') -> x :: y :: fv_id_or_imm z'

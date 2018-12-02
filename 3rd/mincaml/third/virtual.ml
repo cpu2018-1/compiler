@@ -192,7 +192,7 @@ let rec g env = function (* 式の仮想マシンコード生成 (caml2html: virtual_g) *)
       | Type.Array(_) ->
               Ans(Stw(z, x, V(y)))
       | _ -> assert false)
-  | Closure.ExtArray(Id.L(x)) -> Ans(SetL(Id.L("min_caml_" ^ x)))
+  | Closure.ExtArray(Id.L(x)) -> Ans(SetGlb(Id.L("min_caml_" ^ x)))
   | Closure.Sll(x, y) -> Ans(Sll(x, V(y)))
   | Closure.Srl(x, y) -> Ans(Srl(x, V(y)))
   | Closure.Sra(x, y) -> Ans(Sra(x, V(y)))

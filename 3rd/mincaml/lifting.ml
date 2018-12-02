@@ -39,14 +39,15 @@ let rec lifted free = function (* lambda liftingされるべき関数をその�
   | LetRec ({ name = (x, t); args = yts; body = e1 }, e2) -> 
     let zs = S.diff (fv e1) (S.add x (S.of_list (List.map fst yts))) in
     let intersection = S.inter (S.of_list (List.map fst free)) zs in
-    if (S.is_empty intersection) then (* xが自由変数を持たないならxに対しては特に何もしない *)
+    if (S.is_empty intersection) then (* xが自由変数を持たないならxに対してはliftingするだけ *)
         let lifted_list, e2' = lifted free e2 in
-        (lifted_list, LetRec ({ name = (x, t); args = yts; body = e1 }, e2'))
+        (({ name = (x, t); args = yts; body = e1 }, []) :: lifted_list, e2')
     else
       if (is_used_as_var x e1 || is_used_as_var x e2) then (* 変数として使われているときはlambda lifting しない *)
         let lifted_list, e2' = lifted free e2 in
         (lifted_list, LetRec ({ name = (x, t); args = yts; body = e1 }, e2'))
-      else (* lambda lifting する *)
+      else (* lambda lifting してかつ引数を追加する *)
+        
         let lifted_list, e2' = lifted free e2 in
         let rec find a l = 
           match l with
@@ -88,8 +89,11 @@ let rec lifting_fun = function
     let defs, e1'' = lifted free e1' in
     concat defs ((LetRec({ name = (x, t); args = yts; body = e1'' }, lifting_fun e2)))
   | Let ((x, t), e1, e2) ->
+    let free = [(x, t)] in
     let e1' = lifting_fun e1 in
-    Let ((x, t), e1', lifting_fun e2)
+    let e2' = lifting_fun e2 in
+    let defs, e2'' = lifted free e2' in
+    concat defs (Let ((x, t), e1', e2''))
   | IfLE (x, y, e1, e2) -> IfLE (x, y, lifting_fun e1, lifting_fun e2)
   | IfEq (x, y, e1, e2) -> IfEq (x, y, lifting_fun e1, lifting_fun e2)
   | LetTuple(xts, y, e) ->
@@ -103,4 +107,4 @@ let rec lifting_fun = function
 
 
 let rec lifting e = 
-  lifting_fun (Alpha.f e)
+  lifting_fun e

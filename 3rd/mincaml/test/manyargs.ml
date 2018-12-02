@@ -1,1 +1,1 @@
-x86/manyargs.ml
+PowerPC/manyargs.ml
