@@ -262,6 +262,23 @@ for ((i = 0; i < 180; i++)); do
   echo "  sw  r2, $((n++))(r4)"
 done
 
+#
+name="light_dirvec"
+echo "# ${name}"
+echo "  addi  r1, r4, ${n}"
+for ((i = 0; i < 3; i++)); do
+  echo "  fsw  f0, $((n++))(r4)"
+done
+echo "  addi  r2, r4, ${n}"
+for ((i = 0; i < 60; i++)); do
+  echo "  sw  r1, $((n++))(r4)"
+done
+echo "${prefix}${name} $((n + hp))" >> table.txt
+echo "  sw  r1, $((n++))(r4)"
+echo "  sw  r2, $((n++))(r4)"
+
+
+
 
 #
 name="n_reflections"

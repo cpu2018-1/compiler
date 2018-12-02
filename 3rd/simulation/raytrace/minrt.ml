@@ -251,49 +251,6 @@ let rec div10 n =
   *)
 in
 
-let rec iter_mul10 n k =
-  if k = 0 then
-    n
-  else 
-    iter_mul10 (mul10 n) (k - 1)
-in
-
-let rec iter_div10 n k =
-  if k = 0 then
-    n
-  else 
-    iter_div10 (div10 n) (k - 1)
-in
-
-let rec keta_sub n k =
-  if n < 10 then 
-    k + 1
-  else
-    let a = div10 n in
-    keta_sub a (k + 1)
-in 
-
-let rec keta n =
-  keta_sub n 0
-in
-
-let rec print_uint_keta n k =
-  if (k = 1) then
-    print_num n
-  else (
-    if (n < iter_mul10 1 (k - 1)) then
-      (
-      print_num 0;
-      print_uint_keta n (k - 1)
-      )
-    else (
-      let b = iter_div10 n (k - 1) in
-      print_num b;
-      print_uint_keta (n - (iter_mul10 b (k - 1))) (k - 1)
-    )
-  )
-in
-
 
 let rec print_uint n =
   if (n < 10) then
@@ -339,212 +296,13 @@ let rec print_int n =
 in 
 
 
-
-let rec read_token in_token =
-  let c = read_char () in
-  if c = 32 then
-    if in_token then 
-      ()
-    else 
-      read_token 0
-  else if c = 9 then
-      if in_token then 
-        ()
-      else
-      read_token 0
-  else if c = 13 then
-    if in_token then 
-      ()
-    else
-      read_token 0
-  else if c = 10 then
-    if in_token then 
-      ()
-    else
-      read_token 0
-  else if c = 26 then
-    ()
-  else (
-    buffer_add_char c;
-    read_token 1
-  )
-in
-
-
-let rec read_int_ascii x =
-  buffer_clear ();
-  let _ = read_token 0 in
-  buffer_to_int ()
-in
-
-let rec iter_div10_float a b =
-  if b = 0 then a else iter_div10_float (a /. 10.0) (b - 1)
-in
-
-let rec read_float_ascii x =
-  buffer_clear ();
-  let _ = read_token 0 in
-  let c = buffer_get 0 in
-  let i = buffer_to_int_of_float () in
-  let d = buffer_to_dec_of_float () in
-  let k = buffer_to_ika_keta_of_float () in (* 小数点以下の桁 *)
-  if (c = 45) then
-    (-.1.0) *. (float_of_int i +. (iter_div10_float (float_of_int d) k))
-  else
-    float_of_int i +. (iter_div10_float (float_of_int d) k)
-in
-
-
-
-
-(** 色々 **)
-let rec truncate a = 
-  int_of_float (a)
-in
-
-let rec abs_float a =
-  if (a < 0.0) then
-    (-.a)
-  else
-    a
-in
-
-let rec print_dec x =
-  if (x = 0.0) then
-    ()
-  else (
-    let y = 10.0 *. x in
-    print_int (int_of_float y);
-    print_dec (y -. float_of_int (int_of_float y))
-  )
-in
-
-
-let rec print_ufloat x =
-  print_int (int_of_float x);
-  print_char (46);
-  print_dec (x -. float_of_int (int_of_float x))
-in
-
-let rec print_float x =
-  if x < 0.0 then (
-    print_char 45;
-    print_ufloat (-.x) 
-  )
-  else
-    print_ufloat x 
-in 
-
 (* library ends *)
 
 
 
-(*MINCAML*) let true = 1 in
-(*MINCAML*) let false = 0 in
 
-
-(********************これはズル**********************)
-(*
-let n_objects = create_array 1 0
-in
-
-(* オブジェクトのデータを入れるベクトル（最大60個）*)
-let objects = 
-  let dummy = create_array 0 0.0 in
-  create_array 60 (0, 0, 0, 0, dummy, dummy, false, dummy, dummy, dummy, dummy)
-in
 
 (*
-let screen = create_array 3 0.0 
-in
-*)
-
-(* 視点の座標 *)
-let viewpoint = create_array 3 0.0
-in
-(* 光源方向ベクトル (単位ベクトル) *)
-let light = create_array 3 0.0
-in
-(* 鏡面ハイライト強度 (標準=255) *)
-let beam = create_array 1 255.0
-in
-
-(* AND ネットワークを保持 *)
-let and_net = create_array 50 (create_array 1 (-1))
-in
-(* OR ネットワークを保持 *)
-let or_net = create_array 1 (create_array 1 (and_net.(0)))
-in
-
-
-(* 以下、交差判定ルーチンの返り値格納用 *)
-(* solver の交点 の t の値 *)
-let solver_dist = create_array 1 0.0
-in
-(* 交点の直方体表面での方向 *)
-let intsec_rectside = create_array 1 0
-in
-(* 発見した交点の最小の t *)
-let tmin = create_array 1 (1000000000.0)
-in
-(* 交点の座標 *)
-let intersection_point = create_array 3 0.0
-in
-(* 衝突したオブジェクト番号 *)
-let intersected_object_id = create_array 1 0
-in
-(* 法線ベクトル *)
-let nvector = create_array 3 0.0
-in
-(* 交点の色 *)
-let texture_color = create_array 3 0.0
-in
-
-(* 計算中の間接受光強度を保持 *)
-let diffuse_ray = create_array 3 0.0
-in
-(* スクリーン上の点の明るさ *)
-let rgb = create_array 3 0.0
-in
-
-(* 画像サイズ *)
-let image_size = create_array 2 0
-in
-(* 画像の中心 = 画像サイズの半分 *)
-let image_center = create_array 2 0
-in
-(* 3次元上のピクセル間隔 *)
-let scan_pitch = create_array 1 0.0
-in
-
-(* judge_intersectionに与える光線始点 *)
-let startp = create_array 3 0.0
-in
-(* judge_intersection_fastに与える光線始点 *)
-let startp_fast = create_array 3 0.0
-in
-
-(* 画面上のx,y,z軸の3次元空間上の方向 *)
-let screenx_dir = create_array 3 0.0
-in
-let screeny_dir = create_array 3 0.0
-in
-let screenz_dir = create_array 3 0.0
-in
-
-(* 直接光追跡で使う光方向ベクトル *)
-let ptrace_dirvec  = create_array 3 0.0
-in
-
-(* 間接光サンプリングに使う方向ベクトル *)
-let dirvecs = 
-  let dummyf = create_array 0 0.0 in
-  let dummyff = create_array 0 dummyf in
-  let dummy_vs = create_array 0 (dummyf, dummyff) in
-  create_array 5 dummy_vs
-in
-*)
-
 (* 光源光の前処理済み方向ベクトル *)
 let light_dirvec =
   let dummyf2 = create_array 0 0.0 in
@@ -552,24 +310,7 @@ let light_dirvec =
   let consts = create_array 60 dummyf2 in
   (v3, consts)
 in
-
-(*
-(* 鏡平面の反射情報 *)
-let reflections =
-  let dummyf3 = create_array 0 0.0 in
-  let dummyff3 = create_array 0 dummyf3 in
-  let dummydv = (dummyf3, dummyff3) in
-  create_array 180 (0, dummydv, 0.0)
-in
-
-(* reflectionsの有効な要素数 *) 
-
-let n_reflections = create_array 1 0
-in
 *)
-(********************************************************)
-
-
 
 
 (*MINCAML*) let rec xor x y = if x then not y else y in

@@ -120,6 +120,7 @@ let insert_let (e, t) k = (* letを挿入する補助関数 (caml2html: knormal_insert) *
   | Syntax.Var(x, d) -> (* 外部配列の参照 (caml2html: knormal_extarray) *)
       (match M.find x !Typing.extenv with
       | Type.Array(_) as t -> ExtArray x, t
+      | Type.Tuple(_) as t -> ExtArray x, t
       | _ -> failwith (Printf.sprintf "external variable %s does not have an array type" x))
   | Syntax.LetRec({ Syntax.name = (x, t); Syntax.args = yts; Syntax.body = e1; Syntax.deb = d }, e2, d2) ->
       let env' = M.add x t env in

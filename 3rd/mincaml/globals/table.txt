@@ -26,4 +26,5 @@ min_caml_screenz_dir 10760
 min_caml_ptrace_dirvec 10763
 min_caml_dirvecs 10766
 min_caml_reflections 10778
-min_caml_n_reflections 10958
+min_caml_light_dirvec 11021
+min_caml_n_reflections 11023
