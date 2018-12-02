@@ -40,14 +40,13 @@ let lexbuf outchan l = (* バッファをコンパイルしてチャンネルへ出力する (caml2htm
           (Virtual.f
              (Closure.f
                 (iter !limit
-                   (Alpha.f
-                   (let b = 
+                   (let c = Alpha.f (let b = 
                       (KNormal.f
                          (Typing.f
                             a)) in
-                     (*KNormal.print_kNormal b;*) b
-                       )
-                      )))))) in (*Asm.print_t 0 t;*) print_ftable (); Asm.Prog(fl, funlist, t))
+                     KNormal.print_kNormal b; b) 
+                   in KNormal.print_kNormal c; c)
+                      ))))) in (*Asm.print_t 0 t;*) print_ftable (); Asm.Prog(fl, funlist, t))
 
 let string s = lexbuf stdout (Lexing.from_string s) (* 文字列をコンパイルして標準出力に表示する (caml2html: main_string) *)
 
