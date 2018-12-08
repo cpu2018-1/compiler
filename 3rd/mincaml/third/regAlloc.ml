@@ -1,5 +1,7 @@
 open Asm
 
+let print = ref false
+
 (* for register coalescing *)
 (* [XXX] Callがあったら、そこから先は無意味というか逆効果なので追わない。
          そのために「Callがあったかどうか」を返り値の第1要素に含める。 *)
@@ -228,4 +230,15 @@ let f (Prog(data, fundefs, e)) = (* プログラム全体のレジスタ割り当て (caml2html:
   Format.eprintf "register allocation: may take some time (up to a few minutes, depending on the size of functions)@.";
   let fundefs' = List.map h fundefs in
   let e', regenv' = g (Id.gentmp Type.Unit, Type.Unit) (Ans(Nop)) M.empty e in
+  (if (!print) then (
+    Printf.printf ("Prog after register allocation\n");
+    print_endline "functions :";
+    List.iter (fun f -> print_newline (); Asm.print_fundef f) fundefs';
+    print_newline ();
+    print_endline "main :";
+    Asm.print_t 1 e'
+  )
+  else ()
+  )
+  ;
   Prog(data, fundefs', e')

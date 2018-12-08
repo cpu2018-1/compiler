@@ -2,6 +2,8 @@
 
 open Asm
 
+let print = ref false
+
 let ftable = ref Ftable.empty
 
 (* Ftableに値を設定 *)
@@ -218,8 +220,17 @@ let h { Closure.name = (Id.L(x), t); Closure.args = yts; Closure.formal_fv = zts
 
 (* プログラム全体の仮想マシンコード生成 (caml2html: virtual_f) *)
 let f (Closure.Prog(fundefs, e)) =
-  data := [];
+ data := [];
   set_ftable ();
   let fundefs = List.map h fundefs in
   let e = g M.empty e in
+  (if (!print) then (
+    Printf.printf ("Prog before register allocation\n");
+    List.iter (fun f -> print_newline (); Asm.print_fundef f) fundefs;
+    print_newline ();
+    Asm.print_t 1 e
+  )
+  else ()
+  )
+  ;
   Prog(!data, fundefs, e)

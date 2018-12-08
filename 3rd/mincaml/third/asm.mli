@@ -67,3 +67,4 @@ val concat : t -> Id.t * Type.t -> t -> t
 val align : int -> int
 
 val print_t : int -> t -> unit
+val print_fundef : fundef -> unit

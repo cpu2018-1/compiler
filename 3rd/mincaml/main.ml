@@ -34,19 +34,16 @@ let lexbuf outchan l = (* バッファをコンパイルしてチャンネルへ出力する (caml2htm
   let a = Parser.exp Lexer.token l in
 (*  Syntax.print_syntax a; print_newline ();*)
   Emit.f outchan
-    (let Asm.Prog(fl, funlist, t) = 
     (RegAlloc.f
        (Simm.f
           (Virtual.f
              (Closure.f
                 (iter !limit
-                   (let c = (*Lifting.lifting*)(Alpha.f (let b = 
+                   (Alpha.f 
                       (KNormal.f
                          (Typing.f
-                            a)) in
-                    (* KNormal.print_kNormal b; *) b)) 
-                   in (*KNormal.print_kNormal c;*) c)
-                      ))))) in (*Asm.print_t 0 t;*) print_ftable (); Asm.Prog(fl, funlist, t))
+                            a))
+                      ))))))
 
 let string s = lexbuf stdout (Lexing.from_string s) (* 文字列をコンパイルして標準出力に表示する (caml2html: main_string) *)
 
@@ -64,7 +61,9 @@ let () = (* ここからコンパイラの実行が開始される (caml2html: main_entry) *)
   let files = ref [] in
   Arg.parse
     [("-inline", Arg.Int(fun i -> Inline.threshold := i), "maximum size of functions inlined");
-     ("-iter", Arg.Int(fun i -> limit := i), "maximum number of optimizations iterated")]
+     ("-iter", Arg.Int(fun i -> limit := i), "maximum number of optimizations iterated");
+     ("-asm", Arg.Set(Virtual.print), "print asm.t before register allocation");
+     ("-reg", Arg.Set(RegAlloc.print), "print asm.t after register allocation")]
     (fun s -> files := !files @ [s])
     ("Mitou Min-Caml Compiler (C) Eijiro Sumii\n" ^
      Printf.sprintf "usage: %s [-inline m] [-iter n] ...filenames without \".ml\"..." Sys.argv.(0));

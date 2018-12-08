@@ -278,3 +278,10 @@ and print_exp i exp = (* 一つ一つの命令に対応する式 (caml2html: sparcasm_exp) *)
   | ItoF (x) -> 
           print_endline "ItoF";
           print_indent (i + 1); Id.print_id x; print_newline ()
+
+let rec print_fundef { name = L(f); args = xs; fargs = ys; body = e; ret = ty } =
+  print_endline ("function name : "^f);
+  let arguments = List.fold_left (fun x s -> x ^ " " ^ s) "" (xs @ ys) in
+  print_endline ("arguments : "^arguments);
+  print_endline ("body : ");
+  print_t 1 e
