@@ -1,10 +1,11 @@
-(* PowerPC assembly with a few virtual instructions *)
+
+let print = ref false
 
 type id_or_imm = V of Id.t | C of int | FC of float
-type t = (* Ì¿Îá¤ÎÎó (caml2html: sparcasm_t) *)
-  | Ans of exp
-  | Let of (Id.t * Type.t) * exp * t
-and exp = (* °ì¤Ä°ì¤Ä¤ÎÌ¿Îá¤ËÂÐ±þ¤¹¤ë¼° (caml2html: sparcasm_exp) *)
+type t = (* å‘½ä»¤ã®åˆ— (caml2html: sparcasm_t) *)
+  | Ans of exp * int
+  | Let of (Id.t * Type.t) * exp * int * t
+and exp = (* ä¸€ã¤ä¸€ã¤ã®å‘½ä»¤ã«å¯¾å¿œã™ã‚‹å¼ (caml2html: sparcasm_exp) *)
   | Nop
   | Li of int
 (*  | FLi of Id.l*)
@@ -28,14 +29,14 @@ and exp = (* °ì¤Ä°ì¤Ä¤ÎÌ¿Îá¤ËÂÐ±þ¤¹¤ë¼° (caml2html: sparcasm_exp) *)
   (* virtual instructions *)
   | IfEq of Id.t * id_or_imm * t * t
   | IfLE of Id.t * id_or_imm * t * t
-  | IfGE of Id.t * id_or_imm * t * t (* º¸±¦ÂÐ¾Î¤Ç¤Ï¤Ê¤¤¤Î¤ÇÉ¬Í× *)
+  | IfGE of Id.t * id_or_imm * t * t (* å·¦å³å¯¾ç§°ã§ã¯ãªã„ã®ã§å¿…è¦ *)
   | IfFEq of id_or_imm * id_or_imm * t * t
   | IfFLE of id_or_imm * id_or_imm * t * t
   (* closure address, integer arguments, and float arguments *)
   | CallCls of Id.t * Id.t list * Id.t list
   | CallDir of Id.l * Id.t list * Id.t list
-  | Save of Id.t * Id.t (* ¥ì¥¸¥¹¥¿ÊÑ¿ô¤ÎÃÍ¤ò¥¹¥¿¥Ã¥¯ÊÑ¿ô¤ØÊÝÂ¸ (caml2html: sparcasm_save) *)
-  | Restore of Id.t (* ¥¹¥¿¥Ã¥¯ÊÑ¿ô¤«¤éÃÍ¤òÉü¸µ (caml2html: sparcasm_restore) *)
+  | Save of Id.t * Id.t (* ãƒ¬ã‚¸ã‚¹ã‚¿å¤‰æ•°ã®å€¤ã‚’ã‚¹ã‚¿ãƒƒã‚¯å¤‰æ•°ã¸ä¿å­˜ (caml2html: sparcasm_save) *)
+  | Restore of Id.t (* ã‚¹ã‚¿ãƒƒã‚¯å¤‰æ•°ã‹ã‚‰å€¤ã‚’å¾©å…ƒ (caml2html: sparcasm_restore) *)
   | Sll of Id.t * id_or_imm
   | Srl of Id.t * id_or_imm
   | Sra of Id.t * id_or_imm
@@ -46,40 +47,12 @@ and exp = (* °ì¤Ä°ì¤Ä¤ÎÌ¿Îá¤ËÂÐ±þ¤¹¤ë¼° (caml2html: sparcasm_exp) *)
   | ItoF of Id.t
   | SetGlb of Id.l
 type fundef = { name : Id.l; args : Id.t list; fargs : Id.t list; body : t; ret : Type.t }
-(* ¥×¥í¥°¥é¥àÁ´ÂÎ = ÉâÆ°¾®¿ôÅÀ¿ô¥Æ¡¼¥Ö¥ë + ¥È¥Ã¥×¥ì¥Ù¥ë´Ø¿ô + ¥á¥¤¥ó¤Î¼° (caml2html: sparcasm_prog) *)
-type prog = Prog of (Id.l * float) list * fundef list * t
 
-let fletd(x, e1, e2) = Let((x, Type.Float), e1, e2)
-let seq(e1, e2) = Let((Id.gentmp Type.Unit ,Type.Unit), e1, e2) (** ½ç¤Ë¼Â¹Ô **)
-
-let regs = (* Array.init 27 (fun i -> Printf.sprintf "_R_%d" i) *)
-  [| "%r1"; "%r2"; "%r5"; "%r6"; "%r7"; "%r8"; "%r9"; "%r10";
-     "%r11"; "%r12"; "%r13"; "%r14"; "%r15"; "%r16"; "%r17"; "%r18";
-     "%r19"; "%r20"; "%r21"; "%r22"; "%r23"; "%r24"; "%r25"; "%r26";
-     "%r27"; "%r28"; "%r29" |]
-let fregs = 
-[| "%f1"; "%f2"; "%f3"; "%f4"; "%f5"; "%f6"; "%f7"; "%f8"; "%f9"; "%f10";   
-   "%f11"; "%f12"; "%f13"; "%f14"; "%f15"; "%f16"; "%f17"; "%f18"; "%f19";       
-   "%f20"; "%f21"; "%f22"; "%f23"; "%f24"; "%f25"; "%f26"; "%f27"; "%f28";
-   "%f29"; "%f30"; "%f30" |]
-let allregs = Array.to_list regs
-let allfregs = Array.to_list fregs
-let reg_cl = regs.(Array.length regs - 1) (* closure address (caml2html: sparcasm_regcl) *)
-let reg_sw = regs.(Array.length regs - 2) (* temporary for swap *)
-let reg_fsw = fregs.(Array.length fregs - 1) (* temporary for swap *)
-let reg_sp = "%r3" (* stack pointer *)
-let reg_hp = "%r4" (* heap pointer (caml2html: sparcasm_reghp) *)
-let reg_tmp = "%r30" (* [XX] ad hoc *)
-let reg_lr = "%r31"
-let is_reg x = (x.[0] = '%')
-
-(* super-tenuki *)
 let rec remove_and_uniq xs = function
   | [] -> []
   | x :: ys when S.mem x xs -> remove_and_uniq xs ys
   | x :: ys -> x :: remove_and_uniq (S.add x xs) ys
 
-(* free variables in the order of use (for spilling) (caml2html: sparcasm_fv) *)
 let fv_id_or_imm = function V(x) -> [x] | _ -> []
 let rec fv_exp = function
   | Nop | Li(_) | FLi(_) | SetL(_) | Comment(_) | Restore(_) | SetGlb(_) -> []
@@ -92,27 +65,77 @@ let rec fv_exp = function
   | CallCls(x, ys, zs) -> x :: ys @ zs
   | CallDir(_, ys, zs) -> ys @ zs
 and fv = function
-  | Ans(exp) -> fv_exp exp
-  | Let((x, t), exp, e) ->
+  | Ans(exp, i) -> fv_exp exp
+  | Let((x, t), exp, i, e) ->
       fv_exp exp @ remove_and_uniq (S.singleton x) (fv e)
 let fv e = remove_and_uniq S.empty (fv e)
 
-let rec concat e1 xt e2 =
-  match e1 with
-  | Ans(exp) -> Let(xt, exp, e2)
-  | Let(yt, exp, e1') -> Let(yt, exp, concat e1' xt e2)
-
-(*let align i = (if i mod 8 = 0 then i else i + 4)*)
-let align i = i
 
 
+type prog =
+  Prog of (Id.l * float) list * fundef list * t
 
+let counter = ref 0
 
+let rec convert_id_or_imm = function
+  | Asm.V(x) -> V(x)
+  | Asm.C(i) -> C(i)
+  | Asm.FC(d) -> FC(d)
 
-(* ¥¤¥ó¥Ç¥ó¥ÈÉý *)
+let rec convert_exp e =
+  match e with
+  | Asm.IfEq(a, b, e1, e2) -> IfEq(a, convert_id_or_imm b, convert_t e1, convert_t e2) 
+  | Asm.IfLE(a, b, e1, e2) -> IfLE(a, convert_id_or_imm b, convert_t e1, convert_t e2)
+  | Asm.IfGE(a, b, e1, e2) -> IfGE(a, convert_id_or_imm b, convert_t e1, convert_t e2)
+  | Asm.IfFEq(a, b, e1, e2) -> IfFEq(convert_id_or_imm a, convert_id_or_imm b, convert_t e1, convert_t e2)
+  | Asm.IfFLE(a, b, e1, e2) -> IfFLE(convert_id_or_imm a, convert_id_or_imm b, convert_t e1, convert_t e2)
+  | Asm.Nop -> Nop
+  | Asm.Li(i) -> Li(i)
+  | Asm.FLi(d) -> FLi(d)
+  | Asm.SetL(l) -> SetL(l)
+  | Asm.Mr(x) -> Mr(x)
+  | Asm.Neg(x) -> Neg(x)
+  | Asm.Add(x, a) -> Add(x, convert_id_or_imm a)
+  | Asm.Sub(x, a) -> Sub(x, convert_id_or_imm a)
+  | Asm.Lwz(x, a) -> Lwz(x, convert_id_or_imm a)
+  | Asm.Stw(x, y, a) -> Stw(x, y, convert_id_or_imm a)
+  | Asm.FMr(x) -> FMr(x)
+  | Asm.FNeg(x) -> FNeg(x)
+  | Asm.FAdd(x, y) -> FAdd(x, y)
+  | Asm.FSub(x, y) -> FSub(x, y)
+  | Asm.FMul(x, y) -> FMul(x, y)
+  | Asm.FDiv(x, y) -> FDiv(x, y)
+  | Asm.FLw(x, a) -> FLw(x, convert_id_or_imm a)
+  | Asm.FSw(x, y, a) -> FSw(x, y, convert_id_or_imm a)
+  | Asm.Comment(s) -> Comment(s)
+  | Asm.CallCls(x, xs, ys) -> CallCls(x, xs, ys)
+  | Asm.CallDir(x, xs, ys) -> CallDir(x, xs, ys)
+  | Asm.Save(x, y) -> Save(x, y)
+  | Asm.Restore(x) -> Restore(x)
+  | Asm.Sll(x, a) -> Sll(x, convert_id_or_imm a)
+  | Asm.Srl(x, a) -> Srl(x, convert_id_or_imm a)
+  | Asm.Sra(x, a) -> Sra(x, convert_id_or_imm a)
+  | Asm.In(x) -> In(x)
+  | Asm.Out(x) -> Out(x)
+  | Asm.FSqrt(x) -> FSqrt(x)
+  | Asm.FtoI(x) -> FtoI(x)
+  | Asm.ItoF(x) -> ItoF(x)
+  | Asm.SetGlb(x) -> SetGlb(x)
+and convert_t t = 
+  incr counter;
+  let i = !counter in
+  match t with
+  | Asm.Let((x, t), e, cont) ->
+    Let((x, t), convert_exp e, i, convert_t cont)
+  | Asm.Ans(e) -> Ans(convert_exp e, i)
+
+let rec convert_fun { Asm.name = x; Asm.args = xs; Asm.fargs = ys; Asm.body = e; Asm.ret = t} =
+  { name = x; args = xs; fargs = ys; body = convert_t e; ret = t}
+
+(* ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆå¹… *)
 let indent = ". "
   
-(* Éýn¤Î¥¤¥ó¥Ç¥ó¥È¤ò½ÐÎÏ *)
+(* å¹…nã®ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆã‚’å‡ºåŠ› *)
 let rec print_indent n =
   if n = 0 then
     ()
@@ -120,9 +143,9 @@ let rec print_indent n =
     print_string indent; print_indent (n - 1)
   )
 
-(* (¥¤¥ó¥Ç¥ó¥ÈÉý) * (¥¤¥ó¥Ç¥ó¥È¤Î¿¼¤µ)¤Î¥¤¥ó¥Ç¥ó¥È¤ò½ÐÎÏ *)
+(* (ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆå¹…) * (ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆã®æ·±ã•)ã®ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆã‚’å‡ºåŠ› *)
 
-(* ¥¹¥Ú¡¼¥¹¤ò½ÐÎÏ/¸å¡¹¤Ë¥¹¥Ú¡¼¥¹¤òÊÑ¤¨¤¿¤¤»þÍÑ¤ËÄêµÁ¤·¤¿¤¬ÉÔÍ×¤Ê´¶¤¸¤¬¤¹¤ë *)
+(* ã‚¹ãƒšãƒ¼ã‚¹ã‚’å‡ºåŠ›/å¾Œã€…ã«ã‚¹ãƒšãƒ¼ã‚¹ã‚’å¤‰ãˆãŸã„æ™‚ç”¨ã«å®šç¾©ã—ãŸãŒä¸è¦ãªæ„Ÿã˜ãŒã™ã‚‹ *)
 let print_space () = print_string " "
 
 let rec print_id_or_imm = function
@@ -131,15 +154,20 @@ let rec print_id_or_imm = function
   | FC f -> print_float f
 
 let rec print_t i = function
-  | Ans e -> print_exp i e
-  | Let ((x, t), exp, e) -> 
+  | Ans (e, j) ->
+        print_indent i; print_string "instruction number : ";
+        print_int j; print_newline ();
+        print_exp i e
+  | Let ((x, t), exp, j, e) -> 
+        print_indent i;
+        print_string "instruction number : "; print_int j; print_newline ();
         print_indent i;
         print_endline "LET";
         print_indent (i + 1); Id.print_id x; print_endline " = ";
         print_exp (i + 1) exp;
         print_indent i; print_endline "IN";
         print_t (i + 1) e
-and print_exp i exp = (* °ì¤Ä°ì¤Ä¤ÎÌ¿Îá¤ËÂÐ±þ¤¹¤ë¼° (caml2html: sparcasm_exp) *)
+and print_exp i exp = (* ä¸€ã¤ä¸€ã¤ã®å‘½ä»¤ã«å¯¾å¿œã™ã‚‹å¼ (caml2html: sparcasm_exp) *)
   print_indent i;
   match exp with
   | Nop -> print_endline "Nop";
@@ -244,11 +272,11 @@ and print_exp i exp = (* °ì¤Ä°ì¤Ä¤ÎÌ¿Îá¤ËÂÐ±þ¤¹¤ë¼° (caml2html: sparcasm_exp) *)
           print_indent (i + 1); Id.print_id f; print_newline ();
           print_indent (i + 1); Id.print_id_list x " "; print_newline ();
           print_indent (i + 1); Id.print_id_list fx " "; print_newline ()
-  | Save (x, y) -> (* ¥ì¥¸¥¹¥¿ÊÑ¿ô¤ÎÃÍ¤ò¥¹¥¿¥Ã¥¯ÊÑ¿ô¤ØÊÝÂ¸ (caml2html: sparcasm_save) *)
+  | Save (x, y) -> (* ãƒ¬ã‚¸ã‚¹ã‚¿å¤‰æ•°ã®å€¤ã‚’ã‚¹ã‚¿ãƒƒã‚¯å¤‰æ•°ã¸ä¿å­˜ (caml2html: sparcasm_save) *)
           print_endline "Save";
           print_indent (i + 1); Id.print_id x; print_newline ();
           print_indent (i + 1); Id.print_id y; print_newline ();
-  | Restore x -> (* ¥¹¥¿¥Ã¥¯ÊÑ¿ô¤«¤éÃÍ¤òÉü¸µ (caml2html: sparcasm_restore) *)
+  | Restore x -> (* ã‚¹ã‚¿ãƒƒã‚¯å¤‰æ•°ã‹ã‚‰å€¤ã‚’å¾©å…ƒ (caml2html: sparcasm_restore) *)
           print_endline "Restore";
           print_indent (i + 1); Id.print_id x; print_newline ();
   | Sll (x, a) -> 
@@ -286,3 +314,75 @@ let rec print_fundef { name = Id.L(f); args = xs; fargs = ys; body = e; ret = ty
   print_endline ("arguments : "^arguments);
   print_endline ("body : ");
   print_t 1 e
+  
+
+let rec invert_id_or_imm = function
+  | V(x) -> Asm.V(x)
+  | C(i) -> Asm.C(i)
+  | FC(d) -> Asm.FC(d)
+
+(* Asm.expã«æˆ»ã™ *)
+let rec invert_exp e =
+  match e with
+  | IfEq(a, b, e1, e2) -> Asm.IfEq(a, invert_id_or_imm b, invert_t e1, invert_t e2) 
+  | IfLE(a, b, e1, e2) -> Asm.IfLE(a, invert_id_or_imm b, invert_t e1, invert_t e2)
+  | IfGE(a, b, e1, e2) -> Asm.IfGE(a, invert_id_or_imm b, invert_t e1, invert_t e2)
+  | IfFEq(a, b, e1, e2) -> Asm.IfFEq(invert_id_or_imm a, invert_id_or_imm b, invert_t e1, invert_t e2)
+  | IfFLE(a, b, e1, e2) -> Asm.IfFLE(invert_id_or_imm a, invert_id_or_imm b, invert_t e1, invert_t e2)
+  | Nop -> Asm.Nop
+  | Li(i) -> Asm.Li(i)
+  | FLi(d) -> Asm.FLi(d)
+  | SetL(l) -> Asm.SetL(l)
+  | Mr(x) -> Asm.Mr(x)
+  | Neg(x) -> Asm.Neg(x)
+  | Add(x, a) -> Asm.Add(x, invert_id_or_imm a)
+  | Sub(x, a) -> Asm.Sub(x, invert_id_or_imm a)
+  | Lwz(x, a) -> Asm.Lwz(x, invert_id_or_imm a)
+  | Stw(x, y, a) -> Asm.Stw(x, y, invert_id_or_imm a)
+  | FMr(x) -> Asm.FMr(x)
+  | FNeg(x) -> Asm.FNeg(x)
+  | FAdd(x, y) -> Asm.FAdd(x, y)
+  | FSub(x, y) -> Asm.FSub(x, y)
+  | FMul(x, y) -> Asm.FMul(x, y)
+  | FDiv(x, y) -> Asm.FDiv(x, y)
+  | FLw(x, a) -> Asm.FLw(x, invert_id_or_imm a)
+  | FSw(x, y, a) -> Asm.FSw(x, y, invert_id_or_imm a)
+  | Comment(s) -> Asm.Comment(s)
+  | CallCls(x, xs, ys) -> Asm.CallCls(x, xs, ys)
+  | CallDir(x, xs, ys) -> Asm.CallDir(x, xs, ys)
+  | Save(x, y) -> Asm.Save(x, y)
+  | Restore(x) -> Asm.Restore(x)
+  | Sll(x, a) -> Asm.Sll(x, invert_id_or_imm a)
+  | Srl(x, a) -> Asm.Srl(x, invert_id_or_imm a)
+  | Sra(x, a) -> Asm.Sra(x, invert_id_or_imm a)
+  | In(x) -> Asm.In(x)
+  | Out(x) -> Asm.Out(x)
+  | FSqrt(x) -> Asm.FSqrt(x)
+  | FtoI(x) -> Asm.FtoI(x)
+  | ItoF(x) -> Asm.ItoF(x)
+  | SetGlb(x) -> Asm.SetGlb(x)
+and invert_t t =
+  match t with
+  | Let((x, t), e, i, cont) -> Asm.Let((x, t), invert_exp e, invert_t cont)
+  | Ans(e, i) -> Asm.Ans(invert_exp e)
+
+
+let rec invert_fun { name = x; args = xs; fargs = ys; body = e; ret = t} =
+  { Asm.name = x; Asm.args = xs; Asm.fargs = ys; Asm.body = invert_t e; Asm.ret = t}
+
+
+
+
+let rec f (Asm.Prog(data, fundefs, e)) =
+  let e = convert_t e in
+  let fundefs = List.map convert_fun fundefs in 
+  (if (!print) then (
+    Printf.printf ("Prog before register allocation\n");
+    List.iter (fun f -> print_newline (); print_fundef f) fundefs;
+    print_newline ();
+    print_t 1 e
+  )
+  else ()
+  )
+  ;
+  Prog(data, fundefs, e)

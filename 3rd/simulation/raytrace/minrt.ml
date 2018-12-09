@@ -50,12 +50,15 @@ in
 
 
 let rec int_of_float a = 
+(*
   if (a = 0.0) then
     0
   else if (a >= 0.0) then
     ftoi (a -. 0.5)
   else
     ftoi (a +. 0.5)
+    *)
+  ftoi a
 in
 
 let rec float_of_int a =
@@ -245,10 +248,12 @@ in
 
 
 let rec div10 n =
+(*
   div10_sub n 0 n 
- (* 
-  ((n << 7) + (n << 6) + (n << 3) + (n << 2) + n) >> 11
   *)
+  
+  ((n << 7) + (n << 6) + (n << 3) + (n << 2) + n) >> 11
+  
 in
 
 
@@ -271,7 +276,7 @@ let rec print_int n =
   )
   else
     print_uint n 
-    *)
+*)    
   if (n < 0) then
     print_char 45;
     print_int (-n)

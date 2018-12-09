@@ -42,12 +42,15 @@ in
 
 
 let rec int_of_float a = 
+(*
   if (a = 0.0) then
     0
   else if (a >= 0.0) then
     asm_ftoi (a -. 0.5)
   else
     asm_ftoi (a +. 0.5)
+    *)
+  asm_ftoi a
 in
 
 let rec float_of_int a =

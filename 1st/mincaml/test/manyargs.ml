@@ -1,1 +1,1 @@
-ours/manyargs.ml
+PowerPC/manyargs.ml

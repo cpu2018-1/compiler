@@ -1,1 +1,1 @@
-ours/Makefile
+PowerPC/Makefile

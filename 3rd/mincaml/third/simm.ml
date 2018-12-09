@@ -1,5 +1,7 @@
 open Asm
 
+let print = ref false
+
 let rec g env fenv = function (* 命令列の16bit即値最適化 (caml2html: simm13_g) *)
   | Ans(exp) -> Ans(g' env fenv exp)
   | Let((x, t), Li(i), e) when -32768 <= i && i < 32768 ->
@@ -51,4 +53,15 @@ let h { name = l; args = xs; fargs = ys; body = e; ret = t } = (* トップレベル関
   { name = l; args = xs; fargs = ys; body = g M.empty M.empty e; ret = t }
 
 let f (Prog(data, fundefs, e)) = (* プログラム全体の16bit即値最適化 *)
-  Prog(data, List.map h fundefs, g M.empty M.empty e)
+  let fundefs = List.map h fundefs in
+  let e = g M.empty M.empty e in
+  (if (!print) then (
+    Printf.printf ("Prog after simm\n");
+    List.iter (fun f -> print_newline (); Asm.print_fundef f) fundefs;
+    print_newline ();
+    Asm.print_t 1 e
+  )
+  else ()
+  )
+  ;
+  Prog(data, fundefs, e)

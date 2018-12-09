@@ -1,1 +1,1 @@
-print_float (floor (-10.0))
+print_float (floor (-10.3))

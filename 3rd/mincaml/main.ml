@@ -35,6 +35,10 @@ let lexbuf outchan l = (* バッファをコンパイルしてチャンネルへ出力する (caml2htm
 (*  Syntax.print_syntax a; print_newline ();*)
   Emit.f outchan
     (RegAlloc.f
+      (Coloring.f
+      ((*Schedule.f 
+*)
+      (Num_asm.f
        (Simm.f
           (Virtual.f
              (Closure.f
@@ -43,7 +47,7 @@ let lexbuf outchan l = (* バッファをコンパイルしてチャンネルへ出力する (caml2htm
                       (KNormal.f
                          (Typing.f
                             a))
-                      ))))))
+                      )))))))))
 
 let string s = lexbuf stdout (Lexing.from_string s) (* 文字列をコンパイルして標準出力に表示する (caml2html: main_string) *)
 
@@ -63,6 +67,8 @@ let () = (* ここからコンパイラの実行が開始される (caml2html: main_entry) *)
     [("-inline", Arg.Int(fun i -> Inline.threshold := i), "maximum size of functions inlined");
      ("-iter", Arg.Int(fun i -> limit := i), "maximum number of optimizations iterated");
      ("-asm", Arg.Set(Virtual.print), "print asm.t before register allocation");
+     ("-simm", Arg.Set(Simm.print), "print asm.t after simm");
+     ("-nasm", Arg.Set(Num_asm.print), "print num_asm.t before register allocation");
      ("-reg", Arg.Set(RegAlloc.print), "print asm.t after register allocation")]
     (fun s -> files := !files @ [s])
     ("Mitou Min-Caml Compiler (C) Eijiro Sumii\n" ^

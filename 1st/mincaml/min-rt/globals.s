@@ -1,1 +1,1 @@
-ours/globals.s
+PowerPC/globals.s
