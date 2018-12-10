@@ -1785,8 +1785,9 @@ _fle_else.783:
 	j lib_print_ufloat
 _R_0:
 _min_caml_start: # main entry point
-  addi  r3, r0, 0
-  addi  r4, r0, 10000
+  addi  r3, r0, 32500
+  slli   r3, r3, 2
+  addi  r4, r0, 0
 # n_objects
   sw  r0, 0(r4)
 # objects
@@ -2521,7 +2522,7 @@ _min_caml_start: # main entry point
   sw  r1, 721(r4)
 # or_net
   sw  r1, 722(r4)
-  addi  r1, r4, 10722
+  addi  r1, r4, 722
   sw  r1, 723(r4)
 # solver_dist
   fsw f0, 724(r4)

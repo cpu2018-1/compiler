@@ -44,7 +44,7 @@ let load_label r label =
 let load_globals_label r label =
   let r' = reg r in
   Printf.sprintf
-  "\taddi\t%s, r0, %d\n" r' (M.find label Glbarray.table)
+  "\taddi\t%s, r0, %d\t\t\t\t# set %s\n" r' (M.find label Glbarray.table) label
 (*  "\tlis\t%s, ha16(%s)\n\taddi\t%s, %s, lo16(%s)\n"
     r' label r' r' label
 *)

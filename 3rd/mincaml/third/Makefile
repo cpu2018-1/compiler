@@ -23,8 +23,8 @@ SOURCES = float.c type.ml id.ml m.ml s.ml int_M.ml int_S.ml\
 syntax.ml parser.mly lexer.mll typing.mli typing.ml kNormal.mli kNormal.ml \
 alpha.mli alpha.ml lifting.ml commelm.mli commelm.ml beta.mli beta.ml assoc.mli assoc.ml \
 inline.mli inline.ml constFold.mli constFold.ml elim.mli elim.ml \
-closure.mli closure.ml asm.mli asm.ml ftable.ml virtual.mli virtual.ml \
-simm.mli simm.ml num_asm.ml schedule.ml coloring.ml regAlloc.mli regAlloc.ml glbarray.ml emit.mli emit.ml \
+closure.mli closure.ml asm.mli asm.ml ftable.ml virtual.mli virtual.ml glbarray.ml \
+simm.mli simm.ml num_asm.ml schedule.ml coloring.ml regAlloc.mli regAlloc.ml emit.mli emit.ml \
 main.mli main.ml
 
 # ↓テストプログラムが増えたら、これも増やす

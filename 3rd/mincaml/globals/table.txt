@@ -1,30 +1,30 @@
-min_caml_n_objects 10000
-min_caml_objects 10001
-min_caml_screen 10661
-min_caml_viewpoint 10664
-min_caml_light 10667
-min_caml_beam 10670
-min_caml_and_net 10672
-min_caml_or_net 10723
-min_caml_solver_dist 10724
-min_caml_intsec_rectside 10725
-min_caml_tmin 10726
-min_caml_intersection_point 10727
-min_caml_intersected_object_id 10730
-min_caml_nvector 10731
-min_caml_texture_color 10734
-min_caml_diffuse_ray 10737
-min_caml_rgb 10740
-min_caml_image_size 10743
-min_caml_image_center 10745
-min_caml_scan_pitch 10747
-min_caml_startp 10748
-min_caml_startp_fast 10751
-min_caml_screenx_dir 10754
-min_caml_screeny_dir 10757
-min_caml_screenz_dir 10760
-min_caml_ptrace_dirvec 10763
-min_caml_dirvecs 10766
-min_caml_reflections 10778
-min_caml_light_dirvec 11021
-min_caml_n_reflections 11023
+let table = (M.add "min_caml_n_objects" 0 table)
+let table = (M.add "min_caml_objects" 1 table)
+let table = (M.add "min_caml_screen" 661 table)
+let table = (M.add "min_caml_viewpoint" 664 table)
+let table = (M.add "min_caml_light" 667 table)
+let table = (M.add "min_caml_beam" 670 table)
+let table = (M.add "min_caml_and_net" 672 table)
+let table = (M.add "min_caml_or_net" 723 table)
+let table = (M.add "min_caml_solver_dist" 724 table)
+let table = (M.add "min_caml_intsec_rectside" 725 table)
+let table = (M.add "min_caml_tmin" 726 table)
+let table = (M.add "min_caml_intersection_point" 727 table)
+let table = (M.add "min_caml_intersected_object_id" 730 table)
+let table = (M.add "min_caml_nvector" 731 table)
+let table = (M.add "min_caml_texture_color" 734 table)
+let table = (M.add "min_caml_diffuse_ray" 737 table)
+let table = (M.add "min_caml_rgb" 740 table)
+let table = (M.add "min_caml_image_size" 743 table)
+let table = (M.add "min_caml_image_center" 745 table)
+let table = (M.add "min_caml_scan_pitch" 747 table)
+let table = (M.add "min_caml_startp" 748 table)
+let table = (M.add "min_caml_startp_fast" 751 table)
+let table = (M.add "min_caml_screenx_dir" 754 table)
+let table = (M.add "min_caml_screeny_dir" 757 table)
+let table = (M.add "min_caml_screenz_dir" 760 table)
+let table = (M.add "min_caml_ptrace_dirvec" 763 table)
+let table = (M.add "min_caml_dirvecs" 766 table)
+let table = (M.add "min_caml_reflections" 778 table)
+let table = (M.add "min_caml_light_dirvec" 1021 table)
+let table = (M.add "min_caml_n_reflections" 1023 table)

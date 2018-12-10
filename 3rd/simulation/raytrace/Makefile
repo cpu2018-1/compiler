@@ -1,4 +1,4 @@
-OPT=
+OPT=-s sub.txt
 SOURCE=minrt
 INPUT=contest.bin
 ASMDIR=../simu-assem3rd/assembly
