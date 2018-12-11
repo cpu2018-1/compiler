@@ -65,8 +65,9 @@ let rec iter_analysis lives t =
     iter_analysis lives' t
 
 
-let rec analysis_fun { name = x; args = xs; fargs = ys; body = e; ret = t} =
-  { Asm.name = x; Asm.args = xs; Asm.fargs = ys; Asm.body = invert_t e; Asm.ret = t}
+let rec analysis_fun { name = Id.L(x); args = xs; fargs = ys; body = e; ret = t} =
+  print_endline ("analysis "^x);
+  { Asm.name = Id.L(x); Asm.args = xs; Asm.fargs = ys; Asm.body = invert_t e; Asm.ret = t}
 
 let rec f (Prog(data, fundefs, e)) =
   let g = iter_analysis Int_M.empty e in
@@ -74,4 +75,5 @@ let rec f (Prog(data, fundefs, e)) =
   List.iter (fun (x, l) -> print_string ((string_of_int x)^"  ");
                           S.iter (fun y -> print_string (y^" ")) l; print_newline ()) g';
   print_int (Int_M.cardinal g); print_newline ();
+  let fundefs' = List.map analysis_fun fundefs in
   Asm.Prog(data, List.map invert_fun fundefs, invert_t e)

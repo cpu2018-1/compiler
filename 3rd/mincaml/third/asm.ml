@@ -14,8 +14,8 @@ and exp = (* 一つ一つの命令に対応する式 (caml2html: sparcasm_exp) *)
   | Neg of Id.t
   | Add of Id.t * id_or_imm
   | Sub of Id.t * id_or_imm
-  | Lwz of Id.t * id_or_imm
-  | Stw of Id.t * Id.t * id_or_imm
+  | Lw of Id.t * id_or_imm
+  | Sw of Id.t * Id.t * id_or_imm
   | FMr of Id.t
   | FNeg of Id.t
   | FAdd of Id.t * Id.t
@@ -36,6 +36,7 @@ and exp = (* 一つ一つの命令に対応する式 (caml2html: sparcasm_exp) *)
   | CallDir of Id.l * Id.t list * Id.t list
   | Save of Id.t * Id.t (* レジスタ変数の値をスタック変数へ保存 (caml2html: sparcasm_save) *)
   | Restore of Id.t (* スタック変数から値を復元 (caml2html: sparcasm_restore) *)
+  (* 自班のアーキテクチャ用に加えたもの *)
   | Sll of Id.t * id_or_imm
   | Srl of Id.t * id_or_imm
   | Sra of Id.t * id_or_imm
@@ -85,8 +86,8 @@ let fv_id_or_imm = function V(x) -> [x] | _ -> []
 let rec fv_exp = function
   | Nop | Li(_) | FLi(_) | SetL(_) | Comment(_) | Restore(_) | SetGlb(_) -> []
   | Mr(x) | Neg(x) | FMr(x) | FNeg(x) | Save(x, _) | In(x) | Out(x) | FSqrt(x) | FtoI(x) | ItoF(x) -> [x]
-  | Add(x, y') | Sub(x, y') | FLw(x, y') | Lwz(x, y') | Sll(x, y') | Srl(x, y') | Sra(x, y') -> x :: fv_id_or_imm y'
-  | Stw(x, y, z') | FSw(x, y, z') -> x :: y :: fv_id_or_imm z'
+  | Add(x, y') | Sub(x, y') | FLw(x, y') | Lw(x, y') | Sll(x, y') | Srl(x, y') | Sra(x, y') -> x :: fv_id_or_imm y'
+  | Sw(x, y, z') | FSw(x, y, z') -> x :: y :: fv_id_or_imm z'
   | FAdd(x, y) | FSub(x, y) | FMul(x, y) | FDiv(x, y) -> [x; y]
   | IfEq(x, y', e1, e2) | IfLE(x, y', e1, e2) | IfGE(x, y', e1, e2) ->  x :: fv_id_or_imm y' @ remove_and_uniq S.empty (fv e1 @ fv e2) (* uniq here just for efficiency *)
   | IfFEq(x, y', e1, e2) | IfFLE(x, y', e1, e2) -> fv_id_or_imm x @ fv_id_or_imm y' @ remove_and_uniq S.empty (fv e1 @ fv e2) (* uniq here just for efficiency *)
@@ -157,12 +158,12 @@ and print_exp i exp = (* 一つ一つの命令に対応する式 (caml2html: sparcasm_exp) *)
           print_endline "Sub"; 
           print_indent (i + 1); Id.print_id x; print_newline ();
           print_indent (i + 1); print_id_or_imm a; print_newline ()
-  | Lwz (x, a) ->
-          print_endline "Lwz";
+  | Lw (x, a) ->
+          print_endline "Lw";
           print_indent (i + 1); Id.print_id x; print_newline ();
           print_indent (i + 1); print_id_or_imm a; print_newline ()
-  | Stw (x, y, a) ->
-          print_endline "Stw"; 
+  | Sw (x, y, a) ->
+          print_endline "Sw"; 
           print_indent (i + 1); Id.print_id x; print_newline ();
           print_indent (i + 1); Id.print_id y; print_newline ();
           print_indent (i + 1); print_id_or_imm a; print_newline ()

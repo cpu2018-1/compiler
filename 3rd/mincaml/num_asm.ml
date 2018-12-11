@@ -15,8 +15,8 @@ and exp = (* 一つ一つの命令に対応する式 (caml2html: sparcasm_exp) *
   | Neg of Id.t
   | Add of Id.t * id_or_imm
   | Sub of Id.t * id_or_imm
-  | Lwz of Id.t * id_or_imm
-  | Stw of Id.t * Id.t * id_or_imm
+  | Lw of Id.t * id_or_imm
+  | Sw of Id.t * Id.t * id_or_imm
   | FMr of Id.t
   | FNeg of Id.t
   | FAdd of Id.t * Id.t
@@ -57,8 +57,8 @@ let fv_id_or_imm = function V(x) -> [x] | _ -> []
 let rec fv_exp = function
   | Nop | Li(_) | FLi(_) | SetL(_) | Comment(_) | Restore(_) | SetGlb(_) -> []
   | Mr(x) | Neg(x) | FMr(x) | FNeg(x) | Save(x, _) | In(x) | Out(x) | FSqrt(x) | FtoI(x) | ItoF(x) -> [x]
-  | Add(x, y') | Sub(x, y') | FLw(x, y') | Lwz(x, y') | Sll(x, y') | Srl(x, y') | Sra(x, y') -> x :: fv_id_or_imm y'
-  | Stw(x, y, z') | FSw(x, y, z') -> x :: y :: fv_id_or_imm z'
+  | Add(x, y') | Sub(x, y') | FLw(x, y') | Lw(x, y') | Sll(x, y') | Srl(x, y') | Sra(x, y') -> x :: fv_id_or_imm y'
+  | Sw(x, y, z') | FSw(x, y, z') -> x :: y :: fv_id_or_imm z'
   | FAdd(x, y) | FSub(x, y) | FMul(x, y) | FDiv(x, y) -> [x; y]
   | IfEq(x, y', e1, e2) | IfLE(x, y', e1, e2) | IfGE(x, y', e1, e2) ->  x :: fv_id_or_imm y' @ remove_and_uniq S.empty (fv e1 @ fv e2) (* uniq here just for efficiency *)
   | IfFEq(x, y', e1, e2) | IfFLE(x, y', e1, e2) -> fv_id_or_imm x @ fv_id_or_imm y' @ remove_and_uniq S.empty (fv e1 @ fv e2) (* uniq here just for efficiency *)
@@ -97,8 +97,8 @@ let rec convert_exp e =
   | Asm.Neg(x) -> Neg(x)
   | Asm.Add(x, a) -> Add(x, convert_id_or_imm a)
   | Asm.Sub(x, a) -> Sub(x, convert_id_or_imm a)
-  | Asm.Lwz(x, a) -> Lwz(x, convert_id_or_imm a)
-  | Asm.Stw(x, y, a) -> Stw(x, y, convert_id_or_imm a)
+  | Asm.Lw(x, a) -> Lw(x, convert_id_or_imm a)
+  | Asm.Sw(x, y, a) -> Sw(x, y, convert_id_or_imm a)
   | Asm.FMr(x) -> FMr(x)
   | Asm.FNeg(x) -> FNeg(x)
   | Asm.FAdd(x, y) -> FAdd(x, y)
@@ -184,12 +184,12 @@ and print_exp i exp = (* 一つ一つの命令に対応する式 (caml2html: spa
           print_endline "Sub"; 
           print_indent (i + 1); Id.print_id x; print_newline ();
           print_indent (i + 1); print_id_or_imm a; print_newline ()
-  | Lwz (x, a) ->
-          print_endline "Lwz";
+  | Lw (x, a) ->
+          print_endline "Lw";
           print_indent (i + 1); Id.print_id x; print_newline ();
           print_indent (i + 1); print_id_or_imm a; print_newline ()
-  | Stw (x, y, a) ->
-          print_endline "Stw"; 
+  | Sw (x, y, a) ->
+          print_endline "Sw"; 
           print_indent (i + 1); Id.print_id x; print_newline ();
           print_indent (i + 1); Id.print_id y; print_newline ();
           print_indent (i + 1); print_id_or_imm a; print_newline ()
@@ -337,8 +337,8 @@ let rec invert_exp e =
   | Neg(x) -> Asm.Neg(x)
   | Add(x, a) -> Asm.Add(x, invert_id_or_imm a)
   | Sub(x, a) -> Asm.Sub(x, invert_id_or_imm a)
-  | Lwz(x, a) -> Asm.Lwz(x, invert_id_or_imm a)
-  | Stw(x, y, a) -> Asm.Stw(x, y, invert_id_or_imm a)
+  | Lw(x, a) -> Asm.Lw(x, invert_id_or_imm a)
+  | Sw(x, y, a) -> Asm.Sw(x, y, invert_id_or_imm a)
   | FMr(x) -> Asm.FMr(x)
   | FNeg(x) -> Asm.FNeg(x)
   | FAdd(x, y) -> Asm.FAdd(x, y)
