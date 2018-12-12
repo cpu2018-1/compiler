@@ -1,0 +1,54 @@
+
+. instruction number : 1
+. LET
+. . Ta3.29 = 
+. . Lw
+. . . %r0
+. . . 740
+. IN
+. . instruction number : 2
+. . LET
+. . . Ti5.23 = 
+. . . Lw
+. . . . Ta3.29
+. . . . 0
+. . IN
+. . . instruction number : 3
+. . . LET
+. . . . Ta8.25 = 
+. . . . Lw
+. . . . . %r0
+. . . . . 741
+. . . IN
+. . . . instruction number : 4
+. . . . LET
+. . . . . Ti10.24 = 
+. . . . . Lw
+. . . . . . Ta8.25
+. . . . . . 1
+. . . . IN
+. . . . . instruction number : 5
+. . . . . LET
+. . . . . . Ti11.17 = 
+. . . . . . Add
+. . . . . . . Ti5.23
+. . . . . . . Ti10.24
+. . . . . IN
+. . . . . . instruction number : 6
+. . . . . . LET
+. . . . . . . Ta14.19 = 
+. . . . . . . Lw
+. . . . . . . . %r0
+. . . . . . . . 742
+. . . . . . IN
+. . . . . . . instruction number : 7
+. . . . . . . LET
+. . . . . . . . Ti16.18 = 
+. . . . . . . . Lw
+. . . . . . . . . Ta14.19
+. . . . . . . . . 2
+. . . . . . . IN
+. . . . . . . . instruction number : 8
+. . . . . . . . Add
+. . . . . . . . . Ti11.17
+. . . . . . . . . Ti16.18

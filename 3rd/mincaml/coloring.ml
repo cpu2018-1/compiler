@@ -35,17 +35,16 @@ let rec update lives succ =
 let rec liveness_analysis_main lives t succ =
   match t with
   | Let((x, t), e, i, cont) ->
-    print_int i; print_newline ();
     (match e with 
     | IfEq(a, b', e1, e2) | IfLE(a, b', e1, e2) | IfGE(a, b', e1, e2) -> (* ここの(x, t)に対応する命令は比較であることにする *)
       let live_i = update lives [e1; e2] in
       let lives1 = liveness_analysis_main lives e1 [cont] in 
-      let lives2 = liveness_analysis_main lives1 e1 [cont] in 
+      let lives2 = liveness_analysis_main lives1 e2 [cont] in 
       liveness_analysis_main (Int_M.add i live_i lives2) cont succ
     | IfFEq(a, b', e1, e2) | IfFLE(a, b', e1, e2) -> (* ここの(x, t)に対応する命令は比較であることにする *)
       let live_i = update lives [e1; e2] in
       let lives1 = liveness_analysis_main lives e1 [cont] in 
-      let lives2 = liveness_analysis_main lives1 e1 [cont] in 
+      let lives2 = liveness_analysis_main lives1 e2 [cont] in 
       liveness_analysis_main (Int_M.add i live_i lives) cont succ
     | _ -> 
       let live_i = update lives [cont] in
@@ -57,7 +56,6 @@ let rec liveness_analysis_main lives t succ =
     
 
 let rec iter_analysis lives t =
-  print_endline "iter!";
   let lives' = liveness_analysis_main lives t [] in
   if (lives' = lives) then
     lives
@@ -72,8 +70,9 @@ let rec analysis_fun { name = Id.L(x); args = xs; fargs = ys; body = e; ret = t}
 let rec f (Prog(data, fundefs, e)) =
   let g = iter_analysis Int_M.empty e in
   let g' = Int_M.bindings g in
+  (*
   List.iter (fun (x, l) -> print_string ((string_of_int x)^"  ");
                           S.iter (fun y -> print_string (y^" ")) l; print_newline ()) g';
-  print_int (Int_M.cardinal g); print_newline ();
   let fundefs' = List.map analysis_fun fundefs in
+  *)
   Asm.Prog(data, List.map invert_fun fundefs, invert_t e)

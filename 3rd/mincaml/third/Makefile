@@ -19,7 +19,7 @@ $(RESULT): debug-code top
 clean:: nobackup
 
 # ↓もし実装を改造したら、それに合わせて変える
-SOURCES = float.c type.ml id.ml m.ml s.ml int_M.ml int_S.ml\
+SOURCES = float.c type.ml id.ml m.ml s.ml int_M.ml int_S.ml int_Int_S.ml\
 syntax.ml parser.mly lexer.mll typing.mli typing.ml kNormal.mli kNormal.ml \
 alpha.mli alpha.ml lifting.ml commelm.mli commelm.ml beta.mli beta.ml assoc.mli assoc.ml \
 inline.mli inline.ml constFold.mli constFold.ml elim.mli elim.ml \

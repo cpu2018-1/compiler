@@ -35,9 +35,9 @@ let lexbuf outchan l = (* バッファをコンパイルしてチャンネルへ出力する (caml2htm
 (*  Syntax.print_syntax a; print_newline ();*)
   Emit.f outchan
     (RegAlloc.f
-      (Coloring.f
-      ((*Schedule.f 
-*)
+    (Num_asm.g
+      ((*Coloring.f*)
+      (Schedule.f
       (Num_asm.f
        (Simm.f
           (Virtual.f
@@ -47,7 +47,7 @@ let lexbuf outchan l = (* バッファをコンパイルしてチャンネルへ出力する (caml2htm
                       (KNormal.f
                          (Typing.f
                             a))
-                      )))))))))
+                      ))))))))))
 
 let string s = lexbuf stdout (Lexing.from_string s) (* 文字列をコンパイルして標準出力に表示する (caml2html: main_string) *)
 
@@ -68,8 +68,9 @@ let () = (* ここからコンパイラの実行が開始される (caml2html: main_entry) *)
      ("-iter", Arg.Int(fun i -> limit := i), "maximum number of optimizations iterated");
      ("-asm", Arg.Set(Virtual.print), "print asm.t before register allocation");
      ("-simm", Arg.Set(Simm.print), "print asm.t after simm");
-     ("-nasm", Arg.Set(Num_asm.print), "print num_asm.t before register allocation");
-     ("-reg", Arg.Set(RegAlloc.print), "print asm.t after register allocation")]
+     ("-nasm", Arg.Set(Num_asm.print_b), "print num_asm.t before register allocation");
+     ("-breg", Arg.Set(Num_asm.print_a), "print num_asm.t before register allocation");
+     ("-areg", Arg.Set(RegAlloc.print), "print asm.t after register allocation")]
     (fun s -> files := !files @ [s])
     ("Mitou Min-Caml Compiler (C) Eijiro Sumii\n" ^
      Printf.sprintf "usage: %s [-inline m] [-iter n] ...filenames without \".ml\"..." Sys.argv.(0));

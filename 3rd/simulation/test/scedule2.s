@@ -2080,16 +2080,11 @@ _min_caml_start: # main entry point
   sw r0, 1023(r4)
   addi  r4, r4, 1024
 #	main program starts
-	addi	r1, r0, 2
-	addi	r2, r0, 3
-	sw	r31, 0(r3)
-	addi	r3, r3, 1
-	jal	lib_mul				
-	addi	r3, r3, -1
-	lw	r31, 0(r3)
-	bgei	5, r1, bge_then.9
-	addi	_R_0, r0, 1
-	j	bge_cont.10
-bge_then.9:
-	addi	_R_0, r0, 0
-bge_cont.10:
+	lw	r1, 740(r0)
+	lw	r2, 741(r0)
+	lw	r1, 0(r1)
+	lw	r2, 1(r2)
+	lw	r5, 742(r0)
+	add	r1, r1, r2
+	lw	r2, 2(r5)
+	add	_R_0, r1, r2

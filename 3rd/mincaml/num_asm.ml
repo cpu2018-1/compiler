@@ -1,5 +1,6 @@
 
-let print = ref false
+let print_b = ref false
+let print_a = ref false
 
 type id_or_imm = V of Id.t | C of int | FC of float
 type t = (* 命令の列 (caml2html: sparcasm_t) *)
@@ -371,12 +372,26 @@ let rec invert_fun { name = x; args = xs; fargs = ys; body = e; ret = t} =
   { Asm.name = x; Asm.args = xs; Asm.fargs = ys; Asm.body = invert_t e; Asm.ret = t}
 
 
+let rec g (Prog(data, fundefs, e)) =
+  (if (!print_a) then (
+    Printf.printf ("Prog before register allocation\n");
+    List.iter (fun f -> print_newline (); print_fundef f) fundefs;
+    print_newline ();
+    print_t 1 e
+  )
+  else ()
+  )
+  ;
+  let e = invert_t e in
+  let fundefs = List.map invert_fun fundefs in 
+  Asm.Prog(data, fundefs, e)
+
 
 
 let rec f (Asm.Prog(data, fundefs, e)) =
   let e = convert_t e in
   let fundefs = List.map convert_fun fundefs in 
-  (if (!print) then (
+  (if (!print_b) then (
     Printf.printf ("Prog before register allocation\n");
     List.iter (fun f -> print_newline (); print_fundef f) fundefs;
     print_newline ();

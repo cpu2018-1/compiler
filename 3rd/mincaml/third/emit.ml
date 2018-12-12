@@ -219,44 +219,34 @@ and g' oc = function (* 各命令のアセンブリ生成 (caml2html: emit_gprime) *)
       g'_args oc [(x, reg_cl)] ys zs;
       Printf.fprintf oc "\tlw\t%s, 0(%s)\n" (reg reg_sw) (reg reg_cl);
       Printf.fprintf oc "\tjr\t%s\n" (reg reg_sw);
-(*      Printf.fprintf oc "\tmtctr\t%s\n\tbctr\n" (reg reg_sw);*)
   | Tail, CallDir(Id.L(x), ys, zs) -> (* 末尾呼び出し *)
       g'_args oc [] ys zs;
       Printf.fprintf oc "\tj\t%s\n" x
-(*      Printf.fprintf oc "\tb\t%s\n" x*) (* 単なるジャンプ ble r0 r31 で代用 *)
   | NonTail(a), CallCls(x, ys, zs) ->
-(*      Printf.fprintf oc "\taddi\t%s, %s, 0\t\t\t\t#mflr\t%s\n" (reg reg_tmp) (reg reg_lr) (reg reg_tmp); *)
       g'_args oc [(x, reg_cl)] ys zs;
       let ss = stacksize () in
-(*      Printf.fprintf oc "\tsw\t%s, %d(%s)\n" (reg reg_tmp) (ss - 1) (reg reg_sp); *)
       Printf.fprintf oc "\tsw\t%s, %d(%s)\n" (reg reg_lr) (ss - 1) (reg reg_sp); 
       Printf.fprintf oc "\taddi\t%s, %s, %d\n" (reg reg_sp) (reg reg_sp) ss;
       Printf.fprintf oc "\tlw\t%s, 0(%s)\n" (reg reg_tmp) (reg reg_cl);
       Printf.fprintf oc "\tjalr\t%s\n" (reg reg_tmp);
       Printf.fprintf oc "\taddi\t%s, %s, %d\n" (reg reg_sp) (reg reg_sp) (-ss);
-(*      Printf.fprintf oc "\tlw\t%s, %d(%s)\n" (reg reg_tmp) (ss - 1) (reg reg_sp); *)
       Printf.fprintf oc "\tlw\t%s, %d(%s)\n" (reg reg_lr) (ss - 1) (reg reg_sp);
       if List.mem a allregs && a <> regs.(0) then
         Printf.fprintf oc "\tadd\t%s, r0, %s\n" (reg a) (reg regs.(0))
       else if List.mem a allfregs && a <> fregs.(0) then
         Printf.fprintf oc "\tfadd\t%s, f0, %s\n" (reg a) (reg fregs.(0))
-(*      Printf.fprintf oc "\tadd\t%s, r0, %s\t\t\t\t#mtlr\t%s\n" (reg reg_lr) (reg reg_tmp) (reg reg_tmp) *)
   | (NonTail(a), CallDir(Id.L(x), ys, zs)) ->
-(*      Printf.fprintf oc "\taddi\t%s, %s, 0\t\t\t\t#mflr\t%s\n" (reg reg_tmp) (reg reg_lr) (reg reg_tmp); *)
       g'_args oc [] ys zs;
       let ss = stacksize () in
-(*      Printf.fprintf oc "\tsw\t%s, %d(%s)\n" (reg reg_tmp) (ss - 1) (reg reg_sp); *)
       Printf.fprintf oc "\tsw\t%s, %d(%s)\n" (reg reg_lr) (ss - 1) (reg reg_sp);
       Printf.fprintf oc "\taddi\t%s, %s, %d\n" (reg reg_sp) (reg reg_sp) ss;
       Printf.fprintf oc "\tjal\t%s\t\t\t\t\n" x;
       Printf.fprintf oc "\taddi\t%s, %s, %d\n" (reg reg_sp) (reg reg_sp) (-ss);
-(*      Printf.fprintf oc "\tlw\t%s, %d(%s)\n" (reg reg_tmp) (ss - 1) (reg reg_sp); *)
       Printf.fprintf oc "\tlw\t%s, %d(%s)\n" (reg reg_lr) (ss - 1) (reg reg_sp);
       if List.mem a allregs && a <> regs.(0) then
         Printf.fprintf oc "\tadd\t%s, r0, %s\n" (reg a) (reg regs.(0))
       else if List.mem a allfregs && a <> fregs.(0) then
         Printf.fprintf oc "\tfadd\t%s, f0, %s\n" (reg a) (reg fregs.(0))
-(*      Printf.fprintf oc "\tadd\t%s, r0, %s\t\t\t\t#mtlr\t%s\n" (reg reg_lr) (reg reg_tmp) (reg reg_tmp) *)
   | NonTail(x), Sll(y, V(z)) -> Printf.fprintf oc "\tsll\t%s, %s, %s\n" (reg x) (reg y) (reg z) (**)
   | NonTail(x), Sll(y, C(z)) -> Printf.fprintf oc "\tslli\t%s, %s, %d\n" (reg x) (reg y) z      (**)
   | NonTail(x), Srl(y, V(z)) -> Printf.fprintf oc "\tsrl\t%s, %s, %s\n" (reg x) (reg y) (reg z) (**)
@@ -361,6 +351,7 @@ let h oc { name = Id.L(x); args = _; fargs = _; body = e; ret = _ } =
   stackset := S.empty;
   stackmap := [];
   g oc (Tail, e)
+
 
 let cat ic oc =
   let rec cat_sub () =
