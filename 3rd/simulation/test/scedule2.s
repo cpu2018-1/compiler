@@ -2082,9 +2082,9 @@ _min_caml_start: # main entry point
 #	main program starts
 	lw	r1, 740(r0)
 	lw	r2, 741(r0)
+	lw	r5, 742(r0)
 	lw	r1, 0(r1)
 	lw	r2, 1(r2)
-	lw	r5, 742(r0)
 	add	r1, r1, r2
 	lw	r2, 2(r5)
 	add	_R_0, r1, r2

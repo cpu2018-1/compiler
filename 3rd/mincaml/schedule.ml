@@ -9,6 +9,8 @@ let rec ready_set graph =
   Int_S.diff b a
 
 
+
+
 type instr = NOP | ALU | FPU | MEM | If | Unknown
 
 let rec get_itype = function
@@ -60,6 +62,40 @@ let rec fv_of_if e =
     )
   | _ -> false, fv_exp e
 
+      
+let itype_map = ref Int_M.empty
+let rec set_itype_map e =
+  match e with
+  | Let((x, t), e', j, cont) ->
+    let is_if, _ = fv_of_if e' in
+    if (is_if) then
+      (match e' with
+      | IfEq(_, _, e1, e2) | IfLE(_, _, e1, e2) | IfGE(_, _, e1, e2) 
+      | IfFEq(_, _, e1, e2) | IfFLE(_, _, e1, e2) ->
+        itype_map := Int_M.add j If !itype_map;
+        set_itype_map e1;
+        set_itype_map e2;
+        set_itype_map cont
+      | _ -> assert(false)
+      )
+    else
+      itype_map := Int_M.add j (get_itype e') !itype_map;
+      set_itype_map cont
+  | Ans(e', j) ->
+    let is_if, _ = fv_of_if e' in
+    if (is_if) then
+      (match e' with
+      | IfEq(_, _, e1, e2) | IfLE(_, _, e1, e2) | IfGE(_, _, e1, e2) 
+      | IfFEq(_, _, e1, e2) | IfFLE(_, _, e1, e2) ->
+        itype_map := Int_M.add j If !itype_map;
+        set_itype_map e1;
+        set_itype_map e2
+      | _ -> assert(false)
+      )
+    else
+      itype_map := Int_M.add j (get_itype e') !itype_map
+ 
+    
 
 let rec check_if i cont graph =
   match cont with
@@ -222,15 +258,51 @@ let rec determine_path_set g = (* クリティカルパスの写像を返す *)
     with Not_found -> raise (Failure ("hoge"))
 
 
+let latency = ref Int_M.empty
+
+let rec set_latency_zeros_sub n =
+  if (n > !counter) then
+    ()
+  else(
+    latency := Int_M.add n 0 !latency;
+    set_latency_zeros_sub (n + 1)
+    )
+
+let set_latency_zeros () =
+  set_latency_zeros_sub 0
+
+let rec update_latency i g =
+  let s = Int_M.find i g in
+  Int_Int_S.iter (fun (j, w) -> latency := Int_M.add j (max (max ((Int_M.find j !latency) - 1) 0) w) !latency) s
+  
+  
+let used_mem = ref false
+let can_use i = 
+  if (Int_M.find i !itype_map = MEM && !used_mem = true) then
+    false
+  else if (Int_M.find i !latency = 0) then
+    true
+  else
+    false
 
 let rec determine_path g =
-  let ready = ready_set g in
-  let s = determine_path_set g in
-  let m, _ = Int_S.fold (fun i (k, mi) -> if mi < Int_M.find i s then (i, Int_M.find i s) else (k, mi)) ready (0, 0) in
-  m 
+  if (Int_M.cardinal g = 1) then
+    let (a, _) = Int_M.choose g in 
+    a
+  else
+    let ready = ready_set g in
+    let s = determine_path_set g in
+    let m, _ = Int_S.fold (fun i (k, mi) -> if mi < Int_M.find i s && can_use i then (i, Int_M.find i s) else (k, mi)) ready (-1, 0) in
+    print_int m; print_endline "";
+    if (m = -1) then
+      Int_S.choose ready (* 実行可能なものがなければ適当に1つとる *)
+    else(
+      m
+    )
 
 let rec determine g =
   let i = determine_path g in
+  update_latency i g;
   print_int i; print_newline ();
   i
 
@@ -304,6 +376,8 @@ let print_graph g =
 
 
 let rec f (Prog(data, fundefs, e)) =
+  set_itype_map e;
+  set_latency_zeros ();
   let e, g = make_graph_t e Int_M.empty in
   let e = list_scheduling e in
   let ready = ready_set g in
