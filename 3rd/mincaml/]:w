@@ -326,7 +326,7 @@ let rec determine_priority_for_source g =
     Int_S.iter (fun i -> 
         let s = Int_M.find i g in
         Int_Int_S.iter (fun (j, w) ->
-                  source := Int_M.add j (max (Int_M.find i !source + 1) (Int_M.find j !source)) !source) s) ready;
+                  source := Int_M.add j (max (Int_M.find i !source) (Int_M.find j !source)) !source) s) ready;
     let g' = Int_S.fold (fun i map -> Int_M.remove i map) ready g in
     determine_priority_for_source g' 
 
@@ -430,6 +430,8 @@ let rec f (Prog(data, fundefs, e)) =
   set_latency_zeros ();
   set_source_ones ();
   let e, g = make_graph_t e Int_M.empty in
+  print_graph g;
   determine_priority_for_source g;
+  print_source ();
   let e = list_scheduling e in
   Prog(data, List.map scheduling_fun fundefs, e)

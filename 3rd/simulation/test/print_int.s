@@ -1013,10 +1013,10 @@ print_int.66:
 	bgei	0, r1, bge_then.145
 	addi	r2, r0, 45
 	sw	r1, 0(r3)
-	add	r1, r0, r2				# mr	r1, r2
+	add	r1, r0, r2
 	sw	r31, 1(r3)
 	addi	r3, r3, 2
-	jal	lib_print_char				#	bl	lib_print_char
+	jal	lib_print_char				
 	addi	r3, r3, -2
 	lw	r31, 1(r3)
 	lw	r1, 0(r3)
@@ -1039,10 +1039,10 @@ bge_then.146:
 	srli	r2, r2, 11
 	sw	r1, 0(r3)
 	sw	r2, 1(r3)
-	add	r1, r0, r2				# mr	r1, r2
+	add	r1, r0, r2
 	sw	r31, 2(r3)
 	addi	r3, r3, 3
-	jal	lib_print_num				#	bl	lib_print_num
+	jal	lib_print_num				
 	addi	r3, r3, -3
 	lw	r31, 2(r3)
 	lw	r1, 1(r3)
@@ -1076,16 +1076,16 @@ ble_then.147:
 	srli	r5, r5, 11
 	sw	r1, 2(r3)
 	sw	r5, 3(r3)
-	add	r1, r0, r2				# mr	r1, r2
+	add	r1, r0, r2
 	sw	r31, 4(r3)
 	addi	r3, r3, 5
-	jal	lib_print_num				#	bl	lib_print_num
+	jal	lib_print_num				
 	addi	r3, r3, -5
 	lw	r31, 4(r3)
 	lw	r1, 3(r3)
 	sw	r31, 4(r3)
 	addi	r3, r3, 5
-	jal	lib_print_num				#	bl	lib_print_num
+	jal	lib_print_num				
 	addi	r3, r3, -5
 	lw	r31, 4(r3)
 	lw	r1, 3(r3)
@@ -1097,8 +1097,9 @@ ble_then.147:
 	j	lib_print_num
 _R_0:
 _min_caml_start: # main entry point
-  addi  r3, r0, 0
-  addi  r4, r0, 10000
+  addi  r3, r0, 32500
+  slli   r3, r3, 2
+  addi  r4, r0, 0
 # n_objects
   sw  r0, 0(r4)
 # objects
@@ -1833,7 +1834,7 @@ _min_caml_start: # main entry point
   sw  r1, 721(r4)
 # or_net
   sw  r1, 722(r4)
-  addi  r1, r4, 10722
+  addi  r1, r4, 722
   sw  r1, 723(r4)
 # solver_dist
   fsw f0, 724(r4)
@@ -2168,6 +2169,6 @@ _min_caml_start: # main entry point
 	addi	r1, r0, 32
 	sw	r31, 0(r3)
 	addi	r3, r3, 1
-	jal	print_int.66				#	bl	print_int.66
+	jal	print_int.66				
 	addi	r3, r3, -1
 	lw	r31, 0(r3)

@@ -9,9 +9,6 @@ let rec ready_set graph =
   Int_S.diff b a
 
 
-let print_graph g =
-  Int_M.iter (fun i s -> print_int i; print_string "  ";
-                Int_Int_S.iter (fun (a, b) -> Printf.printf "(%d, %d)" a b; print_string " ";) s; print_newline ()) g
 
 
 type instr = NOP | ALU | FPU | MEM | If | Unknown
@@ -33,10 +30,10 @@ let rec set_edge a b =
   | FPU, FPU -> 3
   | _ -> 0
   *)
-  | ALU, ALU -> 1
+  | ALU, ALU -> 2
   | MEM, _ -> 2
-  | FPU, FPU -> 1
-  | _ -> 1
+  | FPU, FPU -> 2
+  | _ -> 0
 
 (* グラフの型は (Int_Int_S.t) Int_M.t *)
 
@@ -100,19 +97,14 @@ let rec set_itype_map e =
  
     
 
-let rec check_fixed i cont graph =
+let rec check_if i cont graph =
   match cont with
   | Let((y, _), e, j, t') ->
     let is_if, _ = fv_of_if e in
     if (is_if) then
-      check_fixed i t' (add_edge i (j, 0) graph)
+      check_if i t' (add_edge i (j, 0) graph)
     else
-      (match e with
-      | CallCls _ | CallDir _ | Out _ | In _ -> 
-        check_fixed i t' (add_edge i (j, 0) graph)
-      | _ -> 
-        check_fixed i t' graph
-      )
+      check_if i t' graph
   | Ans(e, j) ->
     let is_if, _ = fv_of_if e in
     if (is_if) then
@@ -128,13 +120,6 @@ let rec add_all_edges i cont graph =
   | Ans(e, j) ->
       add_edge i (j, 0) graph
  
-let rec add_edge_to_ans i cont graph =
-  match cont with
-  | Let((y, _), e, j, t') ->
-    add_edge_to_ans i t' graph
-  | Ans(e, j) ->
-    add_edge i (j, 0) graph
-
 
 
 let rec check_war x i i_type t graph =
@@ -146,6 +131,8 @@ let rec check_war x i i_type t graph =
       | IfEq(_, _, e1, e2) | IfLE(_, _, e1, e2) | IfGE(_, _, e1, e2) 
       | IfFEq(_, _, e1, e2) | IfFLE(_, _, e1, e2) ->
         let g = check_war x i i_type t' (add_edge i (j, (set_edge i_type (get_itype e))) graph) in
+        let g = check_war x i i_type e1 g in
+        let g = check_war x i i_type e2 g in
         g
       | _ -> assert(false)
       )
@@ -160,7 +147,8 @@ let rec check_war x i i_type t graph =
       (match e with
       | IfEq(_, _, e1, e2) | IfLE(_, _, e1, e2) | IfGE(_, _, e1, e2) 
       | IfFEq(_, _, e1, e2) | IfFLE(_, _, e1, e2) ->
-        let g = (add_edge i (j, (set_edge i_type (get_itype e))) graph) in
+        let g = check_war x i i_type e1 (add_edge i (j, (set_edge i_type (get_itype e))) graph) in
+        let g = check_war x i i_type e2 g in
         g
       | _ -> assert(false)
       )
@@ -180,6 +168,8 @@ let rec check_raw i i_type xs t graph =
       | IfEq(_, _, e1, e2) | IfLE(_, _, e1, e2) | IfGE(_, _, e1, e2) 
       | IfFEq(_, _, e1, e2) | IfFLE(_, _, e1, e2) ->
         let g = check_raw i i_type xs t' (add_edge i (j, (set_edge i_type (get_itype e))) graph) in
+        let g = check_raw i i_type xs e1 g in
+        let g = check_raw i i_type xs e2 g in
         g
       | _ -> assert(false)
       )
@@ -194,7 +184,9 @@ let rec check_raw i i_type xs t graph =
       (match e with
       | IfEq(_, _, e1, e2) | IfLE(_, _, e1, e2) | IfGE(_, _, e1, e2) 
       | IfFEq(_, _, e1, e2) | IfFLE(_, _, e1, e2) ->
-        graph
+        let g = check_raw i i_type xs e1 graph in
+        let g = check_raw i i_type xs e2 g in
+        g
       | _ -> assert(false)
       )
     else
@@ -210,6 +202,8 @@ let rec check_waw x i i_type t graph =
       | IfEq(_, _, e1, e2) | IfLE(_, _, e1, e2) | IfGE(_, _, e1, e2) 
       | IfFEq(_, _, e1, e2) | IfFLE(_, _, e1, e2) ->
         let g = check_waw x i i_type t' (add_edge i (j, (set_edge i_type (get_itype e))) graph) in
+        let g = check_waw x i i_type e1 g in
+        let g = check_waw x i i_type e2 g in
         g
       | _ -> assert(false)
       )
@@ -224,7 +218,9 @@ let rec check_waw x i i_type t graph =
       (match e with
       | IfEq(_, _, e1, e2) | IfLE(_, _, e1, e2) | IfGE(_, _, e1, e2) 
       | IfFEq(_, _, e1, e2) | IfFLE(_, _, e1, e2) ->
-        graph
+        let g = check_waw x i i_type e1 graph in
+        let g = check_waw x i i_type e2 g in
+        g
       | _ -> assert(false)
       )
     else
@@ -235,7 +231,7 @@ let rec check_stall x i i_type fvs cont graph =
   let graph = check_war x i i_type cont graph in
   let graph = check_raw i i_type fvs cont graph in
   let graph = check_waw x i i_type cont graph in
-  check_fixed i cont graph 
+  check_if i cont graph 
 
 let replace_if e a b =
   match e with
@@ -289,15 +285,11 @@ let can_use i =
   else
     false
 
-let rec print_s s =
-  Int_M.iter (fun i k -> Printf.printf "(%d, %d) " i k) s; print_newline ()
-
-
 let rec determine_path g =
   let ready = ready_set g in
   let s = determine_path_set g in
-  let m, _ = Int_S.fold (fun i (k, mi) -> if mi < Int_M.find i s && can_use i then (i, Int_M.find i s) else (k, mi)) ready (-1, -1) in
-  Printf.printf "%d was selected in determine_path" m; print_newline ();
+  let m, _ = Int_S.fold (fun i (k, mi) -> if mi < Int_M.find i s && can_use i then (i, Int_M.find i s) else (k, mi)) ready (-1, 0) in
+  print_int m; print_endline "";
   if (m = -1) then
     Int_S.choose ready (* 実行可能なものがなければ適当に1つとる *)
   else(
@@ -310,7 +302,7 @@ let rec set_source_ones_sub n =
   if (n > !counter) then
     ()
   else(
-    source := Int_M.add n 1 !source;
+    latency := Int_M.add n 1 !latency;
     set_source_ones_sub (n + 1)
     )
 
@@ -318,7 +310,7 @@ let set_source_ones () =
   set_source_ones_sub 0
 
 
-let rec determine_priority_for_source g = 
+let rec determine_priority_for_source g n = 
   if (Int_M.cardinal g = 0) then
     ()
   else
@@ -326,23 +318,23 @@ let rec determine_priority_for_source g =
     Int_S.iter (fun i -> 
         let s = Int_M.find i g in
         Int_Int_S.iter (fun (j, w) ->
-                  source := Int_M.add j (max (Int_M.find i !source + 1) (Int_M.find j !source)) !source) s) ready;
+                  source := Int_M.add j (max (n + 1) (Int_M.find j !source)) !source) s) ready;
     let g' = Int_S.fold (fun i map -> Int_M.remove i map) ready g in
-    determine_priority_for_source g' 
+    determine_priority_for_source g' (n + 1)
 
 
 
 let rec determine_source g =
   let ready = ready_set g in
-  let ret, _ = Int_S.fold (fun i (k, v) -> if v < Int_M.find i !source then (i, Int_M.find i !source) else (k, v)) ready (0, 0) in
+  let ret, _ = Int_S.fold (fun i (k, v) -> if v < Int_M.find i !source then (i, Int_M.find i !source) else (k, v)) (0, 0) in
   ret
 
 
 
 let rec determine g =
   let i = determine_source g in
-  Printf.printf "%d was selected!" i; print_newline ();
   update_latency i g;
+  print_int i; print_newline ();
   i
 
 
@@ -367,9 +359,6 @@ let rec list_scheduling e =
   match e with
   | Let((x, t), e', i, cont) ->
     let e, g = make_graph_t e Int_M.empty in
-(*    print_endline "print graph!";
-    print_graph g;
-    *)
     let j = determine g in 
     let Let((y, yt), ye, yi, ycont) = fetch e j in
     Let((y, yt), ye, yi, list_scheduling ycont)
@@ -387,7 +376,7 @@ and
       | IfFEq(_, _, e1, e2) | IfFLE(_, _, e1, e2) ->
         let e1' = list_scheduling e1 in
         let e2' = list_scheduling e2 in
-        Ans(replace_if e e1' e2', i), (Int_M.add i Int_Int_S.empty graph)
+        Ans(replace_if e e1' e2', i), graph
       | _ -> assert(false)
       )
     else
@@ -406,23 +395,14 @@ and
       | _ -> assert(false)
       )
     else
-      match e with
-      | CallCls _ | CallDir _ | Out _ | In _ -> 
-        let graph = add_all_edges i cont graph in
-        let graph' = check_stall x i (get_itype e) (fv_exp e) cont (Int_M.add i Int_Int_S.empty graph) in
-        let graph' = add_edge_to_ans i cont graph' in
-        let cont', g = make_graph_t cont graph' in
-        Let((x, xt), e, i, cont'), g
-      | _ -> 
-        let graph' = check_stall x i (get_itype e) (fv_exp e) cont (Int_M.add i Int_Int_S.empty graph) in
-        let graph' = add_edge_to_ans i cont graph' in
-        let cont', g = make_graph_t cont graph' in
-        Let((x, xt), e, i, cont'), g
+      let graph' = check_stall x i (get_itype e) (fv_exp e) cont graph in
+      let cont', g = make_graph_t cont graph' in
+      Let((x, xt), e, i, cont'), g
 
-let rec scheduling_fun { name = Id.L(x); args = xs; fargs = ys; body = e; ret = t} =
-  print_endline ("scheduling "^x);
-  { name = Id.L(x); args = xs; fargs = ys; body = (set_itype_map e; list_scheduling e); ret = t}
 
+let print_graph g =
+  Int_M.iter (fun i s -> print_int i; print_string "  ";
+                Int_Int_S.iter (fun (a, b) -> Printf.printf "(%d, %d)" a b; print_string " ";) s; print_newline ()) g
 
 
 let rec f (Prog(data, fundefs, e)) =
@@ -430,6 +410,7 @@ let rec f (Prog(data, fundefs, e)) =
   set_latency_zeros ();
   set_source_ones ();
   let e, g = make_graph_t e Int_M.empty in
-  determine_priority_for_source g;
   let e = list_scheduling e in
-  Prog(data, List.map scheduling_fun fundefs, e)
+  let ready = ready_set g in
+  print_graph g;
+  Prog(data, fundefs, e)

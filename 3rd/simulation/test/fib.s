@@ -1009,34 +1009,35 @@ _fle_else.783:
 	j lib_print_ufloat
 _R_0:
 # library ends
-fib.9:
-	blei	1, r1, ble_then.22
+fib.10:
+	blei	1, r1, ble_then.24
 	addi	r2, r1, -1
 	sw	r1, 0(r3)
-	add	r1, r0, r2				# mr	r1, r2
+	add	r1, r0, r2
 	sw	r31, 1(r3)
 	addi	r3, r3, 2
-	jal	fib.9				#	bl	fib.9
+	jal	fib.10				
 	addi	r3, r3, -2
 	lw	r31, 1(r3)
 	lw	r2, 0(r3)
 	addi	r2, r2, -2
 	sw	r1, 1(r3)
-	add	r1, r0, r2				# mr	r1, r2
+	add	r1, r0, r2
 	sw	r31, 2(r3)
 	addi	r3, r3, 3
-	jal	fib.9				#	bl	fib.9
+	jal	fib.10				
 	addi	r3, r3, -3
 	lw	r31, 2(r3)
 	lw	r2, 1(r3)
 	add	r1, r2, r1
 	jr	r31				#
-ble_then.22:
+ble_then.24:
 	jr	r31				#
 _R_0:
 _min_caml_start: # main entry point
-  addi  r3, r0, 0
-  addi  r4, r0, 10000
+  addi  r3, r0, 32500
+  slli   r3, r3, 2
+  addi  r4, r0, 0
 # n_objects
   sw  r0, 0(r4)
 # objects
@@ -1771,7 +1772,7 @@ _min_caml_start: # main entry point
   sw  r1, 721(r4)
 # or_net
   sw  r1, 722(r4)
-  addi  r1, r4, 10722
+  addi  r1, r4, 722
   sw  r1, 723(r4)
 # solver_dist
   fsw f0, 724(r4)
@@ -2106,6 +2107,11 @@ _min_caml_start: # main entry point
 	addi	r1, r0, 10
 	sw	r31, 0(r3)
 	addi	r3, r3, 1
-	jal	fib.9				#	bl	fib.9
+	jal	fib.10				
+	addi	r3, r3, -1
+	lw	r31, 0(r3)
+	sw	r31, 0(r3)
+	addi	r3, r3, 1
+	jal	lib_print_int				
 	addi	r3, r3, -1
 	lw	r31, 0(r3)

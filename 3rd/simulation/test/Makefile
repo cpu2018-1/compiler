@@ -28,4 +28,4 @@ simulate : assembler simulator bytecode.b
 
 
 clean :
-	rm *mine* *utop*
+	rm *mine* *utop* *_diff
