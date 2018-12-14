@@ -217,7 +217,7 @@ and print_exp i exp = (* 一つ一つの命令に対応する式 (caml2html: spa
           print_indent (i + 1); Id.print_id x; print_newline ();
           print_indent (i + 1); print_id_or_imm a; print_newline ()
   | FSw (x, y, a) -> 
-          print_endline "FLw"; 
+          print_endline "FSw"; 
           print_indent (i + 1); Id.print_id x; print_newline ();
           print_indent (i + 1); Id.print_id y; print_newline ();
           print_indent (i + 1); print_id_or_imm a; print_newline ()

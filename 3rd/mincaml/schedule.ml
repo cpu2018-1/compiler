@@ -45,7 +45,9 @@ let rec add_edge i yi graph =
     if (Int_M.mem i graph) then
       Int_M.find i graph
     else
+      (
       Int_Int_S.empty
+      )
   in
     Int_M.add i (Int_Int_S.add yi edges) graph
 
@@ -108,7 +110,7 @@ let rec check_fixed i cont graph =
       check_fixed i t' (add_edge i (j, 0) graph)
     else
       (match e with
-      | CallCls _ | CallDir _ | Out _ | In _ -> 
+      | CallCls _ | CallDir _ | Out _ | In _ | Sw _ | FSw _ -> 
         check_fixed i t' (add_edge i (j, 0) graph)
       | _ -> 
         check_fixed i t' graph
@@ -118,13 +120,18 @@ let rec check_fixed i cont graph =
     if (is_if) then
       add_edge i (j, 0) graph
     else
-      graph
+      (match e with
+      | CallCls _ | CallDir _ | Out _ | In _ | Sw _ | FSw _ -> 
+        add_edge i (j, 0) graph
+      | _ -> 
+        graph
+      )
     
 
 let rec add_all_edges i cont graph =
   match cont with
   | Let((y, _), e, j, t') ->
-    add_all_edges i t' (add_edge i (j, 0) graph)
+    add_all_edges i t' (add_edge i (j, 0) graph) 
   | Ans(e, j) ->
       add_edge i (j, 0) graph
  
@@ -297,7 +304,7 @@ let rec determine_path g =
   let ready = ready_set g in
   let s = determine_path_set g in
   let m, _ = Int_S.fold (fun i (k, mi) -> if mi < Int_M.find i s && can_use i then (i, Int_M.find i s) else (k, mi)) ready (-1, -1) in
-  Printf.printf "%d was selected in determine_path" m; print_newline ();
+(*  Printf.printf "%d was selected in determine_path" m; print_newline ();*)
   if (m = -1) then
     Int_S.choose ready (* 実行可能なものがなければ適当に1つとる *)
   else(
@@ -340,7 +347,7 @@ let rec determine_source g =
 
 
 let rec determine g =
-  let i = determine_source g in
+  let i = determine_path g in
   Printf.printf "%d was selected!" i; print_newline ();
   update_latency i g;
   i
@@ -362,6 +369,11 @@ let rec fetch e j = (* j の命令を前に持ってくる *)
   let ((x, t), ej, j), e' = fetch_sub e j in
   Let((x, t), ej, j, e')
   
+let rec add_itiou i graph =
+  if (Int_M.mem i graph) then
+    graph
+  else
+    Int_M.add i Int_Int_S.empty graph
 
 let rec list_scheduling e =
   match e with
@@ -387,11 +399,11 @@ and
       | IfFEq(_, _, e1, e2) | IfFLE(_, _, e1, e2) ->
         let e1' = list_scheduling e1 in
         let e2' = list_scheduling e2 in
-        Ans(replace_if e e1' e2', i), (Int_M.add i Int_Int_S.empty graph)
+        Ans(replace_if e e1' e2', i), (add_itiou i graph)
       | _ -> assert(false)
       )
     else
-      Ans(e, i), (Int_M.add i Int_Int_S.empty graph)
+      Ans(e, i), (add_itiou i graph)
   | Let((x, xt), e, i, cont) -> 
     let is_if, fvs = fv_of_if e in
     if (is_if) then
@@ -406,18 +418,20 @@ and
       | _ -> assert(false)
       )
     else
+      (
       match e with
-      | CallCls _ | CallDir _ | Out _ | In _ -> 
+      | CallCls _ | CallDir _ | Out _ | In _ | Sw _ | FSw _ -> 
         let graph = add_all_edges i cont graph in
-        let graph' = check_stall x i (get_itype e) (fv_exp e) cont (Int_M.add i Int_Int_S.empty graph) in
+        let graph' = check_stall x i (get_itype e) (fv_exp e) cont (add_itiou i graph) in
         let graph' = add_edge_to_ans i cont graph' in
         let cont', g = make_graph_t cont graph' in
         Let((x, xt), e, i, cont'), g
       | _ -> 
-        let graph' = check_stall x i (get_itype e) (fv_exp e) cont (Int_M.add i Int_Int_S.empty graph) in
+        let graph' = check_stall x i (get_itype e) (fv_exp e) cont (add_itiou i graph) in
         let graph' = add_edge_to_ans i cont graph' in
         let cont', g = make_graph_t cont graph' in
         Let((x, xt), e, i, cont'), g
+      )
 
 let rec scheduling_fun { name = Id.L(x); args = xs; fargs = ys; body = e; ret = t} =
   print_endline ("scheduling "^x);

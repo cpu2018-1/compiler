@@ -1,0 +1,47 @@
+動的命令数 1163
+lui	 0.000
+add	 2.580
+addi	 2.923
+sub	 0.086
+sll	 0.000
+slli	 1.806
+srl	 0.000
+srli	 0.000
+sra	 0.000
+srai	 0.516
+j	 0.774
+jal	 0.258
+jr	 0.258
+jalr	 0.086
+beq	 0.000
+ble	 1.032
+beqi	 0.000
+bnei	 0.000
+blei	 0.000
+bgei	 0.000
+lw	 0.602
+sw	84.437
+flw	 0.000
+fsw	 4.299
+out	 0.172
+in	 0.000
+fadd	 0.000
+fsub	 0.000
+fmul	 0.000
+fdiv	 0.000
+fsqrt	 0.000
+feq	 0.000
+flt	 0.000
+fle	 0.000
+ftoi	 0.000
+itof	 0.000
+flup	 0.172
+fneg	 0.000
+fmvfr	 0.000
+fmvtr	 0.000
+
+各labelへjump/branch回数
+
+r3 r4の最大値
+r3	130004
+r4	1026

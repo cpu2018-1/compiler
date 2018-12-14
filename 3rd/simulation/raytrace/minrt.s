@@ -1014,33 +1014,33 @@ print_char.2801:
 	jr	r31				#
 fispos.2803:
 	fle	r30, f1, f0
-	beq	r0, r30, fle_else.8359
+	beq	r0, r30, fle_else.15666
 	addi	r1, r0, 0
 	jr	r31				#
-fle_else.8359:
+fle_else.15666:
 	addi	r1, r0, 1
 	jr	r31				#
 fisneg.2805:
 	fle	r30, f0, f1
-	beq	r0, r30, fle_else.8360
+	beq	r0, r30, fle_else.15667
 	addi	r1, r0, 0
 	jr	r31				#
-fle_else.8360:
+fle_else.15667:
 	addi	r1, r0, 1
 	jr	r31				#
 fiszero.2807:
 	feq	r30, f1, f0
-	beq	r0, r30, feq_else.8361
+	beq	r0, r30, feq_else.15668
 	addi	r1, r0, 1
 	jr	r31				#
-feq_else.8361:
+feq_else.15668:
 	addi	r1, r0, 0
 	jr	r31				#
 xor.2809:
-	beq	r1, r2, beq_then.8362
+	beq	r1, r2, beq_then.15669
 	addi	r1, r0, 1
 	jr	r31				#
-beq_then.8362:
+beq_then.15669:
 	addi	r1, r0, 0
 	jr	r31				#
 fhalf.2812:
@@ -1052,9 +1052,9 @@ fsqr.2814:
 	jr	r31				#
 fabs.2816:
 	fle	r30, f0, f1
-	beq	r0, r30, fle_else.8363
+	beq	r0, r30, fle_else.15670
 	jr	r31				#
-fle_else.8363:
+fle_else.15670:
 	fneg	f1, f1
 	jr	r31				#
 int_of_float.2818:
@@ -1064,65 +1064,347 @@ float_of_int.2820:
 	itof	r1, r1
 	jr	r31				#
 floor.2822:
-	fsw	f1, 0(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	int_of_float.2818				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	float_of_int.2820				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	flw	f2, 0(r3)
-	fle	r30, f1, f2
-	beq	r0, r30, fle_else.8364
+	ftoi	r1, f1
+	itof	f2, r1
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15671
+	fadd	f1, f0, f2
 	jr	r31				#
-fle_else.8364:
-	flup	f2, 2		# fli	f2, 1.000000
-	fsub	f1, f1, f2
+fle_else.15671:
+	flup	f1, 2		# fli	f1, 1.000000
+	fsub	f1, f2, f1
 	jr	r31				#
 hoge.2824:
 	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8365
+	beq	r0, r30, fle_else.15672
+	flup	f3, 3		# fli	f3, 2.000000
+	fmul	f2, f3, f2
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15673
+	flup	f3, 3		# fli	f3, 2.000000
+	fmul	f2, f3, f2
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15674
+	flup	f3, 3		# fli	f3, 2.000000
+	fmul	f2, f3, f2
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15675
+	flup	f3, 3		# fli	f3, 2.000000
+	fmul	f2, f3, f2
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15676
+	flup	f3, 3		# fli	f3, 2.000000
+	fmul	f2, f3, f2
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15677
+	flup	f3, 3		# fli	f3, 2.000000
+	fmul	f2, f3, f2
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15678
+	flup	f3, 3		# fli	f3, 2.000000
+	fmul	f2, f3, f2
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15679
+	flup	f3, 3		# fli	f3, 2.000000
+	fmul	f2, f3, f2
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15680
+	flup	f3, 3		# fli	f3, 2.000000
+	fmul	f2, f3, f2
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15681
+	flup	f3, 3		# fli	f3, 2.000000
+	fmul	f2, f3, f2
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15682
+	flup	f3, 3		# fli	f3, 2.000000
+	fmul	f2, f3, f2
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15683
+	flup	f3, 3		# fli	f3, 2.000000
+	fmul	f2, f3, f2
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15684
+	flup	f3, 3		# fli	f3, 2.000000
+	fmul	f2, f3, f2
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15685
+	flup	f3, 3		# fli	f3, 2.000000
+	fmul	f2, f3, f2
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15686
+	flup	f3, 3		# fli	f3, 2.000000
+	fmul	f2, f3, f2
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15687
 	flup	f3, 3		# fli	f3, 2.000000
 	fmul	f2, f3, f2
 	j	hoge.2824
-fle_else.8365:
+fle_else.15687:
+	fadd	f1, f0, f2
+	jr	r31				#
+fle_else.15686:
+	fadd	f1, f0, f2
+	jr	r31				#
+fle_else.15685:
+	fadd	f1, f0, f2
+	jr	r31				#
+fle_else.15684:
+	fadd	f1, f0, f2
+	jr	r31				#
+fle_else.15683:
+	fadd	f1, f0, f2
+	jr	r31				#
+fle_else.15682:
+	fadd	f1, f0, f2
+	jr	r31				#
+fle_else.15681:
+	fadd	f1, f0, f2
+	jr	r31				#
+fle_else.15680:
+	fadd	f1, f0, f2
+	jr	r31				#
+fle_else.15679:
+	fadd	f1, f0, f2
+	jr	r31				#
+fle_else.15678:
+	fadd	f1, f0, f2
+	jr	r31				#
+fle_else.15677:
+	fadd	f1, f0, f2
+	jr	r31				#
+fle_else.15676:
+	fadd	f1, f0, f2
+	jr	r31				#
+fle_else.15675:
+	fadd	f1, f0, f2
+	jr	r31				#
+fle_else.15674:
+	fadd	f1, f0, f2
+	jr	r31				#
+fle_else.15673:
+	fadd	f1, f0, f2
+	jr	r31				#
+fle_else.15672:
 	fadd	f1, f0, f2
 	jr	r31				#
 fuga.2827:
 	flup	f4, 3		# fli	f4, 2.000000
 	fmul	f4, f3, f4
 	fle	r30, f4, f1
-	beq	r0, r30, fle_else.8366
+	beq	r0, r30, fle_else.15688
 	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8367
+	beq	r0, r30, fle_else.15689
+	fsub	f1, f1, f2
+	flup	f4, 3		# fli	f4, 2.000000
+	fdiv	f2, f2, f4
+	flup	f4, 3		# fli	f4, 2.000000
+	fmul	f4, f3, f4
+	fle	r30, f4, f1
+	beq	r0, r30, fle_else.15690
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15691
 	fsub	f1, f1, f2
 	flup	f4, 3		# fli	f4, 2.000000
 	fdiv	f2, f2, f4
 	j	fuga.2827
-fle_else.8367:
+fle_else.15691:
 	flup	f4, 3		# fli	f4, 2.000000
 	fdiv	f2, f2, f4
 	j	fuga.2827
-fle_else.8366:
+fle_else.15690:
+	jr	r31				#
+fle_else.15689:
+	flup	f4, 3		# fli	f4, 2.000000
+	fdiv	f2, f2, f4
+	flup	f4, 3		# fli	f4, 2.000000
+	fmul	f4, f3, f4
+	fle	r30, f4, f1
+	beq	r0, r30, fle_else.15692
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15693
+	fsub	f1, f1, f2
+	flup	f4, 3		# fli	f4, 2.000000
+	fdiv	f2, f2, f4
+	j	fuga.2827
+fle_else.15693:
+	flup	f4, 3		# fli	f4, 2.000000
+	fdiv	f2, f2, f4
+	j	fuga.2827
+fle_else.15692:
+	jr	r31				#
+fle_else.15688:
 	jr	r31				#
 modulo_2pi.2831:
-	flup	f2, 5		# fli	f2, 6.283186
 	flup	f3, 14		# fli	f3, 3.141593
+	flup	f2, 5		# fli	f2, 6.283186
 	fsw	f3, 0(r3)
 	fsw	f1, 2(r3)
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15694
+	addi	r30, r0, 4060
+	lui	r30, r30, 16713	# to load float		12.566372
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15696
+	addi	r30, r0, 4060
+	lui	r30, r30, 16841	# to load float		25.132744
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15698
+	addi	r30, r0, 4060
+	lui	r30, r30, 16969	# to load float		50.265488
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15700
+	addi	r30, r0, 4060
+	lui	r30, r30, 17097	# to load float		100.530976
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15702
+	addi	r30, r0, 4060
+	lui	r30, r30, 17225	# to load float		201.061952
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15704
+	addi	r30, r0, 4060
+	lui	r30, r30, 17353	# to load float		402.123904
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15706
+	addi	r30, r0, 4060
+	lui	r30, r30, 17481	# to load float		804.247808
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15708
+	addi	r30, r0, 4060
+	lui	r30, r30, 17609	# to load float		1608.495616
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15710
+	addi	r30, r0, 4060
+	lui	r30, r30, 17737	# to load float		3216.991232
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15712
+	addi	r30, r0, 4060
+	lui	r30, r30, 17865	# to load float		6433.982464
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15714
+	addi	r30, r0, 4060
+	lui	r30, r30, 17993	# to load float		12867.964928
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15716
+	addi	r30, r0, 4060
+	lui	r30, r30, 18121	# to load float		25735.929856
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15718
+	addi	r30, r0, 4060
+	lui	r30, r30, 18249	# to load float		51471.859712
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15720
+	addi	r30, r0, 4060
+	lui	r30, r30, 18377	# to load float		102943.719424
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15722
+	addi	r30, r0, 4060
+	lui	r30, r30, 18505	# to load float		205887.438848
+	fmvfr	f2, r30
 	sw	r31, 4(r3)
 	addi	r3, r3, 5
 	jal	hoge.2824				
 	addi	r3, r3, -5
 	lw	r31, 4(r3)
-	fadd	f2, f0, f1
-	flw	f1, 2(r3)
+	j	fle_cont.15723
+fle_else.15722:
+	fadd	f1, f0, f2
+fle_cont.15723:
+	j	fle_cont.15721
+fle_else.15720:
+	fadd	f1, f0, f2
+fle_cont.15721:
+	j	fle_cont.15719
+fle_else.15718:
+	fadd	f1, f0, f2
+fle_cont.15719:
+	j	fle_cont.15717
+fle_else.15716:
+	fadd	f1, f0, f2
+fle_cont.15717:
+	j	fle_cont.15715
+fle_else.15714:
+	fadd	f1, f0, f2
+fle_cont.15715:
+	j	fle_cont.15713
+fle_else.15712:
+	fadd	f1, f0, f2
+fle_cont.15713:
+	j	fle_cont.15711
+fle_else.15710:
+	fadd	f1, f0, f2
+fle_cont.15711:
+	j	fle_cont.15709
+fle_else.15708:
+	fadd	f1, f0, f2
+fle_cont.15709:
+	j	fle_cont.15707
+fle_else.15706:
+	fadd	f1, f0, f2
+fle_cont.15707:
+	j	fle_cont.15705
+fle_else.15704:
+	fadd	f1, f0, f2
+fle_cont.15705:
+	j	fle_cont.15703
+fle_else.15702:
+	fadd	f1, f0, f2
+fle_cont.15703:
+	j	fle_cont.15701
+fle_else.15700:
+	fadd	f1, f0, f2
+fle_cont.15701:
+	j	fle_cont.15699
+fle_else.15698:
+	fadd	f1, f0, f2
+fle_cont.15699:
+	j	fle_cont.15697
+fle_else.15696:
+	fadd	f1, f0, f2
+fle_cont.15697:
+	j	fle_cont.15695
+fle_else.15694:
+	fadd	f1, f0, f2
+fle_cont.15695:
+	flup	f2, 5		# fli	f2, 6.283186
+	flw	f3, 2(r3)
+	fle	r30, f2, f3
+	beq	r0, r30, fle_else.15724
+	fle	r30, f1, f3
+	beq	r0, r30, fle_else.15725
+	fsub	f2, f3, f1
+	flup	f3, 3		# fli	f3, 2.000000
+	fdiv	f1, f1, f3
 	flw	f3, 0(r3)
+	fadd	f30, f0, f2
+	fadd	f2, f0, f1
+	fadd	f1, f0, f30
 	j	fuga.2827
+fle_else.15725:
+	flup	f2, 3		# fli	f2, 2.000000
+	fdiv	f2, f1, f2
+	flw	f1, 0(r3)
+	fadd	f30, f0, f3
+	fadd	f3, f0, f1
+	fadd	f1, f0, f30
+	j	fuga.2827
+fle_else.15724:
+	fadd	f1, f0, f3
+	jr	r31				#
 sin_body.2833:
 	flup	f2, 6		# fli	f2, 0.166667
 	flup	f3, 7		# fli	f3, 0.008333
@@ -1157,12 +1439,12 @@ cos_body.2835:
 sin.2837:
 	flup	f2, 14		# fli	f2, 3.141593
 	fle	r30, f0, f1
-	beq	r0, r30, fle_else.8368
+	beq	r0, r30, fle_else.15726
 	flup	f3, 2		# fli	f3, 1.000000
-	j	fle_cont.8369
-fle_else.8368:
+	j	fle_cont.15727
+fle_else.15726:
 	flup	f3, 11		# fli	f3, -1.000000
-fle_cont.8369:
+fle_cont.15727:
 	fsw	f3, 0(r3)
 	fsw	f2, 2(r3)
 	sw	r31, 4(r3)
@@ -1170,117 +1452,301 @@ fle_cont.8369:
 	jal	lib_abs_float				
 	addi	r3, r3, -5
 	lw	r31, 4(r3)
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	modulo_2pi.2831				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
+	flup	f3, 14		# fli	f3, 3.141593
+	flup	f2, 5		# fli	f2, 6.283186
+	fsw	f3, 4(r3)
+	fsw	f1, 6(r3)
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15728
+	addi	r30, r0, 4060
+	lui	r30, r30, 16713	# to load float		12.566372
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15730
+	addi	r30, r0, 4060
+	lui	r30, r30, 16841	# to load float		25.132744
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15732
+	addi	r30, r0, 4060
+	lui	r30, r30, 16969	# to load float		50.265488
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15734
+	addi	r30, r0, 4060
+	lui	r30, r30, 17097	# to load float		100.530976
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15736
+	addi	r30, r0, 4060
+	lui	r30, r30, 17225	# to load float		201.061952
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15738
+	addi	r30, r0, 4060
+	lui	r30, r30, 17353	# to load float		402.123904
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15740
+	addi	r30, r0, 4060
+	lui	r30, r30, 17481	# to load float		804.247808
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15742
+	addi	r30, r0, 4060
+	lui	r30, r30, 17609	# to load float		1608.495616
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15744
+	addi	r30, r0, 4060
+	lui	r30, r30, 17737	# to load float		3216.991232
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15746
+	addi	r30, r0, 4060
+	lui	r30, r30, 17865	# to load float		6433.982464
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15748
+	addi	r30, r0, 4060
+	lui	r30, r30, 17993	# to load float		12867.964928
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15750
+	addi	r30, r0, 4060
+	lui	r30, r30, 18121	# to load float		25735.929856
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15752
+	addi	r30, r0, 4060
+	lui	r30, r30, 18249	# to load float		51471.859712
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15754
+	addi	r30, r0, 4060
+	lui	r30, r30, 18377	# to load float		102943.719424
+	fmvfr	f2, r30
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	hoge.2824				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	fadd	f2, f0, f1
+	j	fle_cont.15755
+fle_else.15754:
+fle_cont.15755:
+	j	fle_cont.15753
+fle_else.15752:
+fle_cont.15753:
+	j	fle_cont.15751
+fle_else.15750:
+fle_cont.15751:
+	j	fle_cont.15749
+fle_else.15748:
+fle_cont.15749:
+	j	fle_cont.15747
+fle_else.15746:
+fle_cont.15747:
+	j	fle_cont.15745
+fle_else.15744:
+fle_cont.15745:
+	j	fle_cont.15743
+fle_else.15742:
+fle_cont.15743:
+	j	fle_cont.15741
+fle_else.15740:
+fle_cont.15741:
+	j	fle_cont.15739
+fle_else.15738:
+fle_cont.15739:
+	j	fle_cont.15737
+fle_else.15736:
+fle_cont.15737:
+	j	fle_cont.15735
+fle_else.15734:
+fle_cont.15735:
+	j	fle_cont.15733
+fle_else.15732:
+fle_cont.15733:
+	j	fle_cont.15731
+fle_else.15730:
+fle_cont.15731:
+	j	fle_cont.15729
+fle_else.15728:
+fle_cont.15729:
+	flw	f1, 6(r3)
+	flw	f3, 4(r3)
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	fuga.2827				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
 	flw	f2, 2(r3)
 	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8370
+	beq	r0, r30, fle_else.15756
 	fsub	f1, f1, f2
 	flw	f3, 0(r3)
 	fneg	f3, f3
 	flup	f4, 15		# fli	f4, 1.570796
 	fle	r30, f4, f1
-	beq	r0, r30, fle_else.8371
+	beq	r0, r30, fle_else.15757
 	fsub	f1, f2, f1
 	flup	f2, 16		# fli	f2, 0.785398
 	fle	r30, f1, f2
-	beq	r0, r30, fle_else.8372
-	fsw	f3, 4(r3)
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	sin_body.2833				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	flw	f2, 4(r3)
-	fmul	f1, f1, f2
-	jr	r31				#
-fle_else.8372:
-	flup	f2, 15		# fli	f2, 1.570796
+	beq	r0, r30, fle_else.15758
+	flup	f2, 6		# fli	f2, 0.166667
+	flup	f4, 7		# fli	f4, 0.008333
+	flup	f5, 8		# fli	f5, 0.000196
+	fmul	f6, f1, f1
+	fmul	f2, f2, f1
+	fmul	f2, f2, f6
+	fsub	f2, f1, f2
+	fmul	f4, f4, f1
+	fmul	f4, f4, f6
+	fmul	f4, f4, f6
+	fadd	f2, f2, f4
+	fmul	f1, f5, f1
+	fmul	f1, f1, f6
+	fmul	f1, f1, f6
+	fmul	f1, f1, f6
 	fsub	f1, f2, f1
-	fsw	f3, 4(r3)
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	cos_body.2835				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	flw	f2, 4(r3)
-	fmul	f1, f1, f2
+	fmul	f1, f1, f3
 	jr	r31				#
-fle_else.8371:
+fle_else.15758:
+	flup	f2, 15		# fli	f2, 1.570796
+	flup	f4, 10		# fli	f4, 0.001370
+	flup	f5, 9		# fli	f5, 0.041664
+	flup	f6, 1		# fli	f6, 0.500000
+	flup	f7, 2		# fli	f7, 1.000000
+	fsub	f1, f2, f1
+	fmul	f1, f1, f1
+	fmul	f2, f1, f4
+	fsub	f2, f5, f2
+	fmul	f2, f1, f2
+	fsub	f2, f6, f2
+	fmul	f1, f1, f2
+	fsub	f1, f7, f1
+	fmul	f1, f1, f3
+	jr	r31				#
+fle_else.15757:
 	flup	f2, 16		# fli	f2, 0.785398
 	fle	r30, f1, f2
-	beq	r0, r30, fle_else.8373
-	fsw	f3, 4(r3)
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	sin_body.2833				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	flw	f2, 4(r3)
-	fmul	f1, f1, f2
-	jr	r31				#
-fle_else.8373:
-	flup	f2, 15		# fli	f2, 1.570796
+	beq	r0, r30, fle_else.15759
+	flup	f2, 6		# fli	f2, 0.166667
+	flup	f4, 7		# fli	f4, 0.008333
+	flup	f5, 8		# fli	f5, 0.000196
+	fmul	f6, f1, f1
+	fmul	f2, f2, f1
+	fmul	f2, f2, f6
+	fsub	f2, f1, f2
+	fmul	f4, f4, f1
+	fmul	f4, f4, f6
+	fmul	f4, f4, f6
+	fadd	f2, f2, f4
+	fmul	f1, f5, f1
+	fmul	f1, f1, f6
+	fmul	f1, f1, f6
+	fmul	f1, f1, f6
 	fsub	f1, f2, f1
-	fsw	f3, 4(r3)
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	cos_body.2835				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	flw	f2, 4(r3)
-	fmul	f1, f1, f2
+	fmul	f1, f1, f3
 	jr	r31				#
-fle_else.8370:
+fle_else.15759:
+	flup	f2, 15		# fli	f2, 1.570796
+	flup	f4, 10		# fli	f4, 0.001370
+	flup	f5, 9		# fli	f5, 0.041664
+	flup	f6, 1		# fli	f6, 0.500000
+	flup	f7, 2		# fli	f7, 1.000000
+	fsub	f1, f2, f1
+	fmul	f1, f1, f1
+	fmul	f2, f1, f4
+	fsub	f2, f5, f2
+	fmul	f2, f1, f2
+	fsub	f2, f6, f2
+	fmul	f1, f1, f2
+	fsub	f1, f7, f1
+	fmul	f1, f1, f3
+	jr	r31				#
+fle_else.15756:
 	flup	f3, 15		# fli	f3, 1.570796
 	fle	r30, f3, f1
-	beq	r0, r30, fle_else.8374
+	beq	r0, r30, fle_else.15760
 	fsub	f1, f2, f1
 	flup	f2, 16		# fli	f2, 0.785398
 	fle	r30, f1, f2
-	beq	r0, r30, fle_else.8375
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	sin_body.2833				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	flw	f2, 0(r3)
-	fmul	f1, f1, f2
-	jr	r31				#
-fle_else.8375:
-	flup	f2, 15		# fli	f2, 1.570796
+	beq	r0, r30, fle_else.15761
+	flup	f2, 6		# fli	f2, 0.166667
+	flup	f3, 7		# fli	f3, 0.008333
+	flup	f4, 8		# fli	f4, 0.000196
+	fmul	f5, f1, f1
+	fmul	f2, f2, f1
+	fmul	f2, f2, f5
+	fsub	f2, f1, f2
+	fmul	f3, f3, f1
+	fmul	f3, f3, f5
+	fmul	f3, f3, f5
+	fadd	f2, f2, f3
+	fmul	f1, f4, f1
+	fmul	f1, f1, f5
+	fmul	f1, f1, f5
+	fmul	f1, f1, f5
 	fsub	f1, f2, f1
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	cos_body.2835				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
 	flw	f2, 0(r3)
 	fmul	f1, f1, f2
 	jr	r31				#
-fle_else.8374:
+fle_else.15761:
+	flup	f2, 15		# fli	f2, 1.570796
+	flup	f3, 10		# fli	f3, 0.001370
+	flup	f4, 9		# fli	f4, 0.041664
+	flup	f5, 1		# fli	f5, 0.500000
+	flup	f6, 2		# fli	f6, 1.000000
+	fsub	f1, f2, f1
+	fmul	f1, f1, f1
+	fmul	f2, f1, f3
+	fsub	f2, f4, f2
+	fmul	f2, f1, f2
+	fsub	f2, f5, f2
+	fmul	f1, f1, f2
+	fsub	f1, f6, f1
+	flw	f2, 0(r3)
+	fmul	f1, f1, f2
+	jr	r31				#
+fle_else.15760:
 	flup	f2, 16		# fli	f2, 0.785398
 	fle	r30, f1, f2
-	beq	r0, r30, fle_else.8376
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	sin_body.2833				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
+	beq	r0, r30, fle_else.15762
+	flup	f2, 6		# fli	f2, 0.166667
+	flup	f3, 7		# fli	f3, 0.008333
+	flup	f4, 8		# fli	f4, 0.000196
+	fmul	f5, f1, f1
+	fmul	f2, f2, f1
+	fmul	f2, f2, f5
+	fsub	f2, f1, f2
+	fmul	f3, f3, f1
+	fmul	f3, f3, f5
+	fmul	f3, f3, f5
+	fadd	f2, f2, f3
+	fmul	f1, f4, f1
+	fmul	f1, f1, f5
+	fmul	f1, f1, f5
+	fmul	f1, f1, f5
+	fsub	f1, f2, f1
 	flw	f2, 0(r3)
 	fmul	f1, f1, f2
 	jr	r31				#
-fle_else.8376:
+fle_else.15762:
 	flup	f2, 15		# fli	f2, 1.570796
+	flup	f3, 10		# fli	f3, 0.001370
+	flup	f4, 9		# fli	f4, 0.041664
+	flup	f5, 1		# fli	f5, 0.500000
+	flup	f6, 2		# fli	f6, 1.000000
 	fsub	f1, f2, f1
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	cos_body.2835				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
+	fmul	f1, f1, f1
+	fmul	f2, f1, f3
+	fsub	f2, f4, f2
+	fmul	f2, f1, f2
+	fsub	f2, f5, f2
+	fmul	f1, f1, f2
+	fsub	f1, f6, f1
 	flw	f2, 0(r3)
 	fmul	f1, f1, f2
 	jr	r31				#
@@ -1294,120 +1760,300 @@ cos.2839:
 	jal	lib_abs_float				
 	addi	r3, r3, -5
 	lw	r31, 4(r3)
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	modulo_2pi.2831				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
+	flup	f3, 14		# fli	f3, 3.141593
+	flup	f2, 5		# fli	f2, 6.283186
+	fsw	f3, 4(r3)
+	fsw	f1, 6(r3)
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15763
+	addi	r30, r0, 4060
+	lui	r30, r30, 16713	# to load float		12.566372
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15765
+	addi	r30, r0, 4060
+	lui	r30, r30, 16841	# to load float		25.132744
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15767
+	addi	r30, r0, 4060
+	lui	r30, r30, 16969	# to load float		50.265488
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15769
+	addi	r30, r0, 4060
+	lui	r30, r30, 17097	# to load float		100.530976
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15771
+	addi	r30, r0, 4060
+	lui	r30, r30, 17225	# to load float		201.061952
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15773
+	addi	r30, r0, 4060
+	lui	r30, r30, 17353	# to load float		402.123904
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15775
+	addi	r30, r0, 4060
+	lui	r30, r30, 17481	# to load float		804.247808
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15777
+	addi	r30, r0, 4060
+	lui	r30, r30, 17609	# to load float		1608.495616
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15779
+	addi	r30, r0, 4060
+	lui	r30, r30, 17737	# to load float		3216.991232
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15781
+	addi	r30, r0, 4060
+	lui	r30, r30, 17865	# to load float		6433.982464
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15783
+	addi	r30, r0, 4060
+	lui	r30, r30, 17993	# to load float		12867.964928
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15785
+	addi	r30, r0, 4060
+	lui	r30, r30, 18121	# to load float		25735.929856
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15787
+	addi	r30, r0, 4060
+	lui	r30, r30, 18249	# to load float		51471.859712
+	fmvfr	f2, r30
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.15789
+	addi	r30, r0, 4060
+	lui	r30, r30, 18377	# to load float		102943.719424
+	fmvfr	f2, r30
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	hoge.2824				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	fadd	f2, f0, f1
+	j	fle_cont.15790
+fle_else.15789:
+fle_cont.15790:
+	j	fle_cont.15788
+fle_else.15787:
+fle_cont.15788:
+	j	fle_cont.15786
+fle_else.15785:
+fle_cont.15786:
+	j	fle_cont.15784
+fle_else.15783:
+fle_cont.15784:
+	j	fle_cont.15782
+fle_else.15781:
+fle_cont.15782:
+	j	fle_cont.15780
+fle_else.15779:
+fle_cont.15780:
+	j	fle_cont.15778
+fle_else.15777:
+fle_cont.15778:
+	j	fle_cont.15776
+fle_else.15775:
+fle_cont.15776:
+	j	fle_cont.15774
+fle_else.15773:
+fle_cont.15774:
+	j	fle_cont.15772
+fle_else.15771:
+fle_cont.15772:
+	j	fle_cont.15770
+fle_else.15769:
+fle_cont.15770:
+	j	fle_cont.15768
+fle_else.15767:
+fle_cont.15768:
+	j	fle_cont.15766
+fle_else.15765:
+fle_cont.15766:
+	j	fle_cont.15764
+fle_else.15763:
+fle_cont.15764:
+	flw	f1, 6(r3)
+	flw	f3, 4(r3)
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	fuga.2827				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
 	flw	f2, 2(r3)
 	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8377
+	beq	r0, r30, fle_else.15791
 	fsub	f1, f1, f2
 	flup	f3, 11		# fli	f3, -1.000000
 	flup	f4, 15		# fli	f4, 1.570796
 	fle	r30, f4, f1
-	beq	r0, r30, fle_else.8378
+	beq	r0, r30, fle_else.15792
 	fsub	f1, f2, f1
 	flup	f2, 2		# fli	f2, 1.000000
 	flup	f3, 16		# fli	f3, 0.785398
 	fle	r30, f1, f3
-	beq	r0, r30, fle_else.8379
-	fsw	f2, 4(r3)
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	cos_body.2835				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	flw	f2, 4(r3)
+	beq	r0, r30, fle_else.15793
+	fmul	f1, f1, f1
+	flup	f3, 10		# fli	f3, 0.001370
+	flup	f4, 9		# fli	f4, 0.041664
+	flup	f5, 1		# fli	f5, 0.500000
+	flup	f6, 2		# fli	f6, 1.000000
+	fmul	f3, f1, f3
+	fsub	f3, f4, f3
+	fmul	f3, f1, f3
+	fsub	f3, f5, f3
+	fmul	f1, f1, f3
+	fsub	f1, f6, f1
 	fmul	f1, f1, f2
 	jr	r31				#
-fle_else.8379:
+fle_else.15793:
 	flup	f3, 15		# fli	f3, 1.570796
+	flup	f4, 6		# fli	f4, 0.166667
+	flup	f5, 7		# fli	f5, 0.008333
+	flup	f6, 8		# fli	f6, 0.000196
 	fsub	f1, f3, f1
-	fsw	f2, 4(r3)
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	sin_body.2833				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	flw	f2, 4(r3)
+	fmul	f3, f1, f1
+	fmul	f4, f4, f1
+	fmul	f4, f4, f3
+	fsub	f4, f1, f4
+	fmul	f5, f5, f1
+	fmul	f5, f5, f3
+	fmul	f5, f5, f3
+	fadd	f4, f4, f5
+	fmul	f1, f6, f1
+	fmul	f1, f1, f3
+	fmul	f1, f1, f3
+	fmul	f1, f1, f3
+	fsub	f1, f4, f1
 	fmul	f1, f1, f2
 	jr	r31				#
-fle_else.8378:
+fle_else.15792:
 	flup	f2, 16		# fli	f2, 0.785398
 	fle	r30, f1, f2
-	beq	r0, r30, fle_else.8380
-	fsw	f3, 6(r3)
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	cos_body.2835				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	flw	f2, 6(r3)
+	beq	r0, r30, fle_else.15794
+	fmul	f1, f1, f1
+	flup	f2, 10		# fli	f2, 0.001370
+	flup	f4, 9		# fli	f4, 0.041664
+	flup	f5, 1		# fli	f5, 0.500000
+	flup	f6, 2		# fli	f6, 1.000000
+	fmul	f2, f1, f2
+	fsub	f2, f4, f2
+	fmul	f2, f1, f2
+	fsub	f2, f5, f2
 	fmul	f1, f1, f2
+	fsub	f1, f6, f1
+	fmul	f1, f1, f3
 	jr	r31				#
-fle_else.8380:
+fle_else.15794:
 	flup	f2, 15		# fli	f2, 1.570796
+	flup	f4, 6		# fli	f4, 0.166667
+	flup	f5, 7		# fli	f5, 0.008333
+	flup	f6, 8		# fli	f6, 0.000196
 	fsub	f1, f2, f1
-	fsw	f3, 6(r3)
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	sin_body.2833				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	flw	f2, 6(r3)
+	fmul	f2, f1, f1
+	fmul	f4, f4, f1
+	fmul	f4, f4, f2
+	fsub	f4, f1, f4
+	fmul	f5, f5, f1
+	fmul	f5, f5, f2
+	fmul	f5, f5, f2
+	fadd	f4, f4, f5
+	fmul	f1, f6, f1
 	fmul	f1, f1, f2
+	fmul	f1, f1, f2
+	fmul	f1, f1, f2
+	fsub	f1, f4, f1
+	fmul	f1, f1, f3
 	jr	r31				#
-fle_else.8377:
+fle_else.15791:
 	flup	f3, 15		# fli	f3, 1.570796
 	fle	r30, f3, f1
-	beq	r0, r30, fle_else.8381
+	beq	r0, r30, fle_else.15795
 	fsub	f1, f2, f1
 	flup	f2, 11		# fli	f2, -1.000000
 	flup	f3, 16		# fli	f3, 0.785398
 	fle	r30, f1, f3
-	beq	r0, r30, fle_else.8382
-	fsw	f2, 8(r3)
-	sw	r31, 10(r3)
-	addi	r3, r3, 11
-	jal	cos_body.2835				
-	addi	r3, r3, -11
-	lw	r31, 10(r3)
-	flw	f2, 8(r3)
+	beq	r0, r30, fle_else.15796
+	fmul	f1, f1, f1
+	flup	f3, 10		# fli	f3, 0.001370
+	flup	f4, 9		# fli	f4, 0.041664
+	flup	f5, 1		# fli	f5, 0.500000
+	flup	f6, 2		# fli	f6, 1.000000
+	fmul	f3, f1, f3
+	fsub	f3, f4, f3
+	fmul	f3, f1, f3
+	fsub	f3, f5, f3
+	fmul	f1, f1, f3
+	fsub	f1, f6, f1
 	fmul	f1, f1, f2
 	jr	r31				#
-fle_else.8382:
+fle_else.15796:
 	flup	f3, 15		# fli	f3, 1.570796
+	flup	f4, 6		# fli	f4, 0.166667
+	flup	f5, 7		# fli	f5, 0.008333
+	flup	f6, 8		# fli	f6, 0.000196
 	fsub	f1, f3, f1
-	fsw	f2, 8(r3)
-	sw	r31, 10(r3)
-	addi	r3, r3, 11
-	jal	sin_body.2833				
-	addi	r3, r3, -11
-	lw	r31, 10(r3)
-	flw	f2, 8(r3)
+	fmul	f3, f1, f1
+	fmul	f4, f4, f1
+	fmul	f4, f4, f3
+	fsub	f4, f1, f4
+	fmul	f5, f5, f1
+	fmul	f5, f5, f3
+	fmul	f5, f5, f3
+	fadd	f4, f4, f5
+	fmul	f1, f6, f1
+	fmul	f1, f1, f3
+	fmul	f1, f1, f3
+	fmul	f1, f1, f3
+	fsub	f1, f4, f1
 	fmul	f1, f1, f2
 	jr	r31				#
-fle_else.8381:
+fle_else.15795:
 	flup	f2, 16		# fli	f2, 0.785398
 	fle	r30, f1, f2
-	beq	r0, r30, fle_else.8383
-	sw	r31, 10(r3)
-	addi	r3, r3, 11
-	jal	cos_body.2835				
-	addi	r3, r3, -11
-	lw	r31, 10(r3)
+	beq	r0, r30, fle_else.15797
+	fmul	f1, f1, f1
+	flup	f2, 10		# fli	f2, 0.001370
+	flup	f3, 9		# fli	f3, 0.041664
+	flup	f4, 1		# fli	f4, 0.500000
+	flup	f5, 2		# fli	f5, 1.000000
+	fmul	f2, f1, f2
+	fsub	f2, f3, f2
+	fmul	f2, f1, f2
+	fsub	f2, f4, f2
+	fmul	f1, f1, f2
+	fsub	f1, f5, f1
 	flw	f2, 0(r3)
 	fmul	f1, f1, f2
 	jr	r31				#
-fle_else.8383:
+fle_else.15797:
 	flup	f2, 15		# fli	f2, 1.570796
+	flup	f3, 6		# fli	f3, 0.166667
+	flup	f4, 7		# fli	f4, 0.008333
+	flup	f5, 8		# fli	f5, 0.000196
 	fsub	f1, f2, f1
-	sw	r31, 10(r3)
-	addi	r3, r3, 11
-	jal	sin_body.2833				
-	addi	r3, r3, -11
-	lw	r31, 10(r3)
+	fmul	f2, f1, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f2
+	fsub	f3, f1, f3
+	fmul	f4, f4, f1
+	fmul	f4, f4, f2
+	fmul	f4, f4, f2
+	fadd	f3, f3, f4
+	fmul	f1, f5, f1
+	fmul	f1, f1, f2
+	fmul	f1, f1, f2
+	fmul	f1, f1, f2
+	fsub	f1, f3, f1
 	flw	f2, 0(r3)
 	fmul	f1, f1, f2
 	jr	r31				#
@@ -1446,19 +2092,19 @@ atan_body.2841:
 	jr	r31				#
 atan.2843:
 	fle	r30, f0, f1
-	beq	r0, r30, fle_else.8384
+	beq	r0, r30, fle_else.15798
 	flup	f2, 2		# fli	f2, 1.000000
-	j	fle_cont.8385
-fle_else.8384:
+	j	fle_cont.15799
+fle_else.15798:
 	flup	f2, 11		# fli	f2, -1.000000
-fle_cont.8385:
+fle_cont.15799:
 	fmul	f1, f1, f2
 	flup	f3, 23		# fli	f3, 4.375000
 	fle	r30, f3, f1
-	beq	r0, r30, fle_else.8386
+	beq	r0, r30, fle_else.15800
 	flup	f3, 24		# fli	f3, 2.437500
 	fle	r30, f3, f1
-	beq	r0, r30, fle_else.8387
+	beq	r0, r30, fle_else.15801
 	flup	f3, 2		# fli	f3, 1.000000
 	flup	f4, 15		# fli	f4, 1.570796
 	fdiv	f1, f3, f1
@@ -1474,7 +2120,7 @@ fle_cont.8385:
 	flw	f2, 0(r3)
 	fmul	f1, f1, f2
 	jr	r31				#
-fle_else.8387:
+fle_else.15801:
 	flup	f3, 2		# fli	f3, 1.000000
 	flup	f4, 2		# fli	f4, 1.000000
 	flup	f5, 16		# fli	f5, 0.785398
@@ -1493,7 +2139,7 @@ fle_else.8387:
 	flw	f2, 0(r3)
 	fmul	f1, f1, f2
 	jr	r31				#
-fle_else.8386:
+fle_else.15800:
 	j	atan_body.2841
 print_num.2845:
 	addi	r1, r1, 48
@@ -1507,42 +2153,56 @@ mul10.2847:
 div10_sub.2849:
 	add	r6, r2, r5
 	srai	r6, r6, 1
-	sw	r2, 0(r3)
-	sw	r5, 1(r3)
-	sw	r6, 2(r3)
-	sw	r1, 3(r3)
+	slli	r7, r6, 3
+	slli	r8, r6, 1
+	add	r7, r7, r8
+	ble	r7, r1, ble_then.15802
+	add	r5, r2, r6
+	srai	r5, r5, 1
+	slli	r7, r5, 3
+	slli	r8, r5, 1
+	add	r7, r7, r8
+	ble	r7, r1, ble_then.15803
+	j	div10_sub.2849
+ble_then.15803:
+	slli	r2, r5, 3
+	slli	r7, r5, 1
+	add	r2, r2, r7
+	addi	r2, r2, 9
+	ble	r1, r2, ble_then.15804
+	add	r2, r0, r5
+	add	r5, r0, r6
+	j	div10_sub.2849
+ble_then.15804:
+	add	r1, r0, r5
+	jr	r31				#
+ble_then.15802:
+	slli	r2, r6, 3
+	slli	r7, r6, 1
+	add	r2, r2, r7
+	addi	r2, r2, 9
+	ble	r1, r2, ble_then.15805
+	add	r2, r6, r5
+	srai	r2, r2, 1
+	slli	r7, r2, 3
+	slli	r8, r2, 1
+	add	r7, r7, r8
+	ble	r7, r1, ble_then.15806
+	add	r5, r0, r2
+	add	r2, r0, r6
+	j	div10_sub.2849
+ble_then.15806:
+	slli	r6, r2, 3
+	slli	r7, r2, 1
+	add	r6, r6, r7
+	addi	r6, r6, 9
+	ble	r1, r6, ble_then.15807
+	j	div10_sub.2849
+ble_then.15807:
+	add	r1, r0, r2
+	jr	r31				#
+ble_then.15805:
 	add	r1, r0, r6
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	mul10.2847				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
-	lw	r2, 3(r3)
-	ble	r1, r2, ble_then.8388
-	lw	r1, 0(r3)
-	lw	r5, 2(r3)
-	add	r28, r0, r2
-	add	r2, r0, r1
-	add	r1, r0, r28
-	j	div10_sub.2849
-ble_then.8388:
-	lw	r1, 2(r3)
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	mul10.2847				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
-	addi	r1, r1, 9
-	lw	r2, 3(r3)
-	ble	r2, r1, ble_then.8389
-	lw	r1, 2(r3)
-	lw	r5, 1(r3)
-	add	r28, r0, r2
-	add	r2, r0, r1
-	add	r1, r0, r28
-	j	div10_sub.2849
-ble_then.8389:
-	lw	r1, 2(r3)
 	jr	r31				#
 div10.2853:
 	slli	r2, r1, 7
@@ -1556,49 +2216,11 @@ div10.2853:
 	srli	r1, r1, 11
 	jr	r31				#
 print_uint.2855:
-	bgei	10, r1, bge_then.8390
-	j	print_num.2845
-bge_then.8390:
-	sw	r1, 0(r3)
-	sw	r31, 1(r3)
-	addi	r3, r3, 2
-	jal	div10.2853				
-	addi	r3, r3, -2
-	lw	r31, 1(r3)
-	sw	r1, 1(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	print_uint.2855				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	lw	r1, 1(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	mul10.2847				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	lw	r2, 0(r3)
-	sub	r1, r2, r1
-	j	print_num.2845
-print_int.2857:
-	bgei	0, r1, bge_then.8391
-	addi	r2, r0, 45
-	sw	r1, 0(r3)
-	add	r1, r0, r2
-	sw	r31, 1(r3)
-	addi	r3, r3, 2
-	jal	print_char.2801				
-	addi	r3, r3, -2
-	lw	r31, 1(r3)
-	lw	r1, 0(r3)
-	sub	r1, r0, r1
-	j	print_int.2857
-bge_then.8391:
-	bgei	10, r1, bge_then.8392
-	j	print_num.2845
-bge_then.8392:
-	addi	r2, r0, 100
-	ble	r2, r1, ble_then.8393
+	bgei	10, r1, bge_then.15808
+	addi	r1, r1, 48
+	out	r1
+	jr	r31				#
+bge_then.15808:
 	slli	r2, r1, 7
 	slli	r5, r1, 6
 	add	r2, r2, r5
@@ -1609,21 +2231,78 @@ bge_then.8392:
 	add	r2, r2, r1
 	srli	r2, r2, 11
 	sw	r1, 0(r3)
+	bgei	10, r2, bge_then.15809
+	addi	r5, r2, 48
+	out	r5
+	j	bge_cont.15810
+bge_then.15809:
+	slli	r5, r2, 7
+	slli	r6, r2, 6
+	add	r5, r5, r6
+	slli	r6, r2, 3
+	add	r5, r5, r6
+	slli	r6, r2, 2
+	add	r5, r5, r6
+	add	r5, r5, r2
+	srli	r5, r5, 11
 	sw	r2, 1(r3)
-	add	r1, r0, r2
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	print_num.2845				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	lw	r1, 1(r3)
+	sw	r5, 2(r3)
+	add	r1, r0, r5
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	print_uint.2855				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	lw	r1, 2(r3)
 	slli	r2, r1, 3
 	slli	r1, r1, 1
 	add	r1, r2, r1
+	lw	r2, 1(r3)
+	sub	r1, r2, r1
+	addi	r1, r1, 48
+	out	r1
+bge_cont.15810:
+	slli	r1, r2, 3
+	slli	r2, r2, 1
+	add	r1, r1, r2
 	lw	r2, 0(r3)
 	sub	r1, r2, r1
-	j	print_num.2845
-ble_then.8393:
+	addi	r1, r1, 48
+	out	r1
+	jr	r31				#
+print_int.2857:
+	bgei	0, r1, bge_then.15811
+	addi	r2, r0, 45
+	out	r2
+	sub	r1, r0, r1
+	j	print_int.2857
+bge_then.15811:
+	bgei	10, r1, bge_then.15812
+	addi	r1, r1, 48
+	out	r1
+	jr	r31				#
+bge_then.15812:
+	addi	r2, r0, 100
+	ble	r2, r1, ble_then.15813
+	slli	r2, r1, 7
+	slli	r5, r1, 6
+	add	r2, r2, r5
+	slli	r5, r1, 3
+	add	r2, r2, r5
+	slli	r5, r1, 2
+	add	r2, r2, r5
+	add	r2, r2, r1
+	srli	r2, r2, 11
+	addi	r5, r2, 48
+	out	r5
+	slli	r5, r2, 3
+	slli	r2, r2, 1
+	add	r2, r5, r2
+	sub	r1, r1, r2
+	addi	r1, r1, 48
+	out	r1
+	jr	r31				#
+ble_then.15813:
 	slli	r2, r1, 7
 	slli	r5, r1, 5
 	add	r2, r2, r5
@@ -1645,72 +2324,64 @@ ble_then.8393:
 	add	r5, r5, r6
 	add	r5, r5, r1
 	srli	r5, r5, 11
-	sw	r1, 2(r3)
-	sw	r5, 3(r3)
-	add	r1, r0, r2
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	print_num.2845				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
-	lw	r1, 3(r3)
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	print_num.2845				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
-	lw	r1, 3(r3)
-	slli	r2, r1, 3
-	slli	r1, r1, 1
-	add	r1, r2, r1
-	lw	r2, 2(r3)
-	sub	r1, r2, r1
-	j	print_num.2845
+	addi	r2, r2, 48
+	out	r2
+	addi	r2, r5, 48
+	out	r2
+	slli	r2, r5, 3
+	slli	r5, r5, 1
+	add	r2, r2, r5
+	sub	r1, r1, r2
+	addi	r1, r1, 48
+	out	r1
+	jr	r31				#
 xor.2859:
-	beqi	0, r1, beq_then.8394
-	beqi	0, r2, beq_then.8395
+	beqi	0, r1, beq_then.15814
+	beqi	0, r2, beq_then.15815
 	addi	r1, r0, 0
 	jr	r31				#
-beq_then.8395:
+beq_then.15815:
 	addi	r1, r0, 1
 	jr	r31				#
-beq_then.8394:
+beq_then.15814:
 	add	r1, r0, r2
 	jr	r31				#
 sgn.2862:
-	fsw	f1, 0(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	fiszero.2807				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	beqi	0, r1, beq_then.8396
+	feq	r30, f1, f0
+	beq	r0, r30, feq_else.15816
+	addi	r1, r0, 1
+	j	feq_cont.15817
+feq_else.15816:
+	addi	r1, r0, 0
+feq_cont.15817:
+	beqi	0, r1, beq_then.15818
 	flup	f1, 0		# fli	f1, 0.000000
 	jr	r31				#
-beq_then.8396:
-	flw	f1, 0(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	fispos.2803				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	beqi	0, r1, beq_then.8397
+beq_then.15818:
+	fle	r30, f1, f0
+	beq	r0, r30, fle_else.15819
+	addi	r1, r0, 0
+	j	fle_cont.15820
+fle_else.15819:
+	addi	r1, r0, 1
+fle_cont.15820:
+	beqi	0, r1, beq_then.15821
 	flup	f1, 2		# fli	f1, 1.000000
 	jr	r31				#
-beq_then.8397:
+beq_then.15821:
 	flup	f1, 11		# fli	f1, -1.000000
 	jr	r31				#
 fneg_cond.2864:
-	beqi	0, r1, beq_then.8398
+	beqi	0, r1, beq_then.15822
 	jr	r31				#
-beq_then.8398:
+beq_then.15822:
 	fneg	f1, f1
 	jr	r31				#
 add_mod5.2867:
 	add	r1, r1, r2
-	bgei	5, r1, bge_then.8399
+	bgei	5, r1, bge_then.15823
 	jr	r31				#
-bge_then.8399:
+bge_then.15823:
 	addi	r1, r1, -5
 	jr	r31				#
 vecset.2870:
@@ -1724,15 +2395,17 @@ vecfill.2875:
 	fsw	f1, 2(r1)
 	jr	r31				#
 vecbzero.2878:
-	flup	f1, 0		# fli	f1, 0.000000
-	j	vecfill.2875
+	fsw	f0, 0(r1)
+	fsw	f0, 1(r1)
+	fsw	f0, 2(r1)
+	jr	r31				#
 veccpy.2880:
 	flw	f1, 0(r2)
-	flw	f2, 1(r2)
-	flw	f3, 2(r2)
 	fsw	f1, 0(r1)
-	fsw	f2, 1(r1)
-	fsw	f3, 2(r1)
+	flw	f1, 1(r2)
+	fsw	f1, 1(r1)
+	flw	f1, 2(r2)
+	fsw	f1, 2(r1)
 	jr	r31				#
 vecdist2.2883:
 	flw	f1, 0(r1)
@@ -1742,91 +2415,33 @@ vecdist2.2883:
 	flw	f5, 2(r1)
 	flw	f6, 2(r2)
 	fsub	f1, f1, f2
-	fsw	f6, 0(r3)
-	fsw	f5, 2(r3)
-	fsw	f4, 4(r3)
-	fsw	f3, 6(r3)
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	fsqr.2814				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	flw	f2, 4(r3)
-	flw	f3, 6(r3)
-	fsub	f2, f3, f2
-	fsw	f1, 8(r3)
-	fadd	f1, f0, f2
-	sw	r31, 10(r3)
-	addi	r3, r3, 11
-	jal	fsqr.2814				
-	addi	r3, r3, -11
-	lw	r31, 10(r3)
-	flw	f2, 8(r3)
-	fadd	f1, f2, f1
-	flw	f2, 0(r3)
-	flw	f3, 2(r3)
-	fsub	f2, f3, f2
-	fsw	f1, 10(r3)
-	fadd	f1, f0, f2
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	fsqr.2814				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	flw	f2, 10(r3)
-	fadd	f1, f2, f1
+	fmul	f1, f1, f1
+	fsub	f2, f3, f4
+	fmul	f2, f2, f2
+	fadd	f1, f1, f2
+	fsub	f2, f5, f6
+	fmul	f2, f2, f2
+	fadd	f1, f1, f2
 	jr	r31				#
 vecunit.2886:
 	flw	f1, 0(r1)
 	flw	f2, 1(r1)
-	flup	f3, 2		# fli	f3, 1.000000
-	flw	f4, 2(r1)
+	flw	f3, 2(r1)
+	flup	f4, 2		# fli	f4, 1.000000
 	flw	f5, 0(r1)
-	flw	f6, 1(r1)
-	flw	f7, 2(r1)
-	fsw	f7, 0(r3)
-	fsw	f6, 2(r3)
-	sw	r1, 4(r3)
-	fsw	f5, 6(r3)
-	fsw	f3, 8(r3)
-	fsw	f4, 10(r3)
-	fsw	f2, 12(r3)
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	fsqr.2814				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	flw	f2, 12(r3)
-	fsw	f1, 14(r3)
-	fadd	f1, f0, f2
-	sw	r31, 16(r3)
-	addi	r3, r3, 17
-	jal	fsqr.2814				
-	addi	r3, r3, -17
-	lw	r31, 16(r3)
-	flw	f2, 14(r3)
-	fadd	f1, f2, f1
-	flw	f2, 10(r3)
-	fsw	f1, 16(r3)
-	fadd	f1, f0, f2
-	sw	r31, 18(r3)
-	addi	r3, r3, 19
-	jal	fsqr.2814				
-	addi	r3, r3, -19
-	lw	r31, 18(r3)
-	flw	f2, 16(r3)
-	fadd	f1, f2, f1
+	fmul	f1, f1, f1
+	fmul	f2, f2, f2
+	fadd	f1, f1, f2
+	fmul	f2, f3, f3
+	fadd	f1, f1, f2
 	fsqrt	f1, f1
-	flw	f2, 8(r3)
-	fdiv	f1, f2, f1
-	flw	f2, 6(r3)
-	fmul	f2, f2, f1
-	lw	r1, 4(r3)
+	fdiv	f1, f4, f1
+	fmul	f2, f5, f1
 	fsw	f2, 0(r1)
-	flw	f2, 2(r3)
+	flw	f2, 1(r1)
 	fmul	f2, f2, f1
 	fsw	f2, 1(r1)
-	flw	f2, 0(r3)
+	flw	f2, 2(r1)
 	fmul	f1, f2, f1
 	fsw	f1, 2(r1)
 	jr	r31				#
@@ -1834,67 +2449,40 @@ vecunit_sgn.2888:
 	flw	f1, 0(r1)
 	flw	f2, 1(r1)
 	flw	f3, 2(r1)
-	sw	r1, 0(r3)
-	sw	r2, 1(r3)
-	fsw	f3, 2(r3)
-	fsw	f2, 4(r3)
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	fsqr.2814				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	flw	f2, 4(r3)
-	fsw	f1, 6(r3)
-	fadd	f1, f0, f2
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	fsqr.2814				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	flw	f2, 6(r3)
-	fadd	f1, f2, f1
-	flw	f2, 2(r3)
-	fsw	f1, 8(r3)
-	fadd	f1, f0, f2
-	sw	r31, 10(r3)
-	addi	r3, r3, 11
-	jal	fsqr.2814				
-	addi	r3, r3, -11
-	lw	r31, 10(r3)
-	flw	f2, 8(r3)
-	fadd	f1, f2, f1
+	fmul	f1, f1, f1
+	fmul	f2, f2, f2
+	fadd	f1, f1, f2
+	fmul	f2, f3, f3
+	fadd	f1, f1, f2
 	fsqrt	f1, f1
-	fsw	f1, 10(r3)
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	fiszero.2807				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	beqi	0, r1, beq_then.8405
+	feq	r30, f1, f0
+	beq	r0, r30, feq_else.15829
+	addi	r5, r0, 1
+	j	feq_cont.15830
+feq_else.15829:
+	addi	r5, r0, 0
+feq_cont.15830:
+	beqi	0, r5, beq_then.15831
 	flup	f1, 2		# fli	f1, 1.000000
-	j	beq_cont.8406
-beq_then.8405:
-	lw	r1, 1(r3)
-	beqi	0, r1, beq_then.8407
-	flup	f1, 11		# fli	f1, -1.000000
-	flw	f2, 10(r3)
-	fdiv	f1, f1, f2
-	j	beq_cont.8408
-beq_then.8407:
-	flup	f1, 2		# fli	f1, 1.000000
-	flw	f2, 10(r3)
-	fdiv	f1, f1, f2
-beq_cont.8408:
-beq_cont.8406:
-	lw	r1, 0(r3)
+	j	beq_cont.15832
+beq_then.15831:
+	beqi	0, r2, beq_then.15833
+	flup	f2, 11		# fli	f2, -1.000000
+	fdiv	f1, f2, f1
+	j	beq_cont.15834
+beq_then.15833:
+	flup	f2, 2		# fli	f2, 1.000000
+	fdiv	f1, f2, f1
+beq_cont.15834:
+beq_cont.15832:
 	flw	f2, 0(r1)
-	flw	f3, 1(r1)
-	flw	f4, 2(r1)
 	fmul	f2, f2, f1
 	fsw	f2, 0(r1)
-	fmul	f2, f3, f1
+	flw	f2, 1(r1)
+	fmul	f2, f2, f1
 	fsw	f2, 1(r1)
-	fmul	f1, f4, f1
+	flw	f2, 2(r1)
+	fmul	f1, f2, f1
 	fsw	f1, 2(r1)
 	jr	r31				#
 veciprod.2891:
@@ -1922,78 +2510,78 @@ veciprod2.2894:
 	jr	r31				#
 vecaccum.2899:
 	flw	f2, 0(r2)
-	flw	f3, 1(r2)
-	flw	f4, 2(r2)
-	flw	f5, 0(r1)
-	flw	f6, 1(r1)
-	flw	f7, 2(r1)
+	flw	f3, 0(r1)
 	fmul	f2, f1, f2
-	fadd	f2, f5, f2
+	fadd	f2, f3, f2
 	fsw	f2, 0(r1)
-	fmul	f2, f1, f3
-	fadd	f2, f6, f2
+	flw	f2, 1(r2)
+	flw	f3, 1(r1)
+	fmul	f2, f1, f2
+	fadd	f2, f3, f2
 	fsw	f2, 1(r1)
-	fmul	f1, f1, f4
-	fadd	f1, f7, f1
+	flw	f2, 2(r2)
+	flw	f3, 2(r1)
+	fmul	f1, f1, f2
+	fadd	f1, f3, f1
 	fsw	f1, 2(r1)
 	jr	r31				#
 vecadd.2903:
 	flw	f1, 0(r1)
 	flw	f2, 0(r2)
-	flw	f3, 1(r1)
-	flw	f4, 1(r2)
-	flw	f5, 2(r1)
-	flw	f6, 2(r2)
 	fadd	f1, f1, f2
 	fsw	f1, 0(r1)
-	fadd	f1, f3, f4
+	flw	f1, 1(r1)
+	flw	f2, 1(r2)
+	fadd	f1, f1, f2
 	fsw	f1, 1(r1)
-	fadd	f1, f5, f6
+	flw	f1, 2(r1)
+	flw	f2, 2(r2)
+	fadd	f1, f1, f2
 	fsw	f1, 2(r1)
 	jr	r31				#
 vecmul.2906:
 	flw	f1, 0(r1)
 	flw	f2, 0(r2)
-	flw	f3, 1(r1)
-	flw	f4, 1(r2)
-	flw	f5, 2(r1)
-	flw	f6, 2(r2)
 	fmul	f1, f1, f2
 	fsw	f1, 0(r1)
-	fmul	f1, f3, f4
+	flw	f1, 1(r1)
+	flw	f2, 1(r2)
+	fmul	f1, f1, f2
 	fsw	f1, 1(r1)
-	fmul	f1, f5, f6
+	flw	f1, 2(r1)
+	flw	f2, 2(r2)
+	fmul	f1, f1, f2
 	fsw	f1, 2(r1)
 	jr	r31				#
 vecscale.2909:
 	flw	f2, 0(r1)
-	flw	f3, 1(r1)
-	flw	f4, 2(r1)
 	fmul	f2, f2, f1
 	fsw	f2, 0(r1)
-	fmul	f2, f3, f1
+	flw	f2, 1(r1)
+	fmul	f2, f2, f1
 	fsw	f2, 1(r1)
-	fmul	f1, f4, f1
+	flw	f2, 2(r1)
+	fmul	f1, f2, f1
 	fsw	f1, 2(r1)
 	jr	r31				#
 vecaccumv.2912:
 	flw	f1, 0(r2)
 	flw	f2, 0(r5)
-	flw	f3, 1(r2)
-	flw	f4, 1(r5)
-	flw	f5, 2(r2)
-	flw	f6, 2(r5)
-	flw	f7, 0(r1)
-	flw	f8, 1(r1)
-	flw	f9, 2(r1)
+	flw	f3, 0(r1)
 	fmul	f1, f1, f2
-	fadd	f1, f7, f1
+	fadd	f1, f3, f1
 	fsw	f1, 0(r1)
-	fmul	f1, f3, f4
-	fadd	f1, f8, f1
+	flw	f1, 1(r2)
+	flw	f2, 1(r5)
+	flw	f3, 1(r1)
+	fmul	f1, f1, f2
+	fadd	f1, f3, f1
 	fsw	f1, 1(r1)
-	fmul	f1, f5, f6
-	fadd	f1, f9, f1
+	flw	f1, 2(r2)
+	flw	f2, 2(r5)
+	flw	f3, 2(r1)
+	fmul	f1, f1, f2
+	fadd	f1, f3, f1
 	fsw	f1, 2(r1)
 	jr	r31				#
 o_texturetype.2916:
@@ -2127,122 +2715,98 @@ read_screen_settings.2989:
 	jal	lib_read_float				
 	addi	r3, r3, -1
 	lw	r31, 0(r3)
-	flup	f2, 26		# fli	f2, 200.000000
-	flup	f3, 27		# fli	f3, -200.000000
-	flup	f4, 26		# fli	f4, 200.000000
-	flw	f5, 661(r0)
-	flw	f6, 760(r0)
-	flw	f7, 662(r0)
-	flw	f8, 761(r0)
-	flw	f9, 663(r0)
-	flw	f10, 762(r0)
-	fsw	f0, 755(r0)
 	fsw	f1, 661(r0)
-	fsw	f10, 0(r3)
-	fsw	f9, 2(r3)
-	fsw	f8, 4(r3)
-	fsw	f7, 6(r3)
-	fsw	f6, 8(r3)
-	fsw	f5, 10(r3)
-	fsw	f4, 12(r3)
-	fsw	f3, 14(r3)
-	fsw	f2, 16(r3)
-	sw	r31, 18(r3)
-	addi	r3, r3, 19
+	sw	r31, 0(r3)
+	addi	r3, r3, 1
 	jal	lib_read_float				
-	addi	r3, r3, -19
-	lw	r31, 18(r3)
+	addi	r3, r3, -1
+	lw	r31, 0(r3)
 	fsw	f1, 662(r0)
-	sw	r31, 18(r3)
-	addi	r3, r3, 19
+	sw	r31, 0(r3)
+	addi	r3, r3, 1
 	jal	lib_read_float				
-	addi	r3, r3, -19
-	lw	r31, 18(r3)
+	addi	r3, r3, -1
+	lw	r31, 0(r3)
 	fsw	f1, 663(r0)
-	sw	r31, 18(r3)
-	addi	r3, r3, 19
+	sw	r31, 0(r3)
+	addi	r3, r3, 1
 	jal	lib_read_float				
-	addi	r3, r3, -19
-	lw	r31, 18(r3)
-	sw	r31, 18(r3)
-	addi	r3, r3, 19
-	jal	rad.2987				
-	addi	r3, r3, -19
-	lw	r31, 18(r3)
-	fsw	f1, 18(r3)
-	sw	r31, 20(r3)
-	addi	r3, r3, 21
+	addi	r3, r3, -1
+	lw	r31, 0(r3)
+	flup	f2, 25		# fli	f2, 0.017453
+	fmul	f1, f1, f2
+	fsw	f1, 0(r3)
+	sw	r31, 2(r3)
+	addi	r3, r3, 3
 	jal	cos.2839				
-	addi	r3, r3, -21
-	lw	r31, 20(r3)
-	flw	f2, 18(r3)
-	fsw	f1, 20(r3)
+	addi	r3, r3, -3
+	lw	r31, 2(r3)
+	flw	f2, 0(r3)
+	fsw	f1, 2(r3)
 	fadd	f1, f0, f2
-	sw	r31, 22(r3)
-	addi	r3, r3, 23
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
 	jal	sin.2837				
-	addi	r3, r3, -23
-	lw	r31, 22(r3)
-	fsw	f1, 22(r3)
-	sw	r31, 24(r3)
-	addi	r3, r3, 25
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	fsw	f1, 4(r3)
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
 	jal	lib_read_float				
-	addi	r3, r3, -25
-	lw	r31, 24(r3)
-	sw	r31, 24(r3)
-	addi	r3, r3, 25
-	jal	rad.2987				
-	addi	r3, r3, -25
-	lw	r31, 24(r3)
-	fsw	f1, 24(r3)
-	sw	r31, 26(r3)
-	addi	r3, r3, 27
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	flup	f2, 25		# fli	f2, 0.017453
+	fmul	f1, f1, f2
+	fsw	f1, 6(r3)
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
 	jal	cos.2839				
-	addi	r3, r3, -27
-	lw	r31, 26(r3)
-	flw	f2, 24(r3)
-	fsw	f1, 26(r3)
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	flw	f2, 6(r3)
+	fsw	f1, 8(r3)
 	fadd	f1, f0, f2
-	sw	r31, 28(r3)
-	addi	r3, r3, 29
+	sw	r31, 10(r3)
+	addi	r3, r3, 11
 	jal	sin.2837				
-	addi	r3, r3, -29
-	lw	r31, 28(r3)
-	flw	f2, 20(r3)
-	fmul	f3, f2, f1
-	flw	f4, 16(r3)
-	fmul	f3, f3, f4
-	fsw	f3, 760(r0)
-	flw	f3, 14(r3)
-	flw	f4, 22(r3)
-	fmul	f3, f4, f3
-	fsw	f3, 761(r0)
-	flw	f3, 26(r3)
-	fmul	f5, f2, f3
-	flw	f6, 12(r3)
+	addi	r3, r3, -11
+	lw	r31, 10(r3)
+	flup	f2, 26		# fli	f2, 200.000000
+	flw	f3, 2(r3)
+	fmul	f4, f3, f1
+	fmul	f2, f4, f2
+	fsw	f2, 760(r0)
+	flup	f2, 27		# fli	f2, -200.000000
+	flw	f4, 4(r3)
+	fmul	f2, f4, f2
+	fsw	f2, 761(r0)
+	flw	f2, 8(r3)
+	fmul	f5, f3, f2
+	flup	f6, 26		# fli	f6, 200.000000
 	fmul	f5, f5, f6
 	fsw	f5, 762(r0)
-	fsw	f3, 754(r0)
+	fsw	f2, 754(r0)
+	fsw	f0, 755(r0)
 	fneg	f5, f1
 	fsw	f5, 756(r0)
 	fneg	f4, f4
 	fmul	f1, f4, f1
 	fsw	f1, 757(r0)
-	fneg	f1, f2
+	fneg	f1, f3
 	fsw	f1, 758(r0)
-	fmul	f1, f4, f3
+	fmul	f1, f4, f2
 	fsw	f1, 759(r0)
-	flw	f1, 8(r3)
-	flw	f2, 10(r3)
-	fsub	f1, f2, f1
+	flw	f1, 661(r0)
+	flw	f2, 760(r0)
+	fsub	f1, f1, f2
 	fsw	f1, 664(r0)
-	flw	f1, 4(r3)
-	flw	f2, 6(r3)
-	fsub	f1, f2, f1
+	flw	f1, 662(r0)
+	flw	f2, 761(r0)
+	fsub	f1, f1, f2
 	fsw	f1, 665(r0)
-	flw	f1, 0(r3)
-	flw	f2, 2(r3)
-	fsub	f1, f2, f1
+	flw	f1, 663(r0)
+	flw	f2, 762(r0)
+	fsub	f1, f1, f2
 	fsw	f1, 666(r0)
 	jr	r31				#
 read_light.2991:
@@ -2256,11 +2820,8 @@ read_light.2991:
 	jal	lib_read_float				
 	addi	r3, r3, -1
 	lw	r31, 0(r3)
-	sw	r31, 0(r3)
-	addi	r3, r3, 1
-	jal	rad.2987				
-	addi	r3, r3, -1
-	lw	r31, 0(r3)
+	flup	f2, 25		# fli	f2, 0.017453
+	fmul	f1, f1, f2
 	fsw	f1, 0(r3)
 	sw	r31, 2(r3)
 	addi	r3, r3, 3
@@ -2274,11 +2835,8 @@ read_light.2991:
 	jal	lib_read_float				
 	addi	r3, r3, -3
 	lw	r31, 2(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	rad.2987				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
+	flup	f2, 25		# fli	f2, 0.017453
+	fmul	f1, f1, f2
 	flw	f2, 0(r3)
 	fsw	f1, 2(r3)
 	fadd	f1, f0, f2
@@ -2316,251 +2874,143 @@ read_light.2991:
 	jr	r31				#
 rotate_quadratic_matrix.2993:
 	flw	f1, 0(r2)
-	flw	f2, 0(r2)
-	flw	f3, 1(r2)
-	flw	f4, 1(r2)
-	flw	f5, 2(r2)
-	flw	f6, 2(r2)
-	flw	f7, 0(r1)
-	flw	f8, 1(r1)
-	flw	f9, 2(r1)
-	flup	f10, 3		# fli	f10, 2.000000
-	flup	f11, 3		# fli	f11, 2.000000
-	flup	f12, 3		# fli	f12, 2.000000
-	fsw	f12, 0(r3)
-	fsw	f11, 2(r3)
-	sw	r2, 4(r3)
-	fsw	f10, 6(r3)
-	sw	r1, 8(r3)
-	fsw	f9, 10(r3)
-	fsw	f8, 12(r3)
-	fsw	f7, 14(r3)
-	fsw	f6, 16(r3)
-	fsw	f5, 18(r3)
-	fsw	f4, 20(r3)
-	fsw	f3, 22(r3)
-	fsw	f2, 24(r3)
-	sw	r31, 26(r3)
-	addi	r3, r3, 27
+	sw	r1, 0(r3)
+	sw	r2, 1(r3)
+	sw	r31, 2(r3)
+	addi	r3, r3, 3
 	jal	cos.2839				
-	addi	r3, r3, -27
-	lw	r31, 26(r3)
-	flw	f2, 24(r3)
-	fsw	f1, 26(r3)
+	addi	r3, r3, -3
+	lw	r31, 2(r3)
+	lw	r1, 1(r3)
+	flw	f2, 0(r1)
+	fsw	f1, 2(r3)
 	fadd	f1, f0, f2
-	sw	r31, 28(r3)
-	addi	r3, r3, 29
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
 	jal	sin.2837				
-	addi	r3, r3, -29
-	lw	r31, 28(r3)
-	flw	f2, 22(r3)
-	fsw	f1, 28(r3)
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	lw	r1, 1(r3)
+	flw	f2, 1(r1)
+	fsw	f1, 4(r3)
 	fadd	f1, f0, f2
-	sw	r31, 30(r3)
-	addi	r3, r3, 31
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
 	jal	cos.2839				
-	addi	r3, r3, -31
-	lw	r31, 30(r3)
-	flw	f2, 20(r3)
-	fsw	f1, 30(r3)
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	lw	r1, 1(r3)
+	flw	f2, 1(r1)
+	fsw	f1, 6(r3)
 	fadd	f1, f0, f2
-	sw	r31, 32(r3)
-	addi	r3, r3, 33
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
 	jal	sin.2837				
-	addi	r3, r3, -33
-	lw	r31, 32(r3)
-	flw	f2, 18(r3)
-	fsw	f1, 32(r3)
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	lw	r1, 1(r3)
+	flw	f2, 2(r1)
+	fsw	f1, 8(r3)
 	fadd	f1, f0, f2
-	sw	r31, 34(r3)
-	addi	r3, r3, 35
+	sw	r31, 10(r3)
+	addi	r3, r3, 11
 	jal	cos.2839				
-	addi	r3, r3, -35
-	lw	r31, 34(r3)
-	flw	f2, 16(r3)
-	fsw	f1, 34(r3)
+	addi	r3, r3, -11
+	lw	r31, 10(r3)
+	lw	r1, 1(r3)
+	flw	f2, 2(r1)
+	fsw	f1, 10(r3)
 	fadd	f1, f0, f2
-	sw	r31, 36(r3)
-	addi	r3, r3, 37
+	sw	r31, 12(r3)
+	addi	r3, r3, 13
 	jal	sin.2837				
-	addi	r3, r3, -37
-	lw	r31, 36(r3)
-	flw	f2, 34(r3)
-	flw	f3, 30(r3)
+	addi	r3, r3, -13
+	lw	r31, 12(r3)
+	flw	f2, 10(r3)
+	flw	f3, 6(r3)
 	fmul	f4, f3, f2
-	flw	f5, 32(r3)
-	flw	f6, 28(r3)
-	fmul	f7, f6, f5
-	fmul	f8, f7, f2
-	flw	f9, 26(r3)
-	fmul	f10, f9, f1
-	fsub	f8, f8, f10
-	fmul	f10, f9, f5
-	fmul	f11, f10, f2
-	fmul	f12, f6, f1
-	fadd	f11, f11, f12
-	fmul	f12, f3, f1
-	fmul	f7, f7, f1
-	fmul	f13, f9, f2
-	fadd	f7, f7, f13
-	fmul	f1, f10, f1
-	fmul	f2, f6, f2
-	fsub	f1, f1, f2
-	fneg	f2, f5
-	fmul	f5, f6, f3
-	fmul	f3, f9, f3
-	fsw	f4, 36(r3)
-	fsw	f3, 38(r3)
-	fsw	f1, 40(r3)
-	fsw	f11, 42(r3)
-	fsw	f5, 44(r3)
-	fsw	f7, 46(r3)
-	fsw	f8, 48(r3)
-	fsw	f2, 50(r3)
-	fsw	f12, 52(r3)
-	fadd	f1, f0, f4
-	sw	r31, 54(r3)
-	addi	r3, r3, 55
-	jal	fsqr.2814				
-	addi	r3, r3, -55
-	lw	r31, 54(r3)
-	flw	f2, 14(r3)
-	fmul	f1, f2, f1
-	flw	f3, 52(r3)
-	fsw	f1, 54(r3)
-	fadd	f1, f0, f3
-	sw	r31, 56(r3)
-	addi	r3, r3, 57
-	jal	fsqr.2814				
-	addi	r3, r3, -57
-	lw	r31, 56(r3)
-	flw	f2, 12(r3)
-	fmul	f1, f2, f1
-	flw	f3, 54(r3)
-	fadd	f1, f3, f1
-	flw	f3, 50(r3)
-	fsw	f1, 56(r3)
-	fadd	f1, f0, f3
-	sw	r31, 58(r3)
-	addi	r3, r3, 59
-	jal	fsqr.2814				
-	addi	r3, r3, -59
-	lw	r31, 58(r3)
-	flw	f2, 10(r3)
-	fmul	f1, f2, f1
-	flw	f3, 56(r3)
-	fadd	f1, f3, f1
-	lw	r1, 8(r3)
-	fsw	f1, 0(r1)
-	flw	f1, 48(r3)
-	sw	r31, 58(r3)
-	addi	r3, r3, 59
-	jal	fsqr.2814				
-	addi	r3, r3, -59
-	lw	r31, 58(r3)
-	flw	f2, 14(r3)
-	fmul	f1, f2, f1
-	flw	f3, 46(r3)
-	fsw	f1, 58(r3)
-	fadd	f1, f0, f3
-	sw	r31, 60(r3)
-	addi	r3, r3, 61
-	jal	fsqr.2814				
-	addi	r3, r3, -61
-	lw	r31, 60(r3)
-	flw	f2, 12(r3)
-	fmul	f1, f2, f1
-	flw	f3, 58(r3)
-	fadd	f1, f3, f1
-	flw	f3, 44(r3)
-	fsw	f1, 60(r3)
-	fadd	f1, f0, f3
-	sw	r31, 62(r3)
-	addi	r3, r3, 63
-	jal	fsqr.2814				
-	addi	r3, r3, -63
-	lw	r31, 62(r3)
-	flw	f2, 10(r3)
-	fmul	f1, f2, f1
-	flw	f3, 60(r3)
-	fadd	f1, f3, f1
-	lw	r1, 8(r3)
-	fsw	f1, 1(r1)
-	flw	f1, 42(r3)
-	sw	r31, 62(r3)
-	addi	r3, r3, 63
-	jal	fsqr.2814				
-	addi	r3, r3, -63
-	lw	r31, 62(r3)
-	flw	f2, 14(r3)
-	fmul	f1, f2, f1
-	flw	f3, 40(r3)
-	fsw	f1, 62(r3)
-	fadd	f1, f0, f3
-	sw	r31, 64(r3)
-	addi	r3, r3, 65
-	jal	fsqr.2814				
-	addi	r3, r3, -65
-	lw	r31, 64(r3)
-	flw	f2, 12(r3)
-	fmul	f1, f2, f1
-	flw	f3, 62(r3)
-	fadd	f1, f3, f1
-	flw	f3, 38(r3)
-	fsw	f1, 64(r3)
-	fadd	f1, f0, f3
-	sw	r31, 66(r3)
-	addi	r3, r3, 67
-	jal	fsqr.2814				
-	addi	r3, r3, -67
-	lw	r31, 66(r3)
-	flw	f2, 10(r3)
-	fmul	f1, f2, f1
-	flw	f3, 64(r3)
-	fadd	f1, f3, f1
-	lw	r1, 8(r3)
-	fsw	f1, 2(r1)
-	flw	f1, 48(r3)
-	flw	f3, 14(r3)
-	fmul	f4, f3, f1
-	flw	f5, 42(r3)
-	fmul	f4, f4, f5
-	flw	f6, 46(r3)
-	flw	f7, 12(r3)
-	fmul	f8, f7, f6
-	flw	f9, 40(r3)
-	fmul	f8, f8, f9
-	fadd	f4, f4, f8
-	flw	f8, 44(r3)
-	fmul	f10, f2, f8
-	flw	f11, 38(r3)
-	fmul	f10, f10, f11
-	fadd	f4, f4, f10
-	flw	f10, 6(r3)
-	fmul	f4, f10, f4
-	lw	r1, 4(r3)
-	fsw	f4, 0(r1)
-	flw	f4, 36(r3)
-	fmul	f3, f3, f4
-	fmul	f4, f3, f5
-	flw	f5, 52(r3)
-	fmul	f5, f7, f5
-	fmul	f7, f5, f9
-	fadd	f4, f4, f7
-	flw	f7, 50(r3)
-	fmul	f2, f2, f7
-	fmul	f7, f2, f11
-	fadd	f4, f4, f7
-	flw	f7, 2(r3)
-	fmul	f4, f7, f4
-	fsw	f4, 1(r1)
+	lw	r1, 0(r3)
+	flw	f5, 0(r1)
+	flw	f6, 1(r1)
+	flw	f7, 8(r3)
+	fneg	f8, f7
+	flw	f9, 2(r1)
+	flw	f10, 4(r3)
+	fmul	f11, f10, f7
+	flw	f12, 2(r3)
+	fmul	f7, f12, f7
+	fmul	f13, f12, f2
+	fmul	f14, f10, f2
+	fmul	f15, f10, f3
+	fmul	f16, f12, f3
+	fmul	f17, f11, f2
+	fmul	f12, f12, f1
+	fsub	f12, f17, f12
+	fmul	f2, f7, f2
+	fmul	f10, f10, f1
+	fadd	f2, f2, f10
+	fmul	f3, f3, f1
+	fmul	f10, f11, f1
+	fadd	f10, f10, f13
+	fmul	f1, f7, f1
+	fsub	f1, f1, f14
+	fmul	f7, f4, f4
+	fmul	f7, f5, f7
+	fmul	f11, f3, f3
+	fmul	f11, f6, f11
+	fadd	f7, f7, f11
+	fmul	f11, f8, f8
+	fmul	f11, f9, f11
+	fadd	f7, f7, f11
+	fsw	f7, 0(r1)
+	fmul	f7, f12, f12
+	fmul	f11, f10, f10
+	fmul	f13, f15, f15
+	fmul	f7, f5, f7
+	fmul	f11, f6, f11
+	fadd	f7, f7, f11
+	fmul	f11, f9, f13
+	fadd	f7, f7, f11
+	fsw	f7, 1(r1)
+	fmul	f7, f2, f2
+	fmul	f11, f1, f1
+	fmul	f13, f16, f16
+	fmul	f7, f5, f7
+	fmul	f11, f6, f11
+	fadd	f7, f7, f11
+	fmul	f11, f9, f13
+	fadd	f7, f7, f11
+	fsw	f7, 2(r1)
+	fmul	f7, f5, f12
+	fmul	f11, f6, f10
+	fmul	f13, f9, f15
+	flup	f14, 3		# fli	f14, 2.000000
+	fmul	f7, f7, f2
+	fmul	f11, f11, f1
+	fadd	f7, f7, f11
+	fmul	f11, f13, f16
+	fadd	f7, f7, f11
+	fmul	f7, f14, f7
+	lw	r1, 1(r3)
+	fsw	f7, 0(r1)
+	fmul	f4, f5, f4
+	fmul	f3, f6, f3
+	fmul	f5, f9, f8
+	flup	f6, 3		# fli	f6, 2.000000
+	fmul	f2, f4, f2
 	fmul	f1, f3, f1
-	fmul	f3, f5, f6
-	fadd	f1, f1, f3
-	fmul	f2, f2, f8
+	fadd	f1, f2, f1
+	fmul	f2, f5, f16
 	fadd	f1, f1, f2
-	flw	f2, 0(r3)
-	fmul	f1, f2, f1
+	fmul	f1, f6, f1
+	fsw	f1, 1(r1)
+	fmul	f1, f4, f12
+	fmul	f2, f3, f10
+	fmul	f3, f5, f15
+	flup	f4, 3		# fli	f4, 2.000000
+	fadd	f1, f1, f2
+	fadd	f1, f1, f3
+	fmul	f1, f4, f1
 	fsw	f1, 2(r1)
 	jr	r31				#
 read_nth_object.2996:
@@ -2570,31 +3020,100 @@ read_nth_object.2996:
 	jal	lib_read_int				
 	addi	r3, r3, -2
 	lw	r31, 1(r3)
-	beqi	-1, r1, beq_then.8421
+	beqi	-1, r1, beq_then.15845
+	sw	r1, 1(r3)
+	sw	r31, 2(r3)
+	addi	r3, r3, 3
+	jal	lib_read_int				
+	addi	r3, r3, -3
+	lw	r31, 2(r3)
+	sw	r1, 2(r3)
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	lib_read_int				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	sw	r1, 3(r3)
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	lib_read_int				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
 	addi	r2, r0, 3
 	flup	f1, 0		# fli	f1, 0.000000
-	sw	r1, 1(r3)
-	fsw	f1, 2(r3)
-	sw	r2, 4(r3)
+	sw	r1, 4(r3)
+	add	r1, r0, r2
 	sw	r31, 5(r3)
 	addi	r3, r3, 6
-	jal	lib_read_int				
+	jal	lib_create_float_array				
 	addi	r3, r3, -6
 	lw	r31, 5(r3)
 	sw	r1, 5(r3)
 	sw	r31, 6(r3)
 	addi	r3, r3, 7
-	jal	lib_read_int				
+	jal	lib_read_float				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	lw	r1, 5(r3)
+	fsw	f1, 0(r1)
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	lib_read_float				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	lw	r1, 5(r3)
+	fsw	f1, 1(r1)
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	lib_read_float				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	lw	r1, 5(r3)
+	fsw	f1, 2(r1)
+	addi	r2, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	add	r1, r0, r2
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	lib_create_float_array				
 	addi	r3, r3, -7
 	lw	r31, 6(r3)
 	sw	r1, 6(r3)
 	sw	r31, 7(r3)
 	addi	r3, r3, 8
-	jal	lib_read_int				
+	jal	lib_read_float				
 	addi	r3, r3, -8
 	lw	r31, 7(r3)
-	flw	f1, 2(r3)
-	lw	r2, 4(r3)
+	lw	r1, 6(r3)
+	fsw	f1, 0(r1)
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	lib_read_float				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+	lw	r1, 6(r3)
+	fsw	f1, 1(r1)
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	lib_read_float				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+	lw	r1, 6(r3)
+	fsw	f1, 2(r1)
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	lib_read_float				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.15846
+	addi	r1, r0, 0
+	j	fle_cont.15847
+fle_else.15846:
+	addi	r1, r0, 1
+fle_cont.15847:
+	addi	r2, r0, 2
+	flup	f1, 0		# fli	f1, 0.000000
 	sw	r1, 7(r3)
 	add	r1, r0, r2
 	sw	r31, 8(r3)
@@ -2608,382 +3127,400 @@ read_nth_object.2996:
 	jal	lib_read_float				
 	addi	r3, r3, -10
 	lw	r31, 9(r3)
-	addi	r1, r0, 3
-	flup	f2, 0		# fli	f2, 0.000000
-	addi	r2, r0, 2
-	flup	f3, 0		# fli	f3, 0.000000
-	addi	r5, r0, 3
-	flup	f4, 0		# fli	f4, 0.000000
-	addi	r6, r0, 3
-	flup	f5, 0		# fli	f5, 0.000000
-	lw	r7, 8(r3)
-	fsw	f1, 0(r7)
-	fsw	f5, 10(r3)
-	sw	r6, 12(r3)
-	fsw	f4, 14(r3)
-	sw	r5, 16(r3)
-	fsw	f3, 18(r3)
-	sw	r2, 20(r3)
-	fsw	f2, 22(r3)
-	sw	r1, 24(r3)
-	sw	r31, 25(r3)
-	addi	r3, r3, 26
+	lw	r1, 8(r3)
+	fsw	f1, 0(r1)
+	sw	r31, 9(r3)
+	addi	r3, r3, 10
 	jal	lib_read_float				
-	addi	r3, r3, -26
-	lw	r31, 25(r3)
+	addi	r3, r3, -10
+	lw	r31, 9(r3)
 	lw	r1, 8(r3)
 	fsw	f1, 1(r1)
-	sw	r31, 25(r3)
-	addi	r3, r3, 26
-	jal	lib_read_float				
-	addi	r3, r3, -26
-	lw	r31, 25(r3)
-	lw	r1, 8(r3)
-	fsw	f1, 2(r1)
-	flw	f1, 22(r3)
-	lw	r2, 24(r3)
-	add	r1, r0, r2
-	sw	r31, 25(r3)
-	addi	r3, r3, 26
-	jal	lib_create_float_array				
-	addi	r3, r3, -26
-	lw	r31, 25(r3)
-	sw	r1, 25(r3)
-	sw	r31, 26(r3)
-	addi	r3, r3, 27
-	jal	lib_read_float				
-	addi	r3, r3, -27
-	lw	r31, 26(r3)
-	lw	r1, 25(r3)
-	fsw	f1, 0(r1)
-	sw	r31, 26(r3)
-	addi	r3, r3, 27
-	jal	lib_read_float				
-	addi	r3, r3, -27
-	lw	r31, 26(r3)
-	lw	r1, 25(r3)
-	fsw	f1, 1(r1)
-	sw	r31, 26(r3)
-	addi	r3, r3, 27
-	jal	lib_read_float				
-	addi	r3, r3, -27
-	lw	r31, 26(r3)
-	lw	r1, 25(r3)
-	fsw	f1, 2(r1)
-	sw	r31, 26(r3)
-	addi	r3, r3, 27
-	jal	lib_read_float				
-	addi	r3, r3, -27
-	lw	r31, 26(r3)
-	sw	r31, 26(r3)
-	addi	r3, r3, 27
-	jal	fisneg.2805				
-	addi	r3, r3, -27
-	lw	r31, 26(r3)
-	flw	f1, 18(r3)
-	lw	r2, 20(r3)
-	sw	r1, 26(r3)
-	add	r1, r0, r2
-	sw	r31, 27(r3)
-	addi	r3, r3, 28
-	jal	lib_create_float_array				
-	addi	r3, r3, -28
-	lw	r31, 27(r3)
-	sw	r1, 27(r3)
-	sw	r31, 28(r3)
-	addi	r3, r3, 29
-	jal	lib_read_float				
-	addi	r3, r3, -29
-	lw	r31, 28(r3)
-	lw	r1, 27(r3)
-	fsw	f1, 0(r1)
-	sw	r31, 28(r3)
-	addi	r3, r3, 29
-	jal	lib_read_float				
-	addi	r3, r3, -29
-	lw	r31, 28(r3)
-	lw	r1, 27(r3)
-	fsw	f1, 1(r1)
-	flw	f1, 14(r3)
-	lw	r2, 16(r3)
-	add	r1, r0, r2
-	sw	r31, 28(r3)
-	addi	r3, r3, 29
-	jal	lib_create_float_array				
-	addi	r3, r3, -29
-	lw	r31, 28(r3)
-	sw	r1, 28(r3)
-	sw	r31, 29(r3)
-	addi	r3, r3, 30
-	jal	lib_read_float				
-	addi	r3, r3, -30
-	lw	r31, 29(r3)
-	lw	r1, 28(r3)
-	fsw	f1, 0(r1)
-	sw	r31, 29(r3)
-	addi	r3, r3, 30
-	jal	lib_read_float				
-	addi	r3, r3, -30
-	lw	r31, 29(r3)
-	lw	r1, 28(r3)
-	fsw	f1, 1(r1)
-	sw	r31, 29(r3)
-	addi	r3, r3, 30
-	jal	lib_read_float				
-	addi	r3, r3, -30
-	lw	r31, 29(r3)
-	lw	r1, 28(r3)
-	fsw	f1, 2(r1)
-	flw	f1, 10(r3)
-	lw	r2, 12(r3)
-	add	r1, r0, r2
-	sw	r31, 29(r3)
-	addi	r3, r3, 30
-	jal	lib_create_float_array				
-	addi	r3, r3, -30
-	lw	r31, 29(r3)
-	lw	r2, 7(r3)
-	beqi	0, r2, beq_then.8426
-	sw	r1, 29(r3)
-	sw	r31, 30(r3)
-	addi	r3, r3, 31
-	jal	lib_read_float				
-	addi	r3, r3, -31
-	lw	r31, 30(r3)
-	sw	r31, 30(r3)
-	addi	r3, r3, 31
-	jal	rad.2987				
-	addi	r3, r3, -31
-	lw	r31, 30(r3)
-	lw	r1, 29(r3)
-	fsw	f1, 0(r1)
-	sw	r31, 30(r3)
-	addi	r3, r3, 31
-	jal	lib_read_float				
-	addi	r3, r3, -31
-	lw	r31, 30(r3)
-	sw	r31, 30(r3)
-	addi	r3, r3, 31
-	jal	rad.2987				
-	addi	r3, r3, -31
-	lw	r31, 30(r3)
-	lw	r1, 29(r3)
-	fsw	f1, 1(r1)
-	sw	r31, 30(r3)
-	addi	r3, r3, 31
-	jal	lib_read_float				
-	addi	r3, r3, -31
-	lw	r31, 30(r3)
-	sw	r31, 30(r3)
-	addi	r3, r3, 31
-	jal	rad.2987				
-	addi	r3, r3, -31
-	lw	r31, 30(r3)
-	lw	r1, 29(r3)
-	fsw	f1, 2(r1)
-	j	beq_cont.8427
-beq_then.8426:
-beq_cont.8427:
-	lw	r2, 5(r3)
-	beqi	2, r2, beq_then.8428
-	lw	r5, 26(r3)
-	j	beq_cont.8429
-beq_then.8428:
-	addi	r5, r0, 1
-beq_cont.8429:
-	add	r6, r0, r4
-	addi	r7, r0, 4
+	addi	r2, r0, 3
 	flup	f1, 0		# fli	f1, 0.000000
-	addi	r8, r0, 1				# set min_caml_objects
-	sw	r8, 30(r3)
-	sw	r5, 31(r3)
-	sw	r1, 29(r3)
-	sw	r6, 32(r3)
-	add	r1, r0, r7
-	sw	r31, 33(r3)
-	addi	r3, r3, 34
+	add	r1, r0, r2
+	sw	r31, 9(r3)
+	addi	r3, r3, 10
 	jal	lib_create_float_array				
-	addi	r3, r3, -34
-	lw	r31, 33(r3)
+	addi	r3, r3, -10
+	lw	r31, 9(r3)
+	sw	r1, 9(r3)
+	sw	r31, 10(r3)
+	addi	r3, r3, 11
+	jal	lib_read_float				
+	addi	r3, r3, -11
+	lw	r31, 10(r3)
+	lw	r1, 9(r3)
+	fsw	f1, 0(r1)
+	sw	r31, 10(r3)
+	addi	r3, r3, 11
+	jal	lib_read_float				
+	addi	r3, r3, -11
+	lw	r31, 10(r3)
+	lw	r1, 9(r3)
+	fsw	f1, 1(r1)
+	sw	r31, 10(r3)
+	addi	r3, r3, 11
+	jal	lib_read_float				
+	addi	r3, r3, -11
+	lw	r31, 10(r3)
+	lw	r1, 9(r3)
+	fsw	f1, 2(r1)
+	addi	r2, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	add	r1, r0, r2
+	sw	r31, 10(r3)
+	addi	r3, r3, 11
+	jal	lib_create_float_array				
+	addi	r3, r3, -11
+	lw	r31, 10(r3)
+	lw	r2, 4(r3)
+	beqi	0, r2, beq_then.15848
+	sw	r1, 10(r3)
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	lib_read_float				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	flup	f2, 25		# fli	f2, 0.017453
+	fmul	f1, f1, f2
+	lw	r1, 10(r3)
+	fsw	f1, 0(r1)
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	lib_read_float				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	flup	f2, 25		# fli	f2, 0.017453
+	fmul	f1, f1, f2
+	lw	r1, 10(r3)
+	fsw	f1, 1(r1)
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	lib_read_float				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	flup	f2, 25		# fli	f2, 0.017453
+	fmul	f1, f1, f2
+	lw	r1, 10(r3)
+	fsw	f1, 2(r1)
+	j	beq_cont.15849
+beq_then.15848:
+beq_cont.15849:
+	lw	r2, 2(r3)
+	beqi	2, r2, beq_then.15850
+	lw	r5, 7(r3)
+	j	beq_cont.15851
+beq_then.15850:
+	addi	r5, r0, 1
+beq_cont.15851:
+	addi	r6, r0, 4
+	flup	f1, 0		# fli	f1, 0.000000
+	sw	r5, 11(r3)
+	sw	r1, 10(r3)
+	add	r1, r0, r6
+	sw	r31, 12(r3)
+	addi	r3, r3, 13
+	jal	lib_create_float_array				
+	addi	r3, r3, -13
+	lw	r31, 12(r3)
+	add	r2, r0, r4
 	addi	r4, r4, 11
-	lw	r2, 32(r3)
 	sw	r1, 10(r2)
-	lw	r1, 29(r3)
+	lw	r1, 10(r3)
 	sw	r1, 9(r2)
-	lw	r5, 28(r3)
+	lw	r5, 9(r3)
 	sw	r5, 8(r2)
-	lw	r5, 27(r3)
-	sw	r5, 7(r2)
-	lw	r5, 31(r3)
-	sw	r5, 6(r2)
-	lw	r5, 25(r3)
-	sw	r5, 5(r2)
 	lw	r5, 8(r3)
+	sw	r5, 7(r2)
+	lw	r5, 11(r3)
+	sw	r5, 6(r2)
+	lw	r5, 6(r3)
+	sw	r5, 5(r2)
+	lw	r5, 5(r3)
 	sw	r5, 4(r2)
-	lw	r6, 7(r3)
+	lw	r6, 4(r3)
 	sw	r6, 3(r2)
-	lw	r7, 6(r3)
+	lw	r7, 3(r3)
 	sw	r7, 2(r2)
-	lw	r7, 5(r3)
+	lw	r7, 2(r3)
 	sw	r7, 1(r2)
 	lw	r8, 1(r3)
 	sw	r8, 0(r2)
-	lw	r8, 0(r3)
-	lw	r9, 30(r3)
-	add	r30, r9, r8
+	addi	r8, r0, 1				# set min_caml_objects
+	lw	r9, 0(r3)
+	add	r30, r8, r9
 	sw	r2, 0(r30)
-	beqi	3, r7, beq_then.8430
-	beqi	2, r7, beq_then.8432
-	j	beq_cont.8433
-beq_then.8432:
-	lw	r2, 26(r3)
-	beqi	0, r2, beq_then.8434
+	beqi	3, r7, beq_then.15852
+	beqi	2, r7, beq_then.15854
+	j	beq_cont.15855
+beq_then.15854:
+	lw	r2, 7(r3)
+	beqi	0, r2, beq_then.15856
 	addi	r2, r0, 0
-	j	beq_cont.8435
-beq_then.8434:
+	j	beq_cont.15857
+beq_then.15856:
 	addi	r2, r0, 1
-beq_cont.8435:
+beq_cont.15857:
 	add	r1, r0, r5
-	sw	r31, 33(r3)
-	addi	r3, r3, 34
+	sw	r31, 12(r3)
+	addi	r3, r3, 13
 	jal	vecunit_sgn.2888				
-	addi	r3, r3, -34
-	lw	r31, 33(r3)
-beq_cont.8433:
-	j	beq_cont.8431
-beq_then.8430:
+	addi	r3, r3, -13
+	lw	r31, 12(r3)
+beq_cont.15855:
+	j	beq_cont.15853
+beq_then.15852:
 	flw	f1, 0(r5)
-	fsw	f1, 34(r3)
-	sw	r31, 36(r3)
-	addi	r3, r3, 37
-	jal	fiszero.2807				
-	addi	r3, r3, -37
-	lw	r31, 36(r3)
-	beqi	0, r1, beq_then.8437
+	feq	r30, f1, f0
+	beq	r0, r30, feq_else.15858
+	addi	r2, r0, 1
+	j	feq_cont.15859
+feq_else.15858:
+	addi	r2, r0, 0
+feq_cont.15859:
+	beqi	0, r2, beq_then.15860
 	flup	f1, 0		# fli	f1, 0.000000
-	j	beq_cont.8438
-beq_then.8437:
-	flw	f1, 34(r3)
-	sw	r31, 36(r3)
-	addi	r3, r3, 37
-	jal	sgn.2862				
-	addi	r3, r3, -37
-	lw	r31, 36(r3)
-	flw	f2, 34(r3)
-	fsw	f1, 36(r3)
-	fadd	f1, f0, f2
-	sw	r31, 38(r3)
-	addi	r3, r3, 39
-	jal	fsqr.2814				
-	addi	r3, r3, -39
-	lw	r31, 38(r3)
-	flw	f2, 36(r3)
+	j	beq_cont.15861
+beq_then.15860:
+	feq	r30, f1, f0
+	beq	r0, r30, feq_else.15862
+	addi	r2, r0, 1
+	j	feq_cont.15863
+feq_else.15862:
+	addi	r2, r0, 0
+feq_cont.15863:
+	beqi	0, r2, beq_then.15864
+	flup	f2, 0		# fli	f2, 0.000000
+	j	beq_cont.15865
+beq_then.15864:
+	fle	r30, f1, f0
+	beq	r0, r30, fle_else.15866
+	addi	r2, r0, 0
+	j	fle_cont.15867
+fle_else.15866:
+	addi	r2, r0, 1
+fle_cont.15867:
+	beqi	0, r2, beq_then.15868
+	flup	f2, 2		# fli	f2, 1.000000
+	j	beq_cont.15869
+beq_then.15868:
+	flup	f2, 11		# fli	f2, -1.000000
+beq_cont.15869:
+beq_cont.15865:
+	fmul	f1, f1, f1
 	fdiv	f1, f2, f1
-beq_cont.8438:
-	lw	r1, 8(r3)
-	flw	f2, 1(r1)
-	fsw	f1, 0(r1)
-	fsw	f2, 38(r3)
-	fadd	f1, f0, f2
-	sw	r31, 40(r3)
-	addi	r3, r3, 41
-	jal	fiszero.2807				
-	addi	r3, r3, -41
-	lw	r31, 40(r3)
-	beqi	0, r1, beq_then.8439
+beq_cont.15861:
+	fsw	f1, 0(r5)
+	flw	f1, 1(r5)
+	feq	r30, f1, f0
+	beq	r0, r30, feq_else.15870
+	addi	r2, r0, 1
+	j	feq_cont.15871
+feq_else.15870:
+	addi	r2, r0, 0
+feq_cont.15871:
+	beqi	0, r2, beq_then.15872
 	flup	f1, 0		# fli	f1, 0.000000
-	j	beq_cont.8440
-beq_then.8439:
-	flw	f1, 38(r3)
-	sw	r31, 40(r3)
-	addi	r3, r3, 41
-	jal	sgn.2862				
-	addi	r3, r3, -41
-	lw	r31, 40(r3)
-	flw	f2, 38(r3)
-	fsw	f1, 40(r3)
-	fadd	f1, f0, f2
-	sw	r31, 42(r3)
-	addi	r3, r3, 43
-	jal	fsqr.2814				
-	addi	r3, r3, -43
-	lw	r31, 42(r3)
-	flw	f2, 40(r3)
+	j	beq_cont.15873
+beq_then.15872:
+	feq	r30, f1, f0
+	beq	r0, r30, feq_else.15874
+	addi	r2, r0, 1
+	j	feq_cont.15875
+feq_else.15874:
+	addi	r2, r0, 0
+feq_cont.15875:
+	beqi	0, r2, beq_then.15876
+	flup	f2, 0		# fli	f2, 0.000000
+	j	beq_cont.15877
+beq_then.15876:
+	fle	r30, f1, f0
+	beq	r0, r30, fle_else.15878
+	addi	r2, r0, 0
+	j	fle_cont.15879
+fle_else.15878:
+	addi	r2, r0, 1
+fle_cont.15879:
+	beqi	0, r2, beq_then.15880
+	flup	f2, 2		# fli	f2, 1.000000
+	j	beq_cont.15881
+beq_then.15880:
+	flup	f2, 11		# fli	f2, -1.000000
+beq_cont.15881:
+beq_cont.15877:
+	fmul	f1, f1, f1
 	fdiv	f1, f2, f1
-beq_cont.8440:
-	lw	r1, 8(r3)
-	flw	f2, 2(r1)
-	fsw	f1, 1(r1)
-	fsw	f2, 42(r3)
-	fadd	f1, f0, f2
-	sw	r31, 44(r3)
-	addi	r3, r3, 45
-	jal	fiszero.2807				
-	addi	r3, r3, -45
-	lw	r31, 44(r3)
-	beqi	0, r1, beq_then.8441
+beq_cont.15873:
+	fsw	f1, 1(r5)
+	flw	f1, 2(r5)
+	feq	r30, f1, f0
+	beq	r0, r30, feq_else.15882
+	addi	r2, r0, 1
+	j	feq_cont.15883
+feq_else.15882:
+	addi	r2, r0, 0
+feq_cont.15883:
+	beqi	0, r2, beq_then.15884
 	flup	f1, 0		# fli	f1, 0.000000
-	j	beq_cont.8442
-beq_then.8441:
-	flw	f1, 42(r3)
-	sw	r31, 44(r3)
-	addi	r3, r3, 45
-	jal	sgn.2862				
-	addi	r3, r3, -45
-	lw	r31, 44(r3)
-	flw	f2, 42(r3)
-	fsw	f1, 44(r3)
-	fadd	f1, f0, f2
-	sw	r31, 46(r3)
-	addi	r3, r3, 47
-	jal	fsqr.2814				
-	addi	r3, r3, -47
-	lw	r31, 46(r3)
-	flw	f2, 44(r3)
+	j	beq_cont.15885
+beq_then.15884:
+	feq	r30, f1, f0
+	beq	r0, r30, feq_else.15886
+	addi	r2, r0, 1
+	j	feq_cont.15887
+feq_else.15886:
+	addi	r2, r0, 0
+feq_cont.15887:
+	beqi	0, r2, beq_then.15888
+	flup	f2, 0		# fli	f2, 0.000000
+	j	beq_cont.15889
+beq_then.15888:
+	fle	r30, f1, f0
+	beq	r0, r30, fle_else.15890
+	addi	r2, r0, 0
+	j	fle_cont.15891
+fle_else.15890:
+	addi	r2, r0, 1
+fle_cont.15891:
+	beqi	0, r2, beq_then.15892
+	flup	f2, 2		# fli	f2, 1.000000
+	j	beq_cont.15893
+beq_then.15892:
+	flup	f2, 11		# fli	f2, -1.000000
+beq_cont.15893:
+beq_cont.15889:
+	fmul	f1, f1, f1
 	fdiv	f1, f2, f1
-beq_cont.8442:
-	lw	r1, 8(r3)
-	fsw	f1, 2(r1)
-beq_cont.8431:
-	lw	r1, 7(r3)
-	beqi	0, r1, beq_then.8443
-	lw	r1, 8(r3)
-	lw	r2, 29(r3)
-	sw	r31, 46(r3)
-	addi	r3, r3, 47
+beq_cont.15885:
+	fsw	f1, 2(r5)
+beq_cont.15853:
+	lw	r1, 4(r3)
+	beqi	0, r1, beq_then.15894
+	lw	r1, 5(r3)
+	lw	r2, 10(r3)
+	sw	r31, 12(r3)
+	addi	r3, r3, 13
 	jal	rotate_quadratic_matrix.2993				
-	addi	r3, r3, -47
-	lw	r31, 46(r3)
-	j	beq_cont.8444
-beq_then.8443:
-beq_cont.8444:
+	addi	r3, r3, -13
+	lw	r31, 12(r3)
+	j	beq_cont.15895
+beq_then.15894:
+beq_cont.15895:
 	addi	r1, r0, 1
 	jr	r31				#
-beq_then.8421:
+beq_then.15845:
 	addi	r1, r0, 0
 	jr	r31				#
 read_object.2998:
 	addi	r2, r0, 60
-	ble	r2, r1, ble_then.8445
+	ble	r2, r1, ble_then.15896
 	sw	r1, 0(r3)
 	sw	r31, 1(r3)
 	addi	r3, r3, 2
 	jal	read_nth_object.2996				
 	addi	r3, r3, -2
 	lw	r31, 1(r3)
-	beqi	0, r1, beq_then.8446
+	beqi	0, r1, beq_then.15897
 	lw	r1, 0(r3)
 	addi	r1, r1, 1
+	addi	r2, r0, 60
+	ble	r2, r1, ble_then.15898
+	sw	r1, 1(r3)
+	sw	r31, 2(r3)
+	addi	r3, r3, 3
+	jal	read_nth_object.2996				
+	addi	r3, r3, -3
+	lw	r31, 2(r3)
+	beqi	0, r1, beq_then.15899
+	lw	r1, 1(r3)
+	addi	r1, r1, 1
+	addi	r2, r0, 60
+	ble	r2, r1, ble_then.15900
+	sw	r1, 2(r3)
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	read_nth_object.2996				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	beqi	0, r1, beq_then.15901
+	lw	r1, 2(r3)
+	addi	r1, r1, 1
+	addi	r2, r0, 60
+	ble	r2, r1, ble_then.15902
+	sw	r1, 3(r3)
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	read_nth_object.2996				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	beqi	0, r1, beq_then.15903
+	lw	r1, 3(r3)
+	addi	r1, r1, 1
 	j	read_object.2998
-beq_then.8446:
+beq_then.15903:
+	lw	r1, 3(r3)
+	sw	r1, 0(r0)
+	jr	r31				#
+ble_then.15902:
+	jr	r31				#
+beq_then.15901:
+	lw	r1, 2(r3)
+	sw	r1, 0(r0)
+	jr	r31				#
+ble_then.15900:
+	jr	r31				#
+beq_then.15899:
+	lw	r1, 1(r3)
+	sw	r1, 0(r0)
+	jr	r31				#
+ble_then.15898:
+	jr	r31				#
+beq_then.15897:
 	lw	r1, 0(r3)
 	sw	r1, 0(r0)
 	jr	r31				#
-ble_then.8445:
+ble_then.15896:
 	jr	r31				#
 read_all_object.3000:
 	addi	r1, r0, 0
+	sw	r1, 0(r3)
+	sw	r31, 1(r3)
+	addi	r3, r3, 2
+	jal	read_nth_object.2996				
+	addi	r3, r3, -2
+	lw	r31, 1(r3)
+	beqi	0, r1, beq_then.15912
+	addi	r1, r0, 1
+	sw	r1, 1(r3)
+	sw	r31, 2(r3)
+	addi	r3, r3, 3
+	jal	read_nth_object.2996				
+	addi	r3, r3, -3
+	lw	r31, 2(r3)
+	beqi	0, r1, beq_then.15913
+	addi	r1, r0, 2
+	sw	r1, 2(r3)
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	read_nth_object.2996				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	beqi	0, r1, beq_then.15914
+	addi	r1, r0, 3
 	j	read_object.2998
+beq_then.15914:
+	lw	r1, 2(r3)
+	sw	r1, 0(r0)
+	jr	r31				#
+beq_then.15913:
+	lw	r1, 1(r3)
+	sw	r1, 0(r0)
+	jr	r31				#
+beq_then.15912:
+	lw	r1, 0(r3)
+	sw	r1, 0(r0)
+	jr	r31				#
 read_net_item.3002:
 	sw	r1, 0(r3)
 	sw	r31, 1(r3)
@@ -2991,234 +3528,637 @@ read_net_item.3002:
 	jal	lib_read_int				
 	addi	r3, r3, -2
 	lw	r31, 1(r3)
-	beqi	-1, r1, beq_then.8449
+	beqi	-1, r1, beq_then.15918
 	lw	r2, 0(r3)
 	addi	r5, r2, 1
 	sw	r1, 1(r3)
+	sw	r5, 2(r3)
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	lib_read_int				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	beqi	-1, r1, beq_then.15919
+	lw	r2, 2(r3)
+	addi	r5, r2, 1
+	sw	r1, 3(r3)
+	sw	r5, 4(r3)
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	lib_read_int				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	beqi	-1, r1, beq_then.15921
+	lw	r2, 4(r3)
+	addi	r5, r2, 1
+	sw	r1, 5(r3)
+	sw	r5, 6(r3)
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	lib_read_int				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+	beqi	-1, r1, beq_then.15923
+	lw	r2, 6(r3)
+	addi	r5, r2, 1
+	sw	r1, 7(r3)
 	add	r1, r0, r5
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
 	jal	read_net_item.3002				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	lw	r2, 6(r3)
+	lw	r5, 7(r3)
+	add	r30, r1, r2
+	sw	r5, 0(r30)
+	j	beq_cont.15924
+beq_then.15923:
+	lw	r1, 6(r3)
+	addi	r1, r1, 1
+	addi	r2, r0, -1
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	lib_create_array				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+beq_cont.15924:
+	lw	r2, 4(r3)
+	lw	r5, 5(r3)
+	add	r30, r1, r2
+	sw	r5, 0(r30)
+	j	beq_cont.15922
+beq_then.15921:
+	lw	r1, 4(r3)
+	addi	r1, r1, 1
+	addi	r2, r0, -1
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	lib_create_array				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+beq_cont.15922:
+	lw	r2, 2(r3)
+	lw	r5, 3(r3)
+	add	r30, r1, r2
+	sw	r5, 0(r30)
+	j	beq_cont.15920
+beq_then.15919:
+	lw	r1, 2(r3)
+	addi	r1, r1, 1
+	addi	r2, r0, -1
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	lib_create_array				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+beq_cont.15920:
 	lw	r2, 0(r3)
 	lw	r5, 1(r3)
 	add	r30, r1, r2
 	sw	r5, 0(r30)
 	jr	r31				#
-beq_then.8449:
+beq_then.15918:
 	lw	r1, 0(r3)
 	addi	r1, r1, 1
 	addi	r2, r0, -1
 	j	lib_create_array
 read_or_network.3004:
-	addi	r2, r0, 0
 	sw	r1, 0(r3)
-	add	r1, r0, r2
 	sw	r31, 1(r3)
 	addi	r3, r3, 2
-	jal	read_net_item.3002				
+	jal	lib_read_int				
 	addi	r3, r3, -2
 	lw	r31, 1(r3)
-	add	r2, r0, r1
-	lw	r1, 0(r2)
-	beqi	-1, r1, beq_then.8450
-	lw	r1, 0(r3)
-	addi	r5, r1, 1
-	sw	r2, 1(r3)
-	add	r1, r0, r5
+	beqi	-1, r1, beq_then.15925
+	sw	r1, 1(r3)
 	sw	r31, 2(r3)
 	addi	r3, r3, 3
-	jal	read_or_network.3004				
+	jal	lib_read_int				
 	addi	r3, r3, -3
 	lw	r31, 2(r3)
+	beqi	-1, r1, beq_then.15927
+	sw	r1, 2(r3)
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	lib_read_int				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	beqi	-1, r1, beq_then.15929
+	addi	r2, r0, 3
+	sw	r1, 3(r3)
+	add	r1, r0, r2
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	read_net_item.3002				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	lw	r2, 3(r3)
+	sw	r2, 2(r1)
+	j	beq_cont.15930
+beq_then.15929:
+	addi	r1, r0, 3
+	addi	r2, r0, -1
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	lib_create_array				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+beq_cont.15930:
+	lw	r2, 2(r3)
+	sw	r2, 1(r1)
+	j	beq_cont.15928
+beq_then.15927:
+	addi	r1, r0, 2
+	addi	r2, r0, -1
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	lib_create_array				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+beq_cont.15928:
+	lw	r2, 1(r3)
+	sw	r2, 0(r1)
+	add	r2, r0, r1
+	j	beq_cont.15926
+beq_then.15925:
+	addi	r1, r0, 1
+	addi	r2, r0, -1
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	lib_create_array				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	add	r2, r0, r1
+beq_cont.15926:
+	lw	r1, 0(r2)
+	beqi	-1, r1, beq_then.15931
+	lw	r1, 0(r3)
+	addi	r5, r1, 1
+	sw	r2, 4(r3)
+	sw	r5, 5(r3)
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	lib_read_int				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	beqi	-1, r1, beq_then.15932
+	sw	r1, 6(r3)
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	lib_read_int				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+	beqi	-1, r1, beq_then.15934
+	addi	r2, r0, 2
+	sw	r1, 7(r3)
+	add	r1, r0, r2
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	read_net_item.3002				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	lw	r2, 7(r3)
+	sw	r2, 1(r1)
+	j	beq_cont.15935
+beq_then.15934:
+	addi	r1, r0, 2
+	addi	r2, r0, -1
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	lib_create_array				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+beq_cont.15935:
+	lw	r2, 6(r3)
+	sw	r2, 0(r1)
+	add	r2, r0, r1
+	j	beq_cont.15933
+beq_then.15932:
+	addi	r1, r0, 1
+	addi	r2, r0, -1
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	lib_create_array				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	add	r2, r0, r1
+beq_cont.15933:
+	lw	r1, 0(r2)
+	beqi	-1, r1, beq_then.15936
+	lw	r1, 5(r3)
+	addi	r5, r1, 1
+	sw	r2, 8(r3)
+	add	r1, r0, r5
+	sw	r31, 9(r3)
+	addi	r3, r3, 10
+	jal	read_or_network.3004				
+	addi	r3, r3, -10
+	lw	r31, 9(r3)
+	lw	r2, 5(r3)
+	lw	r5, 8(r3)
+	add	r30, r1, r2
+	sw	r5, 0(r30)
+	j	beq_cont.15937
+beq_then.15936:
+	lw	r1, 5(r3)
+	addi	r1, r1, 1
+	sw	r31, 9(r3)
+	addi	r3, r3, 10
+	jal	lib_create_array				
+	addi	r3, r3, -10
+	lw	r31, 9(r3)
+beq_cont.15937:
 	lw	r2, 0(r3)
-	lw	r5, 1(r3)
+	lw	r5, 4(r3)
 	add	r30, r1, r2
 	sw	r5, 0(r30)
 	jr	r31				#
-beq_then.8450:
+beq_then.15931:
 	lw	r1, 0(r3)
 	addi	r1, r1, 1
 	j	lib_create_array
 read_and_network.3006:
-	addi	r2, r0, 0
 	sw	r1, 0(r3)
-	add	r1, r0, r2
 	sw	r31, 1(r3)
 	addi	r3, r3, 2
-	jal	read_net_item.3002				
+	jal	lib_read_int				
 	addi	r3, r3, -2
 	lw	r31, 1(r3)
-	lw	r2, 0(r1)
-	beqi	-1, r2, beq_then.8451
-	addi	r2, r0, 672				# set min_caml_and_net
-	lw	r5, 0(r3)
-	addi	r6, r5, 1
-	add	r30, r2, r5
-	sw	r1, 0(r30)
-	add	r1, r0, r6
-	j	read_and_network.3006
-beq_then.8451:
-	jr	r31				#
-read_parameter.3008:
-	addi	r1, r0, 0
-	addi	r2, r0, 0
-	sw	r2, 0(r3)
+	beqi	-1, r1, beq_then.15938
 	sw	r1, 1(r3)
 	sw	r31, 2(r3)
 	addi	r3, r3, 3
+	jal	lib_read_int				
+	addi	r3, r3, -3
+	lw	r31, 2(r3)
+	beqi	-1, r1, beq_then.15940
+	sw	r1, 2(r3)
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	lib_read_int				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	beqi	-1, r1, beq_then.15942
+	addi	r2, r0, 3
+	sw	r1, 3(r3)
+	add	r1, r0, r2
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	read_net_item.3002				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	lw	r2, 3(r3)
+	sw	r2, 2(r1)
+	j	beq_cont.15943
+beq_then.15942:
+	addi	r1, r0, 3
+	addi	r2, r0, -1
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	lib_create_array				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+beq_cont.15943:
+	lw	r2, 2(r3)
+	sw	r2, 1(r1)
+	j	beq_cont.15941
+beq_then.15940:
+	addi	r1, r0, 2
+	addi	r2, r0, -1
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	lib_create_array				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+beq_cont.15941:
+	lw	r2, 1(r3)
+	sw	r2, 0(r1)
+	j	beq_cont.15939
+beq_then.15938:
+	addi	r1, r0, 1
+	addi	r2, r0, -1
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	lib_create_array				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+beq_cont.15939:
+	lw	r2, 0(r1)
+	beqi	-1, r2, beq_then.15944
+	addi	r2, r0, 672				# set min_caml_and_net
+	lw	r5, 0(r3)
+	add	r30, r2, r5
+	sw	r1, 0(r30)
+	addi	r1, r5, 1
+	sw	r1, 4(r3)
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	lib_read_int				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	beqi	-1, r1, beq_then.15945
+	sw	r1, 5(r3)
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	lib_read_int				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	beqi	-1, r1, beq_then.15947
+	addi	r2, r0, 2
+	sw	r1, 6(r3)
+	add	r1, r0, r2
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	read_net_item.3002				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+	lw	r2, 6(r3)
+	sw	r2, 1(r1)
+	j	beq_cont.15948
+beq_then.15947:
+	addi	r1, r0, 2
+	addi	r2, r0, -1
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	lib_create_array				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+beq_cont.15948:
+	lw	r2, 5(r3)
+	sw	r2, 0(r1)
+	j	beq_cont.15946
+beq_then.15945:
+	addi	r1, r0, 1
+	addi	r2, r0, -1
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	lib_create_array				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+beq_cont.15946:
+	lw	r2, 0(r1)
+	beqi	-1, r2, beq_then.15949
+	addi	r2, r0, 672				# set min_caml_and_net
+	lw	r5, 4(r3)
+	add	r30, r2, r5
+	sw	r1, 0(r30)
+	addi	r1, r5, 1
+	j	read_and_network.3006
+beq_then.15949:
+	jr	r31				#
+beq_then.15944:
+	jr	r31				#
+read_parameter.3008:
+	sw	r31, 0(r3)
+	addi	r3, r3, 1
 	jal	read_screen_settings.2989				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
+	addi	r3, r3, -1
+	lw	r31, 0(r3)
+	sw	r31, 0(r3)
+	addi	r3, r3, 1
 	jal	read_light.2991				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
+	addi	r3, r3, -1
+	lw	r31, 0(r3)
+	addi	r1, r0, 0
+	sw	r1, 0(r3)
+	sw	r31, 1(r3)
+	addi	r3, r3, 2
+	jal	read_nth_object.2996				
+	addi	r3, r3, -2
+	lw	r31, 1(r3)
+	beqi	0, r1, beq_then.15952
+	addi	r1, r0, 1
+	sw	r1, 1(r3)
 	sw	r31, 2(r3)
 	addi	r3, r3, 3
-	jal	read_all_object.3000				
+	jal	read_nth_object.2996				
 	addi	r3, r3, -3
 	lw	r31, 2(r3)
+	beqi	0, r1, beq_then.15954
+	addi	r1, r0, 2
+	sw	r31, 2(r3)
+	addi	r3, r3, 3
+	jal	read_object.2998				
+	addi	r3, r3, -3
+	lw	r31, 2(r3)
+	j	beq_cont.15955
+beq_then.15954:
 	lw	r1, 1(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	read_and_network.3006				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
+	sw	r1, 0(r0)
+beq_cont.15955:
+	j	beq_cont.15953
+beq_then.15952:
 	lw	r1, 0(r3)
+	sw	r1, 0(r0)
+beq_cont.15953:
 	sw	r31, 2(r3)
 	addi	r3, r3, 3
-	jal	read_or_network.3004				
+	jal	lib_read_int				
 	addi	r3, r3, -3
 	lw	r31, 2(r3)
+	beqi	-1, r1, beq_then.15956
+	sw	r1, 2(r3)
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	lib_read_int				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	beqi	-1, r1, beq_then.15958
+	addi	r2, r0, 2
+	sw	r1, 3(r3)
+	add	r1, r0, r2
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	read_net_item.3002				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	lw	r2, 3(r3)
+	sw	r2, 1(r1)
+	j	beq_cont.15959
+beq_then.15958:
+	addi	r1, r0, 2
+	addi	r2, r0, -1
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	lib_create_array				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+beq_cont.15959:
+	lw	r2, 2(r3)
+	sw	r2, 0(r1)
+	j	beq_cont.15957
+beq_then.15956:
+	addi	r1, r0, 1
+	addi	r2, r0, -1
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	lib_create_array				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+beq_cont.15957:
+	lw	r2, 0(r1)
+	beqi	-1, r2, beq_then.15960
+	sw	r1, 672(r0)
+	addi	r1, r0, 1
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	read_and_network.3006				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	j	beq_cont.15961
+beq_then.15960:
+beq_cont.15961:
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	lib_read_int				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	beqi	-1, r1, beq_then.15962
+	sw	r1, 4(r3)
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	lib_read_int				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	beqi	-1, r1, beq_then.15964
+	addi	r2, r0, 2
+	sw	r1, 5(r3)
+	add	r1, r0, r2
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	read_net_item.3002				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	lw	r2, 5(r3)
+	sw	r2, 1(r1)
+	j	beq_cont.15965
+beq_then.15964:
+	addi	r1, r0, 2
+	addi	r2, r0, -1
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	lib_create_array				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+beq_cont.15965:
+	lw	r2, 4(r3)
+	sw	r2, 0(r1)
+	add	r2, r0, r1
+	j	beq_cont.15963
+beq_then.15962:
+	addi	r1, r0, 1
+	addi	r2, r0, -1
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	lib_create_array				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	add	r2, r0, r1
+beq_cont.15963:
+	lw	r1, 0(r2)
+	beqi	-1, r1, beq_then.15966
+	addi	r1, r0, 1
+	sw	r2, 6(r3)
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	read_or_network.3004				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+	lw	r2, 6(r3)
+	sw	r2, 0(r1)
+	j	beq_cont.15967
+beq_then.15966:
+	addi	r1, r0, 1
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	lib_create_array				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+beq_cont.15967:
 	sw	r1, 723(r0)
 	jr	r31				#
 solver_rect_surface.3010:
 	add	r30, r2, r5
 	flw	f4, 0(r30)
-	fsw	f3, 0(r3)
-	sw	r7, 2(r3)
-	fsw	f2, 4(r3)
-	fsw	f1, 6(r3)
-	sw	r6, 8(r3)
-	sw	r1, 9(r3)
-	sw	r5, 10(r3)
-	sw	r2, 11(r3)
-	fadd	f1, f0, f4
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	fiszero.2807				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	beqi	0, r1, beq_then.8455
+	feq	r30, f4, f0
+	beq	r0, r30, feq_else.15969
+	addi	r8, r0, 1
+	j	feq_cont.15970
+feq_else.15969:
+	addi	r8, r0, 0
+feq_cont.15970:
+	beqi	0, r8, beq_then.15971
 	addi	r1, r0, 0
 	jr	r31				#
-beq_then.8455:
-	lw	r1, 10(r3)
-	lw	r2, 11(r3)
-	add	r30, r2, r1
-	flw	f1, 0(r30)
-	lw	r5, 9(r3)
-	fsw	f1, 12(r3)
-	add	r1, r0, r5
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	o_param_abc.2932				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	lw	r2, 9(r3)
-	sw	r1, 14(r3)
-	add	r1, r0, r2
-	sw	r31, 15(r3)
-	addi	r3, r3, 16
-	jal	o_isinvert.2922				
-	addi	r3, r3, -16
-	lw	r31, 15(r3)
-	flw	f1, 12(r3)
-	sw	r1, 15(r3)
-	sw	r31, 16(r3)
-	addi	r3, r3, 17
-	jal	fisneg.2805				
-	addi	r3, r3, -17
-	lw	r31, 16(r3)
-	add	r2, r0, r1
-	lw	r1, 10(r3)
-	lw	r5, 11(r3)
-	add	r30, r5, r1
-	flw	f1, 0(r30)
-	lw	r6, 8(r3)
-	add	r30, r5, r6
-	flw	f2, 0(r30)
-	lw	r7, 15(r3)
-	fsw	f2, 16(r3)
-	fsw	f1, 18(r3)
-	add	r1, r0, r7
-	sw	r31, 20(r3)
-	addi	r3, r3, 21
-	jal	xor.2859				
-	addi	r3, r3, -21
-	lw	r31, 20(r3)
-	lw	r2, 10(r3)
-	lw	r5, 14(r3)
-	add	r30, r5, r2
-	flw	f1, 0(r30)
-	sw	r31, 20(r3)
-	addi	r3, r3, 21
-	jal	fneg_cond.2864				
-	addi	r3, r3, -21
-	lw	r31, 20(r3)
-	flw	f2, 6(r3)
-	fsub	f1, f1, f2
-	flw	f2, 18(r3)
-	fdiv	f1, f1, f2
-	lw	r1, 8(r3)
-	lw	r2, 14(r3)
-	add	r30, r2, r1
-	flw	f2, 0(r30)
-	flw	f3, 16(r3)
-	fmul	f3, f1, f3
-	flw	f4, 4(r3)
-	fadd	f3, f3, f4
-	fsw	f1, 20(r3)
-	fsw	f2, 22(r3)
-	fadd	f1, f0, f3
-	sw	r31, 24(r3)
-	addi	r3, r3, 25
-	jal	fabs.2816				
-	addi	r3, r3, -25
-	lw	r31, 24(r3)
-	flw	f2, 22(r3)
-	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8456
+beq_then.15971:
+	lw	r8, 4(r1)
+	lw	r1, 6(r1)
+	add	r30, r2, r5
+	flw	f4, 0(r30)
+	fle	r30, f0, f4
+	beq	r0, r30, fle_else.15972
+	addi	r9, r0, 0
+	j	fle_cont.15973
+fle_else.15972:
+	addi	r9, r0, 1
+fle_cont.15973:
+	beqi	0, r1, beq_then.15974
+	beqi	0, r9, beq_then.15976
+	addi	r1, r0, 0
+	j	beq_cont.15977
+beq_then.15976:
+	addi	r1, r0, 1
+beq_cont.15977:
+	j	beq_cont.15975
+beq_then.15974:
+	add	r1, r0, r9
+beq_cont.15975:
+	add	r30, r8, r5
+	flw	f4, 0(r30)
+	beqi	0, r1, beq_then.15978
+	j	beq_cont.15979
+beq_then.15978:
+	fneg	f4, f4
+beq_cont.15979:
+	add	r30, r2, r5
+	flw	f5, 0(r30)
+	fsub	f1, f4, f1
+	add	r30, r2, r6
+	flw	f4, 0(r30)
+	add	r30, r8, r6
+	flw	f6, 0(r30)
+	fdiv	f1, f1, f5
+	fmul	f4, f1, f4
+	fadd	f2, f4, f2
+	fle	r30, f0, f2
+	beq	r0, r30, fle_else.15980
+	j	fle_cont.15981
+fle_else.15980:
+	fneg	f2, f2
+fle_cont.15981:
+	fle	r30, f6, f2
+	beq	r0, r30, fle_else.15982
 	addi	r1, r0, 0
 	jr	r31				#
-fle_else.8456:
-	lw	r1, 2(r3)
-	lw	r2, 11(r3)
-	add	r30, r2, r1
-	flw	f1, 0(r30)
-	lw	r2, 14(r3)
-	add	r30, r2, r1
+fle_else.15982:
+	add	r30, r2, r7
 	flw	f2, 0(r30)
-	flw	f3, 20(r3)
-	fmul	f1, f3, f1
-	flw	f4, 0(r3)
-	fadd	f1, f1, f4
-	fsw	f2, 24(r3)
-	sw	r31, 26(r3)
-	addi	r3, r3, 27
-	jal	fabs.2816				
-	addi	r3, r3, -27
-	lw	r31, 26(r3)
-	flw	f2, 24(r3)
-	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8457
+	add	r30, r8, r7
+	flw	f4, 0(r30)
+	fmul	f2, f1, f2
+	fadd	f2, f2, f3
+	fle	r30, f0, f2
+	beq	r0, r30, fle_else.15983
+	j	fle_cont.15984
+fle_else.15983:
+	fneg	f2, f2
+fle_cont.15984:
+	fle	r30, f4, f2
+	beq	r0, r30, fle_else.15985
 	addi	r1, r0, 0
 	jr	r31				#
-fle_else.8457:
-	flw	f1, 20(r3)
+fle_else.15985:
 	fsw	f1, 724(r0)
 	addi	r1, r0, 1
 	jr	r31				#
@@ -3236,10 +4176,10 @@ solver_rect.3019:
 	jal	solver_rect_surface.3010				
 	addi	r3, r3, -9
 	lw	r31, 8(r3)
-	beqi	0, r1, beq_then.8458
+	beqi	0, r1, beq_then.15986
 	addi	r1, r0, 1
 	jr	r31				#
-beq_then.8458:
+beq_then.15986:
 	addi	r5, r0, 1
 	addi	r6, r0, 2
 	addi	r7, r0, 0
@@ -3253,10 +4193,10 @@ beq_then.8458:
 	jal	solver_rect_surface.3010				
 	addi	r3, r3, -9
 	lw	r31, 8(r3)
-	beqi	0, r1, beq_then.8459
+	beqi	0, r1, beq_then.15987
 	addi	r1, r0, 2
 	jr	r31				#
-beq_then.8459:
+beq_then.15987:
 	addi	r5, r0, 2
 	addi	r6, r0, 0
 	addi	r7, r0, 1
@@ -3270,288 +4210,128 @@ beq_then.8459:
 	jal	solver_rect_surface.3010				
 	addi	r3, r3, -9
 	lw	r31, 8(r3)
-	beqi	0, r1, beq_then.8460
+	beqi	0, r1, beq_then.15988
 	addi	r1, r0, 3
 	jr	r31				#
-beq_then.8460:
+beq_then.15988:
 	addi	r1, r0, 0
 	jr	r31				#
 solver_surface.3025:
-	fsw	f3, 0(r3)
-	fsw	f2, 2(r3)
-	fsw	f1, 4(r3)
-	sw	r2, 6(r3)
-	sw	r31, 7(r3)
-	addi	r3, r3, 8
-	jal	o_param_abc.2932				
-	addi	r3, r3, -8
-	lw	r31, 7(r3)
-	add	r2, r0, r1
-	lw	r1, 6(r3)
-	sw	r2, 7(r3)
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	veciprod.2891				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	fsw	f1, 8(r3)
-	sw	r31, 10(r3)
-	addi	r3, r3, 11
-	jal	fispos.2803				
-	addi	r3, r3, -11
-	lw	r31, 10(r3)
-	beqi	0, r1, beq_then.8461
-	flw	f1, 4(r3)
-	flw	f2, 2(r3)
-	flw	f3, 0(r3)
-	lw	r1, 7(r3)
-	sw	r31, 10(r3)
-	addi	r3, r3, 11
-	jal	veciprod2.2894				
-	addi	r3, r3, -11
-	lw	r31, 10(r3)
+	lw	r1, 4(r1)
+	flw	f4, 0(r2)
+	flw	f5, 1(r2)
+	flw	f6, 2(r2)
+	flw	f7, 0(r1)
+	fmul	f4, f4, f7
+	flw	f7, 1(r1)
+	fmul	f5, f5, f7
+	fadd	f4, f4, f5
+	flw	f5, 2(r1)
+	fmul	f5, f6, f5
+	fadd	f4, f4, f5
+	fle	r30, f4, f0
+	beq	r0, r30, fle_else.15989
+	addi	r2, r0, 0
+	j	fle_cont.15990
+fle_else.15989:
+	addi	r2, r0, 1
+fle_cont.15990:
+	beqi	0, r2, beq_then.15991
+	flw	f5, 0(r1)
+	flw	f6, 1(r1)
+	flw	f7, 2(r1)
+	fmul	f1, f5, f1
+	fmul	f2, f6, f2
+	fadd	f1, f1, f2
+	fmul	f2, f7, f3
+	fadd	f1, f1, f2
 	fneg	f1, f1
-	flw	f2, 8(r3)
-	fdiv	f1, f1, f2
+	fdiv	f1, f1, f4
 	fsw	f1, 724(r0)
 	addi	r1, r0, 1
 	jr	r31				#
-beq_then.8461:
+beq_then.15991:
 	addi	r1, r0, 0
 	jr	r31				#
 quadratic.3031:
-	fsw	f1, 0(r3)
-	fsw	f3, 2(r3)
-	fsw	f2, 4(r3)
-	sw	r1, 6(r3)
-	sw	r31, 7(r3)
-	addi	r3, r3, 8
-	jal	fsqr.2814				
-	addi	r3, r3, -8
-	lw	r31, 7(r3)
-	lw	r1, 6(r3)
-	fsw	f1, 8(r3)
-	sw	r31, 10(r3)
-	addi	r3, r3, 11
-	jal	o_param_a.2926				
-	addi	r3, r3, -11
-	lw	r31, 10(r3)
-	flw	f2, 8(r3)
-	fmul	f1, f2, f1
-	flw	f2, 4(r3)
-	fsw	f1, 10(r3)
-	fadd	f1, f0, f2
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	fsqr.2814				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	lw	r1, 6(r3)
-	fsw	f1, 12(r3)
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	o_param_b.2928				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	flw	f2, 12(r3)
-	fmul	f1, f2, f1
-	flw	f2, 10(r3)
-	fadd	f1, f2, f1
-	flw	f2, 2(r3)
-	fsw	f1, 14(r3)
-	fadd	f1, f0, f2
-	sw	r31, 16(r3)
-	addi	r3, r3, 17
-	jal	fsqr.2814				
-	addi	r3, r3, -17
-	lw	r31, 16(r3)
-	lw	r1, 6(r3)
-	fsw	f1, 16(r3)
-	sw	r31, 18(r3)
-	addi	r3, r3, 19
-	jal	o_param_c.2930				
-	addi	r3, r3, -19
-	lw	r31, 18(r3)
-	flw	f2, 16(r3)
-	fmul	f1, f2, f1
-	flw	f2, 14(r3)
-	fadd	f1, f2, f1
-	lw	r1, 6(r3)
-	fsw	f1, 18(r3)
-	sw	r31, 20(r3)
-	addi	r3, r3, 21
-	jal	o_isrot.2924				
-	addi	r3, r3, -21
-	lw	r31, 20(r3)
-	beqi	0, r1, beq_then.8463
-	flw	f1, 2(r3)
-	flw	f2, 4(r3)
-	fmul	f3, f2, f1
-	lw	r1, 6(r3)
-	fsw	f3, 20(r3)
-	sw	r31, 22(r3)
-	addi	r3, r3, 23
-	jal	o_param_r1.2950				
-	addi	r3, r3, -23
-	lw	r31, 22(r3)
-	flw	f2, 0(r3)
-	flw	f3, 2(r3)
-	fmul	f3, f3, f2
-	flw	f4, 4(r3)
-	fmul	f2, f2, f4
-	flw	f4, 20(r3)
-	fmul	f1, f4, f1
-	flw	f4, 18(r3)
-	fadd	f1, f4, f1
-	lw	r1, 6(r3)
-	fsw	f2, 22(r3)
-	fsw	f1, 24(r3)
-	fsw	f3, 26(r3)
-	sw	r31, 28(r3)
-	addi	r3, r3, 29
-	jal	o_param_r2.2952				
-	addi	r3, r3, -29
-	lw	r31, 28(r3)
-	flw	f2, 26(r3)
-	fmul	f1, f2, f1
-	flw	f2, 24(r3)
-	fadd	f1, f2, f1
-	lw	r1, 6(r3)
-	fsw	f1, 28(r3)
-	sw	r31, 30(r3)
-	addi	r3, r3, 31
-	jal	o_param_r3.2954				
-	addi	r3, r3, -31
-	lw	r31, 30(r3)
-	flw	f2, 22(r3)
-	fmul	f1, f2, f1
-	flw	f2, 28(r3)
+	lw	r2, 4(r1)
+	lw	r5, 4(r1)
+	lw	r6, 4(r1)
+	fmul	f4, f1, f1
+	fmul	f5, f2, f2
+	fmul	f6, f3, f3
+	lw	r7, 3(r1)
+	flw	f7, 0(r2)
+	fmul	f4, f4, f7
+	flw	f7, 1(r5)
+	fmul	f5, f5, f7
+	fadd	f4, f4, f5
+	flw	f5, 2(r6)
+	fmul	f5, f6, f5
+	fadd	f4, f4, f5
+	beqi	0, r7, beq_then.15992
+	lw	r2, 9(r1)
+	lw	r5, 9(r1)
+	lw	r1, 9(r1)
+	fmul	f5, f2, f3
+	fmul	f3, f3, f1
+	fmul	f1, f1, f2
+	flw	f2, 0(r2)
+	fmul	f2, f5, f2
+	fadd	f2, f4, f2
+	flw	f4, 1(r5)
+	fmul	f3, f3, f4
+	fadd	f2, f2, f3
+	flw	f3, 2(r1)
+	fmul	f1, f1, f3
 	fadd	f1, f2, f1
 	jr	r31				#
-beq_then.8463:
-	flw	f1, 18(r3)
+beq_then.15992:
+	fadd	f1, f0, f4
 	jr	r31				#
 bilinear.3036:
+	lw	r2, 4(r1)
+	lw	r5, 4(r1)
+	lw	r6, 4(r1)
 	fmul	f7, f1, f4
-	fsw	f4, 0(r3)
-	fsw	f1, 2(r3)
-	sw	r1, 4(r3)
-	fsw	f7, 6(r3)
-	fsw	f6, 8(r3)
-	fsw	f3, 10(r3)
-	fsw	f5, 12(r3)
-	fsw	f2, 14(r3)
-	sw	r31, 16(r3)
-	addi	r3, r3, 17
-	jal	o_param_a.2926				
-	addi	r3, r3, -17
-	lw	r31, 16(r3)
-	flw	f2, 12(r3)
-	flw	f3, 14(r3)
-	fmul	f4, f3, f2
-	flw	f5, 8(r3)
-	flw	f6, 10(r3)
-	fmul	f7, f6, f5
-	flw	f8, 6(r3)
-	fmul	f1, f8, f1
-	lw	r1, 4(r3)
-	fsw	f7, 16(r3)
-	fsw	f1, 18(r3)
-	fsw	f4, 20(r3)
-	sw	r31, 22(r3)
-	addi	r3, r3, 23
-	jal	o_param_b.2928				
-	addi	r3, r3, -23
-	lw	r31, 22(r3)
-	flw	f2, 20(r3)
-	fmul	f1, f2, f1
-	flw	f2, 18(r3)
-	fadd	f1, f2, f1
-	lw	r1, 4(r3)
-	fsw	f1, 22(r3)
-	sw	r31, 24(r3)
-	addi	r3, r3, 25
-	jal	o_param_c.2930				
-	addi	r3, r3, -25
-	lw	r31, 24(r3)
-	flw	f2, 16(r3)
-	fmul	f1, f2, f1
-	flw	f2, 22(r3)
-	fadd	f1, f2, f1
-	lw	r1, 4(r3)
-	fsw	f1, 24(r3)
-	sw	r31, 26(r3)
-	addi	r3, r3, 27
-	jal	o_isrot.2924				
-	addi	r3, r3, -27
-	lw	r31, 26(r3)
-	beqi	0, r1, beq_then.8465
-	flw	f1, 12(r3)
-	flw	f2, 10(r3)
-	fmul	f3, f2, f1
-	flw	f4, 8(r3)
-	flw	f5, 14(r3)
-	fmul	f6, f5, f4
-	flw	f7, 2(r3)
-	fmul	f4, f7, f4
-	flw	f8, 0(r3)
-	fmul	f2, f2, f8
-	fmul	f1, f7, f1
+	fmul	f8, f2, f5
+	fmul	f9, f3, f6
+	lw	r7, 3(r1)
+	flw	f10, 0(r2)
+	fmul	f7, f7, f10
+	flw	f10, 1(r5)
+	fmul	f8, f8, f10
+	fadd	f7, f7, f8
+	flw	f8, 2(r6)
+	fmul	f8, f9, f8
+	fadd	f7, f7, f8
+	beqi	0, r7, beq_then.15993
+	lw	r2, 9(r1)
+	lw	r5, 9(r1)
+	lw	r1, 9(r1)
+	fmul	f8, f3, f5
+	fmul	f9, f2, f6
+	fmul	f6, f1, f6
+	fmul	f3, f3, f4
+	fmul	f1, f1, f5
+	fmul	f2, f2, f4
+	flup	f4, 1		# fli	f4, 0.500000
+	fadd	f5, f8, f9
+	flw	f8, 0(r2)
 	fmul	f5, f5, f8
-	fadd	f3, f3, f6
-	lw	r1, 4(r3)
-	fsw	f5, 26(r3)
-	fsw	f1, 28(r3)
-	fsw	f2, 30(r3)
-	fsw	f4, 32(r3)
-	fsw	f3, 34(r3)
-	sw	r31, 36(r3)
-	addi	r3, r3, 37
-	jal	o_param_r1.2950				
-	addi	r3, r3, -37
-	lw	r31, 36(r3)
-	flw	f2, 34(r3)
-	fmul	f1, f2, f1
-	flw	f2, 30(r3)
-	flw	f3, 32(r3)
-	fadd	f2, f3, f2
-	lw	r1, 4(r3)
-	fsw	f1, 36(r3)
-	fsw	f2, 38(r3)
-	sw	r31, 40(r3)
-	addi	r3, r3, 41
-	jal	o_param_r2.2952				
-	addi	r3, r3, -41
-	lw	r31, 40(r3)
-	flw	f2, 38(r3)
-	fmul	f1, f2, f1
-	flw	f2, 36(r3)
-	fadd	f1, f2, f1
-	flw	f2, 26(r3)
-	flw	f3, 28(r3)
-	fadd	f2, f3, f2
-	lw	r1, 4(r3)
-	fsw	f1, 40(r3)
-	fsw	f2, 42(r3)
-	sw	r31, 44(r3)
-	addi	r3, r3, 45
-	jal	o_param_r3.2954				
-	addi	r3, r3, -45
-	lw	r31, 44(r3)
-	flw	f2, 42(r3)
-	fmul	f1, f2, f1
-	flw	f2, 40(r3)
-	fadd	f1, f2, f1
-	sw	r31, 44(r3)
-	addi	r3, r3, 45
-	jal	fhalf.2812				
-	addi	r3, r3, -45
-	lw	r31, 44(r3)
-	flw	f2, 24(r3)
-	fadd	f1, f2, f1
+	fadd	f3, f6, f3
+	flw	f6, 1(r5)
+	fmul	f3, f3, f6
+	fadd	f3, f5, f3
+	fadd	f1, f1, f2
+	flw	f2, 2(r1)
+	fmul	f1, f1, f2
+	fadd	f1, f3, f1
+	fmul	f1, f1, f4
+	fadd	f1, f7, f1
 	jr	r31				#
-beq_then.8465:
-	flw	f1, 24(r3)
+beq_then.15993:
+	fadd	f1, f0, f7
 	jr	r31				#
 solver_second.3044:
 	flw	f4, 0(r2)
@@ -3570,24 +4350,32 @@ solver_second.3044:
 	jal	quadratic.3031				
 	addi	r3, r3, -9
 	lw	r31, 8(r3)
-	fsw	f1, 8(r3)
-	sw	r31, 10(r3)
-	addi	r3, r3, 11
-	jal	fiszero.2807				
-	addi	r3, r3, -11
-	lw	r31, 10(r3)
-	beqi	0, r1, beq_then.8466
+	feq	r30, f1, f0
+	beq	r0, r30, feq_else.15994
+	addi	r1, r0, 1
+	j	feq_cont.15995
+feq_else.15994:
+	addi	r1, r0, 0
+feq_cont.15995:
+	beqi	0, r1, beq_then.15996
 	addi	r1, r0, 0
 	jr	r31				#
-beq_then.8466:
+beq_then.15996:
 	lw	r1, 7(r3)
-	flw	f1, 0(r1)
-	flw	f2, 1(r1)
-	flw	f3, 2(r1)
-	flw	f4, 4(r3)
-	flw	f5, 2(r3)
-	flw	f6, 0(r3)
+	flw	f2, 0(r1)
+	flw	f3, 1(r1)
+	flw	f4, 2(r1)
+	flw	f5, 4(r3)
+	flw	f6, 2(r3)
+	flw	f7, 0(r3)
 	lw	r1, 6(r3)
+	fsw	f1, 8(r3)
+	fadd	f1, f0, f2
+	fadd	f2, f0, f3
+	fadd	f3, f0, f4
+	fadd	f4, f0, f5
+	fadd	f5, f0, f6
+	fadd	f6, f0, f7
 	sw	r31, 10(r3)
 	addi	r3, r3, 11
 	jal	bilinear.3036				
@@ -3607,63 +4395,39 @@ beq_then.8466:
 	addi	r3, r3, -13
 	lw	r31, 12(r3)
 	lw	r1, 6(r3)
-	fsw	f1, 12(r3)
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	o_form.2918				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	beqi	3, r1, beq_then.8467
-	flw	f1, 12(r3)
-	j	beq_cont.8468
-beq_then.8467:
-	flup	f1, 2		# fli	f1, 1.000000
-	flw	f2, 12(r3)
-	fsub	f1, f2, f1
-beq_cont.8468:
-	flw	f2, 8(r3)
-	fmul	f1, f2, f1
-	flw	f3, 10(r3)
-	fsw	f1, 14(r3)
-	fadd	f1, f0, f3
-	sw	r31, 16(r3)
-	addi	r3, r3, 17
-	jal	fsqr.2814				
-	addi	r3, r3, -17
-	lw	r31, 16(r3)
-	flw	f2, 14(r3)
+	lw	r2, 1(r1)
+	beqi	3, r2, beq_then.15997
+	j	beq_cont.15998
+beq_then.15997:
+	flup	f2, 2		# fli	f2, 1.000000
 	fsub	f1, f1, f2
-	fsw	f1, 16(r3)
-	sw	r31, 18(r3)
-	addi	r3, r3, 19
-	jal	fispos.2803				
-	addi	r3, r3, -19
-	lw	r31, 18(r3)
-	beqi	0, r1, beq_then.8469
-	flw	f1, 16(r3)
-	fsqrt	f1, f1
-	lw	r1, 6(r3)
-	fsw	f1, 18(r3)
-	sw	r31, 20(r3)
-	addi	r3, r3, 21
-	jal	o_isinvert.2922				
-	addi	r3, r3, -21
-	lw	r31, 20(r3)
-	beqi	0, r1, beq_then.8470
-	flw	f1, 18(r3)
-	j	beq_cont.8471
-beq_then.8470:
-	flw	f1, 18(r3)
-	fneg	f1, f1
-beq_cont.8471:
+beq_cont.15998:
 	flw	f2, 10(r3)
+	fmul	f3, f2, f2
+	flw	f4, 8(r3)
+	fmul	f1, f4, f1
+	fsub	f1, f3, f1
+	fle	r30, f1, f0
+	beq	r0, r30, fle_else.15999
+	addi	r2, r0, 0
+	j	fle_cont.16000
+fle_else.15999:
+	addi	r2, r0, 1
+fle_cont.16000:
+	beqi	0, r2, beq_then.16001
+	lw	r1, 6(r1)
+	fsqrt	f1, f1
+	beqi	0, r1, beq_then.16002
+	j	beq_cont.16003
+beq_then.16002:
+	fneg	f1, f1
+beq_cont.16003:
 	fsub	f1, f1, f2
-	flw	f2, 8(r3)
-	fdiv	f1, f1, f2
+	fdiv	f1, f1, f4
 	fsw	f1, 724(r0)
 	addi	r1, r0, 1
 	jr	r31				#
-beq_then.8469:
+beq_then.16001:
 	addi	r1, r0, 0
 	jr	r31				#
 solver.3050:
@@ -3673,1565 +4437,1214 @@ solver.3050:
 	flw	f3, 2(r5)
 	add	r30, r6, r1
 	lw	r1, 0(r30)
-	sw	r2, 0(r3)
+	lw	r5, 5(r1)
+	flw	f4, 0(r5)
+	fsub	f1, f1, f4
+	lw	r5, 5(r1)
+	flw	f4, 1(r5)
+	fsub	f2, f2, f4
+	lw	r5, 5(r1)
+	flw	f4, 2(r5)
+	fsub	f3, f3, f4
+	lw	r5, 1(r1)
+	beqi	1, r5, beq_then.16004
+	beqi	2, r5, beq_then.16005
+	j	solver_second.3044
+beq_then.16005:
+	lw	r1, 4(r1)
+	flw	f4, 0(r2)
+	flw	f5, 0(r1)
+	fmul	f4, f4, f5
+	flw	f5, 1(r2)
+	flw	f6, 1(r1)
+	fmul	f5, f5, f6
+	fadd	f4, f4, f5
+	flw	f5, 2(r2)
+	flw	f6, 2(r1)
+	fmul	f5, f5, f6
+	fadd	f4, f4, f5
+	fle	r30, f4, f0
+	beq	r0, r30, fle_else.16006
+	addi	r2, r0, 0
+	j	fle_cont.16007
+fle_else.16006:
+	addi	r2, r0, 1
+fle_cont.16007:
+	beqi	0, r2, beq_then.16008
+	flw	f5, 0(r1)
+	fmul	f1, f5, f1
+	flw	f5, 1(r1)
+	fmul	f2, f5, f2
+	fadd	f1, f1, f2
+	flw	f2, 2(r1)
+	fmul	f2, f2, f3
+	fadd	f1, f1, f2
+	fneg	f1, f1
+	fdiv	f1, f1, f4
+	fsw	f1, 724(r0)
+	addi	r1, r0, 1
+	jr	r31				#
+beq_then.16008:
+	addi	r1, r0, 0
+	jr	r31				#
+beq_then.16004:
+	addi	r5, r0, 0
+	addi	r6, r0, 1
+	addi	r7, r0, 2
+	fsw	f1, 0(r3)
 	fsw	f3, 2(r3)
 	fsw	f2, 4(r3)
-	sw	r1, 6(r3)
-	fsw	f1, 8(r3)
-	sw	r31, 10(r3)
-	addi	r3, r3, 11
-	jal	o_param_x.2934				
-	addi	r3, r3, -11
-	lw	r31, 10(r3)
-	flw	f2, 8(r3)
-	fsub	f1, f2, f1
-	lw	r1, 6(r3)
-	fsw	f1, 10(r3)
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	o_param_y.2936				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	flw	f2, 4(r3)
-	fsub	f1, f2, f1
-	lw	r1, 6(r3)
-	fsw	f1, 12(r3)
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	o_param_z.2938				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
+	sw	r2, 6(r3)
+	sw	r1, 7(r3)
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	solver_rect_surface.3010				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	beqi	0, r1, beq_then.16009
+	addi	r1, r0, 1
+	jr	r31				#
+beq_then.16009:
+	addi	r5, r0, 1
+	addi	r6, r0, 2
+	addi	r7, r0, 0
+	flw	f1, 4(r3)
 	flw	f2, 2(r3)
-	fsub	f1, f2, f1
-	lw	r1, 6(r3)
-	fsw	f1, 14(r3)
-	sw	r31, 16(r3)
-	addi	r3, r3, 17
-	jal	o_form.2918				
-	addi	r3, r3, -17
-	lw	r31, 16(r3)
-	beqi	1, r1, beq_then.8474
-	beqi	2, r1, beq_then.8475
-	flw	f1, 10(r3)
-	flw	f2, 12(r3)
-	flw	f3, 14(r3)
-	lw	r1, 6(r3)
-	lw	r2, 0(r3)
-	j	solver_second.3044
-beq_then.8475:
-	flw	f1, 10(r3)
-	flw	f2, 12(r3)
-	flw	f3, 14(r3)
-	lw	r1, 6(r3)
-	lw	r2, 0(r3)
-	j	solver_surface.3025
-beq_then.8474:
-	flw	f1, 10(r3)
-	flw	f2, 12(r3)
-	flw	f3, 14(r3)
-	lw	r1, 6(r3)
-	lw	r2, 0(r3)
-	j	solver_rect.3019
+	flw	f3, 0(r3)
+	lw	r1, 7(r3)
+	lw	r2, 6(r3)
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	solver_rect_surface.3010				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	beqi	0, r1, beq_then.16010
+	addi	r1, r0, 2
+	jr	r31				#
+beq_then.16010:
+	addi	r5, r0, 2
+	addi	r6, r0, 0
+	addi	r7, r0, 1
+	flw	f1, 2(r3)
+	flw	f2, 0(r3)
+	flw	f3, 4(r3)
+	lw	r1, 7(r3)
+	lw	r2, 6(r3)
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	solver_rect_surface.3010				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	beqi	0, r1, beq_then.16011
+	addi	r1, r0, 3
+	jr	r31				#
+beq_then.16011:
+	addi	r1, r0, 0
+	jr	r31				#
 solver_rect_fast.3054:
 	flw	f4, 0(r5)
 	flw	f5, 1(r5)
+	lw	r6, 4(r1)
 	flw	f6, 1(r2)
 	fsub	f4, f4, f1
 	fmul	f4, f4, f5
-	fsw	f1, 0(r3)
-	sw	r5, 2(r3)
-	fsw	f3, 4(r3)
-	sw	r1, 6(r3)
-	sw	r2, 7(r3)
-	fsw	f2, 8(r3)
-	fsw	f6, 10(r3)
-	fsw	f4, 12(r3)
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	o_param_b.2928				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	flw	f2, 10(r3)
-	flw	f3, 12(r3)
-	fmul	f2, f3, f2
-	flw	f4, 8(r3)
-	fadd	f2, f2, f4
-	fsw	f1, 14(r3)
-	fadd	f1, f0, f2
-	sw	r31, 16(r3)
-	addi	r3, r3, 17
-	jal	fabs.2816				
-	addi	r3, r3, -17
-	lw	r31, 16(r3)
-	flw	f2, 14(r3)
-	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8477
-	addi	r1, r0, 0
-	j	fle_cont.8478
-fle_else.8477:
-	lw	r1, 7(r3)
-	flw	f1, 2(r1)
-	lw	r2, 6(r3)
-	fsw	f1, 16(r3)
-	add	r1, r0, r2
-	sw	r31, 18(r3)
-	addi	r3, r3, 19
-	jal	o_param_c.2930				
-	addi	r3, r3, -19
-	lw	r31, 18(r3)
-	flw	f2, 16(r3)
-	flw	f3, 12(r3)
-	fmul	f2, f3, f2
-	flw	f4, 4(r3)
-	fadd	f2, f2, f4
-	fsw	f1, 18(r3)
-	fadd	f1, f0, f2
-	sw	r31, 20(r3)
-	addi	r3, r3, 21
-	jal	fabs.2816				
-	addi	r3, r3, -21
-	lw	r31, 20(r3)
-	flw	f2, 18(r3)
-	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8479
-	addi	r1, r0, 0
-	j	fle_cont.8480
-fle_else.8479:
-	lw	r1, 2(r3)
-	flw	f1, 1(r1)
-	sw	r31, 20(r3)
-	addi	r3, r3, 21
-	jal	fiszero.2807				
-	addi	r3, r3, -21
-	lw	r31, 20(r3)
-	beqi	0, r1, beq_then.8481
-	addi	r1, r0, 0
-	j	beq_cont.8482
-beq_then.8481:
-	addi	r1, r0, 1
-beq_cont.8482:
-fle_cont.8480:
-fle_cont.8478:
-	beqi	0, r1, beq_then.8483
-	flw	f1, 12(r3)
-	fsw	f1, 724(r0)
+	flw	f5, 1(r6)
+	fmul	f6, f4, f6
+	fadd	f6, f6, f2
+	fle	r30, f0, f6
+	beq	r0, r30, fle_else.16012
+	j	fle_cont.16013
+fle_else.16012:
+	fneg	f6, f6
+fle_cont.16013:
+	fle	r30, f5, f6
+	beq	r0, r30, fle_else.16014
+	addi	r6, r0, 0
+	j	fle_cont.16015
+fle_else.16014:
+	lw	r6, 4(r1)
+	flw	f5, 2(r2)
+	flw	f6, 2(r6)
+	fmul	f5, f4, f5
+	fadd	f5, f5, f3
+	fle	r30, f0, f5
+	beq	r0, r30, fle_else.16016
+	j	fle_cont.16017
+fle_else.16016:
+	fneg	f5, f5
+fle_cont.16017:
+	fle	r30, f6, f5
+	beq	r0, r30, fle_else.16018
+	addi	r6, r0, 0
+	j	fle_cont.16019
+fle_else.16018:
+	flw	f5, 1(r5)
+	feq	r30, f5, f0
+	beq	r0, r30, feq_else.16020
+	addi	r6, r0, 1
+	j	feq_cont.16021
+feq_else.16020:
+	addi	r6, r0, 0
+feq_cont.16021:
+	beqi	0, r6, beq_then.16022
+	addi	r6, r0, 0
+	j	beq_cont.16023
+beq_then.16022:
+	addi	r6, r0, 1
+beq_cont.16023:
+fle_cont.16019:
+fle_cont.16015:
+	beqi	0, r6, beq_then.16024
+	fsw	f4, 724(r0)
 	addi	r1, r0, 1
 	jr	r31				#
-beq_then.8483:
-	lw	r1, 2(r3)
-	flw	f1, 2(r1)
-	flw	f2, 3(r1)
-	lw	r2, 7(r3)
-	flw	f3, 0(r2)
-	flw	f4, 8(r3)
-	fsub	f1, f1, f4
-	fmul	f1, f1, f2
-	lw	r5, 6(r3)
-	fsw	f3, 20(r3)
-	fsw	f1, 22(r3)
-	add	r1, r0, r5
-	sw	r31, 24(r3)
-	addi	r3, r3, 25
-	jal	o_param_a.2926				
-	addi	r3, r3, -25
-	lw	r31, 24(r3)
-	flw	f2, 20(r3)
-	flw	f3, 22(r3)
-	fmul	f2, f3, f2
-	flw	f4, 0(r3)
-	fadd	f2, f2, f4
-	fsw	f1, 24(r3)
-	fadd	f1, f0, f2
-	sw	r31, 26(r3)
-	addi	r3, r3, 27
-	jal	fabs.2816				
-	addi	r3, r3, -27
-	lw	r31, 26(r3)
-	flw	f2, 24(r3)
-	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8484
-	addi	r1, r0, 0
-	j	fle_cont.8485
-fle_else.8484:
-	lw	r1, 7(r3)
-	flw	f1, 2(r1)
-	lw	r2, 6(r3)
-	fsw	f1, 26(r3)
-	add	r1, r0, r2
-	sw	r31, 28(r3)
-	addi	r3, r3, 29
-	jal	o_param_c.2930				
-	addi	r3, r3, -29
-	lw	r31, 28(r3)
-	flw	f2, 26(r3)
-	flw	f3, 22(r3)
-	fmul	f2, f3, f2
-	flw	f4, 4(r3)
-	fadd	f2, f2, f4
-	fsw	f1, 28(r3)
-	fadd	f1, f0, f2
-	sw	r31, 30(r3)
-	addi	r3, r3, 31
-	jal	fabs.2816				
-	addi	r3, r3, -31
-	lw	r31, 30(r3)
-	flw	f2, 28(r3)
-	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8486
-	addi	r1, r0, 0
-	j	fle_cont.8487
-fle_else.8486:
-	lw	r1, 2(r3)
-	flw	f1, 3(r1)
-	sw	r31, 30(r3)
-	addi	r3, r3, 31
-	jal	fiszero.2807				
-	addi	r3, r3, -31
-	lw	r31, 30(r3)
-	beqi	0, r1, beq_then.8488
-	addi	r1, r0, 0
-	j	beq_cont.8489
-beq_then.8488:
-	addi	r1, r0, 1
-beq_cont.8489:
-fle_cont.8487:
-fle_cont.8485:
-	beqi	0, r1, beq_then.8490
-	flw	f1, 22(r3)
-	fsw	f1, 724(r0)
+beq_then.16024:
+	flw	f4, 2(r5)
+	flw	f5, 3(r5)
+	lw	r6, 4(r1)
+	flw	f6, 0(r2)
+	fsub	f4, f4, f2
+	fmul	f4, f4, f5
+	flw	f5, 0(r6)
+	fmul	f6, f4, f6
+	fadd	f6, f6, f1
+	fle	r30, f0, f6
+	beq	r0, r30, fle_else.16025
+	j	fle_cont.16026
+fle_else.16025:
+	fneg	f6, f6
+fle_cont.16026:
+	fle	r30, f5, f6
+	beq	r0, r30, fle_else.16027
+	addi	r6, r0, 0
+	j	fle_cont.16028
+fle_else.16027:
+	lw	r6, 4(r1)
+	flw	f5, 2(r2)
+	flw	f6, 2(r6)
+	fmul	f5, f4, f5
+	fadd	f5, f5, f3
+	fle	r30, f0, f5
+	beq	r0, r30, fle_else.16029
+	j	fle_cont.16030
+fle_else.16029:
+	fneg	f5, f5
+fle_cont.16030:
+	fle	r30, f6, f5
+	beq	r0, r30, fle_else.16031
+	addi	r6, r0, 0
+	j	fle_cont.16032
+fle_else.16031:
+	flw	f5, 3(r5)
+	feq	r30, f5, f0
+	beq	r0, r30, feq_else.16033
+	addi	r6, r0, 1
+	j	feq_cont.16034
+feq_else.16033:
+	addi	r6, r0, 0
+feq_cont.16034:
+	beqi	0, r6, beq_then.16035
+	addi	r6, r0, 0
+	j	beq_cont.16036
+beq_then.16035:
+	addi	r6, r0, 1
+beq_cont.16036:
+fle_cont.16032:
+fle_cont.16028:
+	beqi	0, r6, beq_then.16037
+	fsw	f4, 724(r0)
 	addi	r1, r0, 2
 	jr	r31				#
-beq_then.8490:
-	lw	r1, 2(r3)
-	flw	f1, 4(r1)
-	flw	f2, 5(r1)
-	lw	r2, 7(r3)
-	flw	f3, 0(r2)
-	flw	f4, 4(r3)
-	fsub	f1, f1, f4
-	fmul	f1, f1, f2
-	lw	r5, 6(r3)
-	fsw	f3, 30(r3)
-	fsw	f1, 32(r3)
-	add	r1, r0, r5
-	sw	r31, 34(r3)
-	addi	r3, r3, 35
-	jal	o_param_a.2926				
-	addi	r3, r3, -35
-	lw	r31, 34(r3)
-	flw	f2, 30(r3)
-	flw	f3, 32(r3)
-	fmul	f2, f3, f2
-	flw	f4, 0(r3)
-	fadd	f2, f2, f4
-	fsw	f1, 34(r3)
-	fadd	f1, f0, f2
-	sw	r31, 36(r3)
-	addi	r3, r3, 37
-	jal	fabs.2816				
-	addi	r3, r3, -37
-	lw	r31, 36(r3)
-	flw	f2, 34(r3)
-	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8491
+beq_then.16037:
+	flw	f4, 4(r5)
+	flw	f5, 5(r5)
+	lw	r6, 4(r1)
+	flw	f6, 0(r2)
+	fsub	f3, f4, f3
+	fmul	f3, f3, f5
+	flw	f4, 0(r6)
+	fmul	f5, f3, f6
+	fadd	f1, f5, f1
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16038
+	j	fle_cont.16039
+fle_else.16038:
+	fneg	f1, f1
+fle_cont.16039:
+	fle	r30, f4, f1
+	beq	r0, r30, fle_else.16040
 	addi	r1, r0, 0
-	j	fle_cont.8492
-fle_else.8491:
-	lw	r1, 7(r3)
-	flw	f1, 1(r1)
-	lw	r1, 6(r3)
-	fsw	f1, 36(r3)
-	sw	r31, 38(r3)
-	addi	r3, r3, 39
-	jal	o_param_b.2928				
-	addi	r3, r3, -39
-	lw	r31, 38(r3)
-	flw	f2, 36(r3)
-	flw	f3, 32(r3)
-	fmul	f2, f3, f2
-	flw	f4, 8(r3)
-	fadd	f2, f2, f4
-	fsw	f1, 38(r3)
-	fadd	f1, f0, f2
-	sw	r31, 40(r3)
-	addi	r3, r3, 41
-	jal	fabs.2816				
-	addi	r3, r3, -41
-	lw	r31, 40(r3)
-	flw	f2, 38(r3)
-	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8493
+	j	fle_cont.16041
+fle_else.16040:
+	lw	r1, 4(r1)
+	flw	f1, 1(r2)
+	flw	f4, 1(r1)
+	fmul	f1, f3, f1
+	fadd	f1, f1, f2
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16042
+	j	fle_cont.16043
+fle_else.16042:
+	fneg	f1, f1
+fle_cont.16043:
+	fle	r30, f4, f1
+	beq	r0, r30, fle_else.16044
 	addi	r1, r0, 0
-	j	fle_cont.8494
-fle_else.8493:
-	lw	r1, 2(r3)
-	flw	f1, 5(r1)
-	sw	r31, 40(r3)
-	addi	r3, r3, 41
-	jal	fiszero.2807				
-	addi	r3, r3, -41
-	lw	r31, 40(r3)
-	beqi	0, r1, beq_then.8495
-	addi	r1, r0, 0
-	j	beq_cont.8496
-beq_then.8495:
+	j	fle_cont.16045
+fle_else.16044:
+	flw	f1, 5(r5)
+	feq	r30, f1, f0
+	beq	r0, r30, feq_else.16046
 	addi	r1, r0, 1
-beq_cont.8496:
-fle_cont.8494:
-fle_cont.8492:
-	beqi	0, r1, beq_then.8497
-	flw	f1, 32(r3)
-	fsw	f1, 724(r0)
+	j	feq_cont.16047
+feq_else.16046:
+	addi	r1, r0, 0
+feq_cont.16047:
+	beqi	0, r1, beq_then.16048
+	addi	r1, r0, 0
+	j	beq_cont.16049
+beq_then.16048:
+	addi	r1, r0, 1
+beq_cont.16049:
+fle_cont.16045:
+fle_cont.16041:
+	beqi	0, r1, beq_then.16050
+	fsw	f3, 724(r0)
 	addi	r1, r0, 3
 	jr	r31				#
-beq_then.8497:
+beq_then.16050:
 	addi	r1, r0, 0
 	jr	r31				#
 solver_surface_fast.3061:
 	flw	f4, 0(r2)
-	fsw	f3, 0(r3)
-	fsw	f2, 2(r3)
-	fsw	f1, 4(r3)
-	sw	r2, 6(r3)
-	fadd	f1, f0, f4
-	sw	r31, 7(r3)
-	addi	r3, r3, 8
-	jal	fisneg.2805				
-	addi	r3, r3, -8
-	lw	r31, 7(r3)
-	beqi	0, r1, beq_then.8498
-	lw	r1, 6(r3)
-	flw	f1, 1(r1)
-	flw	f2, 2(r1)
-	flw	f3, 3(r1)
-	flw	f4, 4(r3)
-	fmul	f1, f1, f4
-	flw	f4, 2(r3)
-	fmul	f2, f2, f4
+	fle	r30, f0, f4
+	beq	r0, r30, fle_else.16051
+	addi	r1, r0, 0
+	j	fle_cont.16052
+fle_else.16051:
+	addi	r1, r0, 1
+fle_cont.16052:
+	beqi	0, r1, beq_then.16053
+	flw	f4, 1(r2)
+	flw	f5, 2(r2)
+	flw	f6, 3(r2)
+	fmul	f1, f4, f1
+	fmul	f2, f5, f2
 	fadd	f1, f1, f2
-	flw	f2, 0(r3)
-	fmul	f2, f3, f2
+	fmul	f2, f6, f3
 	fadd	f1, f1, f2
 	fsw	f1, 724(r0)
 	addi	r1, r0, 1
 	jr	r31				#
-beq_then.8498:
+beq_then.16053:
 	addi	r1, r0, 0
 	jr	r31				#
 solver_second_fast.3067:
 	flw	f4, 0(r2)
-	fsw	f4, 0(r3)
-	sw	r1, 2(r3)
-	fsw	f3, 4(r3)
-	fsw	f2, 6(r3)
-	fsw	f1, 8(r3)
-	sw	r2, 10(r3)
-	fadd	f1, f0, f4
-	sw	r31, 11(r3)
-	addi	r3, r3, 12
-	jal	fiszero.2807				
-	addi	r3, r3, -12
-	lw	r31, 11(r3)
-	beqi	0, r1, beq_then.8500
+	feq	r30, f4, f0
+	beq	r0, r30, feq_else.16054
+	addi	r5, r0, 1
+	j	feq_cont.16055
+feq_else.16054:
+	addi	r5, r0, 0
+feq_cont.16055:
+	beqi	0, r5, beq_then.16056
 	addi	r1, r0, 0
 	jr	r31				#
-beq_then.8500:
-	lw	r1, 10(r3)
-	flw	f1, 1(r1)
-	flw	f2, 2(r1)
-	flw	f3, 3(r1)
-	flw	f4, 8(r3)
-	fmul	f1, f1, f4
-	flw	f5, 6(r3)
-	fmul	f2, f2, f5
-	fadd	f1, f1, f2
-	flw	f2, 4(r3)
-	fmul	f3, f3, f2
-	fadd	f1, f1, f3
-	lw	r2, 2(r3)
-	fsw	f1, 12(r3)
-	add	r1, r0, r2
-	fadd	f3, f0, f2
-	fadd	f1, f0, f4
-	fadd	f2, f0, f5
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
+beq_then.16056:
+	flw	f5, 1(r2)
+	flw	f6, 2(r2)
+	flw	f7, 3(r2)
+	fmul	f5, f5, f1
+	fmul	f6, f6, f2
+	fadd	f5, f5, f6
+	fmul	f6, f7, f3
+	fadd	f5, f5, f6
+	sw	r2, 0(r3)
+	fsw	f4, 2(r3)
+	fsw	f5, 4(r3)
+	sw	r1, 6(r3)
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
 	jal	quadratic.3031				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	lw	r1, 2(r3)
-	fsw	f1, 14(r3)
-	sw	r31, 16(r3)
-	addi	r3, r3, 17
-	jal	o_form.2918				
-	addi	r3, r3, -17
-	lw	r31, 16(r3)
-	beqi	3, r1, beq_then.8502
-	flw	f1, 14(r3)
-	j	beq_cont.8503
-beq_then.8502:
-	flup	f1, 2		# fli	f1, 1.000000
-	flw	f2, 14(r3)
-	fsub	f1, f2, f1
-beq_cont.8503:
-	flw	f2, 0(r3)
-	fmul	f1, f2, f1
-	flw	f2, 12(r3)
-	fsw	f1, 16(r3)
-	fadd	f1, f0, f2
-	sw	r31, 18(r3)
-	addi	r3, r3, 19
-	jal	fsqr.2814				
-	addi	r3, r3, -19
-	lw	r31, 18(r3)
-	flw	f2, 16(r3)
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+	lw	r1, 6(r3)
+	lw	r2, 1(r1)
+	beqi	3, r2, beq_then.16058
+	j	beq_cont.16059
+beq_then.16058:
+	flup	f2, 2		# fli	f2, 1.000000
 	fsub	f1, f1, f2
-	fsw	f1, 18(r3)
-	sw	r31, 20(r3)
-	addi	r3, r3, 21
-	jal	fispos.2803				
-	addi	r3, r3, -21
-	lw	r31, 20(r3)
-	beqi	0, r1, beq_then.8504
-	lw	r1, 2(r3)
-	sw	r31, 20(r3)
-	addi	r3, r3, 21
-	jal	o_isinvert.2922				
-	addi	r3, r3, -21
-	lw	r31, 20(r3)
-	beqi	0, r1, beq_then.8505
-	flw	f1, 18(r3)
-	fsqrt	f1, f1
-	lw	r1, 10(r3)
-	flw	f2, 4(r1)
-	flw	f3, 12(r3)
-	fadd	f1, f3, f1
-	fmul	f1, f1, f2
-	fsw	f1, 724(r0)
-	j	beq_cont.8506
-beq_then.8505:
-	flw	f1, 18(r3)
-	fsqrt	f1, f1
-	lw	r1, 10(r3)
-	flw	f2, 4(r1)
-	flw	f3, 12(r3)
+beq_cont.16059:
+	flw	f2, 4(r3)
+	fmul	f3, f2, f2
+	flw	f4, 2(r3)
+	fmul	f1, f4, f1
 	fsub	f1, f3, f1
-	fmul	f1, f1, f2
+	fle	r30, f1, f0
+	beq	r0, r30, fle_else.16060
+	addi	r2, r0, 0
+	j	fle_cont.16061
+fle_else.16060:
+	addi	r2, r0, 1
+fle_cont.16061:
+	beqi	0, r2, beq_then.16062
+	lw	r1, 6(r1)
+	beqi	0, r1, beq_then.16063
+	fsqrt	f1, f1
+	lw	r1, 0(r3)
+	flw	f3, 4(r1)
+	fadd	f1, f2, f1
+	fmul	f1, f1, f3
 	fsw	f1, 724(r0)
-beq_cont.8506:
+	j	beq_cont.16064
+beq_then.16063:
+	fsqrt	f1, f1
+	lw	r1, 0(r3)
+	flw	f3, 4(r1)
+	fsub	f1, f2, f1
+	fmul	f1, f1, f3
+	fsw	f1, 724(r0)
+beq_cont.16064:
 	addi	r1, r0, 1
 	jr	r31				#
-beq_then.8504:
+beq_then.16062:
 	addi	r1, r0, 0
 	jr	r31				#
 solver_fast.3073:
 	addi	r6, r0, 1				# set min_caml_objects
+	lw	r7, 1(r2)
 	flw	f1, 0(r5)
 	flw	f2, 1(r5)
 	flw	f3, 2(r5)
 	add	r30, r6, r1
 	lw	r5, 0(r30)
-	sw	r1, 0(r3)
-	sw	r2, 1(r3)
-	fsw	f3, 2(r3)
-	fsw	f2, 4(r3)
-	sw	r5, 6(r3)
-	fsw	f1, 8(r3)
-	add	r1, r0, r5
-	sw	r31, 10(r3)
-	addi	r3, r3, 11
-	jal	o_param_x.2934				
-	addi	r3, r3, -11
-	lw	r31, 10(r3)
-	flw	f2, 8(r3)
-	fsub	f1, f2, f1
-	lw	r1, 6(r3)
-	fsw	f1, 10(r3)
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	o_param_y.2936				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	flw	f2, 4(r3)
-	fsub	f1, f2, f1
-	lw	r1, 6(r3)
-	fsw	f1, 12(r3)
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	o_param_z.2938				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	flw	f2, 2(r3)
-	fsub	f1, f2, f1
-	lw	r1, 1(r3)
-	fsw	f1, 14(r3)
-	sw	r31, 16(r3)
-	addi	r3, r3, 17
-	jal	d_const.2979				
-	addi	r3, r3, -17
-	lw	r31, 16(r3)
-	lw	r2, 0(r3)
-	add	r30, r1, r2
+	lw	r6, 5(r5)
+	flw	f4, 0(r6)
+	fsub	f1, f1, f4
+	lw	r6, 5(r5)
+	flw	f4, 1(r6)
+	fsub	f2, f2, f4
+	lw	r6, 5(r5)
+	flw	f4, 2(r6)
+	fsub	f3, f3, f4
+	add	r30, r7, r1
 	lw	r1, 0(r30)
-	lw	r2, 6(r3)
-	sw	r1, 16(r3)
-	add	r1, r0, r2
-	sw	r31, 17(r3)
-	addi	r3, r3, 18
-	jal	o_form.2918				
-	addi	r3, r3, -18
-	lw	r31, 17(r3)
-	beqi	1, r1, beq_then.8508
-	beqi	2, r1, beq_then.8509
-	flw	f1, 10(r3)
-	flw	f2, 12(r3)
-	flw	f3, 14(r3)
-	lw	r1, 6(r3)
-	lw	r2, 16(r3)
-	j	solver_second_fast.3067
-beq_then.8509:
-	flw	f1, 10(r3)
-	flw	f2, 12(r3)
-	flw	f3, 14(r3)
-	lw	r1, 6(r3)
-	lw	r2, 16(r3)
-	j	solver_surface_fast.3061
-beq_then.8508:
-	lw	r1, 1(r3)
-	sw	r31, 17(r3)
-	addi	r3, r3, 18
-	jal	d_vec.2977				
-	addi	r3, r3, -18
-	lw	r31, 17(r3)
+	lw	r6, 1(r5)
+	beqi	1, r6, beq_then.16065
+	beqi	2, r6, beq_then.16066
 	add	r2, r0, r1
-	flw	f1, 10(r3)
-	flw	f2, 12(r3)
-	flw	f3, 14(r3)
-	lw	r1, 6(r3)
-	lw	r5, 16(r3)
+	add	r1, r0, r5
+	j	solver_second_fast.3067
+beq_then.16066:
+	flw	f4, 0(r1)
+	fle	r30, f0, f4
+	beq	r0, r30, fle_else.16067
+	addi	r2, r0, 0
+	j	fle_cont.16068
+fle_else.16067:
+	addi	r2, r0, 1
+fle_cont.16068:
+	beqi	0, r2, beq_then.16069
+	flw	f4, 1(r1)
+	fmul	f1, f4, f1
+	flw	f4, 2(r1)
+	fmul	f2, f4, f2
+	fadd	f1, f1, f2
+	flw	f2, 3(r1)
+	fmul	f2, f2, f3
+	fadd	f1, f1, f2
+	fsw	f1, 724(r0)
+	addi	r1, r0, 1
+	jr	r31				#
+beq_then.16069:
+	addi	r1, r0, 0
+	jr	r31				#
+beq_then.16065:
+	lw	r2, 0(r2)
+	add	r28, r0, r5
+	add	r5, r0, r1
+	add	r1, r0, r28
 	j	solver_rect_fast.3054
 solver_surface_fast2.3077:
 	flw	f1, 0(r2)
-	sw	r5, 0(r3)
-	sw	r2, 1(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	fisneg.2805				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	beqi	0, r1, beq_then.8510
-	lw	r1, 1(r3)
-	flw	f1, 0(r1)
-	lw	r1, 0(r3)
-	flw	f2, 3(r1)
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16070
+	addi	r1, r0, 0
+	j	fle_cont.16071
+fle_else.16070:
+	addi	r1, r0, 1
+fle_cont.16071:
+	beqi	0, r1, beq_then.16072
+	flw	f1, 0(r2)
+	flw	f2, 3(r5)
 	fmul	f1, f1, f2
 	fsw	f1, 724(r0)
 	addi	r1, r0, 1
 	jr	r31				#
-beq_then.8510:
+beq_then.16072:
 	addi	r1, r0, 0
 	jr	r31				#
 solver_second_fast2.3084:
 	flw	f4, 0(r2)
-	sw	r1, 0(r3)
-	fsw	f4, 2(r3)
-	fsw	f3, 4(r3)
-	fsw	f2, 6(r3)
-	fsw	f1, 8(r3)
-	sw	r5, 10(r3)
-	sw	r2, 11(r3)
-	fadd	f1, f0, f4
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	fiszero.2807				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	beqi	0, r1, beq_then.8512
+	feq	r30, f4, f0
+	beq	r0, r30, feq_else.16073
+	addi	r6, r0, 1
+	j	feq_cont.16074
+feq_else.16073:
+	addi	r6, r0, 0
+feq_cont.16074:
+	beqi	0, r6, beq_then.16075
 	addi	r1, r0, 0
 	jr	r31				#
-beq_then.8512:
-	lw	r1, 11(r3)
-	flw	f1, 1(r1)
-	flw	f2, 2(r1)
-	flw	f3, 3(r1)
-	lw	r2, 10(r3)
-	flw	f4, 3(r2)
-	flw	f5, 8(r3)
-	fmul	f1, f1, f5
-	flw	f5, 6(r3)
-	fmul	f2, f2, f5
+beq_then.16075:
+	flw	f5, 1(r2)
+	flw	f6, 2(r2)
+	flw	f7, 3(r2)
+	flw	f8, 3(r5)
+	fmul	f1, f5, f1
+	fmul	f2, f6, f2
 	fadd	f1, f1, f2
-	flw	f2, 4(r3)
-	fmul	f2, f3, f2
+	fmul	f2, f7, f3
 	fadd	f1, f1, f2
-	fsw	f1, 12(r3)
-	fsw	f4, 14(r3)
-	sw	r31, 16(r3)
-	addi	r3, r3, 17
-	jal	fsqr.2814				
-	addi	r3, r3, -17
-	lw	r31, 16(r3)
-	flw	f2, 14(r3)
-	flw	f3, 2(r3)
-	fmul	f2, f3, f2
+	fmul	f2, f1, f1
+	fmul	f3, f4, f8
+	fsub	f2, f2, f3
+	fle	r30, f2, f0
+	beq	r0, r30, fle_else.16076
+	addi	r5, r0, 0
+	j	fle_cont.16077
+fle_else.16076:
+	addi	r5, r0, 1
+fle_cont.16077:
+	beqi	0, r5, beq_then.16078
+	lw	r1, 6(r1)
+	beqi	0, r1, beq_then.16079
+	fsqrt	f2, f2
+	flw	f3, 4(r2)
+	fadd	f1, f1, f2
+	fmul	f1, f1, f3
+	fsw	f1, 724(r0)
+	j	beq_cont.16080
+beq_then.16079:
+	fsqrt	f2, f2
+	flw	f3, 4(r2)
 	fsub	f1, f1, f2
-	fsw	f1, 16(r3)
-	sw	r31, 18(r3)
-	addi	r3, r3, 19
-	jal	fispos.2803				
-	addi	r3, r3, -19
-	lw	r31, 18(r3)
-	beqi	0, r1, beq_then.8513
-	lw	r1, 0(r3)
-	sw	r31, 18(r3)
-	addi	r3, r3, 19
-	jal	o_isinvert.2922				
-	addi	r3, r3, -19
-	lw	r31, 18(r3)
-	beqi	0, r1, beq_then.8514
-	flw	f1, 16(r3)
-	fsqrt	f1, f1
-	lw	r1, 11(r3)
-	flw	f2, 4(r1)
-	flw	f3, 12(r3)
-	fadd	f1, f3, f1
-	fmul	f1, f1, f2
+	fmul	f1, f1, f3
 	fsw	f1, 724(r0)
-	j	beq_cont.8515
-beq_then.8514:
-	flw	f1, 16(r3)
-	fsqrt	f1, f1
-	lw	r1, 11(r3)
-	flw	f2, 4(r1)
-	flw	f3, 12(r3)
-	fsub	f1, f3, f1
-	fmul	f1, f1, f2
-	fsw	f1, 724(r0)
-beq_cont.8515:
+beq_cont.16080:
 	addi	r1, r0, 1
 	jr	r31				#
-beq_then.8513:
+beq_then.16078:
 	addi	r1, r0, 0
 	jr	r31				#
 solver_fast2.3091:
 	addi	r5, r0, 1				# set min_caml_objects
+	lw	r6, 1(r2)
 	add	r30, r5, r1
 	lw	r5, 0(r30)
-	sw	r5, 0(r3)
-	sw	r1, 1(r3)
-	sw	r2, 2(r3)
-	add	r1, r0, r5
-	sw	r31, 3(r3)
-	addi	r3, r3, 4
-	jal	o_param_ctbl.2956				
-	addi	r3, r3, -4
-	lw	r31, 3(r3)
-	flw	f1, 0(r1)
-	flw	f2, 1(r1)
-	flw	f3, 2(r1)
-	lw	r2, 2(r3)
-	sw	r1, 3(r3)
-	fsw	f3, 4(r3)
-	fsw	f2, 6(r3)
-	fsw	f1, 8(r3)
-	add	r1, r0, r2
-	sw	r31, 10(r3)
-	addi	r3, r3, 11
-	jal	d_const.2979				
-	addi	r3, r3, -11
-	lw	r31, 10(r3)
-	lw	r2, 1(r3)
-	add	r30, r1, r2
+	lw	r7, 10(r5)
+	flw	f1, 0(r7)
+	flw	f2, 1(r7)
+	flw	f3, 2(r7)
+	add	r30, r6, r1
 	lw	r1, 0(r30)
-	lw	r2, 0(r3)
-	sw	r1, 10(r3)
-	add	r1, r0, r2
-	sw	r31, 11(r3)
-	addi	r3, r3, 12
-	jal	o_form.2918				
-	addi	r3, r3, -12
-	lw	r31, 11(r3)
-	beqi	1, r1, beq_then.8516
-	beqi	2, r1, beq_then.8517
-	flw	f1, 8(r3)
-	flw	f2, 6(r3)
-	flw	f3, 4(r3)
-	lw	r1, 0(r3)
-	lw	r2, 10(r3)
-	lw	r5, 3(r3)
-	j	solver_second_fast2.3084
-beq_then.8517:
-	flw	f1, 8(r3)
-	flw	f2, 6(r3)
-	flw	f3, 4(r3)
-	lw	r1, 0(r3)
-	lw	r2, 10(r3)
-	lw	r5, 3(r3)
-	j	solver_surface_fast2.3077
-beq_then.8516:
-	lw	r1, 2(r3)
-	sw	r31, 11(r3)
-	addi	r3, r3, 12
-	jal	d_vec.2977				
-	addi	r3, r3, -12
-	lw	r31, 11(r3)
+	lw	r6, 1(r5)
+	beqi	1, r6, beq_then.16081
+	beqi	2, r6, beq_then.16082
 	add	r2, r0, r1
-	flw	f1, 8(r3)
-	flw	f2, 6(r3)
-	flw	f3, 4(r3)
-	lw	r1, 0(r3)
-	lw	r5, 10(r3)
+	add	r1, r0, r5
+	add	r5, r0, r7
+	j	solver_second_fast2.3084
+beq_then.16082:
+	flw	f1, 0(r1)
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16083
+	addi	r2, r0, 0
+	j	fle_cont.16084
+fle_else.16083:
+	addi	r2, r0, 1
+fle_cont.16084:
+	beqi	0, r2, beq_then.16085
+	flw	f1, 0(r1)
+	flw	f2, 3(r7)
+	fmul	f1, f1, f2
+	fsw	f1, 724(r0)
+	addi	r1, r0, 1
+	jr	r31				#
+beq_then.16085:
+	addi	r1, r0, 0
+	jr	r31				#
+beq_then.16081:
+	lw	r2, 0(r2)
+	add	r28, r0, r5
+	add	r5, r0, r1
+	add	r1, r0, r28
 	j	solver_rect_fast.3054
 setup_rect_table.3094:
-	flw	f1, 0(r1)
 	addi	r5, r0, 6
-	flup	f2, 0		# fli	f2, 0.000000
+	flup	f1, 0		# fli	f1, 0.000000
 	sw	r2, 0(r3)
 	sw	r1, 1(r3)
-	fsw	f1, 2(r3)
 	add	r1, r0, r5
-	fadd	f1, f0, f2
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
+	sw	r31, 2(r3)
+	addi	r3, r3, 3
 	jal	lib_create_float_array				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
-	flw	f1, 2(r3)
-	sw	r1, 4(r3)
-	sw	r31, 5(r3)
-	addi	r3, r3, 6
-	jal	fiszero.2807				
-	addi	r3, r3, -6
-	lw	r31, 5(r3)
-	beqi	0, r1, beq_then.8518
-	lw	r1, 4(r3)
-	fsw	f0, 1(r1)
-	j	beq_cont.8519
-beq_then.8518:
-	lw	r1, 1(r3)
-	flw	f1, 0(r1)
-	lw	r2, 0(r3)
-	fsw	f1, 6(r3)
-	add	r1, r0, r2
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	o_isinvert.2922				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	flup	f1, 2		# fli	f1, 1.000000
+	addi	r3, r3, -3
+	lw	r31, 2(r3)
 	lw	r2, 1(r3)
-	flw	f2, 0(r2)
-	flw	f3, 6(r3)
-	fsw	f2, 8(r3)
-	fsw	f1, 10(r3)
-	sw	r1, 12(r3)
-	fadd	f1, f0, f3
-	sw	r31, 13(r3)
-	addi	r3, r3, 14
-	jal	fisneg.2805				
-	addi	r3, r3, -14
-	lw	r31, 13(r3)
-	add	r2, r0, r1
-	lw	r1, 12(r3)
-	sw	r31, 13(r3)
-	addi	r3, r3, 14
-	jal	xor.2859				
-	addi	r3, r3, -14
-	lw	r31, 13(r3)
-	lw	r2, 0(r3)
-	sw	r1, 13(r3)
-	add	r1, r0, r2
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	o_param_a.2926				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	lw	r1, 13(r3)
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	fneg_cond.2864				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	lw	r1, 4(r3)
+	flw	f1, 0(r2)
+	feq	r30, f1, f0
+	beq	r0, r30, feq_else.16086
+	addi	r5, r0, 1
+	j	feq_cont.16087
+feq_else.16086:
+	addi	r5, r0, 0
+feq_cont.16087:
+	beqi	0, r5, beq_then.16088
+	fsw	f0, 1(r1)
+	j	beq_cont.16089
+beq_then.16088:
+	lw	r5, 0(r3)
+	lw	r6, 6(r5)
+	flw	f1, 0(r2)
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16090
+	addi	r7, r0, 0
+	j	fle_cont.16091
+fle_else.16090:
+	addi	r7, r0, 1
+fle_cont.16091:
+	beqi	0, r6, beq_then.16092
+	beqi	0, r7, beq_then.16094
+	addi	r6, r0, 0
+	j	beq_cont.16095
+beq_then.16094:
+	addi	r6, r0, 1
+beq_cont.16095:
+	j	beq_cont.16093
+beq_then.16092:
+	add	r6, r0, r7
+beq_cont.16093:
+	lw	r7, 4(r5)
+	flw	f1, 0(r7)
+	beqi	0, r6, beq_then.16096
+	j	beq_cont.16097
+beq_then.16096:
+	fneg	f1, f1
+beq_cont.16097:
 	fsw	f1, 0(r1)
-	flw	f1, 8(r3)
-	flw	f2, 10(r3)
+	flw	f1, 0(r2)
+	flup	f2, 2		# fli	f2, 1.000000
 	fdiv	f1, f2, f1
 	fsw	f1, 1(r1)
-beq_cont.8519:
-	lw	r2, 1(r3)
+beq_cont.16089:
 	flw	f1, 1(r2)
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	fiszero.2807				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	beqi	0, r1, beq_then.8521
-	lw	r1, 4(r3)
+	feq	r30, f1, f0
+	beq	r0, r30, feq_else.16098
+	addi	r5, r0, 1
+	j	feq_cont.16099
+feq_else.16098:
+	addi	r5, r0, 0
+feq_cont.16099:
+	beqi	0, r5, beq_then.16100
 	fsw	f0, 3(r1)
-	j	beq_cont.8522
-beq_then.8521:
-	lw	r1, 1(r3)
-	flw	f1, 1(r1)
-	lw	r2, 0(r3)
-	fsw	f1, 14(r3)
-	add	r1, r0, r2
-	sw	r31, 16(r3)
-	addi	r3, r3, 17
-	jal	o_isinvert.2922				
-	addi	r3, r3, -17
-	lw	r31, 16(r3)
-	flup	f1, 2		# fli	f1, 1.000000
-	lw	r2, 1(r3)
-	flw	f2, 1(r2)
-	flw	f3, 14(r3)
-	fsw	f2, 16(r3)
-	fsw	f1, 18(r3)
-	sw	r1, 20(r3)
-	fadd	f1, f0, f3
-	sw	r31, 21(r3)
-	addi	r3, r3, 22
-	jal	fisneg.2805				
-	addi	r3, r3, -22
-	lw	r31, 21(r3)
-	add	r2, r0, r1
-	lw	r1, 20(r3)
-	sw	r31, 21(r3)
-	addi	r3, r3, 22
-	jal	xor.2859				
-	addi	r3, r3, -22
-	lw	r31, 21(r3)
-	lw	r2, 0(r3)
-	sw	r1, 21(r3)
-	add	r1, r0, r2
-	sw	r31, 22(r3)
-	addi	r3, r3, 23
-	jal	o_param_b.2928				
-	addi	r3, r3, -23
-	lw	r31, 22(r3)
-	lw	r1, 21(r3)
-	sw	r31, 22(r3)
-	addi	r3, r3, 23
-	jal	fneg_cond.2864				
-	addi	r3, r3, -23
-	lw	r31, 22(r3)
-	lw	r1, 4(r3)
+	j	beq_cont.16101
+beq_then.16100:
+	lw	r5, 0(r3)
+	lw	r6, 6(r5)
+	flw	f1, 1(r2)
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16102
+	addi	r7, r0, 0
+	j	fle_cont.16103
+fle_else.16102:
+	addi	r7, r0, 1
+fle_cont.16103:
+	beqi	0, r6, beq_then.16104
+	beqi	0, r7, beq_then.16106
+	addi	r6, r0, 0
+	j	beq_cont.16107
+beq_then.16106:
+	addi	r6, r0, 1
+beq_cont.16107:
+	j	beq_cont.16105
+beq_then.16104:
+	add	r6, r0, r7
+beq_cont.16105:
+	lw	r7, 4(r5)
+	flw	f1, 1(r7)
+	beqi	0, r6, beq_then.16108
+	j	beq_cont.16109
+beq_then.16108:
+	fneg	f1, f1
+beq_cont.16109:
 	fsw	f1, 2(r1)
-	flw	f1, 16(r3)
-	flw	f2, 18(r3)
+	flw	f1, 1(r2)
+	flup	f2, 2		# fli	f2, 1.000000
 	fdiv	f1, f2, f1
 	fsw	f1, 3(r1)
-beq_cont.8522:
-	lw	r2, 1(r3)
+beq_cont.16101:
 	flw	f1, 2(r2)
-	sw	r31, 22(r3)
-	addi	r3, r3, 23
-	jal	fiszero.2807				
-	addi	r3, r3, -23
-	lw	r31, 22(r3)
-	beqi	0, r1, beq_then.8523
-	lw	r1, 4(r3)
+	feq	r30, f1, f0
+	beq	r0, r30, feq_else.16110
+	addi	r5, r0, 1
+	j	feq_cont.16111
+feq_else.16110:
+	addi	r5, r0, 0
+feq_cont.16111:
+	beqi	0, r5, beq_then.16112
 	fsw	f0, 5(r1)
-	j	beq_cont.8524
-beq_then.8523:
-	lw	r1, 1(r3)
-	flw	f1, 2(r1)
-	lw	r2, 0(r3)
-	fsw	f1, 22(r3)
-	add	r1, r0, r2
-	sw	r31, 24(r3)
-	addi	r3, r3, 25
-	jal	o_isinvert.2922				
-	addi	r3, r3, -25
-	lw	r31, 24(r3)
-	flup	f1, 2		# fli	f1, 1.000000
-	lw	r2, 1(r3)
-	flw	f2, 2(r2)
-	flw	f3, 22(r3)
-	fsw	f2, 24(r3)
-	fsw	f1, 26(r3)
-	sw	r1, 28(r3)
-	fadd	f1, f0, f3
-	sw	r31, 29(r3)
-	addi	r3, r3, 30
-	jal	fisneg.2805				
-	addi	r3, r3, -30
-	lw	r31, 29(r3)
-	add	r2, r0, r1
-	lw	r1, 28(r3)
-	sw	r31, 29(r3)
-	addi	r3, r3, 30
-	jal	xor.2859				
-	addi	r3, r3, -30
-	lw	r31, 29(r3)
-	lw	r2, 0(r3)
-	sw	r1, 29(r3)
-	add	r1, r0, r2
-	sw	r31, 30(r3)
-	addi	r3, r3, 31
-	jal	o_param_c.2930				
-	addi	r3, r3, -31
-	lw	r31, 30(r3)
-	lw	r1, 29(r3)
-	sw	r31, 30(r3)
-	addi	r3, r3, 31
-	jal	fneg_cond.2864				
-	addi	r3, r3, -31
-	lw	r31, 30(r3)
-	lw	r1, 4(r3)
+	j	beq_cont.16113
+beq_then.16112:
+	lw	r5, 0(r3)
+	lw	r6, 6(r5)
+	flw	f1, 2(r2)
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16114
+	addi	r7, r0, 0
+	j	fle_cont.16115
+fle_else.16114:
+	addi	r7, r0, 1
+fle_cont.16115:
+	beqi	0, r6, beq_then.16116
+	beqi	0, r7, beq_then.16118
+	addi	r6, r0, 0
+	j	beq_cont.16119
+beq_then.16118:
+	addi	r6, r0, 1
+beq_cont.16119:
+	j	beq_cont.16117
+beq_then.16116:
+	add	r6, r0, r7
+beq_cont.16117:
+	lw	r5, 4(r5)
+	flw	f1, 2(r5)
+	beqi	0, r6, beq_then.16120
+	j	beq_cont.16121
+beq_then.16120:
+	fneg	f1, f1
+beq_cont.16121:
 	fsw	f1, 4(r1)
-	flw	f1, 24(r3)
-	flw	f2, 26(r3)
+	flw	f1, 2(r2)
+	flup	f2, 2		# fli	f2, 1.000000
 	fdiv	f1, f2, f1
 	fsw	f1, 5(r1)
-beq_cont.8524:
+beq_cont.16113:
 	jr	r31				#
 setup_surface_table.3097:
 	addi	r5, r0, 4
 	flup	f1, 0		# fli	f1, 0.000000
-	flw	f2, 0(r1)
-	flw	f3, 1(r1)
-	flw	f4, 2(r1)
-	fsw	f4, 0(r3)
-	fsw	f3, 2(r3)
-	fsw	f2, 4(r3)
-	sw	r2, 6(r3)
+	sw	r1, 0(r3)
+	sw	r2, 1(r3)
 	add	r1, r0, r5
-	sw	r31, 7(r3)
-	addi	r3, r3, 8
+	sw	r31, 2(r3)
+	addi	r3, r3, 3
 	jal	lib_create_float_array				
-	addi	r3, r3, -8
-	lw	r31, 7(r3)
-	lw	r2, 6(r3)
-	sw	r1, 7(r3)
-	add	r1, r0, r2
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	o_param_a.2926				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	flw	f2, 4(r3)
-	fmul	f1, f2, f1
-	lw	r1, 6(r3)
-	fsw	f1, 8(r3)
-	sw	r31, 10(r3)
-	addi	r3, r3, 11
-	jal	o_param_b.2928				
-	addi	r3, r3, -11
-	lw	r31, 10(r3)
-	flw	f2, 2(r3)
-	fmul	f1, f2, f1
-	flw	f2, 8(r3)
-	fadd	f1, f2, f1
-	lw	r1, 6(r3)
-	fsw	f1, 10(r3)
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	o_param_c.2930				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	flw	f2, 0(r3)
-	fmul	f1, f2, f1
-	flw	f2, 10(r3)
-	fadd	f1, f2, f1
-	fsw	f1, 12(r3)
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	fispos.2803				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	beqi	0, r1, beq_then.8525
-	flup	f1, 11		# fli	f1, -1.000000
-	flw	f2, 12(r3)
-	fdiv	f1, f1, f2
-	lw	r1, 7(r3)
-	fsw	f1, 0(r1)
-	lw	r2, 6(r3)
-	add	r1, r0, r2
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	o_param_a.2926				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	flw	f2, 12(r3)
-	fdiv	f1, f1, f2
+	addi	r3, r3, -3
+	lw	r31, 2(r3)
+	lw	r2, 1(r3)
+	lw	r5, 4(r2)
+	lw	r6, 4(r2)
+	lw	r7, 4(r2)
+	lw	r8, 0(r3)
+	flw	f1, 0(r8)
+	flw	f2, 1(r8)
+	flw	f3, 2(r8)
+	flw	f4, 0(r5)
+	fmul	f1, f1, f4
+	flw	f4, 1(r6)
+	fmul	f2, f2, f4
+	fadd	f1, f1, f2
+	flw	f2, 2(r7)
+	fmul	f2, f3, f2
+	fadd	f1, f1, f2
+	fle	r30, f1, f0
+	beq	r0, r30, fle_else.16122
+	addi	r5, r0, 0
+	j	fle_cont.16123
+fle_else.16122:
+	addi	r5, r0, 1
+fle_cont.16123:
+	beqi	0, r5, beq_then.16124
+	flup	f2, 11		# fli	f2, -1.000000
+	fdiv	f2, f2, f1
+	fsw	f2, 0(r1)
+	lw	r5, 4(r2)
+	flw	f2, 0(r5)
+	fdiv	f2, f2, f1
+	fneg	f2, f2
+	fsw	f2, 1(r1)
+	lw	r5, 4(r2)
+	flw	f2, 1(r5)
+	fdiv	f2, f2, f1
+	fneg	f2, f2
+	fsw	f2, 2(r1)
+	lw	r2, 4(r2)
+	flw	f2, 2(r2)
+	fdiv	f1, f2, f1
 	fneg	f1, f1
-	lw	r1, 7(r3)
-	fsw	f1, 1(r1)
-	lw	r2, 6(r3)
-	add	r1, r0, r2
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	o_param_b.2928				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	flw	f2, 12(r3)
-	fdiv	f1, f1, f2
-	fneg	f1, f1
-	lw	r1, 7(r3)
-	fsw	f1, 2(r1)
-	lw	r2, 6(r3)
-	add	r1, r0, r2
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	o_param_c.2930				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	flw	f2, 12(r3)
-	fdiv	f1, f1, f2
-	fneg	f1, f1
-	lw	r1, 7(r3)
 	fsw	f1, 3(r1)
-	j	beq_cont.8526
-beq_then.8525:
-	lw	r1, 7(r3)
+	j	beq_cont.16125
+beq_then.16124:
 	fsw	f0, 0(r1)
-beq_cont.8526:
+beq_cont.16125:
 	jr	r31				#
 setup_second_table.3100:
-	flw	f1, 0(r1)
-	flw	f2, 1(r1)
-	flw	f3, 2(r1)
 	addi	r5, r0, 5
-	flup	f4, 0		# fli	f4, 0.000000
-	flw	f5, 0(r1)
-	flw	f6, 1(r1)
-	flw	f7, 2(r1)
-	sw	r1, 0(r3)
-	fsw	f7, 2(r3)
-	fsw	f6, 4(r3)
-	fsw	f5, 6(r3)
-	fsw	f3, 8(r3)
-	fsw	f2, 10(r3)
-	fsw	f1, 12(r3)
-	sw	r2, 14(r3)
+	flup	f1, 0		# fli	f1, 0.000000
+	sw	r2, 0(r3)
+	sw	r1, 1(r3)
 	add	r1, r0, r5
-	fadd	f1, f0, f4
-	sw	r31, 15(r3)
-	addi	r3, r3, 16
+	sw	r31, 2(r3)
+	addi	r3, r3, 3
 	jal	lib_create_float_array				
-	addi	r3, r3, -16
-	lw	r31, 15(r3)
-	flw	f1, 12(r3)
-	flw	f2, 10(r3)
-	flw	f3, 8(r3)
-	lw	r2, 14(r3)
-	sw	r1, 15(r3)
-	add	r1, r0, r2
-	sw	r31, 16(r3)
-	addi	r3, r3, 17
+	addi	r3, r3, -3
+	lw	r31, 2(r3)
+	lw	r2, 1(r3)
+	flw	f1, 0(r2)
+	flw	f2, 1(r2)
+	flw	f3, 2(r2)
+	lw	r5, 0(r3)
+	sw	r1, 2(r3)
+	add	r1, r0, r5
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
 	jal	quadratic.3031				
-	addi	r3, r3, -17
-	lw	r31, 16(r3)
-	lw	r1, 14(r3)
-	fsw	f1, 16(r3)
-	sw	r31, 18(r3)
-	addi	r3, r3, 19
-	jal	o_param_a.2926				
-	addi	r3, r3, -19
-	lw	r31, 18(r3)
-	flw	f2, 6(r3)
-	fmul	f1, f2, f1
-	fneg	f1, f1
-	lw	r1, 14(r3)
-	fsw	f1, 18(r3)
-	sw	r31, 20(r3)
-	addi	r3, r3, 21
-	jal	o_param_b.2928				
-	addi	r3, r3, -21
-	lw	r31, 20(r3)
-	flw	f2, 4(r3)
-	fmul	f1, f2, f1
-	fneg	f1, f1
-	lw	r1, 14(r3)
-	fsw	f1, 20(r3)
-	sw	r31, 22(r3)
-	addi	r3, r3, 23
-	jal	o_param_c.2930				
-	addi	r3, r3, -23
-	lw	r31, 22(r3)
-	flw	f2, 2(r3)
-	fmul	f1, f2, f1
-	fneg	f1, f1
-	lw	r1, 15(r3)
-	flw	f2, 16(r3)
-	fsw	f2, 0(r1)
-	lw	r2, 14(r3)
-	fsw	f1, 22(r3)
-	add	r1, r0, r2
-	sw	r31, 24(r3)
-	addi	r3, r3, 25
-	jal	o_isrot.2924				
-	addi	r3, r3, -25
-	lw	r31, 24(r3)
-	beqi	0, r1, beq_then.8528
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
 	lw	r1, 0(r3)
-	flw	f1, 2(r1)
-	lw	r2, 14(r3)
-	fsw	f1, 24(r3)
+	lw	r2, 4(r1)
+	lw	r5, 4(r1)
+	lw	r6, 4(r1)
+	lw	r7, 1(r3)
+	flw	f2, 0(r7)
+	flw	f3, 1(r7)
+	flw	f4, 2(r7)
+	flw	f5, 0(r2)
+	fmul	f2, f2, f5
+	fneg	f2, f2
+	flw	f5, 1(r5)
+	fmul	f3, f3, f5
+	fneg	f3, f3
+	flw	f5, 2(r6)
+	fmul	f4, f4, f5
+	fneg	f4, f4
+	lw	r2, 2(r3)
+	fsw	f1, 0(r2)
+	lw	r5, 3(r1)
+	beqi	0, r5, beq_then.16126
+	lw	r5, 9(r1)
+	lw	r6, 9(r1)
+	flw	f5, 2(r7)
+	flw	f6, 1(r7)
+	flup	f7, 1		# fli	f7, 0.500000
+	flw	f8, 1(r5)
+	fmul	f5, f5, f8
+	flw	f8, 2(r6)
+	fmul	f6, f6, f8
+	fadd	f5, f5, f6
+	fmul	f5, f5, f7
+	fsub	f2, f2, f5
+	fsw	f2, 1(r2)
+	lw	r5, 9(r1)
+	lw	r6, 9(r1)
+	flw	f2, 2(r7)
+	flw	f5, 0(r7)
+	flup	f6, 1		# fli	f6, 0.500000
+	flw	f7, 0(r5)
+	fmul	f2, f2, f7
+	flw	f7, 2(r6)
+	fmul	f5, f5, f7
+	fadd	f2, f2, f5
+	fmul	f2, f2, f6
+	fsub	f2, f3, f2
+	fsw	f2, 2(r2)
+	lw	r5, 9(r1)
+	lw	r1, 9(r1)
+	flw	f2, 1(r7)
+	flw	f3, 0(r7)
+	flup	f5, 1		# fli	f5, 0.500000
+	flw	f6, 0(r5)
+	fmul	f2, f2, f6
+	flw	f6, 1(r1)
+	fmul	f3, f3, f6
+	fadd	f2, f2, f3
+	fmul	f2, f2, f5
+	fsub	f2, f4, f2
+	fsw	f2, 3(r2)
+	j	beq_cont.16127
+beq_then.16126:
+	fsw	f2, 1(r2)
+	fsw	f3, 2(r2)
+	fsw	f4, 3(r2)
+beq_cont.16127:
+	feq	r30, f1, f0
+	beq	r0, r30, feq_else.16128
+	addi	r1, r0, 1
+	j	feq_cont.16129
+feq_else.16128:
+	addi	r1, r0, 0
+feq_cont.16129:
+	beqi	0, r1, beq_then.16130
+	j	beq_cont.16131
+beq_then.16130:
+	flup	f2, 2		# fli	f2, 1.000000
+	fdiv	f1, f2, f1
+	fsw	f1, 4(r2)
+beq_cont.16131:
 	add	r1, r0, r2
-	sw	r31, 26(r3)
-	addi	r3, r3, 27
-	jal	o_param_r2.2952				
-	addi	r3, r3, -27
-	lw	r31, 26(r3)
-	lw	r1, 0(r3)
-	flw	f2, 1(r1)
-	flw	f3, 2(r1)
-	flw	f4, 0(r1)
-	flw	f5, 1(r1)
-	flw	f6, 0(r1)
-	flw	f7, 24(r3)
-	fmul	f1, f7, f1
-	lw	r1, 14(r3)
-	fsw	f6, 26(r3)
-	fsw	f5, 28(r3)
-	fsw	f4, 30(r3)
-	fsw	f3, 32(r3)
-	fsw	f1, 34(r3)
-	fsw	f2, 36(r3)
-	sw	r31, 38(r3)
-	addi	r3, r3, 39
-	jal	o_param_r3.2954				
-	addi	r3, r3, -39
-	lw	r31, 38(r3)
-	flw	f2, 36(r3)
-	fmul	f1, f2, f1
-	flw	f2, 34(r3)
-	fadd	f1, f2, f1
-	sw	r31, 38(r3)
-	addi	r3, r3, 39
-	jal	fhalf.2812				
-	addi	r3, r3, -39
-	lw	r31, 38(r3)
-	flw	f2, 18(r3)
-	fsub	f1, f2, f1
-	lw	r1, 15(r3)
-	fsw	f1, 1(r1)
-	lw	r2, 14(r3)
-	add	r1, r0, r2
-	sw	r31, 38(r3)
-	addi	r3, r3, 39
-	jal	o_param_r1.2950				
-	addi	r3, r3, -39
-	lw	r31, 38(r3)
-	flw	f2, 32(r3)
-	fmul	f1, f2, f1
-	lw	r1, 14(r3)
-	fsw	f1, 38(r3)
-	sw	r31, 40(r3)
-	addi	r3, r3, 41
-	jal	o_param_r3.2954				
-	addi	r3, r3, -41
-	lw	r31, 40(r3)
-	flw	f2, 30(r3)
-	fmul	f1, f2, f1
-	flw	f2, 38(r3)
-	fadd	f1, f2, f1
-	sw	r31, 40(r3)
-	addi	r3, r3, 41
-	jal	fhalf.2812				
-	addi	r3, r3, -41
-	lw	r31, 40(r3)
-	flw	f2, 20(r3)
-	fsub	f1, f2, f1
-	lw	r1, 15(r3)
-	fsw	f1, 2(r1)
-	lw	r2, 14(r3)
-	add	r1, r0, r2
-	sw	r31, 40(r3)
-	addi	r3, r3, 41
-	jal	o_param_r1.2950				
-	addi	r3, r3, -41
-	lw	r31, 40(r3)
-	flw	f2, 28(r3)
-	fmul	f1, f2, f1
-	lw	r1, 14(r3)
-	fsw	f1, 40(r3)
-	sw	r31, 42(r3)
-	addi	r3, r3, 43
-	jal	o_param_r2.2952				
-	addi	r3, r3, -43
-	lw	r31, 42(r3)
-	flw	f2, 26(r3)
-	fmul	f1, f2, f1
-	flw	f2, 40(r3)
-	fadd	f1, f2, f1
-	sw	r31, 42(r3)
-	addi	r3, r3, 43
-	jal	fhalf.2812				
-	addi	r3, r3, -43
-	lw	r31, 42(r3)
-	flw	f2, 22(r3)
-	fsub	f1, f2, f1
-	lw	r1, 15(r3)
-	fsw	f1, 3(r1)
-	j	beq_cont.8529
-beq_then.8528:
-	lw	r1, 15(r3)
-	flw	f1, 18(r3)
-	fsw	f1, 1(r1)
-	flw	f1, 20(r3)
-	fsw	f1, 2(r1)
-	flw	f1, 22(r3)
-	fsw	f1, 3(r1)
-beq_cont.8529:
-	flw	f1, 16(r3)
-	sw	r31, 42(r3)
-	addi	r3, r3, 43
-	jal	fiszero.2807				
-	addi	r3, r3, -43
-	lw	r31, 42(r3)
-	beqi	0, r1, beq_then.8530
-	j	beq_cont.8531
-beq_then.8530:
-	flup	f1, 2		# fli	f1, 1.000000
-	flw	f2, 16(r3)
-	fdiv	f1, f1, f2
-	lw	r1, 15(r3)
-	fsw	f1, 4(r1)
-beq_cont.8531:
-	lw	r1, 15(r3)
 	jr	r31				#
 iter_setup_dirvec_constants.3103:
-	bgei	0, r2, bge_then.8532
+	bgei	0, r2, bge_then.16132
 	jr	r31				#
-bge_then.8532:
+bge_then.16132:
 	addi	r5, r0, 1				# set min_caml_objects
 	add	r30, r5, r2
 	lw	r5, 0(r30)
-	sw	r2, 0(r3)
-	sw	r5, 1(r3)
-	sw	r1, 2(r3)
+	lw	r6, 1(r1)
+	lw	r7, 0(r1)
+	lw	r8, 1(r5)
+	sw	r1, 0(r3)
+	beqi	1, r8, beq_then.16134
+	beqi	2, r8, beq_then.16136
+	sw	r2, 1(r3)
+	sw	r6, 2(r3)
+	add	r2, r0, r5
+	add	r1, r0, r7
 	sw	r31, 3(r3)
 	addi	r3, r3, 4
-	jal	d_const.2979				
+	jal	setup_second_table.3100				
 	addi	r3, r3, -4
 	lw	r31, 3(r3)
-	lw	r2, 2(r3)
+	lw	r2, 1(r3)
+	lw	r5, 2(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+	j	beq_cont.16137
+beq_then.16136:
+	sw	r2, 1(r3)
+	sw	r6, 2(r3)
+	add	r2, r0, r5
+	add	r1, r0, r7
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	setup_surface_table.3097				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	lw	r2, 1(r3)
+	lw	r5, 2(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16137:
+	j	beq_cont.16135
+beq_then.16134:
+	sw	r2, 1(r3)
+	sw	r6, 2(r3)
+	add	r2, r0, r5
+	add	r1, r0, r7
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	setup_rect_table.3094				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	lw	r2, 1(r3)
+	lw	r5, 2(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16135:
+	addi	r1, r2, -1
+	bgei	0, r1, bge_then.16138
+	jr	r31				#
+bge_then.16138:
+	addi	r2, r0, 1				# set min_caml_objects
+	add	r30, r2, r1
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	lw	r6, 1(r5)
+	lw	r7, 0(r5)
+	lw	r8, 1(r2)
+	beqi	1, r8, beq_then.16140
+	beqi	2, r8, beq_then.16142
 	sw	r1, 3(r3)
-	add	r1, r0, r2
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	d_vec.2977				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
-	lw	r2, 1(r3)
-	sw	r1, 4(r3)
-	add	r1, r0, r2
-	sw	r31, 5(r3)
-	addi	r3, r3, 6
-	jal	o_form.2918				
-	addi	r3, r3, -6
-	lw	r31, 5(r3)
-	beqi	1, r1, beq_then.8534
-	beqi	2, r1, beq_then.8536
-	lw	r1, 4(r3)
-	lw	r2, 1(r3)
+	sw	r6, 4(r3)
+	add	r1, r0, r7
 	sw	r31, 5(r3)
 	addi	r3, r3, 6
 	jal	setup_second_table.3100				
 	addi	r3, r3, -6
 	lw	r31, 5(r3)
-	lw	r2, 0(r3)
-	lw	r5, 3(r3)
+	lw	r2, 3(r3)
+	lw	r5, 4(r3)
 	add	r30, r5, r2
 	sw	r1, 0(r30)
-	j	beq_cont.8537
-beq_then.8536:
-	lw	r1, 4(r3)
-	lw	r2, 1(r3)
+	j	beq_cont.16143
+beq_then.16142:
+	sw	r1, 3(r3)
+	sw	r6, 4(r3)
+	add	r1, r0, r7
 	sw	r31, 5(r3)
 	addi	r3, r3, 6
 	jal	setup_surface_table.3097				
 	addi	r3, r3, -6
 	lw	r31, 5(r3)
-	lw	r2, 0(r3)
-	lw	r5, 3(r3)
+	lw	r2, 3(r3)
+	lw	r5, 4(r3)
 	add	r30, r5, r2
 	sw	r1, 0(r30)
-beq_cont.8537:
-	j	beq_cont.8535
-beq_then.8534:
-	lw	r1, 4(r3)
-	lw	r2, 1(r3)
+beq_cont.16143:
+	j	beq_cont.16141
+beq_then.16140:
+	sw	r1, 3(r3)
+	sw	r6, 4(r3)
+	add	r1, r0, r7
 	sw	r31, 5(r3)
 	addi	r3, r3, 6
 	jal	setup_rect_table.3094				
 	addi	r3, r3, -6
 	lw	r31, 5(r3)
-	lw	r2, 0(r3)
-	lw	r5, 3(r3)
+	lw	r2, 3(r3)
+	lw	r5, 4(r3)
 	add	r30, r5, r2
 	sw	r1, 0(r30)
-beq_cont.8535:
+beq_cont.16141:
 	addi	r2, r2, -1
-	lw	r1, 2(r3)
+	lw	r1, 0(r3)
 	j	iter_setup_dirvec_constants.3103
 setup_dirvec_constants.3106:
 	lw	r2, 0(r0)
 	addi	r2, r2, -1
+	bgei	0, r2, bge_then.16144
+	jr	r31				#
+bge_then.16144:
+	addi	r5, r0, 1				# set min_caml_objects
+	lw	r6, 1(r1)
+	lw	r7, 0(r1)
+	add	r30, r5, r2
+	lw	r5, 0(r30)
+	lw	r8, 1(r5)
+	sw	r1, 0(r3)
+	beqi	1, r8, beq_then.16146
+	beqi	2, r8, beq_then.16148
+	sw	r2, 1(r3)
+	sw	r6, 2(r3)
+	add	r2, r0, r5
+	add	r1, r0, r7
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	setup_second_table.3100				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	lw	r2, 1(r3)
+	lw	r5, 2(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+	j	beq_cont.16149
+beq_then.16148:
+	sw	r2, 1(r3)
+	sw	r6, 2(r3)
+	add	r2, r0, r5
+	add	r1, r0, r7
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	setup_surface_table.3097				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	lw	r2, 1(r3)
+	lw	r5, 2(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16149:
+	j	beq_cont.16147
+beq_then.16146:
+	sw	r2, 1(r3)
+	sw	r6, 2(r3)
+	add	r2, r0, r5
+	add	r1, r0, r7
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	setup_rect_table.3094				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	lw	r2, 1(r3)
+	lw	r5, 2(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16147:
+	addi	r2, r2, -1
+	lw	r1, 0(r3)
 	j	iter_setup_dirvec_constants.3103
 setup_startp_constants.3108:
-	bgei	0, r2, bge_then.8538
+	bgei	0, r2, bge_then.16150
 	jr	r31				#
-bge_then.8538:
+bge_then.16150:
 	addi	r5, r0, 1				# set min_caml_objects
 	add	r30, r5, r2
 	lw	r5, 0(r30)
-	sw	r2, 0(r3)
-	sw	r1, 1(r3)
-	sw	r5, 2(r3)
-	add	r1, r0, r5
-	sw	r31, 3(r3)
-	addi	r3, r3, 4
-	jal	o_param_ctbl.2956				
-	addi	r3, r3, -4
-	lw	r31, 3(r3)
-	lw	r2, 2(r3)
-	sw	r1, 3(r3)
-	add	r1, r0, r2
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	o_form.2918				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
-	lw	r2, 1(r3)
-	flw	f1, 0(r2)
-	lw	r5, 2(r3)
-	sw	r1, 4(r3)
-	fsw	f1, 6(r3)
-	add	r1, r0, r5
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	o_param_x.2934				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	flw	f2, 6(r3)
-	fsub	f1, f2, f1
-	lw	r1, 3(r3)
-	fsw	f1, 0(r1)
-	lw	r2, 1(r3)
-	flw	f1, 1(r2)
-	lw	r5, 2(r3)
-	fsw	f1, 8(r3)
-	add	r1, r0, r5
-	sw	r31, 10(r3)
-	addi	r3, r3, 11
-	jal	o_param_y.2936				
-	addi	r3, r3, -11
-	lw	r31, 10(r3)
-	flw	f2, 8(r3)
-	fsub	f1, f2, f1
-	lw	r1, 3(r3)
-	fsw	f1, 1(r1)
-	lw	r2, 1(r3)
-	flw	f1, 2(r2)
-	lw	r5, 2(r3)
-	fsw	f1, 10(r3)
-	add	r1, r0, r5
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	o_param_z.2938				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	flw	f2, 10(r3)
-	fsub	f1, f2, f1
-	lw	r1, 3(r3)
-	fsw	f1, 2(r1)
-	lw	r2, 4(r3)
-	beqi	2, r2, beq_then.8541
-	blei	2, r2, ble_then.8543
+	lw	r6, 10(r5)
+	lw	r7, 1(r5)
 	flw	f1, 0(r1)
-	flw	f2, 1(r1)
-	flw	f3, 2(r1)
-	lw	r5, 2(r3)
-	add	r1, r0, r5
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	quadratic.3031				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	lw	r1, 4(r3)
-	beqi	3, r1, beq_then.8545
-	j	beq_cont.8546
-beq_then.8545:
-	flup	f2, 2		# fli	f2, 1.000000
+	lw	r8, 5(r5)
+	flw	f2, 0(r8)
 	fsub	f1, f1, f2
-beq_cont.8546:
-	lw	r1, 3(r3)
-	fsw	f1, 3(r1)
-	j	ble_cont.8544
-ble_then.8543:
-ble_cont.8544:
-	j	beq_cont.8542
-beq_then.8541:
-	lw	r2, 2(r3)
-	add	r1, r0, r2
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	o_param_abc.2932				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	lw	r2, 3(r3)
-	flw	f1, 0(r2)
-	flw	f2, 1(r2)
-	flw	f3, 2(r2)
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	veciprod2.2894				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	lw	r1, 3(r3)
-	fsw	f1, 3(r1)
-beq_cont.8542:
-	lw	r1, 0(r3)
-	addi	r2, r1, -1
-	lw	r1, 1(r3)
-	j	setup_startp_constants.3108
-setup_startp.3111:
-	lw	r2, 0(r0)
-	addi	r5, r0, 751				# set min_caml_startp_fast
+	fsw	f1, 0(r6)
+	flw	f1, 1(r1)
+	lw	r8, 5(r5)
+	flw	f2, 1(r8)
+	fsub	f1, f1, f2
+	fsw	f1, 1(r6)
+	flw	f1, 2(r1)
+	lw	r8, 5(r5)
+	flw	f2, 2(r8)
+	fsub	f1, f1, f2
+	fsw	f1, 2(r6)
 	sw	r1, 0(r3)
 	sw	r2, 1(r3)
-	add	r2, r0, r1
+	beqi	2, r7, beq_then.16152
+	blei	2, r7, ble_then.16154
+	flw	f1, 0(r6)
+	flw	f2, 1(r6)
+	flw	f3, 2(r6)
+	sw	r6, 2(r3)
+	sw	r7, 3(r3)
 	add	r1, r0, r5
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	veccpy.2880				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	quadratic.3031				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	lw	r1, 3(r3)
+	beqi	3, r1, beq_then.16156
+	j	beq_cont.16157
+beq_then.16156:
+	flup	f2, 2		# fli	f2, 1.000000
+	fsub	f1, f1, f2
+beq_cont.16157:
+	lw	r1, 2(r3)
+	fsw	f1, 3(r1)
+	j	ble_cont.16155
+ble_then.16154:
+ble_cont.16155:
+	j	beq_cont.16153
+beq_then.16152:
+	lw	r5, 4(r5)
+	flw	f1, 0(r6)
+	flw	f2, 1(r6)
+	flw	f3, 2(r6)
+	flw	f4, 0(r5)
+	fmul	f1, f4, f1
+	flw	f4, 1(r5)
+	fmul	f2, f4, f2
+	fadd	f1, f1, f2
+	flw	f2, 2(r5)
+	fmul	f2, f2, f3
+	fadd	f1, f1, f2
+	fsw	f1, 3(r6)
+beq_cont.16153:
 	lw	r1, 1(r3)
 	addi	r2, r1, -1
 	lw	r1, 0(r3)
 	j	setup_startp_constants.3108
+setup_startp.3111:
+	flw	f1, 0(r1)
+	fsw	f1, 751(r0)
+	flw	f1, 1(r1)
+	fsw	f1, 752(r0)
+	flw	f1, 2(r1)
+	fsw	f1, 753(r0)
+	lw	r2, 0(r0)
+	addi	r2, r2, -1
+	j	setup_startp_constants.3108
 is_rect_outside.3113:
-	fsw	f3, 0(r3)
-	fsw	f2, 2(r3)
-	sw	r1, 4(r3)
-	fsw	f1, 6(r3)
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	o_param_a.2926				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	flw	f2, 6(r3)
-	fsw	f1, 8(r3)
-	fadd	f1, f0, f2
-	sw	r31, 10(r3)
-	addi	r3, r3, 11
-	jal	fabs.2816				
-	addi	r3, r3, -11
-	lw	r31, 10(r3)
-	flw	f2, 8(r3)
-	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8548
-	addi	r1, r0, 0
-	j	fle_cont.8549
-fle_else.8548:
-	lw	r1, 4(r3)
-	sw	r31, 10(r3)
-	addi	r3, r3, 11
-	jal	o_param_b.2928				
-	addi	r3, r3, -11
-	lw	r31, 10(r3)
-	flw	f2, 2(r3)
-	fsw	f1, 10(r3)
-	fadd	f1, f0, f2
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	fabs.2816				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	flw	f2, 10(r3)
-	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8550
-	addi	r1, r0, 0
-	j	fle_cont.8551
-fle_else.8550:
-	lw	r1, 4(r3)
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	o_param_c.2930				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	flw	f2, 0(r3)
-	fsw	f1, 12(r3)
-	fadd	f1, f0, f2
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	fabs.2816				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	flw	f2, 12(r3)
-	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8552
-	addi	r1, r0, 0
-	j	fle_cont.8553
-fle_else.8552:
-	addi	r1, r0, 1
-fle_cont.8553:
-fle_cont.8551:
-fle_cont.8549:
-	beqi	0, r1, beq_then.8554
-	lw	r1, 4(r3)
-	j	o_isinvert.2922
-beq_then.8554:
-	lw	r1, 4(r3)
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	o_isinvert.2922				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	beqi	0, r1, beq_then.8555
+	lw	r2, 4(r1)
+	flw	f4, 0(r2)
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16158
+	j	fle_cont.16159
+fle_else.16158:
+	fneg	f1, f1
+fle_cont.16159:
+	fle	r30, f4, f1
+	beq	r0, r30, fle_else.16160
+	addi	r2, r0, 0
+	j	fle_cont.16161
+fle_else.16160:
+	lw	r2, 4(r1)
+	flw	f1, 1(r2)
+	fle	r30, f0, f2
+	beq	r0, r30, fle_else.16162
+	j	fle_cont.16163
+fle_else.16162:
+	fneg	f2, f2
+fle_cont.16163:
+	fle	r30, f1, f2
+	beq	r0, r30, fle_else.16164
+	addi	r2, r0, 0
+	j	fle_cont.16165
+fle_else.16164:
+	lw	r2, 4(r1)
+	flw	f1, 2(r2)
+	fle	r30, f0, f3
+	beq	r0, r30, fle_else.16166
+	fadd	f2, f0, f3
+	j	fle_cont.16167
+fle_else.16166:
+	fneg	f2, f3
+fle_cont.16167:
+	fle	r30, f1, f2
+	beq	r0, r30, fle_else.16168
+	addi	r2, r0, 0
+	j	fle_cont.16169
+fle_else.16168:
+	addi	r2, r0, 1
+fle_cont.16169:
+fle_cont.16165:
+fle_cont.16161:
+	beqi	0, r2, beq_then.16170
+	lw	r1, 6(r1)
+	jr	r31				#
+beq_then.16170:
+	lw	r1, 6(r1)
+	beqi	0, r1, beq_then.16171
 	addi	r1, r0, 0
 	jr	r31				#
-beq_then.8555:
+beq_then.16171:
 	addi	r1, r0, 1
 	jr	r31				#
 is_plane_outside.3118:
-	sw	r1, 0(r3)
-	fsw	f3, 2(r3)
-	fsw	f2, 4(r3)
-	fsw	f1, 6(r3)
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	o_param_abc.2932				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	flw	f1, 6(r3)
-	flw	f2, 4(r3)
-	flw	f3, 2(r3)
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	veciprod2.2894				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	lw	r1, 0(r3)
-	fsw	f1, 8(r3)
-	sw	r31, 10(r3)
-	addi	r3, r3, 11
-	jal	o_isinvert.2922				
-	addi	r3, r3, -11
-	lw	r31, 10(r3)
-	flw	f1, 8(r3)
-	sw	r1, 10(r3)
-	sw	r31, 11(r3)
-	addi	r3, r3, 12
-	jal	fisneg.2805				
-	addi	r3, r3, -12
-	lw	r31, 11(r3)
-	add	r2, r0, r1
-	lw	r1, 10(r3)
-	sw	r31, 11(r3)
-	addi	r3, r3, 12
-	jal	xor.2859				
-	addi	r3, r3, -12
-	lw	r31, 11(r3)
-	beqi	0, r1, beq_then.8557
+	lw	r2, 4(r1)
+	lw	r1, 6(r1)
+	flw	f4, 0(r2)
+	fmul	f1, f4, f1
+	flw	f4, 1(r2)
+	fmul	f2, f4, f2
+	fadd	f1, f1, f2
+	flw	f2, 2(r2)
+	fmul	f2, f2, f3
+	fadd	f1, f1, f2
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16172
+	addi	r2, r0, 0
+	j	fle_cont.16173
+fle_else.16172:
+	addi	r2, r0, 1
+fle_cont.16173:
+	beqi	0, r1, beq_then.16174
+	beqi	0, r2, beq_then.16176
+	addi	r1, r0, 0
+	j	beq_cont.16177
+beq_then.16176:
+	addi	r1, r0, 1
+beq_cont.16177:
+	j	beq_cont.16175
+beq_then.16174:
+	add	r1, r0, r2
+beq_cont.16175:
+	beqi	0, r1, beq_then.16178
 	addi	r1, r0, 0
 	jr	r31				#
-beq_then.8557:
+beq_then.16178:
 	addi	r1, r0, 1
 	jr	r31				#
 is_second_outside.3123:
@@ -5242,230 +5655,508 @@ is_second_outside.3123:
 	addi	r3, r3, -2
 	lw	r31, 1(r3)
 	lw	r1, 0(r3)
-	fsw	f1, 2(r3)
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	o_form.2918				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
-	beqi	3, r1, beq_then.8559
-	flw	f1, 2(r3)
-	j	beq_cont.8560
-beq_then.8559:
-	flup	f1, 2		# fli	f1, 1.000000
-	flw	f2, 2(r3)
-	fsub	f1, f2, f1
-beq_cont.8560:
-	lw	r1, 0(r3)
-	fsw	f1, 4(r3)
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	o_isinvert.2922				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	flw	f1, 4(r3)
-	sw	r1, 6(r3)
-	sw	r31, 7(r3)
-	addi	r3, r3, 8
-	jal	fisneg.2805				
-	addi	r3, r3, -8
-	lw	r31, 7(r3)
-	add	r2, r0, r1
-	lw	r1, 6(r3)
-	sw	r31, 7(r3)
-	addi	r3, r3, 8
-	jal	xor.2859				
-	addi	r3, r3, -8
-	lw	r31, 7(r3)
-	beqi	0, r1, beq_then.8561
+	lw	r2, 1(r1)
+	beqi	3, r2, beq_then.16179
+	j	beq_cont.16180
+beq_then.16179:
+	flup	f2, 2		# fli	f2, 1.000000
+	fsub	f1, f1, f2
+beq_cont.16180:
+	lw	r1, 6(r1)
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16181
+	addi	r2, r0, 0
+	j	fle_cont.16182
+fle_else.16181:
+	addi	r2, r0, 1
+fle_cont.16182:
+	beqi	0, r1, beq_then.16183
+	beqi	0, r2, beq_then.16185
+	addi	r1, r0, 0
+	j	beq_cont.16186
+beq_then.16185:
+	addi	r1, r0, 1
+beq_cont.16186:
+	j	beq_cont.16184
+beq_then.16183:
+	add	r1, r0, r2
+beq_cont.16184:
+	beqi	0, r1, beq_then.16187
 	addi	r1, r0, 0
 	jr	r31				#
-beq_then.8561:
+beq_then.16187:
 	addi	r1, r0, 1
 	jr	r31				#
 is_outside.3128:
-	fsw	f3, 0(r3)
-	fsw	f2, 2(r3)
-	sw	r1, 4(r3)
-	fsw	f1, 6(r3)
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	o_param_x.2934				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	flw	f2, 6(r3)
-	fsub	f1, f2, f1
-	lw	r1, 4(r3)
-	fsw	f1, 8(r3)
-	sw	r31, 10(r3)
-	addi	r3, r3, 11
-	jal	o_param_y.2936				
-	addi	r3, r3, -11
-	lw	r31, 10(r3)
-	flw	f2, 2(r3)
-	fsub	f1, f2, f1
-	lw	r1, 4(r3)
-	fsw	f1, 10(r3)
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	o_param_z.2938				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	flw	f2, 0(r3)
-	fsub	f1, f2, f1
-	lw	r1, 4(r3)
-	fsw	f1, 12(r3)
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	o_form.2918				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	beqi	1, r1, beq_then.8563
-	beqi	2, r1, beq_then.8564
-	flw	f1, 8(r3)
-	flw	f2, 10(r3)
-	flw	f3, 12(r3)
-	lw	r1, 4(r3)
-	j	is_second_outside.3123
-beq_then.8564:
-	flw	f1, 8(r3)
-	flw	f2, 10(r3)
-	flw	f3, 12(r3)
-	lw	r1, 4(r3)
-	j	is_plane_outside.3118
-beq_then.8563:
-	flw	f1, 8(r3)
-	flw	f2, 10(r3)
-	flw	f3, 12(r3)
-	lw	r1, 4(r3)
-	j	is_rect_outside.3113
+	lw	r2, 5(r1)
+	lw	r5, 5(r1)
+	lw	r6, 5(r1)
+	lw	r7, 1(r1)
+	flw	f4, 0(r2)
+	fsub	f1, f1, f4
+	flw	f4, 1(r5)
+	fsub	f2, f2, f4
+	flw	f4, 2(r6)
+	fsub	f3, f3, f4
+	beqi	1, r7, beq_then.16188
+	beqi	2, r7, beq_then.16189
+	sw	r1, 0(r3)
+	sw	r31, 1(r3)
+	addi	r3, r3, 2
+	jal	quadratic.3031				
+	addi	r3, r3, -2
+	lw	r31, 1(r3)
+	lw	r1, 0(r3)
+	lw	r2, 1(r1)
+	beqi	3, r2, beq_then.16190
+	j	beq_cont.16191
+beq_then.16190:
+	flup	f2, 2		# fli	f2, 1.000000
+	fsub	f1, f1, f2
+beq_cont.16191:
+	lw	r1, 6(r1)
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16192
+	addi	r2, r0, 0
+	j	fle_cont.16193
+fle_else.16192:
+	addi	r2, r0, 1
+fle_cont.16193:
+	beqi	0, r1, beq_then.16194
+	beqi	0, r2, beq_then.16196
+	addi	r1, r0, 0
+	j	beq_cont.16197
+beq_then.16196:
+	addi	r1, r0, 1
+beq_cont.16197:
+	j	beq_cont.16195
+beq_then.16194:
+	add	r1, r0, r2
+beq_cont.16195:
+	beqi	0, r1, beq_then.16198
+	addi	r1, r0, 0
+	jr	r31				#
+beq_then.16198:
+	addi	r1, r0, 1
+	jr	r31				#
+beq_then.16189:
+	lw	r2, 4(r1)
+	flw	f4, 0(r2)
+	fmul	f1, f4, f1
+	flw	f4, 1(r2)
+	fmul	f2, f4, f2
+	fadd	f1, f1, f2
+	flw	f2, 2(r2)
+	fmul	f2, f2, f3
+	fadd	f1, f1, f2
+	lw	r1, 6(r1)
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16199
+	addi	r2, r0, 0
+	j	fle_cont.16200
+fle_else.16199:
+	addi	r2, r0, 1
+fle_cont.16200:
+	beqi	0, r1, beq_then.16201
+	beqi	0, r2, beq_then.16203
+	addi	r1, r0, 0
+	j	beq_cont.16204
+beq_then.16203:
+	addi	r1, r0, 1
+beq_cont.16204:
+	j	beq_cont.16202
+beq_then.16201:
+	add	r1, r0, r2
+beq_cont.16202:
+	beqi	0, r1, beq_then.16205
+	addi	r1, r0, 0
+	jr	r31				#
+beq_then.16205:
+	addi	r1, r0, 1
+	jr	r31				#
+beq_then.16188:
+	lw	r2, 4(r1)
+	flw	f4, 0(r2)
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16206
+	j	fle_cont.16207
+fle_else.16206:
+	fneg	f1, f1
+fle_cont.16207:
+	fle	r30, f4, f1
+	beq	r0, r30, fle_else.16208
+	addi	r2, r0, 0
+	j	fle_cont.16209
+fle_else.16208:
+	lw	r2, 4(r1)
+	flw	f1, 1(r2)
+	fle	r30, f0, f2
+	beq	r0, r30, fle_else.16210
+	j	fle_cont.16211
+fle_else.16210:
+	fneg	f2, f2
+fle_cont.16211:
+	fle	r30, f1, f2
+	beq	r0, r30, fle_else.16212
+	addi	r2, r0, 0
+	j	fle_cont.16213
+fle_else.16212:
+	lw	r2, 4(r1)
+	flw	f1, 2(r2)
+	fle	r30, f0, f3
+	beq	r0, r30, fle_else.16214
+	fadd	f2, f0, f3
+	j	fle_cont.16215
+fle_else.16214:
+	fneg	f2, f3
+fle_cont.16215:
+	fle	r30, f1, f2
+	beq	r0, r30, fle_else.16216
+	addi	r2, r0, 0
+	j	fle_cont.16217
+fle_else.16216:
+	addi	r2, r0, 1
+fle_cont.16217:
+fle_cont.16213:
+fle_cont.16209:
+	beqi	0, r2, beq_then.16218
+	lw	r1, 6(r1)
+	jr	r31				#
+beq_then.16218:
+	lw	r1, 6(r1)
+	beqi	0, r1, beq_then.16219
+	addi	r1, r0, 0
+	jr	r31				#
+beq_then.16219:
+	addi	r1, r0, 1
+	jr	r31				#
 check_all_inside.3133:
 	add	r30, r2, r1
 	lw	r5, 0(r30)
-	beqi	-1, r5, beq_then.8565
+	beqi	-1, r5, beq_then.16220
 	addi	r6, r0, 1				# set min_caml_objects
 	add	r30, r6, r5
 	lw	r5, 0(r30)
+	lw	r6, 5(r5)
+	flw	f4, 0(r6)
+	fsub	f4, f1, f4
+	lw	r6, 5(r5)
+	flw	f5, 1(r6)
+	fsub	f5, f2, f5
+	lw	r6, 5(r5)
+	flw	f6, 2(r6)
+	fsub	f6, f3, f6
+	lw	r6, 1(r5)
 	fsw	f3, 0(r3)
 	fsw	f2, 2(r3)
 	fsw	f1, 4(r3)
 	sw	r2, 6(r3)
 	sw	r1, 7(r3)
+	beqi	1, r6, beq_then.16221
+	beqi	2, r6, beq_then.16223
+	sw	r5, 8(r3)
 	add	r1, r0, r5
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	is_outside.3128				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	beqi	0, r1, beq_then.8566
+	fadd	f3, f0, f6
+	fadd	f2, f0, f5
+	fadd	f1, f0, f4
+	sw	r31, 9(r3)
+	addi	r3, r3, 10
+	jal	quadratic.3031				
+	addi	r3, r3, -10
+	lw	r31, 9(r3)
+	lw	r1, 8(r3)
+	lw	r2, 1(r1)
+	beqi	3, r2, beq_then.16225
+	j	beq_cont.16226
+beq_then.16225:
+	flup	f2, 2		# fli	f2, 1.000000
+	fsub	f1, f1, f2
+beq_cont.16226:
+	lw	r1, 6(r1)
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16227
+	addi	r2, r0, 0
+	j	fle_cont.16228
+fle_else.16227:
+	addi	r2, r0, 1
+fle_cont.16228:
+	beqi	0, r1, beq_then.16229
+	beqi	0, r2, beq_then.16231
+	addi	r1, r0, 0
+	j	beq_cont.16232
+beq_then.16231:
+	addi	r1, r0, 1
+beq_cont.16232:
+	j	beq_cont.16230
+beq_then.16229:
+	add	r1, r0, r2
+beq_cont.16230:
+	beqi	0, r1, beq_then.16233
+	addi	r1, r0, 0
+	j	beq_cont.16234
+beq_then.16233:
+	addi	r1, r0, 1
+beq_cont.16234:
+	j	beq_cont.16224
+beq_then.16223:
+	lw	r6, 4(r5)
+	flw	f7, 0(r6)
+	fmul	f4, f7, f4
+	flw	f7, 1(r6)
+	fmul	f5, f7, f5
+	fadd	f4, f4, f5
+	flw	f5, 2(r6)
+	fmul	f5, f5, f6
+	fadd	f4, f4, f5
+	lw	r5, 6(r5)
+	fle	r30, f0, f4
+	beq	r0, r30, fle_else.16235
+	addi	r6, r0, 0
+	j	fle_cont.16236
+fle_else.16235:
+	addi	r6, r0, 1
+fle_cont.16236:
+	beqi	0, r5, beq_then.16237
+	beqi	0, r6, beq_then.16239
+	addi	r5, r0, 0
+	j	beq_cont.16240
+beq_then.16239:
+	addi	r5, r0, 1
+beq_cont.16240:
+	j	beq_cont.16238
+beq_then.16237:
+	add	r5, r0, r6
+beq_cont.16238:
+	beqi	0, r5, beq_then.16241
+	addi	r1, r0, 0
+	j	beq_cont.16242
+beq_then.16241:
+	addi	r1, r0, 1
+beq_cont.16242:
+beq_cont.16224:
+	j	beq_cont.16222
+beq_then.16221:
+	add	r1, r0, r5
+	fadd	f3, f0, f6
+	fadd	f2, f0, f5
+	fadd	f1, f0, f4
+	sw	r31, 9(r3)
+	addi	r3, r3, 10
+	jal	is_rect_outside.3113				
+	addi	r3, r3, -10
+	lw	r31, 9(r3)
+beq_cont.16222:
+	beqi	0, r1, beq_then.16243
 	addi	r1, r0, 0
 	jr	r31				#
-beq_then.8566:
+beq_then.16243:
 	lw	r1, 7(r3)
+	addi	r1, r1, 1
+	lw	r2, 6(r3)
+	add	r30, r2, r1
+	lw	r5, 0(r30)
+	beqi	-1, r5, beq_then.16244
+	addi	r6, r0, 1				# set min_caml_objects
+	add	r30, r6, r5
+	lw	r5, 0(r30)
+	flw	f1, 4(r3)
+	flw	f2, 2(r3)
+	flw	f3, 0(r3)
+	sw	r1, 9(r3)
+	add	r1, r0, r5
+	sw	r31, 10(r3)
+	addi	r3, r3, 11
+	jal	is_outside.3128				
+	addi	r3, r3, -11
+	lw	r31, 10(r3)
+	beqi	0, r1, beq_then.16245
+	addi	r1, r0, 0
+	jr	r31				#
+beq_then.16245:
+	lw	r1, 9(r3)
 	addi	r1, r1, 1
 	flw	f1, 4(r3)
 	flw	f2, 2(r3)
 	flw	f3, 0(r3)
 	lw	r2, 6(r3)
 	j	check_all_inside.3133
-beq_then.8565:
+beq_then.16244:
+	addi	r1, r0, 1
+	jr	r31				#
+beq_then.16220:
 	addi	r1, r0, 1
 	jr	r31				#
 shadow_check_and_group.3139:
 	add	r30, r2, r1
 	lw	r5, 0(r30)
-	beqi	-1, r5, beq_then.8567
+	beqi	-1, r5, beq_then.16246
 	add	r30, r2, r1
 	lw	r5, 0(r30)
-	addi	r6, r0, 1021				# set min_caml_light_dirvec
-	addi	r7, r0, 727				# set min_caml_intersection_point
-	flw	f1, 724(r0)
+	addi	r6, r0, 1				# set min_caml_objects
+	addi	r7, r0, 1021				# set min_caml_light_dirvec
+	flw	f1, 727(r0)
+	flw	f2, 728(r0)
+	flw	f3, 729(r0)
+	add	r30, r6, r5
+	lw	r6, 0(r30)
+	lw	r8, 5(r6)
+	flw	f4, 0(r8)
+	fsub	f1, f1, f4
+	lw	r8, 5(r6)
+	flw	f4, 1(r8)
+	fsub	f2, f2, f4
+	lw	r8, 5(r6)
+	flw	f4, 2(r8)
+	fsub	f3, f3, f4
+	lw	r8, 1(r7)
+	add	r30, r8, r5
+	lw	r8, 0(r30)
+	lw	r9, 1(r6)
 	sw	r2, 0(r3)
 	sw	r1, 1(r3)
 	sw	r5, 2(r3)
-	fsw	f1, 4(r3)
-	add	r2, r0, r6
-	add	r1, r0, r5
-	add	r5, r0, r7
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	solver_fast.3073				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	beqi	0, r1, beq_then.8569
-	flup	f1, 28		# fli	f1, -0.200000
-	flw	f2, 4(r3)
-	fle	r30, f1, f2
-	beq	r0, r30, fle_else.8571
-	addi	r1, r0, 0
-	j	fle_cont.8572
-fle_else.8571:
-	addi	r1, r0, 1
-fle_cont.8572:
-	j	beq_cont.8570
-beq_then.8569:
-	addi	r1, r0, 0
-beq_cont.8570:
-	beqi	0, r1, beq_then.8573
-	flup	f1, 29		# fli	f1, 0.010000
-	flw	f2, 667(r0)
-	flw	f3, 668(r0)
-	flw	f4, 669(r0)
-	flw	f5, 727(r0)
-	flw	f6, 728(r0)
-	flw	f7, 729(r0)
-	addi	r1, r0, 0
-	flw	f8, 4(r3)
-	fadd	f1, f8, f1
-	fmul	f2, f2, f1
-	fadd	f2, f2, f5
-	fmul	f3, f3, f1
-	fadd	f3, f3, f6
+	beqi	1, r9, beq_then.16247
+	beqi	2, r9, beq_then.16249
+	add	r2, r0, r8
+	add	r1, r0, r6
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	solver_second_fast.3067				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	j	beq_cont.16250
+beq_then.16249:
+	flw	f4, 0(r8)
+	fle	r30, f0, f4
+	beq	r0, r30, fle_else.16251
+	addi	r6, r0, 0
+	j	fle_cont.16252
+fle_else.16251:
+	addi	r6, r0, 1
+fle_cont.16252:
+	beqi	0, r6, beq_then.16253
+	flw	f4, 1(r8)
 	fmul	f1, f4, f1
-	fadd	f1, f1, f7
+	flw	f4, 2(r8)
+	fmul	f2, f4, f2
+	fadd	f1, f1, f2
+	flw	f2, 3(r8)
+	fmul	f2, f2, f3
+	fadd	f1, f1, f2
+	fsw	f1, 724(r0)
+	addi	r1, r0, 1
+	j	beq_cont.16254
+beq_then.16253:
+	addi	r1, r0, 0
+beq_cont.16254:
+beq_cont.16250:
+	j	beq_cont.16248
+beq_then.16247:
+	lw	r7, 0(r7)
+	add	r5, r0, r8
+	add	r2, r0, r7
+	add	r1, r0, r6
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	solver_rect_fast.3054				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+beq_cont.16248:
+	flw	f1, 724(r0)
+	beqi	0, r1, beq_then.16255
+	flup	f2, 28		# fli	f2, -0.200000
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.16257
+	addi	r1, r0, 0
+	j	fle_cont.16258
+fle_else.16257:
+	addi	r1, r0, 1
+fle_cont.16258:
+	j	beq_cont.16256
+beq_then.16255:
+	addi	r1, r0, 0
+beq_cont.16256:
+	beqi	0, r1, beq_then.16259
+	flup	f2, 29		# fli	f2, 0.010000
+	flw	f3, 667(r0)
+	flw	f4, 668(r0)
+	flw	f5, 669(r0)
+	flw	f6, 727(r0)
+	flw	f7, 728(r0)
+	flw	f8, 729(r0)
 	lw	r2, 0(r3)
+	lw	r1, 0(r2)
+	fadd	f1, f1, f2
+	fmul	f2, f3, f1
+	fadd	f2, f2, f6
+	fmul	f3, f4, f1
+	fadd	f3, f3, f7
+	fmul	f1, f5, f1
+	fadd	f1, f1, f8
+	beqi	-1, r1, beq_then.16260
+	addi	r5, r0, 1				# set min_caml_objects
+	add	r30, r5, r1
+	lw	r1, 0(r30)
+	fsw	f1, 4(r3)
+	fsw	f3, 6(r3)
+	fsw	f2, 8(r3)
 	fadd	f30, f0, f3
 	fadd	f3, f0, f1
 	fadd	f1, f0, f2
 	fadd	f2, f0, f30
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
+	sw	r31, 10(r3)
+	addi	r3, r3, 11
+	jal	is_outside.3128				
+	addi	r3, r3, -11
+	lw	r31, 10(r3)
+	beqi	0, r1, beq_then.16263
+	addi	r1, r0, 0
+	j	beq_cont.16264
+beq_then.16263:
+	addi	r1, r0, 1
+	flw	f1, 8(r3)
+	flw	f2, 6(r3)
+	flw	f3, 4(r3)
+	lw	r2, 0(r3)
+	sw	r31, 10(r3)
+	addi	r3, r3, 11
 	jal	check_all_inside.3133				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	beqi	0, r1, beq_then.8574
+	addi	r3, r3, -11
+	lw	r31, 10(r3)
+beq_cont.16264:
+	j	beq_cont.16261
+beq_then.16260:
+	addi	r1, r0, 1
+beq_cont.16261:
+	beqi	0, r1, beq_then.16265
 	addi	r1, r0, 1
 	jr	r31				#
-beq_then.8574:
+beq_then.16265:
 	lw	r1, 1(r3)
 	addi	r1, r1, 1
 	lw	r2, 0(r3)
 	j	shadow_check_and_group.3139
-beq_then.8573:
+beq_then.16259:
 	addi	r1, r0, 1				# set min_caml_objects
 	lw	r2, 2(r3)
 	add	r30, r1, r2
 	lw	r1, 0(r30)
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	o_isinvert.2922				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	beqi	0, r1, beq_then.8575
+	lw	r1, 6(r1)
+	beqi	0, r1, beq_then.16266
 	lw	r1, 1(r3)
 	addi	r1, r1, 1
 	lw	r2, 0(r3)
 	j	shadow_check_and_group.3139
-beq_then.8575:
+beq_then.16266:
 	addi	r1, r0, 0
 	jr	r31				#
-beq_then.8567:
+beq_then.16246:
 	addi	r1, r0, 0
 	jr	r31				#
 shadow_check_one_or_group.3142:
 	add	r30, r2, r1
 	lw	r5, 0(r30)
-	beqi	-1, r5, beq_then.8576
+	beqi	-1, r5, beq_then.16267
 	addi	r6, r0, 672				# set min_caml_and_net
 	addi	r7, r0, 0
 	add	r30, r6, r5
@@ -5479,128 +6170,481 @@ shadow_check_one_or_group.3142:
 	jal	shadow_check_and_group.3139				
 	addi	r3, r3, -3
 	lw	r31, 2(r3)
-	beqi	0, r1, beq_then.8577
+	beqi	0, r1, beq_then.16268
 	addi	r1, r0, 1
 	jr	r31				#
-beq_then.8577:
+beq_then.16268:
 	lw	r1, 1(r3)
 	addi	r1, r1, 1
 	lw	r2, 0(r3)
+	add	r30, r2, r1
+	lw	r5, 0(r30)
+	beqi	-1, r5, beq_then.16269
+	addi	r6, r0, 672				# set min_caml_and_net
+	addi	r7, r0, 0
+	add	r30, r6, r5
+	lw	r5, 0(r30)
+	sw	r1, 2(r3)
+	add	r2, r0, r5
+	add	r1, r0, r7
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	shadow_check_and_group.3139				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	beqi	0, r1, beq_then.16270
+	addi	r1, r0, 1
+	jr	r31				#
+beq_then.16270:
+	lw	r1, 2(r3)
+	addi	r1, r1, 1
+	lw	r2, 0(r3)
+	add	r30, r2, r1
+	lw	r5, 0(r30)
+	beqi	-1, r5, beq_then.16271
+	addi	r6, r0, 672				# set min_caml_and_net
+	addi	r7, r0, 0
+	add	r30, r6, r5
+	lw	r5, 0(r30)
+	sw	r1, 3(r3)
+	add	r2, r0, r5
+	add	r1, r0, r7
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	shadow_check_and_group.3139				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	beqi	0, r1, beq_then.16272
+	addi	r1, r0, 1
+	jr	r31				#
+beq_then.16272:
+	lw	r1, 3(r3)
+	addi	r1, r1, 1
+	lw	r2, 0(r3)
+	add	r30, r2, r1
+	lw	r5, 0(r30)
+	beqi	-1, r5, beq_then.16273
+	addi	r6, r0, 672				# set min_caml_and_net
+	addi	r7, r0, 0
+	add	r30, r6, r5
+	lw	r5, 0(r30)
+	sw	r1, 4(r3)
+	add	r2, r0, r5
+	add	r1, r0, r7
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	shadow_check_and_group.3139				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	beqi	0, r1, beq_then.16274
+	addi	r1, r0, 1
+	jr	r31				#
+beq_then.16274:
+	lw	r1, 4(r3)
+	addi	r1, r1, 1
+	lw	r2, 0(r3)
 	j	shadow_check_one_or_group.3142
-beq_then.8576:
+beq_then.16273:
+	addi	r1, r0, 0
+	jr	r31				#
+beq_then.16271:
+	addi	r1, r0, 0
+	jr	r31				#
+beq_then.16269:
+	addi	r1, r0, 0
+	jr	r31				#
+beq_then.16267:
 	addi	r1, r0, 0
 	jr	r31				#
 shadow_check_one_or_matrix.3145:
 	add	r30, r2, r1
 	lw	r5, 0(r30)
 	lw	r6, 0(r5)
-	beqi	-1, r6, beq_then.8578
+	beqi	-1, r6, beq_then.16275
 	addi	r7, r0, 99
 	sw	r5, 0(r3)
 	sw	r2, 1(r3)
 	sw	r1, 2(r3)
-	beq	r6, r7, beq_then.8579
-	addi	r7, r0, 1021				# set min_caml_light_dirvec
-	addi	r8, r0, 727				# set min_caml_intersection_point
-	add	r5, r0, r8
-	add	r2, r0, r7
-	add	r1, r0, r6
+	beq	r6, r7, beq_then.16276
+	addi	r7, r0, 1				# set min_caml_objects
+	addi	r8, r0, 1021				# set min_caml_light_dirvec
+	flw	f1, 727(r0)
+	flw	f2, 728(r0)
+	flw	f3, 729(r0)
+	add	r30, r7, r6
+	lw	r7, 0(r30)
+	lw	r9, 5(r7)
+	flw	f4, 0(r9)
+	fsub	f1, f1, f4
+	lw	r9, 5(r7)
+	flw	f4, 1(r9)
+	fsub	f2, f2, f4
+	lw	r9, 5(r7)
+	flw	f4, 2(r9)
+	fsub	f3, f3, f4
+	lw	r9, 1(r8)
+	add	r30, r9, r6
+	lw	r6, 0(r30)
+	lw	r9, 1(r7)
+	beqi	1, r9, beq_then.16278
+	beqi	2, r9, beq_then.16280
+	add	r2, r0, r6
+	add	r1, r0, r7
 	sw	r31, 3(r3)
 	addi	r3, r3, 4
-	jal	solver_fast.3073				
+	jal	solver_second_fast.3067				
 	addi	r3, r3, -4
 	lw	r31, 3(r3)
-	beqi	0, r1, beq_then.8581
+	j	beq_cont.16281
+beq_then.16280:
+	flw	f4, 0(r6)
+	fle	r30, f0, f4
+	beq	r0, r30, fle_else.16282
+	addi	r7, r0, 0
+	j	fle_cont.16283
+fle_else.16282:
+	addi	r7, r0, 1
+fle_cont.16283:
+	beqi	0, r7, beq_then.16284
+	flw	f4, 1(r6)
+	fmul	f1, f4, f1
+	flw	f4, 2(r6)
+	fmul	f2, f4, f2
+	fadd	f1, f1, f2
+	flw	f2, 3(r6)
+	fmul	f2, f2, f3
+	fadd	f1, f1, f2
+	fsw	f1, 724(r0)
+	addi	r1, r0, 1
+	j	beq_cont.16285
+beq_then.16284:
+	addi	r1, r0, 0
+beq_cont.16285:
+beq_cont.16281:
+	j	beq_cont.16279
+beq_then.16278:
+	lw	r8, 0(r8)
+	add	r5, r0, r6
+	add	r2, r0, r8
+	add	r1, r0, r7
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	solver_rect_fast.3054				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+beq_cont.16279:
+	beqi	0, r1, beq_then.16286
 	flw	f1, 724(r0)
 	flup	f2, 30		# fli	f2, -0.100000
 	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8583
+	beq	r0, r30, fle_else.16288
 	addi	r1, r0, 0
-	j	fle_cont.8584
-fle_else.8583:
+	j	fle_cont.16289
+fle_else.16288:
+	lw	r1, 0(r3)
+	lw	r2, 1(r1)
+	beqi	-1, r2, beq_then.16290
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	add	r1, r0, r6
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	shadow_check_and_group.3139				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	beqi	0, r1, beq_then.16292
 	addi	r1, r0, 1
+	j	beq_cont.16293
+beq_then.16292:
+	lw	r1, 0(r3)
+	lw	r2, 2(r1)
+	beqi	-1, r2, beq_then.16294
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	add	r1, r0, r6
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	shadow_check_and_group.3139				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	beqi	0, r1, beq_then.16296
+	addi	r1, r0, 1
+	j	beq_cont.16297
+beq_then.16296:
+	lw	r1, 0(r3)
+	lw	r2, 3(r1)
+	beqi	-1, r2, beq_then.16298
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	add	r1, r0, r6
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	shadow_check_and_group.3139				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	beqi	0, r1, beq_then.16300
+	addi	r1, r0, 1
+	j	beq_cont.16301
+beq_then.16300:
+	addi	r1, r0, 4
 	lw	r2, 0(r3)
 	sw	r31, 3(r3)
 	addi	r3, r3, 4
 	jal	shadow_check_one_or_group.3142				
 	addi	r3, r3, -4
 	lw	r31, 3(r3)
-	beqi	0, r1, beq_then.8585
-	addi	r1, r0, 1
-	j	beq_cont.8586
-beq_then.8585:
+beq_cont.16301:
+	j	beq_cont.16299
+beq_then.16298:
 	addi	r1, r0, 0
-beq_cont.8586:
-fle_cont.8584:
-	j	beq_cont.8582
-beq_then.8581:
+beq_cont.16299:
+beq_cont.16297:
+	j	beq_cont.16295
+beq_then.16294:
 	addi	r1, r0, 0
-beq_cont.8582:
-	j	beq_cont.8580
-beq_then.8579:
+beq_cont.16295:
+beq_cont.16293:
+	j	beq_cont.16291
+beq_then.16290:
+	addi	r1, r0, 0
+beq_cont.16291:
+	beqi	0, r1, beq_then.16302
 	addi	r1, r0, 1
-beq_cont.8580:
-	beqi	0, r1, beq_then.8587
+	j	beq_cont.16303
+beq_then.16302:
+	addi	r1, r0, 0
+beq_cont.16303:
+fle_cont.16289:
+	j	beq_cont.16287
+beq_then.16286:
+	addi	r1, r0, 0
+beq_cont.16287:
+	j	beq_cont.16277
+beq_then.16276:
 	addi	r1, r0, 1
+beq_cont.16277:
+	beqi	0, r1, beq_then.16304
+	lw	r1, 0(r3)
+	lw	r2, 1(r1)
+	beqi	-1, r2, beq_then.16305
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	add	r1, r0, r6
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	shadow_check_and_group.3139				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	beqi	0, r1, beq_then.16307
+	addi	r1, r0, 1
+	j	beq_cont.16308
+beq_then.16307:
+	lw	r1, 0(r3)
+	lw	r2, 2(r1)
+	beqi	-1, r2, beq_then.16309
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	add	r1, r0, r6
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	shadow_check_and_group.3139				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	beqi	0, r1, beq_then.16311
+	addi	r1, r0, 1
+	j	beq_cont.16312
+beq_then.16311:
+	lw	r1, 0(r3)
+	lw	r2, 3(r1)
+	beqi	-1, r2, beq_then.16313
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	add	r1, r0, r6
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	shadow_check_and_group.3139				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	beqi	0, r1, beq_then.16315
+	addi	r1, r0, 1
+	j	beq_cont.16316
+beq_then.16315:
+	addi	r1, r0, 4
 	lw	r2, 0(r3)
 	sw	r31, 3(r3)
 	addi	r3, r3, 4
 	jal	shadow_check_one_or_group.3142				
 	addi	r3, r3, -4
 	lw	r31, 3(r3)
-	beqi	0, r1, beq_then.8588
+beq_cont.16316:
+	j	beq_cont.16314
+beq_then.16313:
+	addi	r1, r0, 0
+beq_cont.16314:
+beq_cont.16312:
+	j	beq_cont.16310
+beq_then.16309:
+	addi	r1, r0, 0
+beq_cont.16310:
+beq_cont.16308:
+	j	beq_cont.16306
+beq_then.16305:
+	addi	r1, r0, 0
+beq_cont.16306:
+	beqi	0, r1, beq_then.16317
 	addi	r1, r0, 1
 	jr	r31				#
-beq_then.8588:
+beq_then.16317:
 	lw	r1, 2(r3)
 	addi	r1, r1, 1
 	lw	r2, 1(r3)
 	j	shadow_check_one_or_matrix.3145
-beq_then.8587:
+beq_then.16304:
 	lw	r1, 2(r3)
 	addi	r1, r1, 1
 	lw	r2, 1(r3)
 	j	shadow_check_one_or_matrix.3145
-beq_then.8578:
+beq_then.16275:
 	addi	r1, r0, 0
 	jr	r31				#
 solve_each_element.3148:
 	add	r30, r2, r1
 	lw	r6, 0(r30)
-	beqi	-1, r6, beq_then.8589
-	addi	r7, r0, 748				# set min_caml_startp
+	beqi	-1, r6, beq_then.16318
+	addi	r7, r0, 1				# set min_caml_objects
+	flw	f1, 748(r0)
+	flw	f2, 749(r0)
+	flw	f3, 750(r0)
+	add	r30, r7, r6
+	lw	r7, 0(r30)
+	lw	r8, 5(r7)
+	flw	f4, 0(r8)
+	fsub	f1, f1, f4
+	lw	r8, 5(r7)
+	flw	f4, 1(r8)
+	fsub	f2, f2, f4
+	lw	r8, 5(r7)
+	flw	f4, 2(r8)
+	fsub	f3, f3, f4
+	lw	r8, 1(r7)
 	sw	r5, 0(r3)
 	sw	r2, 1(r3)
 	sw	r1, 2(r3)
 	sw	r6, 3(r3)
+	beqi	1, r8, beq_then.16319
+	beqi	2, r8, beq_then.16321
 	add	r2, r0, r5
-	add	r1, r0, r6
-	add	r5, r0, r7
+	add	r1, r0, r7
 	sw	r31, 4(r3)
 	addi	r3, r3, 5
-	jal	solver.3050				
+	jal	solver_second.3044				
 	addi	r3, r3, -5
 	lw	r31, 4(r3)
-	beqi	0, r1, beq_then.8590
+	j	beq_cont.16322
+beq_then.16321:
+	add	r2, r0, r5
+	add	r1, r0, r7
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	solver_surface.3025				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+beq_cont.16322:
+	j	beq_cont.16320
+beq_then.16319:
+	addi	r8, r0, 0
+	addi	r9, r0, 1
+	addi	r10, r0, 2
+	fsw	f1, 4(r3)
+	fsw	f3, 6(r3)
+	fsw	f2, 8(r3)
+	sw	r7, 10(r3)
+	add	r6, r0, r9
+	add	r2, r0, r5
+	add	r1, r0, r7
+	add	r7, r0, r10
+	add	r5, r0, r8
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	solver_rect_surface.3010				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	beqi	0, r1, beq_then.16323
+	addi	r1, r0, 1
+	j	beq_cont.16324
+beq_then.16323:
+	addi	r5, r0, 1
+	addi	r6, r0, 2
+	addi	r7, r0, 0
+	flw	f1, 8(r3)
+	flw	f2, 6(r3)
+	flw	f3, 4(r3)
+	lw	r1, 10(r3)
+	lw	r2, 0(r3)
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	solver_rect_surface.3010				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	beqi	0, r1, beq_then.16325
+	addi	r1, r0, 2
+	j	beq_cont.16326
+beq_then.16325:
+	addi	r5, r0, 2
+	addi	r6, r0, 0
+	addi	r7, r0, 1
+	flw	f1, 6(r3)
+	flw	f2, 4(r3)
+	flw	f3, 8(r3)
+	lw	r1, 10(r3)
+	lw	r2, 0(r3)
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	solver_rect_surface.3010				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	beqi	0, r1, beq_then.16327
+	addi	r1, r0, 3
+	j	beq_cont.16328
+beq_then.16327:
+	addi	r1, r0, 0
+beq_cont.16328:
+beq_cont.16326:
+beq_cont.16324:
+beq_cont.16320:
+	beqi	0, r1, beq_then.16329
 	flw	f1, 724(r0)
 	fle	r30, f1, f0
-	beq	r0, r30, fle_else.8591
-	j	fle_cont.8592
-fle_else.8591:
+	beq	r0, r30, fle_else.16330
+	j	fle_cont.16331
+fle_else.16330:
 	flw	f2, 726(r0)
 	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8593
-	j	fle_cont.8594
-fle_else.8593:
+	beq	r0, r30, fle_else.16332
+	j	fle_cont.16333
+fle_else.16332:
 	flup	f2, 29		# fli	f2, 0.010000
-	lw	r2, 0(r3)
-	flw	f3, 0(r2)
-	flw	f4, 1(r2)
-	flw	f5, 2(r2)
+	lw	r5, 0(r3)
+	flw	f3, 0(r5)
+	flw	f4, 1(r5)
+	flw	f5, 2(r5)
 	flw	f6, 748(r0)
 	flw	f7, 749(r0)
 	flw	f8, 750(r0)
-	addi	r5, r0, 0
+	lw	r2, 1(r3)
+	lw	r6, 0(r2)
 	fadd	f1, f1, f2
 	fmul	f2, f3, f1
 	fadd	f2, f2, f6
@@ -5608,75 +6652,88 @@ fle_else.8593:
 	fadd	f3, f3, f7
 	fmul	f4, f5, f1
 	fadd	f4, f4, f8
-	lw	r6, 1(r3)
-	sw	r1, 4(r3)
-	fsw	f4, 6(r3)
-	fsw	f3, 8(r3)
-	fsw	f2, 10(r3)
-	fsw	f1, 12(r3)
-	add	r2, r0, r6
-	add	r1, r0, r5
+	sw	r1, 11(r3)
+	fsw	f4, 12(r3)
+	fsw	f3, 14(r3)
+	fsw	f2, 16(r3)
+	fsw	f1, 18(r3)
+	beqi	-1, r6, beq_then.16334
+	addi	r7, r0, 1				# set min_caml_objects
+	add	r30, r7, r6
+	lw	r6, 0(r30)
+	add	r1, r0, r6
 	fadd	f1, f0, f2
 	fadd	f2, f0, f3
 	fadd	f3, f0, f4
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
+	sw	r31, 20(r3)
+	addi	r3, r3, 21
+	jal	is_outside.3128				
+	addi	r3, r3, -21
+	lw	r31, 20(r3)
+	beqi	0, r1, beq_then.16336
+	addi	r1, r0, 0
+	j	beq_cont.16337
+beq_then.16336:
+	addi	r1, r0, 1
+	flw	f1, 16(r3)
+	flw	f2, 14(r3)
+	flw	f3, 12(r3)
+	lw	r2, 1(r3)
+	sw	r31, 20(r3)
+	addi	r3, r3, 21
 	jal	check_all_inside.3133				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	beqi	0, r1, beq_then.8596
-	addi	r1, r0, 727				# set min_caml_intersection_point
-	flw	f1, 12(r3)
+	addi	r3, r3, -21
+	lw	r31, 20(r3)
+beq_cont.16337:
+	j	beq_cont.16335
+beq_then.16334:
+	addi	r1, r0, 1
+beq_cont.16335:
+	beqi	0, r1, beq_then.16338
+	flw	f1, 18(r3)
 	fsw	f1, 726(r0)
-	flw	f1, 10(r3)
-	flw	f2, 8(r3)
-	flw	f3, 6(r3)
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	vecset.2870				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
+	flw	f1, 16(r3)
+	fsw	f1, 727(r0)
+	flw	f1, 14(r3)
+	fsw	f1, 728(r0)
+	flw	f1, 12(r3)
+	fsw	f1, 729(r0)
 	lw	r1, 3(r3)
 	sw	r1, 730(r0)
-	lw	r1, 4(r3)
+	lw	r1, 11(r3)
 	sw	r1, 725(r0)
-	j	beq_cont.8597
-beq_then.8596:
-beq_cont.8597:
-fle_cont.8594:
-fle_cont.8592:
+	j	beq_cont.16339
+beq_then.16338:
+beq_cont.16339:
+fle_cont.16333:
+fle_cont.16331:
 	lw	r1, 2(r3)
 	addi	r1, r1, 1
 	lw	r2, 1(r3)
 	lw	r5, 0(r3)
 	j	solve_each_element.3148
-beq_then.8590:
+beq_then.16329:
 	addi	r1, r0, 1				# set min_caml_objects
 	lw	r2, 3(r3)
 	add	r30, r1, r2
 	lw	r1, 0(r30)
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	o_isinvert.2922				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	beqi	0, r1, beq_then.8598
+	lw	r1, 6(r1)
+	beqi	0, r1, beq_then.16340
 	lw	r1, 2(r3)
 	addi	r1, r1, 1
 	lw	r2, 1(r3)
 	lw	r5, 0(r3)
 	j	solve_each_element.3148
-beq_then.8598:
+beq_then.16340:
 	jr	r31				#
-beq_then.8589:
+beq_then.16318:
 	jr	r31				#
 solve_one_or_network.3152:
 	add	r30, r2, r1
 	lw	r6, 0(r30)
-	beqi	-1, r6, beq_then.8601
+	beqi	-1, r6, beq_then.16343
 	addi	r7, r0, 672				# set min_caml_and_net
 	addi	r8, r0, 0
-	addi	r1, r1, 1
 	add	r30, r7, r6
 	lw	r6, 0(r30)
 	sw	r5, 0(r3)
@@ -5690,144 +6747,679 @@ solve_one_or_network.3152:
 	addi	r3, r3, -4
 	lw	r31, 3(r3)
 	lw	r1, 2(r3)
+	addi	r1, r1, 1
+	lw	r2, 1(r3)
+	add	r30, r2, r1
+	lw	r5, 0(r30)
+	beqi	-1, r5, beq_then.16344
+	addi	r6, r0, 672				# set min_caml_and_net
+	addi	r7, r0, 0
+	add	r30, r6, r5
+	lw	r5, 0(r30)
+	lw	r6, 0(r3)
+	sw	r1, 3(r3)
+	add	r2, r0, r5
+	add	r1, r0, r7
+	add	r5, r0, r6
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	solve_each_element.3148				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	lw	r1, 3(r3)
+	addi	r1, r1, 1
+	lw	r2, 1(r3)
+	add	r30, r2, r1
+	lw	r5, 0(r30)
+	beqi	-1, r5, beq_then.16345
+	addi	r6, r0, 672				# set min_caml_and_net
+	addi	r7, r0, 0
+	add	r30, r6, r5
+	lw	r5, 0(r30)
+	lw	r6, 0(r3)
+	sw	r1, 4(r3)
+	add	r2, r0, r5
+	add	r1, r0, r7
+	add	r5, r0, r6
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	solve_each_element.3148				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	lw	r1, 4(r3)
+	addi	r1, r1, 1
+	lw	r2, 1(r3)
+	add	r30, r2, r1
+	lw	r5, 0(r30)
+	beqi	-1, r5, beq_then.16346
+	addi	r6, r0, 672				# set min_caml_and_net
+	addi	r7, r0, 0
+	add	r30, r6, r5
+	lw	r5, 0(r30)
+	lw	r6, 0(r3)
+	sw	r1, 5(r3)
+	add	r2, r0, r5
+	add	r1, r0, r7
+	add	r5, r0, r6
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	solve_each_element.3148				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	lw	r1, 5(r3)
+	addi	r1, r1, 1
 	lw	r2, 1(r3)
 	lw	r5, 0(r3)
 	j	solve_one_or_network.3152
-beq_then.8601:
+beq_then.16346:
+	jr	r31				#
+beq_then.16345:
+	jr	r31				#
+beq_then.16344:
+	jr	r31				#
+beq_then.16343:
 	jr	r31				#
 trace_or_matrix.3156:
 	add	r30, r2, r1
 	lw	r6, 0(r30)
 	lw	r7, 0(r6)
-	beqi	-1, r7, beq_then.8603
+	beqi	-1, r7, beq_then.16351
 	addi	r8, r0, 99
 	sw	r5, 0(r3)
 	sw	r2, 1(r3)
 	sw	r1, 2(r3)
-	beq	r7, r8, beq_then.8604
-	addi	r8, r0, 748				# set min_caml_startp
+	beq	r7, r8, beq_then.16352
+	addi	r8, r0, 1				# set min_caml_objects
+	flw	f1, 748(r0)
+	flw	f2, 749(r0)
+	flw	f3, 750(r0)
+	add	r30, r8, r7
+	lw	r7, 0(r30)
+	lw	r8, 5(r7)
+	flw	f4, 0(r8)
+	fsub	f1, f1, f4
+	lw	r8, 5(r7)
+	flw	f4, 1(r8)
+	fsub	f2, f2, f4
+	lw	r8, 5(r7)
+	flw	f4, 2(r8)
+	fsub	f3, f3, f4
+	lw	r8, 1(r7)
 	sw	r6, 3(r3)
+	beqi	1, r8, beq_then.16354
+	beqi	2, r8, beq_then.16356
 	add	r2, r0, r5
 	add	r1, r0, r7
-	add	r5, r0, r8
 	sw	r31, 4(r3)
 	addi	r3, r3, 5
-	jal	solver.3050				
+	jal	solver_second.3044				
 	addi	r3, r3, -5
 	lw	r31, 4(r3)
-	beqi	0, r1, beq_then.8606
+	j	beq_cont.16357
+beq_then.16356:
+	add	r2, r0, r5
+	add	r1, r0, r7
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	solver_surface.3025				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+beq_cont.16357:
+	j	beq_cont.16355
+beq_then.16354:
+	addi	r8, r0, 0
+	addi	r9, r0, 1
+	addi	r10, r0, 2
+	fsw	f1, 4(r3)
+	fsw	f3, 6(r3)
+	fsw	f2, 8(r3)
+	sw	r7, 10(r3)
+	add	r6, r0, r9
+	add	r2, r0, r5
+	add	r1, r0, r7
+	add	r7, r0, r10
+	add	r5, r0, r8
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	solver_rect_surface.3010				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	beqi	0, r1, beq_then.16358
+	addi	r1, r0, 1
+	j	beq_cont.16359
+beq_then.16358:
+	addi	r5, r0, 1
+	addi	r6, r0, 2
+	addi	r7, r0, 0
+	flw	f1, 8(r3)
+	flw	f2, 6(r3)
+	flw	f3, 4(r3)
+	lw	r1, 10(r3)
+	lw	r2, 0(r3)
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	solver_rect_surface.3010				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	beqi	0, r1, beq_then.16360
+	addi	r1, r0, 2
+	j	beq_cont.16361
+beq_then.16360:
+	addi	r5, r0, 2
+	addi	r6, r0, 0
+	addi	r7, r0, 1
+	flw	f1, 6(r3)
+	flw	f2, 4(r3)
+	flw	f3, 8(r3)
+	lw	r1, 10(r3)
+	lw	r2, 0(r3)
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	solver_rect_surface.3010				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	beqi	0, r1, beq_then.16362
+	addi	r1, r0, 3
+	j	beq_cont.16363
+beq_then.16362:
+	addi	r1, r0, 0
+beq_cont.16363:
+beq_cont.16361:
+beq_cont.16359:
+beq_cont.16355:
+	beqi	0, r1, beq_then.16364
 	flw	f1, 724(r0)
 	flw	f2, 726(r0)
 	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8608
-	j	fle_cont.8609
-fle_else.8608:
-	addi	r1, r0, 1
+	beq	r0, r30, fle_else.16366
+	j	fle_cont.16367
+fle_else.16366:
+	lw	r1, 3(r3)
+	lw	r2, 1(r1)
+	beqi	-1, r2, beq_then.16368
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	add	r1, r0, r6
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	solve_each_element.3148				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	lw	r1, 3(r3)
+	lw	r2, 2(r1)
+	beqi	-1, r2, beq_then.16370
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	add	r1, r0, r6
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	solve_each_element.3148				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	lw	r1, 3(r3)
+	lw	r2, 3(r1)
+	beqi	-1, r2, beq_then.16372
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	add	r1, r0, r6
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	solve_each_element.3148				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	addi	r1, r0, 4
 	lw	r2, 3(r3)
 	lw	r5, 0(r3)
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
 	jal	solve_one_or_network.3152				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
-fle_cont.8609:
-	j	beq_cont.8607
-beq_then.8606:
-beq_cont.8607:
-	j	beq_cont.8605
-beq_then.8604:
-	addi	r7, r0, 1
-	add	r2, r0, r6
-	add	r1, r0, r7
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	j	beq_cont.16373
+beq_then.16372:
+beq_cont.16373:
+	j	beq_cont.16371
+beq_then.16370:
+beq_cont.16371:
+	j	beq_cont.16369
+beq_then.16368:
+beq_cont.16369:
+fle_cont.16367:
+	j	beq_cont.16365
+beq_then.16364:
+beq_cont.16365:
+	j	beq_cont.16353
+beq_then.16352:
+	lw	r7, 1(r6)
+	beqi	-1, r7, beq_then.16374
+	addi	r8, r0, 672				# set min_caml_and_net
+	addi	r9, r0, 0
+	add	r30, r8, r7
+	lw	r7, 0(r30)
+	sw	r6, 3(r3)
+	add	r2, r0, r7
+	add	r1, r0, r9
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	solve_each_element.3148				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	lw	r1, 3(r3)
+	lw	r2, 2(r1)
+	beqi	-1, r2, beq_then.16376
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	add	r1, r0, r6
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	solve_each_element.3148				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	lw	r1, 3(r3)
+	lw	r2, 3(r1)
+	beqi	-1, r2, beq_then.16378
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	add	r1, r0, r6
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	solve_each_element.3148				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	addi	r1, r0, 4
+	lw	r2, 3(r3)
+	lw	r5, 0(r3)
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
 	jal	solve_one_or_network.3152				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
-beq_cont.8605:
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	j	beq_cont.16379
+beq_then.16378:
+beq_cont.16379:
+	j	beq_cont.16377
+beq_then.16376:
+beq_cont.16377:
+	j	beq_cont.16375
+beq_then.16374:
+beq_cont.16375:
+beq_cont.16353:
 	lw	r1, 2(r3)
+	addi	r1, r1, 1
+	lw	r2, 1(r3)
+	add	r30, r2, r1
+	lw	r5, 0(r30)
+	lw	r6, 0(r5)
+	beqi	-1, r6, beq_then.16380
+	addi	r7, r0, 99
+	sw	r1, 11(r3)
+	beq	r6, r7, beq_then.16381
+	addi	r7, r0, 748				# set min_caml_startp
+	lw	r8, 0(r3)
+	sw	r5, 12(r3)
+	add	r5, r0, r7
+	add	r2, r0, r8
+	add	r1, r0, r6
+	sw	r31, 13(r3)
+	addi	r3, r3, 14
+	jal	solver.3050				
+	addi	r3, r3, -14
+	lw	r31, 13(r3)
+	beqi	0, r1, beq_then.16383
+	flw	f1, 724(r0)
+	flw	f2, 726(r0)
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.16385
+	j	fle_cont.16386
+fle_else.16385:
+	lw	r1, 12(r3)
+	lw	r2, 1(r1)
+	beqi	-1, r2, beq_then.16387
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	add	r1, r0, r6
+	sw	r31, 13(r3)
+	addi	r3, r3, 14
+	jal	solve_each_element.3148				
+	addi	r3, r3, -14
+	lw	r31, 13(r3)
+	lw	r1, 12(r3)
+	lw	r2, 2(r1)
+	beqi	-1, r2, beq_then.16389
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	add	r1, r0, r6
+	sw	r31, 13(r3)
+	addi	r3, r3, 14
+	jal	solve_each_element.3148				
+	addi	r3, r3, -14
+	lw	r31, 13(r3)
+	addi	r1, r0, 3
+	lw	r2, 12(r3)
+	lw	r5, 0(r3)
+	sw	r31, 13(r3)
+	addi	r3, r3, 14
+	jal	solve_one_or_network.3152				
+	addi	r3, r3, -14
+	lw	r31, 13(r3)
+	j	beq_cont.16390
+beq_then.16389:
+beq_cont.16390:
+	j	beq_cont.16388
+beq_then.16387:
+beq_cont.16388:
+fle_cont.16386:
+	j	beq_cont.16384
+beq_then.16383:
+beq_cont.16384:
+	j	beq_cont.16382
+beq_then.16381:
+	lw	r6, 1(r5)
+	beqi	-1, r6, beq_then.16391
+	addi	r7, r0, 672				# set min_caml_and_net
+	addi	r8, r0, 0
+	add	r30, r7, r6
+	lw	r6, 0(r30)
+	lw	r7, 0(r3)
+	sw	r5, 12(r3)
+	add	r5, r0, r7
+	add	r2, r0, r6
+	add	r1, r0, r8
+	sw	r31, 13(r3)
+	addi	r3, r3, 14
+	jal	solve_each_element.3148				
+	addi	r3, r3, -14
+	lw	r31, 13(r3)
+	lw	r1, 12(r3)
+	lw	r2, 2(r1)
+	beqi	-1, r2, beq_then.16393
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	add	r1, r0, r6
+	sw	r31, 13(r3)
+	addi	r3, r3, 14
+	jal	solve_each_element.3148				
+	addi	r3, r3, -14
+	lw	r31, 13(r3)
+	addi	r1, r0, 3
+	lw	r2, 12(r3)
+	lw	r5, 0(r3)
+	sw	r31, 13(r3)
+	addi	r3, r3, 14
+	jal	solve_one_or_network.3152				
+	addi	r3, r3, -14
+	lw	r31, 13(r3)
+	j	beq_cont.16394
+beq_then.16393:
+beq_cont.16394:
+	j	beq_cont.16392
+beq_then.16391:
+beq_cont.16392:
+beq_cont.16382:
+	lw	r1, 11(r3)
 	addi	r1, r1, 1
 	lw	r2, 1(r3)
 	lw	r5, 0(r3)
 	j	trace_or_matrix.3156
-beq_then.8603:
+beq_then.16380:
+	jr	r31				#
+beq_then.16351:
 	jr	r31				#
 judge_intersection.3160:
-	lw	r2, 723(r0)
 	flup	f1, 31		# fli	f1, 1000000000.000000
-	addi	r5, r0, 0
-	flw	f2, 726(r0)
-	flup	f3, 30		# fli	f3, -0.100000
 	fsw	f1, 726(r0)
-	fsw	f3, 0(r3)
-	fsw	f2, 2(r3)
-	add	r28, r0, r5
-	add	r5, r0, r1
-	add	r1, r0, r28
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	trace_or_matrix.3156				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
-	flw	f1, 0(r3)
-	flw	f2, 2(r3)
+	lw	r2, 723(r0)
+	lw	r5, 0(r2)
+	lw	r6, 0(r5)
+	beqi	-1, r6, beq_then.16397
+	addi	r7, r0, 99
+	sw	r1, 0(r3)
+	sw	r2, 1(r3)
+	beq	r6, r7, beq_then.16399
+	addi	r7, r0, 748				# set min_caml_startp
+	sw	r5, 2(r3)
+	add	r5, r0, r7
+	add	r2, r0, r1
+	add	r1, r0, r6
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	solver.3050				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	beqi	0, r1, beq_then.16401
+	flw	f1, 724(r0)
+	flw	f2, 726(r0)
 	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8611
-	addi	r1, r0, 0
-	jr	r31				#
-fle_else.8611:
-	flup	f1, 32		# fli	f1, 100000000.000000
+	beq	r0, r30, fle_else.16403
+	j	fle_cont.16404
+fle_else.16403:
+	lw	r1, 2(r3)
+	lw	r2, 1(r1)
+	beqi	-1, r2, beq_then.16405
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	add	r1, r0, r6
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	solve_each_element.3148				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	lw	r1, 2(r3)
+	lw	r2, 2(r1)
+	beqi	-1, r2, beq_then.16407
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	add	r1, r0, r6
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	solve_each_element.3148				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	addi	r1, r0, 3
+	lw	r2, 2(r3)
+	lw	r5, 0(r3)
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	solve_one_or_network.3152				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	j	beq_cont.16408
+beq_then.16407:
+beq_cont.16408:
+	j	beq_cont.16406
+beq_then.16405:
+beq_cont.16406:
+fle_cont.16404:
+	j	beq_cont.16402
+beq_then.16401:
+beq_cont.16402:
+	j	beq_cont.16400
+beq_then.16399:
+	lw	r6, 1(r5)
+	beqi	-1, r6, beq_then.16409
+	addi	r7, r0, 672				# set min_caml_and_net
+	addi	r8, r0, 0
+	add	r30, r7, r6
+	lw	r6, 0(r30)
+	sw	r5, 2(r3)
+	add	r5, r0, r1
+	add	r2, r0, r6
+	add	r1, r0, r8
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	solve_each_element.3148				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	lw	r1, 2(r3)
+	lw	r2, 2(r1)
+	beqi	-1, r2, beq_then.16411
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	add	r1, r0, r6
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	solve_each_element.3148				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	addi	r1, r0, 3
+	lw	r2, 2(r3)
+	lw	r5, 0(r3)
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	solve_one_or_network.3152				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	j	beq_cont.16412
+beq_then.16411:
+beq_cont.16412:
+	j	beq_cont.16410
+beq_then.16409:
+beq_cont.16410:
+beq_cont.16400:
+	addi	r1, r0, 1
+	lw	r2, 1(r3)
+	lw	r5, 0(r3)
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	trace_or_matrix.3156				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	j	beq_cont.16398
+beq_then.16397:
+beq_cont.16398:
+	flw	f1, 726(r0)
+	flup	f2, 30		# fli	f2, -0.100000
 	fle	r30, f1, f2
-	beq	r0, r30, fle_else.8612
+	beq	r0, r30, fle_else.16413
 	addi	r1, r0, 0
 	jr	r31				#
-fle_else.8612:
+fle_else.16413:
+	flup	f2, 32		# fli	f2, 100000000.000000
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.16414
+	addi	r1, r0, 0
+	jr	r31				#
+fle_else.16414:
 	addi	r1, r0, 1
 	jr	r31				#
 solve_each_element_fast.3162:
+	lw	r6, 0(r5)
 	add	r30, r2, r1
-	lw	r6, 0(r30)
-	sw	r2, 0(r3)
-	sw	r1, 1(r3)
-	sw	r5, 2(r3)
-	sw	r6, 3(r3)
-	add	r1, r0, r5
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	d_vec.2977				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
-	lw	r2, 3(r3)
-	beqi	-1, r2, beq_then.8613
-	lw	r5, 2(r3)
-	sw	r1, 4(r3)
-	add	r1, r0, r2
-	add	r2, r0, r5
+	lw	r7, 0(r30)
+	beqi	-1, r7, beq_then.16415
+	addi	r8, r0, 1				# set min_caml_objects
+	lw	r9, 1(r5)
+	add	r30, r8, r7
+	lw	r8, 0(r30)
+	lw	r10, 10(r8)
+	flw	f1, 0(r10)
+	flw	f2, 1(r10)
+	flw	f3, 2(r10)
+	add	r30, r9, r7
+	lw	r9, 0(r30)
+	lw	r11, 1(r8)
+	sw	r6, 0(r3)
+	sw	r5, 1(r3)
+	sw	r2, 2(r3)
+	sw	r1, 3(r3)
+	sw	r7, 4(r3)
+	beqi	1, r11, beq_then.16416
+	beqi	2, r11, beq_then.16418
+	add	r5, r0, r10
+	add	r2, r0, r9
+	add	r1, r0, r8
 	sw	r31, 5(r3)
 	addi	r3, r3, 6
-	jal	solver_fast2.3091				
+	jal	solver_second_fast2.3084				
 	addi	r3, r3, -6
 	lw	r31, 5(r3)
-	beqi	0, r1, beq_then.8614
+	j	beq_cont.16419
+beq_then.16418:
+	flw	f1, 0(r9)
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16420
+	addi	r8, r0, 0
+	j	fle_cont.16421
+fle_else.16420:
+	addi	r8, r0, 1
+fle_cont.16421:
+	beqi	0, r8, beq_then.16422
+	flw	f1, 0(r9)
+	flw	f2, 3(r10)
+	fmul	f1, f1, f2
+	fsw	f1, 724(r0)
+	addi	r1, r0, 1
+	j	beq_cont.16423
+beq_then.16422:
+	addi	r1, r0, 0
+beq_cont.16423:
+beq_cont.16419:
+	j	beq_cont.16417
+beq_then.16416:
+	lw	r10, 0(r5)
+	add	r5, r0, r9
+	add	r2, r0, r10
+	add	r1, r0, r8
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	solver_rect_fast.3054				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+beq_cont.16417:
+	beqi	0, r1, beq_then.16424
 	flw	f1, 724(r0)
 	fle	r30, f1, f0
-	beq	r0, r30, fle_else.8615
-	j	fle_cont.8616
-fle_else.8615:
+	beq	r0, r30, fle_else.16425
+	j	fle_cont.16426
+fle_else.16425:
 	flw	f2, 726(r0)
 	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8617
-	j	fle_cont.8618
-fle_else.8617:
+	beq	r0, r30, fle_else.16427
+	j	fle_cont.16428
+fle_else.16427:
 	flup	f2, 29		# fli	f2, 0.010000
-	lw	r2, 4(r3)
+	lw	r2, 0(r3)
 	flw	f3, 0(r2)
 	flw	f4, 1(r2)
 	flw	f5, 2(r2)
 	flw	f6, 751(r0)
 	flw	f7, 752(r0)
 	flw	f8, 753(r0)
-	addi	r2, r0, 0
+	lw	r2, 2(r3)
+	lw	r5, 0(r2)
 	fadd	f1, f1, f2
 	fmul	f2, f3, f1
 	fadd	f2, f2, f6
@@ -5835,75 +7427,88 @@ fle_else.8617:
 	fadd	f3, f3, f7
 	fmul	f4, f5, f1
 	fadd	f4, f4, f8
-	lw	r5, 0(r3)
 	sw	r1, 5(r3)
 	fsw	f4, 6(r3)
 	fsw	f3, 8(r3)
 	fsw	f2, 10(r3)
 	fsw	f1, 12(r3)
-	add	r1, r0, r2
-	add	r2, r0, r5
+	beqi	-1, r5, beq_then.16429
+	addi	r6, r0, 1				# set min_caml_objects
+	add	r30, r6, r5
+	lw	r5, 0(r30)
+	add	r1, r0, r5
 	fadd	f1, f0, f2
 	fadd	f2, f0, f3
 	fadd	f3, f0, f4
 	sw	r31, 14(r3)
 	addi	r3, r3, 15
-	jal	check_all_inside.3133				
+	jal	is_outside.3128				
 	addi	r3, r3, -15
 	lw	r31, 14(r3)
-	beqi	0, r1, beq_then.8619
-	addi	r1, r0, 727				# set min_caml_intersection_point
-	flw	f1, 12(r3)
-	fsw	f1, 726(r0)
+	beqi	0, r1, beq_then.16431
+	addi	r1, r0, 0
+	j	beq_cont.16432
+beq_then.16431:
+	addi	r1, r0, 1
 	flw	f1, 10(r3)
 	flw	f2, 8(r3)
 	flw	f3, 6(r3)
+	lw	r2, 2(r3)
 	sw	r31, 14(r3)
 	addi	r3, r3, 15
-	jal	vecset.2870				
+	jal	check_all_inside.3133				
 	addi	r3, r3, -15
 	lw	r31, 14(r3)
-	lw	r1, 3(r3)
+beq_cont.16432:
+	j	beq_cont.16430
+beq_then.16429:
+	addi	r1, r0, 1
+beq_cont.16430:
+	beqi	0, r1, beq_then.16433
+	flw	f1, 12(r3)
+	fsw	f1, 726(r0)
+	flw	f1, 10(r3)
+	fsw	f1, 727(r0)
+	flw	f1, 8(r3)
+	fsw	f1, 728(r0)
+	flw	f1, 6(r3)
+	fsw	f1, 729(r0)
+	lw	r1, 4(r3)
 	sw	r1, 730(r0)
 	lw	r1, 5(r3)
 	sw	r1, 725(r0)
-	j	beq_cont.8620
-beq_then.8619:
-beq_cont.8620:
-fle_cont.8618:
-fle_cont.8616:
-	lw	r1, 1(r3)
+	j	beq_cont.16434
+beq_then.16433:
+beq_cont.16434:
+fle_cont.16428:
+fle_cont.16426:
+	lw	r1, 3(r3)
 	addi	r1, r1, 1
-	lw	r2, 0(r3)
-	lw	r5, 2(r3)
+	lw	r2, 2(r3)
+	lw	r5, 1(r3)
 	j	solve_each_element_fast.3162
-beq_then.8614:
+beq_then.16424:
 	addi	r1, r0, 1				# set min_caml_objects
-	lw	r2, 3(r3)
+	lw	r2, 4(r3)
 	add	r30, r1, r2
 	lw	r1, 0(r30)
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	o_isinvert.2922				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	beqi	0, r1, beq_then.8621
-	lw	r1, 1(r3)
+	lw	r1, 6(r1)
+	beqi	0, r1, beq_then.16435
+	lw	r1, 3(r3)
 	addi	r1, r1, 1
-	lw	r2, 0(r3)
-	lw	r5, 2(r3)
+	lw	r2, 2(r3)
+	lw	r5, 1(r3)
 	j	solve_each_element_fast.3162
-beq_then.8621:
+beq_then.16435:
 	jr	r31				#
-beq_then.8613:
+beq_then.16415:
 	jr	r31				#
 solve_one_or_network_fast.3166:
 	add	r30, r2, r1
 	lw	r6, 0(r30)
-	beqi	-1, r6, beq_then.8624
+	beqi	-1, r6, beq_then.16438
 	addi	r7, r0, 672				# set min_caml_and_net
 	addi	r8, r0, 0
-	addi	r1, r1, 1
 	add	r30, r7, r6
 	lw	r6, 0(r30)
 	sw	r5, 0(r3)
@@ -5917,37 +7522,193 @@ solve_one_or_network_fast.3166:
 	addi	r3, r3, -4
 	lw	r31, 3(r3)
 	lw	r1, 2(r3)
+	addi	r1, r1, 1
+	lw	r2, 1(r3)
+	add	r30, r2, r1
+	lw	r5, 0(r30)
+	beqi	-1, r5, beq_then.16439
+	addi	r6, r0, 672				# set min_caml_and_net
+	addi	r7, r0, 0
+	add	r30, r6, r5
+	lw	r5, 0(r30)
+	lw	r6, 0(r3)
+	sw	r1, 3(r3)
+	add	r2, r0, r5
+	add	r1, r0, r7
+	add	r5, r0, r6
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	solve_each_element_fast.3162				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	lw	r1, 3(r3)
+	addi	r1, r1, 1
+	lw	r2, 1(r3)
+	add	r30, r2, r1
+	lw	r5, 0(r30)
+	beqi	-1, r5, beq_then.16440
+	addi	r6, r0, 672				# set min_caml_and_net
+	addi	r7, r0, 0
+	add	r30, r6, r5
+	lw	r5, 0(r30)
+	lw	r6, 0(r3)
+	sw	r1, 4(r3)
+	add	r2, r0, r5
+	add	r1, r0, r7
+	add	r5, r0, r6
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	solve_each_element_fast.3162				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	lw	r1, 4(r3)
+	addi	r1, r1, 1
+	lw	r2, 1(r3)
+	add	r30, r2, r1
+	lw	r5, 0(r30)
+	beqi	-1, r5, beq_then.16441
+	addi	r6, r0, 672				# set min_caml_and_net
+	addi	r7, r0, 0
+	add	r30, r6, r5
+	lw	r5, 0(r30)
+	lw	r6, 0(r3)
+	sw	r1, 5(r3)
+	add	r2, r0, r5
+	add	r1, r0, r7
+	add	r5, r0, r6
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	solve_each_element_fast.3162				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	lw	r1, 5(r3)
+	addi	r1, r1, 1
 	lw	r2, 1(r3)
 	lw	r5, 0(r3)
 	j	solve_one_or_network_fast.3166
-beq_then.8624:
+beq_then.16441:
+	jr	r31				#
+beq_then.16440:
+	jr	r31				#
+beq_then.16439:
+	jr	r31				#
+beq_then.16438:
 	jr	r31				#
 trace_or_matrix_fast.3170:
 	add	r30, r2, r1
 	lw	r6, 0(r30)
 	lw	r7, 0(r6)
-	beqi	-1, r7, beq_then.8626
+	beqi	-1, r7, beq_then.16446
 	addi	r8, r0, 99
 	sw	r5, 0(r3)
 	sw	r2, 1(r3)
 	sw	r1, 2(r3)
-	beq	r7, r8, beq_then.8627
+	beq	r7, r8, beq_then.16447
+	addi	r8, r0, 1				# set min_caml_objects
+	lw	r9, 1(r5)
+	add	r30, r8, r7
+	lw	r8, 0(r30)
+	lw	r10, 10(r8)
+	flw	f1, 0(r10)
+	flw	f2, 1(r10)
+	flw	f3, 2(r10)
+	add	r30, r9, r7
+	lw	r7, 0(r30)
+	lw	r9, 1(r8)
 	sw	r6, 3(r3)
-	add	r2, r0, r5
-	add	r1, r0, r7
+	beqi	1, r9, beq_then.16449
+	beqi	2, r9, beq_then.16451
+	add	r5, r0, r10
+	add	r2, r0, r7
+	add	r1, r0, r8
 	sw	r31, 4(r3)
 	addi	r3, r3, 5
-	jal	solver_fast2.3091				
+	jal	solver_second_fast2.3084				
 	addi	r3, r3, -5
 	lw	r31, 4(r3)
-	beqi	0, r1, beq_then.8629
+	j	beq_cont.16452
+beq_then.16451:
+	flw	f1, 0(r7)
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16453
+	addi	r8, r0, 0
+	j	fle_cont.16454
+fle_else.16453:
+	addi	r8, r0, 1
+fle_cont.16454:
+	beqi	0, r8, beq_then.16455
+	flw	f1, 0(r7)
+	flw	f2, 3(r10)
+	fmul	f1, f1, f2
+	fsw	f1, 724(r0)
+	addi	r1, r0, 1
+	j	beq_cont.16456
+beq_then.16455:
+	addi	r1, r0, 0
+beq_cont.16456:
+beq_cont.16452:
+	j	beq_cont.16450
+beq_then.16449:
+	lw	r9, 0(r5)
+	add	r5, r0, r7
+	add	r2, r0, r9
+	add	r1, r0, r8
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	solver_rect_fast.3054				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+beq_cont.16450:
+	beqi	0, r1, beq_then.16457
 	flw	f1, 724(r0)
 	flw	f2, 726(r0)
 	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8631
-	j	fle_cont.8632
-fle_else.8631:
-	addi	r1, r0, 1
+	beq	r0, r30, fle_else.16459
+	j	fle_cont.16460
+fle_else.16459:
+	lw	r1, 3(r3)
+	lw	r2, 1(r1)
+	beqi	-1, r2, beq_then.16461
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	add	r1, r0, r6
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	solve_each_element_fast.3162				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	lw	r1, 3(r3)
+	lw	r2, 2(r1)
+	beqi	-1, r2, beq_then.16463
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	add	r1, r0, r6
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	solve_each_element_fast.3162				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	lw	r1, 3(r3)
+	lw	r2, 3(r1)
+	beqi	-1, r2, beq_then.16465
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	add	r1, r0, r6
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	solve_each_element_fast.3162				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	addi	r1, r0, 4
 	lw	r2, 3(r3)
 	lw	r5, 0(r3)
 	sw	r31, 4(r3)
@@ -5955,622 +7716,827 @@ fle_else.8631:
 	jal	solve_one_or_network_fast.3166				
 	addi	r3, r3, -5
 	lw	r31, 4(r3)
-fle_cont.8632:
-	j	beq_cont.8630
-beq_then.8629:
-beq_cont.8630:
-	j	beq_cont.8628
-beq_then.8627:
-	addi	r7, r0, 1
-	add	r2, r0, r6
-	add	r1, r0, r7
+	j	beq_cont.16466
+beq_then.16465:
+beq_cont.16466:
+	j	beq_cont.16464
+beq_then.16463:
+beq_cont.16464:
+	j	beq_cont.16462
+beq_then.16461:
+beq_cont.16462:
+fle_cont.16460:
+	j	beq_cont.16458
+beq_then.16457:
+beq_cont.16458:
+	j	beq_cont.16448
+beq_then.16447:
+	lw	r7, 1(r6)
+	beqi	-1, r7, beq_then.16467
+	addi	r8, r0, 672				# set min_caml_and_net
+	addi	r9, r0, 0
+	add	r30, r8, r7
+	lw	r7, 0(r30)
+	sw	r6, 3(r3)
+	add	r2, r0, r7
+	add	r1, r0, r9
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	solve_each_element_fast.3162				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	lw	r1, 3(r3)
+	lw	r2, 2(r1)
+	beqi	-1, r2, beq_then.16469
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	add	r1, r0, r6
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	solve_each_element_fast.3162				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	lw	r1, 3(r3)
+	lw	r2, 3(r1)
+	beqi	-1, r2, beq_then.16471
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	add	r1, r0, r6
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	solve_each_element_fast.3162				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	addi	r1, r0, 4
+	lw	r2, 3(r3)
+	lw	r5, 0(r3)
 	sw	r31, 4(r3)
 	addi	r3, r3, 5
 	jal	solve_one_or_network_fast.3166				
 	addi	r3, r3, -5
 	lw	r31, 4(r3)
-beq_cont.8628:
+	j	beq_cont.16472
+beq_then.16471:
+beq_cont.16472:
+	j	beq_cont.16470
+beq_then.16469:
+beq_cont.16470:
+	j	beq_cont.16468
+beq_then.16467:
+beq_cont.16468:
+beq_cont.16448:
 	lw	r1, 2(r3)
+	addi	r1, r1, 1
+	lw	r2, 1(r3)
+	add	r30, r2, r1
+	lw	r5, 0(r30)
+	lw	r6, 0(r5)
+	beqi	-1, r6, beq_then.16473
+	addi	r7, r0, 99
+	sw	r1, 4(r3)
+	beq	r6, r7, beq_then.16474
+	lw	r7, 0(r3)
+	sw	r5, 5(r3)
+	add	r2, r0, r7
+	add	r1, r0, r6
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	solver_fast2.3091				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	beqi	0, r1, beq_then.16476
+	flw	f1, 724(r0)
+	flw	f2, 726(r0)
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.16478
+	j	fle_cont.16479
+fle_else.16478:
+	lw	r1, 5(r3)
+	lw	r2, 1(r1)
+	beqi	-1, r2, beq_then.16480
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	add	r1, r0, r6
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	solve_each_element_fast.3162				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	lw	r1, 5(r3)
+	lw	r2, 2(r1)
+	beqi	-1, r2, beq_then.16482
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	add	r1, r0, r6
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	solve_each_element_fast.3162				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	addi	r1, r0, 3
+	lw	r2, 5(r3)
+	lw	r5, 0(r3)
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	solve_one_or_network_fast.3166				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	j	beq_cont.16483
+beq_then.16482:
+beq_cont.16483:
+	j	beq_cont.16481
+beq_then.16480:
+beq_cont.16481:
+fle_cont.16479:
+	j	beq_cont.16477
+beq_then.16476:
+beq_cont.16477:
+	j	beq_cont.16475
+beq_then.16474:
+	lw	r6, 1(r5)
+	beqi	-1, r6, beq_then.16484
+	addi	r7, r0, 672				# set min_caml_and_net
+	addi	r8, r0, 0
+	add	r30, r7, r6
+	lw	r6, 0(r30)
+	lw	r7, 0(r3)
+	sw	r5, 5(r3)
+	add	r5, r0, r7
+	add	r2, r0, r6
+	add	r1, r0, r8
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	solve_each_element_fast.3162				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	lw	r1, 5(r3)
+	lw	r2, 2(r1)
+	beqi	-1, r2, beq_then.16486
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	add	r1, r0, r6
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	solve_each_element_fast.3162				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	addi	r1, r0, 3
+	lw	r2, 5(r3)
+	lw	r5, 0(r3)
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	solve_one_or_network_fast.3166				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	j	beq_cont.16487
+beq_then.16486:
+beq_cont.16487:
+	j	beq_cont.16485
+beq_then.16484:
+beq_cont.16485:
+beq_cont.16475:
+	lw	r1, 4(r3)
 	addi	r1, r1, 1
 	lw	r2, 1(r3)
 	lw	r5, 0(r3)
 	j	trace_or_matrix_fast.3170
-beq_then.8626:
+beq_then.16473:
+	jr	r31				#
+beq_then.16446:
 	jr	r31				#
 judge_intersection_fast.3174:
-	lw	r2, 723(r0)
 	flup	f1, 31		# fli	f1, 1000000000.000000
-	addi	r5, r0, 0
-	flw	f2, 726(r0)
-	flup	f3, 30		# fli	f3, -0.100000
 	fsw	f1, 726(r0)
-	fsw	f3, 0(r3)
-	fsw	f2, 2(r3)
-	add	r28, r0, r5
-	add	r5, r0, r1
-	add	r1, r0, r28
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	trace_or_matrix_fast.3170				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
-	flw	f1, 0(r3)
-	flw	f2, 2(r3)
+	lw	r2, 723(r0)
+	lw	r5, 0(r2)
+	lw	r6, 0(r5)
+	beqi	-1, r6, beq_then.16490
+	addi	r7, r0, 99
+	sw	r1, 0(r3)
+	sw	r2, 1(r3)
+	beq	r6, r7, beq_then.16492
+	sw	r5, 2(r3)
+	add	r2, r0, r1
+	add	r1, r0, r6
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	solver_fast2.3091				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	beqi	0, r1, beq_then.16494
+	flw	f1, 724(r0)
+	flw	f2, 726(r0)
 	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8634
-	addi	r1, r0, 0
-	jr	r31				#
-fle_else.8634:
-	flup	f1, 32		# fli	f1, 100000000.000000
+	beq	r0, r30, fle_else.16496
+	j	fle_cont.16497
+fle_else.16496:
+	lw	r1, 2(r3)
+	lw	r2, 1(r1)
+	beqi	-1, r2, beq_then.16498
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	add	r1, r0, r6
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	solve_each_element_fast.3162				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	lw	r1, 2(r3)
+	lw	r2, 2(r1)
+	beqi	-1, r2, beq_then.16500
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	add	r1, r0, r6
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	solve_each_element_fast.3162				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	addi	r1, r0, 3
+	lw	r2, 2(r3)
+	lw	r5, 0(r3)
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	solve_one_or_network_fast.3166				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	j	beq_cont.16501
+beq_then.16500:
+beq_cont.16501:
+	j	beq_cont.16499
+beq_then.16498:
+beq_cont.16499:
+fle_cont.16497:
+	j	beq_cont.16495
+beq_then.16494:
+beq_cont.16495:
+	j	beq_cont.16493
+beq_then.16492:
+	lw	r6, 1(r5)
+	beqi	-1, r6, beq_then.16502
+	addi	r7, r0, 672				# set min_caml_and_net
+	addi	r8, r0, 0
+	add	r30, r7, r6
+	lw	r6, 0(r30)
+	sw	r5, 2(r3)
+	add	r5, r0, r1
+	add	r2, r0, r6
+	add	r1, r0, r8
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	solve_each_element_fast.3162				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	lw	r1, 2(r3)
+	lw	r2, 2(r1)
+	beqi	-1, r2, beq_then.16504
+	addi	r5, r0, 672				# set min_caml_and_net
+	addi	r6, r0, 0
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r5, 0(r3)
+	add	r1, r0, r6
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	solve_each_element_fast.3162				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	addi	r1, r0, 3
+	lw	r2, 2(r3)
+	lw	r5, 0(r3)
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	solve_one_or_network_fast.3166				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	j	beq_cont.16505
+beq_then.16504:
+beq_cont.16505:
+	j	beq_cont.16503
+beq_then.16502:
+beq_cont.16503:
+beq_cont.16493:
+	addi	r1, r0, 1
+	lw	r2, 1(r3)
+	lw	r5, 0(r3)
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	trace_or_matrix_fast.3170				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	j	beq_cont.16491
+beq_then.16490:
+beq_cont.16491:
+	flw	f1, 726(r0)
+	flup	f2, 30		# fli	f2, -0.100000
 	fle	r30, f1, f2
-	beq	r0, r30, fle_else.8635
+	beq	r0, r30, fle_else.16506
 	addi	r1, r0, 0
 	jr	r31				#
-fle_else.8635:
+fle_else.16506:
+	flup	f2, 32		# fli	f2, 100000000.000000
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.16507
+	addi	r1, r0, 0
+	jr	r31				#
+fle_else.16507:
 	addi	r1, r0, 1
 	jr	r31				#
 get_nvector_rect.3176:
 	lw	r2, 725(r0)
-	addi	r5, r0, 731				# set min_caml_nvector
+	fsw	f0, 731(r0)
+	fsw	f0, 732(r0)
+	fsw	f0, 733(r0)
+	addi	r5, r2, -1
 	addi	r6, r0, 731				# set min_caml_nvector
-	sw	r6, 0(r3)
-	sw	r1, 1(r3)
-	sw	r2, 2(r3)
-	add	r1, r0, r5
-	sw	r31, 3(r3)
-	addi	r3, r3, 4
-	jal	vecbzero.2878				
-	addi	r3, r3, -4
-	lw	r31, 3(r3)
-	lw	r1, 2(r3)
-	addi	r2, r1, -1
-	addi	r1, r1, -1
-	lw	r5, 1(r3)
-	add	r30, r5, r1
+	addi	r2, r2, -1
+	add	r30, r1, r5
 	flw	f1, 0(r30)
-	sw	r2, 3(r3)
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	sgn.2862				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
+	feq	r30, f1, f0
+	beq	r0, r30, feq_else.16508
+	addi	r1, r0, 1
+	j	feq_cont.16509
+feq_else.16508:
+	addi	r1, r0, 0
+feq_cont.16509:
+	beqi	0, r1, beq_then.16510
+	flup	f1, 0		# fli	f1, 0.000000
+	j	beq_cont.16511
+beq_then.16510:
+	fle	r30, f1, f0
+	beq	r0, r30, fle_else.16512
+	addi	r1, r0, 0
+	j	fle_cont.16513
+fle_else.16512:
+	addi	r1, r0, 1
+fle_cont.16513:
+	beqi	0, r1, beq_then.16514
+	flup	f1, 2		# fli	f1, 1.000000
+	j	beq_cont.16515
+beq_then.16514:
+	flup	f1, 11		# fli	f1, -1.000000
+beq_cont.16515:
+beq_cont.16511:
 	fneg	f1, f1
-	lw	r1, 3(r3)
-	lw	r2, 0(r3)
-	add	r30, r2, r1
+	add	r30, r6, r2
 	fsw	f1, 0(r30)
 	jr	r31				#
 get_nvector_plane.3178:
-	sw	r1, 0(r3)
-	sw	r31, 1(r3)
-	addi	r3, r3, 2
-	jal	o_param_a.2926				
-	addi	r3, r3, -2
-	lw	r31, 1(r3)
+	lw	r2, 4(r1)
+	flw	f1, 0(r2)
 	fneg	f1, f1
 	fsw	f1, 731(r0)
-	lw	r1, 0(r3)
-	sw	r31, 1(r3)
-	addi	r3, r3, 2
-	jal	o_param_b.2928				
-	addi	r3, r3, -2
-	lw	r31, 1(r3)
+	lw	r2, 4(r1)
+	flw	f1, 1(r2)
 	fneg	f1, f1
 	fsw	f1, 732(r0)
-	lw	r1, 0(r3)
-	sw	r31, 1(r3)
-	addi	r3, r3, 2
-	jal	o_param_c.2930				
-	addi	r3, r3, -2
-	lw	r31, 1(r3)
+	lw	r1, 4(r1)
+	flw	f1, 2(r1)
 	fneg	f1, f1
 	fsw	f1, 733(r0)
 	jr	r31				#
 get_nvector_second.3180:
+	lw	r2, 5(r1)
+	lw	r5, 5(r1)
+	lw	r6, 5(r1)
+	lw	r7, 4(r1)
+	lw	r8, 4(r1)
+	lw	r9, 4(r1)
 	flw	f1, 727(r0)
-	sw	r1, 0(r3)
-	fsw	f1, 2(r3)
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	o_param_x.2934				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
 	flw	f2, 728(r0)
 	flw	f3, 729(r0)
-	flw	f4, 2(r3)
-	fsub	f1, f4, f1
-	lw	r1, 0(r3)
-	fsw	f1, 4(r3)
-	fsw	f3, 6(r3)
-	fsw	f2, 8(r3)
+	lw	r10, 3(r1)
+	flw	f4, 0(r2)
+	fsub	f1, f1, f4
+	flw	f4, 1(r5)
+	fsub	f2, f2, f4
+	flw	f4, 2(r6)
+	fsub	f3, f3, f4
+	flw	f4, 0(r7)
+	fmul	f4, f1, f4
+	flw	f5, 1(r8)
+	fmul	f5, f2, f5
+	flw	f6, 2(r9)
+	fmul	f6, f3, f6
+	beqi	0, r10, beq_then.16518
+	lw	r2, 9(r1)
+	lw	r5, 9(r1)
+	flup	f7, 1		# fli	f7, 0.500000
+	flw	f8, 2(r2)
+	fmul	f8, f2, f8
+	flw	f9, 1(r5)
+	fmul	f9, f3, f9
+	fadd	f8, f8, f9
+	fmul	f7, f8, f7
+	fadd	f4, f4, f7
+	fsw	f4, 731(r0)
+	lw	r2, 9(r1)
+	lw	r5, 9(r1)
+	flup	f4, 1		# fli	f4, 0.500000
+	flw	f7, 2(r2)
+	fmul	f7, f1, f7
+	flw	f8, 0(r5)
+	fmul	f3, f3, f8
+	fadd	f3, f7, f3
+	fmul	f3, f3, f4
+	fadd	f3, f5, f3
+	fsw	f3, 732(r0)
+	lw	r2, 9(r1)
+	lw	r5, 9(r1)
+	flup	f3, 1		# fli	f3, 0.500000
+	flw	f4, 1(r2)
+	fmul	f1, f1, f4
+	flw	f4, 0(r5)
+	fmul	f2, f2, f4
+	fadd	f1, f1, f2
+	fmul	f1, f1, f3
+	fadd	f1, f6, f1
+	fsw	f1, 733(r0)
+	j	beq_cont.16519
+beq_then.16518:
+	fsw	f4, 731(r0)
+	fsw	f5, 732(r0)
+	fsw	f6, 733(r0)
+beq_cont.16519:
+	lw	r2, 6(r1)
+	addi	r1, r0, 731				# set min_caml_nvector
+	j	vecunit_sgn.2888
+get_nvector.3182:
+	lw	r5, 1(r1)
+	beqi	1, r5, beq_then.16520
+	beqi	2, r5, beq_then.16521
+	j	get_nvector_second.3180
+beq_then.16521:
+	lw	r2, 4(r1)
+	flw	f1, 0(r2)
+	fneg	f1, f1
+	fsw	f1, 731(r0)
+	lw	r2, 4(r1)
+	flw	f1, 1(r2)
+	fneg	f1, f1
+	fsw	f1, 732(r0)
+	lw	r1, 4(r1)
+	flw	f1, 2(r1)
+	fneg	f1, f1
+	fsw	f1, 733(r0)
+	jr	r31				#
+beq_then.16520:
+	lw	r1, 725(r0)
+	fsw	f0, 731(r0)
+	fsw	f0, 732(r0)
+	fsw	f0, 733(r0)
+	addi	r5, r1, -1
+	addi	r6, r0, 731				# set min_caml_nvector
+	addi	r1, r1, -1
+	add	r30, r2, r5
+	flw	f1, 0(r30)
+	feq	r30, f1, f0
+	beq	r0, r30, feq_else.16523
+	addi	r2, r0, 1
+	j	feq_cont.16524
+feq_else.16523:
+	addi	r2, r0, 0
+feq_cont.16524:
+	beqi	0, r2, beq_then.16525
+	flup	f1, 0		# fli	f1, 0.000000
+	j	beq_cont.16526
+beq_then.16525:
+	fle	r30, f1, f0
+	beq	r0, r30, fle_else.16527
+	addi	r2, r0, 0
+	j	fle_cont.16528
+fle_else.16527:
+	addi	r2, r0, 1
+fle_cont.16528:
+	beqi	0, r2, beq_then.16529
+	flup	f1, 2		# fli	f1, 1.000000
+	j	beq_cont.16530
+beq_then.16529:
+	flup	f1, 11		# fli	f1, -1.000000
+beq_cont.16530:
+beq_cont.16526:
+	fneg	f1, f1
+	add	r30, r6, r1
+	fsw	f1, 0(r30)
+	jr	r31				#
+utexture.3185:
+	lw	r5, 8(r1)
+	lw	r6, 0(r1)
+	flw	f1, 0(r5)
+	fsw	f1, 734(r0)
+	lw	r5, 8(r1)
+	flw	f1, 1(r5)
+	fsw	f1, 735(r0)
+	lw	r5, 8(r1)
+	flw	f1, 2(r5)
+	fsw	f1, 736(r0)
+	beqi	1, r6, beq_then.16532
+	beqi	2, r6, beq_then.16533
+	beqi	3, r6, beq_then.16534
+	beqi	4, r6, beq_then.16535
+	jr	r31				#
+beq_then.16535:
+	flw	f1, 0(r2)
+	lw	r5, 5(r1)
+	flw	f2, 0(r5)
+	fsub	f1, f1, f2
+	lw	r5, 4(r1)
+	flw	f2, 0(r5)
+	fsqrt	f2, f2
+	fmul	f1, f1, f2
+	flw	f2, 2(r2)
+	lw	r5, 5(r1)
+	flw	f3, 2(r5)
+	fsub	f2, f2, f3
+	lw	r5, 4(r1)
+	flw	f3, 2(r5)
+	fsqrt	f3, f3
+	fmul	f2, f2, f3
+	fmul	f3, f1, f1
+	fmul	f4, f2, f2
+	fadd	f3, f3, f4
+	flup	f4, 33		# fli	f4, 0.000100
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16537
+	fadd	f5, f0, f1
+	j	fle_cont.16538
+fle_else.16537:
+	fneg	f5, f1
+fle_cont.16538:
+	fsw	f3, 0(r3)
+	sw	r1, 2(r3)
+	sw	r2, 3(r3)
+	fle	r30, f4, f5
+	beq	r0, r30, fle_else.16539
+	fdiv	f1, f2, f1
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16541
+	j	fle_cont.16542
+fle_else.16541:
+	fneg	f1, f1
+fle_cont.16542:
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16543
+	flup	f2, 2		# fli	f2, 1.000000
+	j	fle_cont.16544
+fle_else.16543:
+	flup	f2, 11		# fli	f2, -1.000000
+fle_cont.16544:
+	fmul	f1, f1, f2
+	flup	f4, 23		# fli	f4, 4.375000
+	fle	r30, f4, f1
+	beq	r0, r30, fle_else.16545
+	flup	f4, 24		# fli	f4, 2.437500
+	fle	r30, f4, f1
+	beq	r0, r30, fle_else.16547
+	flup	f4, 15		# fli	f4, 1.570796
+	flup	f5, 2		# fli	f5, 1.000000
+	fdiv	f1, f5, f1
+	fsw	f2, 4(r3)
+	fsw	f4, 6(r3)
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	atan_body.2841				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	flw	f2, 6(r3)
+	fadd	f1, f2, f1
+	flw	f2, 4(r3)
+	fmul	f1, f1, f2
+	j	fle_cont.16548
+fle_else.16547:
+	flup	f4, 16		# fli	f4, 0.785398
+	flup	f5, 2		# fli	f5, 1.000000
+	fsub	f5, f1, f5
+	flup	f6, 2		# fli	f6, 1.000000
+	fadd	f1, f1, f6
+	fdiv	f1, f5, f1
+	fsw	f2, 4(r3)
+	fsw	f4, 8(r3)
 	sw	r31, 10(r3)
 	addi	r3, r3, 11
-	jal	o_param_y.2936				
+	jal	atan_body.2841				
 	addi	r3, r3, -11
 	lw	r31, 10(r3)
 	flw	f2, 8(r3)
-	fsub	f1, f2, f1
-	lw	r1, 0(r3)
-	fsw	f1, 10(r3)
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	o_param_z.2938				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	flw	f2, 6(r3)
-	fsub	f1, f2, f1
-	lw	r1, 0(r3)
-	fsw	f1, 12(r3)
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	o_param_a.2926				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
+	fadd	f1, f2, f1
 	flw	f2, 4(r3)
-	fmul	f1, f2, f1
-	lw	r1, 0(r3)
-	fsw	f1, 14(r3)
-	sw	r31, 16(r3)
-	addi	r3, r3, 17
-	jal	o_param_b.2928				
-	addi	r3, r3, -17
-	lw	r31, 16(r3)
-	flw	f2, 10(r3)
-	fmul	f1, f2, f1
-	lw	r1, 0(r3)
-	fsw	f1, 16(r3)
-	sw	r31, 18(r3)
-	addi	r3, r3, 19
-	jal	o_param_c.2930				
-	addi	r3, r3, -19
-	lw	r31, 18(r3)
-	flw	f2, 12(r3)
-	fmul	f1, f2, f1
-	lw	r1, 0(r3)
-	fsw	f1, 18(r3)
-	sw	r31, 20(r3)
-	addi	r3, r3, 21
-	jal	o_isrot.2924				
-	addi	r3, r3, -21
-	lw	r31, 20(r3)
-	beqi	0, r1, beq_then.8639
-	lw	r1, 0(r3)
-	sw	r31, 20(r3)
-	addi	r3, r3, 21
-	jal	o_param_r3.2954				
-	addi	r3, r3, -21
-	lw	r31, 20(r3)
-	flw	f2, 10(r3)
-	fmul	f1, f2, f1
-	lw	r1, 0(r3)
-	fsw	f1, 20(r3)
-	sw	r31, 22(r3)
-	addi	r3, r3, 23
-	jal	o_param_r2.2952				
-	addi	r3, r3, -23
-	lw	r31, 22(r3)
-	flw	f2, 12(r3)
-	fmul	f1, f2, f1
-	flw	f3, 20(r3)
-	fadd	f1, f3, f1
-	sw	r31, 22(r3)
-	addi	r3, r3, 23
-	jal	fhalf.2812				
-	addi	r3, r3, -23
-	lw	r31, 22(r3)
-	flw	f2, 14(r3)
-	fadd	f1, f2, f1
-	fsw	f1, 731(r0)
-	lw	r1, 0(r3)
-	sw	r31, 22(r3)
-	addi	r3, r3, 23
-	jal	o_param_r3.2954				
-	addi	r3, r3, -23
-	lw	r31, 22(r3)
-	flw	f2, 4(r3)
-	fmul	f1, f2, f1
-	lw	r1, 0(r3)
-	fsw	f1, 22(r3)
-	sw	r31, 24(r3)
-	addi	r3, r3, 25
-	jal	o_param_r1.2950				
-	addi	r3, r3, -25
-	lw	r31, 24(r3)
-	flw	f2, 12(r3)
-	fmul	f1, f2, f1
-	flw	f2, 22(r3)
-	fadd	f1, f2, f1
-	sw	r31, 24(r3)
-	addi	r3, r3, 25
-	jal	fhalf.2812				
-	addi	r3, r3, -25
-	lw	r31, 24(r3)
-	flw	f2, 16(r3)
-	fadd	f1, f2, f1
-	fsw	f1, 732(r0)
-	lw	r1, 0(r3)
-	sw	r31, 24(r3)
-	addi	r3, r3, 25
-	jal	o_param_r2.2952				
-	addi	r3, r3, -25
-	lw	r31, 24(r3)
-	flw	f2, 4(r3)
-	fmul	f1, f2, f1
-	lw	r1, 0(r3)
-	fsw	f1, 24(r3)
-	sw	r31, 26(r3)
-	addi	r3, r3, 27
-	jal	o_param_r1.2950				
-	addi	r3, r3, -27
-	lw	r31, 26(r3)
-	flw	f2, 10(r3)
-	fmul	f1, f2, f1
-	flw	f2, 24(r3)
-	fadd	f1, f2, f1
-	sw	r31, 26(r3)
-	addi	r3, r3, 27
-	jal	fhalf.2812				
-	addi	r3, r3, -27
-	lw	r31, 26(r3)
-	flw	f2, 18(r3)
-	fadd	f1, f2, f1
-	fsw	f1, 733(r0)
-	j	beq_cont.8640
-beq_then.8639:
-	flw	f1, 14(r3)
-	fsw	f1, 731(r0)
-	flw	f1, 16(r3)
-	fsw	f1, 732(r0)
-	flw	f1, 18(r3)
-	fsw	f1, 733(r0)
-beq_cont.8640:
-	addi	r1, r0, 731				# set min_caml_nvector
-	lw	r2, 0(r3)
-	sw	r1, 26(r3)
-	add	r1, r0, r2
-	sw	r31, 27(r3)
-	addi	r3, r3, 28
-	jal	o_isinvert.2922				
-	addi	r3, r3, -28
-	lw	r31, 27(r3)
-	add	r2, r0, r1
-	lw	r1, 26(r3)
-	j	vecunit_sgn.2888
-get_nvector.3182:
-	sw	r1, 0(r3)
-	sw	r2, 1(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	o_form.2918				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	beqi	1, r1, beq_then.8641
-	beqi	2, r1, beq_then.8642
-	lw	r1, 0(r3)
-	j	get_nvector_second.3180
-beq_then.8642:
-	lw	r1, 0(r3)
-	j	get_nvector_plane.3178
-beq_then.8641:
-	lw	r1, 1(r3)
-	j	get_nvector_rect.3176
-utexture.3185:
-	sw	r2, 0(r3)
-	sw	r1, 1(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	o_texturetype.2916				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	lw	r2, 1(r3)
-	sw	r1, 2(r3)
-	add	r1, r0, r2
-	sw	r31, 3(r3)
-	addi	r3, r3, 4
-	jal	o_color_red.2944				
-	addi	r3, r3, -4
-	lw	r31, 3(r3)
-	fsw	f1, 734(r0)
-	lw	r1, 1(r3)
-	sw	r31, 3(r3)
-	addi	r3, r3, 4
-	jal	o_color_green.2946				
-	addi	r3, r3, -4
-	lw	r31, 3(r3)
-	fsw	f1, 735(r0)
-	lw	r1, 1(r3)
-	sw	r31, 3(r3)
-	addi	r3, r3, 4
-	jal	o_color_blue.2948				
-	addi	r3, r3, -4
-	lw	r31, 3(r3)
-	fsw	f1, 736(r0)
-	lw	r1, 2(r3)
-	beqi	1, r1, beq_then.8643
-	beqi	2, r1, beq_then.8644
-	beqi	3, r1, beq_then.8645
-	beqi	4, r1, beq_then.8646
-	jr	r31				#
-beq_then.8646:
-	lw	r1, 0(r3)
-	flw	f1, 0(r1)
-	lw	r2, 1(r3)
-	fsw	f1, 4(r3)
-	add	r1, r0, r2
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	o_param_x.2934				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	flw	f2, 4(r3)
-	fsub	f1, f2, f1
-	lw	r1, 1(r3)
-	fsw	f1, 6(r3)
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	o_param_a.2926				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	fsqrt	f1, f1
-	flw	f2, 6(r3)
-	fmul	f1, f2, f1
-	lw	r1, 0(r3)
-	flw	f2, 2(r1)
-	lw	r2, 1(r3)
-	fsw	f1, 8(r3)
-	fsw	f2, 10(r3)
-	add	r1, r0, r2
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	o_param_z.2938				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	flw	f2, 10(r3)
-	fsub	f1, f2, f1
-	lw	r1, 1(r3)
-	fsw	f1, 12(r3)
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	o_param_c.2930				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	fsqrt	f1, f1
-	flw	f2, 12(r3)
-	fmul	f1, f2, f1
-	flw	f2, 8(r3)
-	fsw	f1, 14(r3)
-	fadd	f1, f0, f2
-	sw	r31, 16(r3)
-	addi	r3, r3, 17
-	jal	fsqr.2814				
-	addi	r3, r3, -17
-	lw	r31, 16(r3)
-	flw	f2, 14(r3)
-	fsw	f1, 16(r3)
-	fadd	f1, f0, f2
-	sw	r31, 18(r3)
-	addi	r3, r3, 19
-	jal	fsqr.2814				
-	addi	r3, r3, -19
-	lw	r31, 18(r3)
-	flw	f2, 16(r3)
-	fadd	f1, f2, f1
-	flup	f2, 33		# fli	f2, 0.000100
-	flw	f3, 8(r3)
-	fsw	f1, 18(r3)
-	fsw	f2, 20(r3)
-	fadd	f1, f0, f3
-	sw	r31, 22(r3)
-	addi	r3, r3, 23
-	jal	fabs.2816				
-	addi	r3, r3, -23
-	lw	r31, 22(r3)
-	flw	f2, 20(r3)
-	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8649
-	flw	f1, 8(r3)
-	flw	f2, 14(r3)
-	fdiv	f1, f2, f1
-	sw	r31, 22(r3)
-	addi	r3, r3, 23
-	jal	fabs.2816				
-	addi	r3, r3, -23
-	lw	r31, 22(r3)
-	sw	r31, 22(r3)
-	addi	r3, r3, 23
-	jal	atan.2843				
-	addi	r3, r3, -23
-	lw	r31, 22(r3)
+	fmul	f1, f1, f2
+fle_cont.16548:
+	j	fle_cont.16546
+fle_else.16545:
+	sw	r31, 10(r3)
+	addi	r3, r3, 11
+	jal	atan_body.2841				
+	addi	r3, r3, -11
+	lw	r31, 10(r3)
+fle_cont.16546:
 	flup	f2, 35		# fli	f2, 30.000000
 	fmul	f1, f1, f2
 	flup	f2, 14		# fli	f2, 3.141593
 	fdiv	f1, f1, f2
-	j	fle_cont.8650
-fle_else.8649:
+	j	fle_cont.16540
+fle_else.16539:
 	flup	f1, 34		# fli	f1, 15.000000
-fle_cont.8650:
-	fsw	f1, 22(r3)
-	sw	r31, 24(r3)
-	addi	r3, r3, 25
-	jal	floor.2822				
-	addi	r3, r3, -25
-	lw	r31, 24(r3)
-	flw	f2, 22(r3)
-	fsub	f1, f2, f1
-	lw	r1, 0(r3)
+fle_cont.16540:
+	ftoi	r1, f1
+	itof	f2, r1
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.16549
+	j	fle_cont.16550
+fle_else.16549:
+	flup	f3, 2		# fli	f3, 1.000000
+	fsub	f2, f2, f3
+fle_cont.16550:
+	fsub	f1, f1, f2
+	lw	r1, 3(r3)
 	flw	f2, 1(r1)
-	lw	r1, 1(r3)
-	fsw	f1, 24(r3)
-	fsw	f2, 26(r3)
-	sw	r31, 28(r3)
-	addi	r3, r3, 29
-	jal	o_param_y.2936				
-	addi	r3, r3, -29
-	lw	r31, 28(r3)
-	flw	f2, 26(r3)
-	fsub	f1, f2, f1
-	lw	r1, 1(r3)
-	fsw	f1, 28(r3)
-	sw	r31, 30(r3)
-	addi	r3, r3, 31
-	jal	o_param_b.2928				
-	addi	r3, r3, -31
-	lw	r31, 30(r3)
-	fsqrt	f1, f1
-	flw	f2, 28(r3)
-	fmul	f1, f2, f1
-	flup	f2, 33		# fli	f2, 0.000100
-	flw	f3, 18(r3)
-	fsw	f1, 30(r3)
-	fsw	f2, 32(r3)
-	fadd	f1, f0, f3
-	sw	r31, 34(r3)
-	addi	r3, r3, 35
-	jal	fabs.2816				
-	addi	r3, r3, -35
-	lw	r31, 34(r3)
-	flw	f2, 32(r3)
-	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8651
-	flw	f1, 18(r3)
-	flw	f2, 30(r3)
-	fdiv	f1, f2, f1
-	sw	r31, 34(r3)
-	addi	r3, r3, 35
-	jal	fabs.2816				
-	addi	r3, r3, -35
-	lw	r31, 34(r3)
-	sw	r31, 34(r3)
-	addi	r3, r3, 35
-	jal	atan.2843				
-	addi	r3, r3, -35
-	lw	r31, 34(r3)
+	lw	r1, 2(r3)
+	lw	r2, 5(r1)
+	flw	f3, 1(r2)
+	fsub	f2, f2, f3
+	lw	r1, 4(r1)
+	flw	f3, 1(r1)
+	fsqrt	f3, f3
+	fmul	f2, f2, f3
+	flup	f3, 33		# fli	f3, 0.000100
+	flw	f4, 0(r3)
+	fle	r30, f0, f4
+	beq	r0, r30, fle_else.16551
+	fadd	f5, f0, f4
+	j	fle_cont.16552
+fle_else.16551:
+	fneg	f5, f4
+fle_cont.16552:
+	fsw	f1, 10(r3)
+	fle	r30, f3, f5
+	beq	r0, r30, fle_else.16553
+	fdiv	f2, f2, f4
+	fle	r30, f0, f2
+	beq	r0, r30, fle_else.16555
+	j	fle_cont.16556
+fle_else.16555:
+	fneg	f2, f2
+fle_cont.16556:
+	fle	r30, f0, f2
+	beq	r0, r30, fle_else.16557
+	flup	f3, 2		# fli	f3, 1.000000
+	j	fle_cont.16558
+fle_else.16557:
+	flup	f3, 11		# fli	f3, -1.000000
+fle_cont.16558:
+	fmul	f2, f2, f3
+	flup	f4, 23		# fli	f4, 4.375000
+	fle	r30, f4, f2
+	beq	r0, r30, fle_else.16559
+	flup	f4, 24		# fli	f4, 2.437500
+	fle	r30, f4, f2
+	beq	r0, r30, fle_else.16561
+	flup	f4, 15		# fli	f4, 1.570796
+	flup	f5, 2		# fli	f5, 1.000000
+	fdiv	f2, f5, f2
+	fsw	f3, 12(r3)
+	fsw	f4, 14(r3)
+	fadd	f1, f0, f2
+	sw	r31, 16(r3)
+	addi	r3, r3, 17
+	jal	atan_body.2841				
+	addi	r3, r3, -17
+	lw	r31, 16(r3)
+	flw	f2, 14(r3)
+	fadd	f1, f2, f1
+	flw	f2, 12(r3)
+	fmul	f1, f1, f2
+	j	fle_cont.16562
+fle_else.16561:
+	flup	f4, 16		# fli	f4, 0.785398
+	flup	f5, 2		# fli	f5, 1.000000
+	fsub	f5, f2, f5
+	flup	f6, 2		# fli	f6, 1.000000
+	fadd	f2, f2, f6
+	fdiv	f2, f5, f2
+	fsw	f3, 12(r3)
+	fsw	f4, 16(r3)
+	fadd	f1, f0, f2
+	sw	r31, 18(r3)
+	addi	r3, r3, 19
+	jal	atan_body.2841				
+	addi	r3, r3, -19
+	lw	r31, 18(r3)
+	flw	f2, 16(r3)
+	fadd	f1, f2, f1
+	flw	f2, 12(r3)
+	fmul	f1, f1, f2
+fle_cont.16562:
+	j	fle_cont.16560
+fle_else.16559:
+	fadd	f1, f0, f2
+	sw	r31, 18(r3)
+	addi	r3, r3, 19
+	jal	atan_body.2841				
+	addi	r3, r3, -19
+	lw	r31, 18(r3)
+fle_cont.16560:
 	flup	f2, 35		# fli	f2, 30.000000
 	fmul	f1, f1, f2
 	flup	f2, 14		# fli	f2, 3.141593
 	fdiv	f1, f1, f2
-	j	fle_cont.8652
-fle_else.8651:
+	j	fle_cont.16554
+fle_else.16553:
 	flup	f1, 34		# fli	f1, 15.000000
-fle_cont.8652:
-	fsw	f1, 34(r3)
-	sw	r31, 36(r3)
-	addi	r3, r3, 37
-	jal	floor.2822				
-	addi	r3, r3, -37
-	lw	r31, 36(r3)
-	flw	f2, 34(r3)
-	fsub	f1, f2, f1
+fle_cont.16554:
+	ftoi	r1, f1
+	itof	f2, r1
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.16563
+	j	fle_cont.16564
+fle_else.16563:
+	flup	f3, 2		# fli	f3, 1.000000
+	fsub	f2, f2, f3
+fle_cont.16564:
+	fsub	f1, f1, f2
 	flup	f2, 36		# fli	f2, 0.150000
 	flup	f3, 1		# fli	f3, 0.500000
-	flw	f4, 24(r3)
+	flw	f4, 10(r3)
 	fsub	f3, f3, f4
-	fsw	f1, 36(r3)
-	fsw	f2, 38(r3)
-	fadd	f1, f0, f3
-	sw	r31, 40(r3)
-	addi	r3, r3, 41
-	jal	fsqr.2814				
-	addi	r3, r3, -41
-	lw	r31, 40(r3)
-	flw	f2, 38(r3)
-	fsub	f1, f2, f1
-	flup	f2, 1		# fli	f2, 0.500000
-	flw	f3, 36(r3)
+	fmul	f3, f3, f3
 	fsub	f2, f2, f3
-	fsw	f1, 40(r3)
-	fadd	f1, f0, f2
-	sw	r31, 42(r3)
-	addi	r3, r3, 43
-	jal	fsqr.2814				
-	addi	r3, r3, -43
-	lw	r31, 42(r3)
-	flw	f2, 40(r3)
+	flup	f3, 1		# fli	f3, 0.500000
+	fsub	f1, f3, f1
+	fmul	f1, f1, f1
 	fsub	f1, f2, f1
-	fsw	f1, 42(r3)
-	sw	r31, 44(r3)
-	addi	r3, r3, 45
-	jal	fisneg.2805				
-	addi	r3, r3, -45
-	lw	r31, 44(r3)
-	beqi	0, r1, beq_then.8653
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16565
+	addi	r1, r0, 0
+	j	fle_cont.16566
+fle_else.16565:
+	addi	r1, r0, 1
+fle_cont.16566:
+	beqi	0, r1, beq_then.16567
 	flup	f1, 0		# fli	f1, 0.000000
-	j	beq_cont.8654
-beq_then.8653:
-	flw	f1, 42(r3)
-beq_cont.8654:
+	j	beq_cont.16568
+beq_then.16567:
+beq_cont.16568:
 	flup	f2, 37		# fli	f2, 255.000000
 	fmul	f1, f2, f1
 	flup	f2, 38		# fli	f2, 0.300000
 	fdiv	f1, f1, f2
 	fsw	f1, 736(r0)
 	jr	r31				#
-beq_then.8645:
-	lw	r1, 0(r3)
-	flw	f1, 0(r1)
-	lw	r2, 1(r3)
-	fsw	f1, 44(r3)
-	add	r1, r0, r2
-	sw	r31, 46(r3)
-	addi	r3, r3, 47
-	jal	o_param_x.2934				
-	addi	r3, r3, -47
-	lw	r31, 46(r3)
-	flw	f2, 44(r3)
-	fsub	f1, f2, f1
-	lw	r1, 0(r3)
-	flw	f2, 2(r1)
-	lw	r1, 1(r3)
-	fsw	f1, 46(r3)
-	fsw	f2, 48(r3)
-	sw	r31, 50(r3)
-	addi	r3, r3, 51
-	jal	o_param_z.2938				
-	addi	r3, r3, -51
-	lw	r31, 50(r3)
-	flw	f2, 48(r3)
-	fsub	f1, f2, f1
-	flw	f2, 46(r3)
-	fsw	f1, 50(r3)
-	fadd	f1, f0, f2
-	sw	r31, 52(r3)
-	addi	r3, r3, 53
-	jal	fsqr.2814				
-	addi	r3, r3, -53
-	lw	r31, 52(r3)
-	flw	f2, 50(r3)
-	fsw	f1, 52(r3)
-	fadd	f1, f0, f2
-	sw	r31, 54(r3)
-	addi	r3, r3, 55
-	jal	fsqr.2814				
-	addi	r3, r3, -55
-	lw	r31, 54(r3)
-	flw	f2, 52(r3)
-	fadd	f1, f2, f1
+beq_then.16534:
+	flw	f1, 0(r2)
+	lw	r5, 5(r1)
+	flw	f2, 0(r5)
+	fsub	f1, f1, f2
+	flw	f2, 2(r2)
+	lw	r1, 5(r1)
+	flw	f3, 2(r1)
+	fsub	f2, f2, f3
+	fmul	f1, f1, f1
+	fmul	f2, f2, f2
+	fadd	f1, f1, f2
 	fsqrt	f1, f1
 	flup	f2, 39		# fli	f2, 10.000000
 	fdiv	f1, f1, f2
-	fsw	f1, 54(r3)
-	sw	r31, 56(r3)
-	addi	r3, r3, 57
-	jal	floor.2822				
-	addi	r3, r3, -57
-	lw	r31, 56(r3)
-	flw	f2, 54(r3)
-	fsub	f1, f2, f1
+	ftoi	r1, f1
+	itof	f2, r1
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.16570
+	j	fle_cont.16571
+fle_else.16570:
+	flup	f3, 2		# fli	f3, 1.000000
+	fsub	f2, f2, f3
+fle_cont.16571:
+	fsub	f1, f1, f2
 	flup	f2, 14		# fli	f2, 3.141593
 	fmul	f1, f1, f2
-	sw	r31, 56(r3)
-	addi	r3, r3, 57
+	sw	r31, 18(r3)
+	addi	r3, r3, 19
 	jal	cos.2839				
-	addi	r3, r3, -57
-	lw	r31, 56(r3)
-	sw	r31, 56(r3)
-	addi	r3, r3, 57
-	jal	fsqr.2814				
-	addi	r3, r3, -57
-	lw	r31, 56(r3)
+	addi	r3, r3, -19
+	lw	r31, 18(r3)
+	fmul	f1, f1, f1
 	flup	f2, 37		# fli	f2, 255.000000
 	fmul	f2, f1, f2
 	fsw	f2, 735(r0)
@@ -6580,21 +8546,16 @@ beq_then.8645:
 	fmul	f1, f1, f2
 	fsw	f1, 736(r0)
 	jr	r31				#
-beq_then.8644:
-	lw	r1, 0(r3)
-	flw	f1, 1(r1)
+beq_then.16533:
+	flw	f1, 1(r2)
 	flup	f2, 40		# fli	f2, 0.250000
 	fmul	f1, f1, f2
-	sw	r31, 56(r3)
-	addi	r3, r3, 57
+	sw	r31, 18(r3)
+	addi	r3, r3, 19
 	jal	sin.2837				
-	addi	r3, r3, -57
-	lw	r31, 56(r3)
-	sw	r31, 56(r3)
-	addi	r3, r3, 57
-	jal	fsqr.2814				
-	addi	r3, r3, -57
-	lw	r31, 56(r3)
+	addi	r3, r3, -19
+	lw	r31, 18(r3)
+	fmul	f1, f1, f1
 	flup	f2, 37		# fli	f2, 255.000000
 	fmul	f2, f2, f1
 	fsw	f2, 734(r0)
@@ -6604,267 +8565,236 @@ beq_then.8644:
 	fmul	f1, f2, f1
 	fsw	f1, 735(r0)
 	jr	r31				#
-beq_then.8643:
-	lw	r1, 0(r3)
-	flw	f1, 0(r1)
-	lw	r2, 1(r3)
-	fsw	f1, 56(r3)
-	add	r1, r0, r2
-	sw	r31, 58(r3)
-	addi	r3, r3, 59
-	jal	o_param_x.2934				
-	addi	r3, r3, -59
-	lw	r31, 58(r3)
+beq_then.16532:
+	lw	r5, 5(r1)
+	flw	f1, 0(r2)
 	flup	f2, 41		# fli	f2, 0.050000
+	flw	f3, 0(r5)
+	fsub	f1, f1, f3
+	fmul	f2, f1, f2
+	ftoi	r5, f2
+	itof	f3, r5
+	fle	r30, f3, f2
+	beq	r0, r30, fle_else.16574
+	fadd	f2, f0, f3
+	j	fle_cont.16575
+fle_else.16574:
+	flup	f2, 2		# fli	f2, 1.000000
+	fsub	f2, f3, f2
+fle_cont.16575:
 	flup	f3, 42		# fli	f3, 20.000000
 	flup	f4, 39		# fli	f4, 10.000000
-	flw	f5, 56(r3)
-	fsub	f1, f5, f1
-	fmul	f2, f1, f2
-	fsw	f4, 58(r3)
-	fsw	f1, 60(r3)
-	fsw	f3, 62(r3)
-	fadd	f1, f0, f2
-	sw	r31, 64(r3)
-	addi	r3, r3, 65
-	jal	floor.2822				
-	addi	r3, r3, -65
-	lw	r31, 64(r3)
-	flw	f2, 62(r3)
-	fmul	f1, f1, f2
-	flw	f2, 60(r3)
-	fsub	f1, f2, f1
-	flw	f2, 58(r3)
-	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8658
-	addi	r1, r0, 0
-	j	fle_cont.8659
-fle_else.8658:
-	addi	r1, r0, 1
-fle_cont.8659:
-	lw	r2, 0(r3)
+	fmul	f2, f2, f3
+	fsub	f1, f1, f2
+	fle	r30, f4, f1
+	beq	r0, r30, fle_else.16576
+	addi	r5, r0, 0
+	j	fle_cont.16577
+fle_else.16576:
+	addi	r5, r0, 1
+fle_cont.16577:
+	lw	r1, 5(r1)
 	flw	f1, 2(r2)
-	lw	r2, 1(r3)
-	sw	r1, 64(r3)
-	fsw	f1, 66(r3)
-	add	r1, r0, r2
-	sw	r31, 68(r3)
-	addi	r3, r3, 69
-	jal	o_param_z.2938				
-	addi	r3, r3, -69
-	lw	r31, 68(r3)
 	flup	f2, 41		# fli	f2, 0.050000
+	flw	f3, 2(r1)
+	fsub	f1, f1, f3
+	fmul	f2, f1, f2
+	ftoi	r1, f2
+	itof	f3, r1
+	fle	r30, f3, f2
+	beq	r0, r30, fle_else.16578
+	fadd	f2, f0, f3
+	j	fle_cont.16579
+fle_else.16578:
+	flup	f2, 2		# fli	f2, 1.000000
+	fsub	f2, f3, f2
+fle_cont.16579:
 	flup	f3, 42		# fli	f3, 20.000000
 	flup	f4, 39		# fli	f4, 10.000000
-	flw	f5, 66(r3)
-	fsub	f1, f5, f1
-	fmul	f2, f1, f2
-	fsw	f4, 68(r3)
-	fsw	f1, 70(r3)
-	fsw	f3, 72(r3)
-	fadd	f1, f0, f2
-	sw	r31, 74(r3)
-	addi	r3, r3, 75
-	jal	floor.2822				
-	addi	r3, r3, -75
-	lw	r31, 74(r3)
-	flw	f2, 72(r3)
-	fmul	f1, f1, f2
-	flw	f2, 70(r3)
-	fsub	f1, f2, f1
-	flw	f2, 68(r3)
-	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8661
+	fmul	f2, f2, f3
+	fsub	f1, f1, f2
+	fle	r30, f4, f1
+	beq	r0, r30, fle_else.16580
 	addi	r1, r0, 0
-	j	fle_cont.8662
-fle_else.8661:
+	j	fle_cont.16581
+fle_else.16580:
 	addi	r1, r0, 1
-fle_cont.8662:
-	lw	r2, 64(r3)
-	beqi	0, r2, beq_then.8663
-	beqi	0, r1, beq_then.8665
+fle_cont.16581:
+	beqi	0, r5, beq_then.16582
+	beqi	0, r1, beq_then.16584
 	flup	f1, 37		# fli	f1, 255.000000
-	j	beq_cont.8666
-beq_then.8665:
+	j	beq_cont.16585
+beq_then.16584:
 	flup	f1, 0		# fli	f1, 0.000000
-beq_cont.8666:
-	j	beq_cont.8664
-beq_then.8663:
-	beqi	0, r1, beq_then.8667
+beq_cont.16585:
+	j	beq_cont.16583
+beq_then.16582:
+	beqi	0, r1, beq_then.16586
 	flup	f1, 0		# fli	f1, 0.000000
-	j	beq_cont.8668
-beq_then.8667:
+	j	beq_cont.16587
+beq_then.16586:
 	flup	f1, 37		# fli	f1, 255.000000
-beq_cont.8668:
-beq_cont.8664:
+beq_cont.16587:
+beq_cont.16583:
 	fsw	f1, 735(r0)
 	jr	r31				#
 add_light.3188:
-	fsw	f3, 0(r3)
-	fsw	f2, 2(r3)
-	fsw	f1, 4(r3)
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	fispos.2803				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	beqi	0, r1, beq_then.8670
-	addi	r1, r0, 740				# set min_caml_rgb
-	addi	r2, r0, 734				# set min_caml_texture_color
-	flw	f1, 4(r3)
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	vecaccum.2899				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	j	beq_cont.8671
-beq_then.8670:
-beq_cont.8671:
-	flw	f1, 2(r3)
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	fispos.2803				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	beqi	0, r1, beq_then.8672
-	flw	f1, 2(r3)
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	fsqr.2814				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
+	fle	r30, f1, f0
+	beq	r0, r30, fle_else.16589
+	addi	r1, r0, 0
+	j	fle_cont.16590
+fle_else.16589:
+	addi	r1, r0, 1
+fle_cont.16590:
+	beqi	0, r1, beq_then.16591
+	flw	f4, 734(r0)
+	flw	f5, 740(r0)
+	fmul	f4, f1, f4
+	fadd	f4, f5, f4
+	fsw	f4, 740(r0)
+	flw	f4, 735(r0)
+	flw	f5, 741(r0)
+	fmul	f4, f1, f4
+	fadd	f4, f5, f4
+	fsw	f4, 741(r0)
+	flw	f4, 736(r0)
+	flw	f5, 742(r0)
+	fmul	f1, f1, f4
+	fadd	f1, f5, f1
+	fsw	f1, 742(r0)
+	j	beq_cont.16592
+beq_then.16591:
+beq_cont.16592:
+	fle	r30, f2, f0
+	beq	r0, r30, fle_else.16593
+	addi	r1, r0, 0
+	j	fle_cont.16594
+fle_else.16593:
+	addi	r1, r0, 1
+fle_cont.16594:
+	beqi	0, r1, beq_then.16595
+	fmul	f1, f2, f2
 	flw	f2, 740(r0)
-	flw	f3, 741(r0)
-	flw	f4, 742(r0)
-	fsw	f4, 6(r3)
-	fsw	f3, 8(r3)
-	fsw	f2, 10(r3)
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	fsqr.2814				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	flw	f2, 0(r3)
-	fmul	f1, f1, f2
-	flw	f2, 10(r3)
+	fmul	f1, f1, f1
+	fmul	f1, f1, f3
 	fadd	f2, f2, f1
 	fsw	f2, 740(r0)
-	flw	f2, 8(r3)
+	flw	f2, 741(r0)
 	fadd	f2, f2, f1
 	fsw	f2, 741(r0)
-	flw	f2, 6(r3)
+	flw	f2, 742(r0)
 	fadd	f1, f2, f1
 	fsw	f1, 742(r0)
 	jr	r31				#
-beq_then.8672:
+beq_then.16595:
 	jr	r31				#
 trace_reflections.3192:
-	bgei	0, r1, bge_then.8675
+	bgei	0, r1, bge_then.16598
 	jr	r31				#
-bge_then.8675:
+bge_then.16598:
 	addi	r5, r0, 778				# set min_caml_reflections
 	add	r30, r5, r1
 	lw	r5, 0(r30)
+	lw	r6, 1(r5)
+	flup	f3, 31		# fli	f3, 1000000000.000000
+	fsw	f3, 726(r0)
+	addi	r7, r0, 0
+	lw	r8, 723(r0)
 	sw	r1, 0(r3)
 	fsw	f2, 2(r3)
 	sw	r2, 4(r3)
 	fsw	f1, 6(r3)
-	sw	r5, 8(r3)
-	add	r1, r0, r5
-	sw	r31, 9(r3)
-	addi	r3, r3, 10
-	jal	r_dvec.2983				
-	addi	r3, r3, -10
-	lw	r31, 9(r3)
-	sw	r1, 9(r3)
+	sw	r6, 8(r3)
+	sw	r5, 9(r3)
+	add	r5, r0, r6
+	add	r2, r0, r8
+	add	r1, r0, r7
 	sw	r31, 10(r3)
 	addi	r3, r3, 11
-	jal	judge_intersection_fast.3174				
+	jal	trace_or_matrix_fast.3170				
 	addi	r3, r3, -11
 	lw	r31, 10(r3)
-	beqi	0, r1, beq_then.8679
+	flw	f1, 726(r0)
+	flup	f2, 30		# fli	f2, -0.100000
+	fle	r30, f1, f2
+	beq	r0, r30, fle_else.16602
+	addi	r1, r0, 0
+	j	fle_cont.16603
+fle_else.16602:
+	flup	f2, 32		# fli	f2, 100000000.000000
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.16604
+	addi	r1, r0, 0
+	j	fle_cont.16605
+fle_else.16604:
+	addi	r1, r0, 1
+fle_cont.16605:
+fle_cont.16603:
+	beqi	0, r1, beq_then.16606
 	lw	r1, 730(r0)
 	slli	r1, r1, 2
 	lw	r2, 725(r0)
 	add	r1, r1, r2
-	lw	r2, 8(r3)
-	sw	r1, 10(r3)
-	add	r1, r0, r2
-	sw	r31, 11(r3)
-	addi	r3, r3, 12
-	jal	r_surface_id.2981				
-	addi	r3, r3, -12
-	lw	r31, 11(r3)
-	lw	r2, 10(r3)
-	beq	r2, r1, beq_then.8681
-	j	beq_cont.8682
-beq_then.8681:
-	addi	r1, r0, 0
-	lw	r2, 723(r0)
-	sw	r31, 11(r3)
-	addi	r3, r3, 12
-	jal	shadow_check_one_or_matrix.3145				
-	addi	r3, r3, -12
-	lw	r31, 11(r3)
-	beqi	0, r1, beq_then.8683
-	j	beq_cont.8684
-beq_then.8683:
-	addi	r1, r0, 731				# set min_caml_nvector
 	lw	r2, 9(r3)
-	sw	r1, 11(r3)
-	add	r1, r0, r2
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	d_vec.2977				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	add	r2, r0, r1
-	lw	r1, 11(r3)
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	veciprod.2891				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
+	lw	r5, 0(r2)
+	beq	r1, r5, beq_then.16608
+	j	beq_cont.16609
+beq_then.16608:
+	addi	r1, r0, 0
+	lw	r5, 723(r0)
+	add	r2, r0, r5
+	sw	r31, 10(r3)
+	addi	r3, r3, 11
+	jal	shadow_check_one_or_matrix.3145				
+	addi	r3, r3, -11
+	lw	r31, 10(r3)
+	beqi	0, r1, beq_then.16610
+	j	beq_cont.16611
+beq_then.16610:
 	lw	r1, 8(r3)
-	fsw	f1, 12(r3)
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	r_bright.2985				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	flw	f2, 6(r3)
-	fmul	f3, f1, f2
-	flw	f4, 12(r3)
-	fmul	f3, f3, f4
-	lw	r1, 9(r3)
-	fsw	f3, 14(r3)
-	fsw	f1, 16(r3)
-	sw	r31, 18(r3)
-	addi	r3, r3, 19
-	jal	d_vec.2977				
-	addi	r3, r3, -19
-	lw	r31, 18(r3)
-	add	r2, r0, r1
-	lw	r1, 4(r3)
-	sw	r31, 18(r3)
-	addi	r3, r3, 19
-	jal	veciprod.2891				
-	addi	r3, r3, -19
-	lw	r31, 18(r3)
-	flw	f2, 16(r3)
-	fmul	f2, f2, f1
-	flw	f1, 14(r3)
-	flw	f3, 2(r3)
-	sw	r31, 18(r3)
-	addi	r3, r3, 19
+	lw	r2, 0(r1)
+	flw	f1, 731(r0)
+	flw	f2, 0(r2)
+	fmul	f1, f1, f2
+	flw	f2, 732(r0)
+	flw	f3, 1(r2)
+	fmul	f2, f2, f3
+	fadd	f1, f1, f2
+	flw	f2, 733(r0)
+	flw	f3, 2(r2)
+	fmul	f2, f2, f3
+	fadd	f1, f1, f2
+	lw	r2, 9(r3)
+	flw	f2, 2(r2)
+	flw	f3, 6(r3)
+	fmul	f4, f2, f3
+	fmul	f1, f4, f1
+	lw	r1, 0(r1)
+	lw	r2, 4(r3)
+	flw	f4, 0(r2)
+	flw	f5, 0(r1)
+	fmul	f4, f4, f5
+	flw	f5, 1(r2)
+	flw	f6, 1(r1)
+	fmul	f5, f5, f6
+	fadd	f4, f4, f5
+	flw	f5, 2(r2)
+	flw	f6, 2(r1)
+	fmul	f5, f5, f6
+	fadd	f4, f4, f5
+	fmul	f2, f2, f4
+	flw	f4, 2(r3)
+	fadd	f3, f0, f4
+	sw	r31, 10(r3)
+	addi	r3, r3, 11
 	jal	add_light.3188				
-	addi	r3, r3, -19
-	lw	r31, 18(r3)
-beq_cont.8684:
-beq_cont.8682:
-	j	beq_cont.8680
-beq_then.8679:
-beq_cont.8680:
+	addi	r3, r3, -11
+	lw	r31, 10(r3)
+beq_cont.16611:
+beq_cont.16609:
+	j	beq_cont.16607
+beq_then.16606:
+beq_cont.16607:
 	lw	r1, 0(r3)
 	addi	r1, r1, -1
 	flw	f1, 6(r3)
@@ -6872,332 +8802,377 @@ beq_cont.8680:
 	lw	r2, 4(r3)
 	j	trace_reflections.3192
 trace_ray.3197:
-	blei	4, r1, ble_then.8685
+	blei	4, r1, ble_then.16612
 	jr	r31				#
-ble_then.8685:
+ble_then.16612:
+	lw	r6, 2(r5)
+	flup	f3, 31		# fli	f3, 1000000000.000000
+	fsw	f3, 726(r0)
+	addi	r7, r0, 0
+	lw	r8, 723(r0)
 	fsw	f2, 0(r3)
 	sw	r5, 2(r3)
 	fsw	f1, 4(r3)
-	sw	r1, 6(r3)
-	sw	r2, 7(r3)
-	add	r1, r0, r5
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	p_surface_ids.2962				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	lw	r2, 7(r3)
-	sw	r1, 8(r3)
-	add	r1, r0, r2
+	sw	r2, 6(r3)
+	sw	r1, 7(r3)
+	sw	r6, 8(r3)
+	add	r5, r0, r2
+	add	r1, r0, r7
+	add	r2, r0, r8
 	sw	r31, 9(r3)
 	addi	r3, r3, 10
-	jal	judge_intersection.3160				
+	jal	trace_or_matrix.3156				
 	addi	r3, r3, -10
 	lw	r31, 9(r3)
-	beqi	0, r1, beq_then.8688
+	flw	f1, 726(r0)
+	flup	f2, 30		# fli	f2, -0.100000
+	fle	r30, f1, f2
+	beq	r0, r30, fle_else.16615
+	addi	r1, r0, 0
+	j	fle_cont.16616
+fle_else.16615:
+	flup	f2, 32		# fli	f2, 100000000.000000
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.16617
+	addi	r1, r0, 0
+	j	fle_cont.16618
+fle_else.16617:
+	addi	r1, r0, 1
+fle_cont.16618:
+fle_cont.16616:
+	beqi	0, r1, beq_then.16619
 	lw	r1, 730(r0)
 	addi	r2, r0, 1				# set min_caml_objects
 	add	r30, r2, r1
 	lw	r2, 0(r30)
-	sw	r1, 9(r3)
-	sw	r2, 10(r3)
-	add	r1, r0, r2
-	sw	r31, 11(r3)
-	addi	r3, r3, 12
-	jal	o_reflectiontype.2920				
-	addi	r3, r3, -12
-	lw	r31, 11(r3)
-	lw	r2, 10(r3)
-	sw	r1, 11(r3)
-	add	r1, r0, r2
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	o_diffuse.2940				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
+	lw	r5, 2(r2)
+	lw	r6, 7(r2)
+	flw	f1, 0(r6)
 	flw	f2, 4(r3)
 	fmul	f1, f1, f2
-	lw	r1, 10(r3)
-	lw	r2, 7(r3)
-	fsw	f1, 12(r3)
+	lw	r6, 1(r2)
+	sw	r5, 9(r3)
+	fsw	f1, 10(r3)
+	sw	r1, 12(r3)
+	sw	r2, 13(r3)
+	beqi	1, r6, beq_then.16620
+	beqi	2, r6, beq_then.16622
+	add	r1, r0, r2
 	sw	r31, 14(r3)
 	addi	r3, r3, 15
-	jal	get_nvector.3182				
+	jal	get_nvector_second.3180				
 	addi	r3, r3, -15
 	lw	r31, 14(r3)
-	addi	r1, r0, 748				# set min_caml_startp
+	j	beq_cont.16623
+beq_then.16622:
+	lw	r6, 4(r2)
+	flw	f3, 0(r6)
+	fneg	f3, f3
+	fsw	f3, 731(r0)
+	lw	r6, 4(r2)
+	flw	f3, 1(r6)
+	fneg	f3, f3
+	fsw	f3, 732(r0)
+	lw	r6, 4(r2)
+	flw	f3, 2(r6)
+	fneg	f3, f3
+	fsw	f3, 733(r0)
+beq_cont.16623:
+	j	beq_cont.16621
+beq_then.16620:
+	lw	r6, 725(r0)
+	fsw	f0, 731(r0)
+	fsw	f0, 732(r0)
+	fsw	f0, 733(r0)
+	addi	r7, r0, 731				# set min_caml_nvector
+	addi	r8, r6, -1
+	addi	r6, r6, -1
+	lw	r9, 6(r3)
+	add	r30, r9, r6
+	flw	f3, 0(r30)
+	feq	r30, f3, f0
+	beq	r0, r30, feq_else.16624
+	addi	r6, r0, 1
+	j	feq_cont.16625
+feq_else.16624:
+	addi	r6, r0, 0
+feq_cont.16625:
+	beqi	0, r6, beq_then.16626
+	flup	f3, 0		# fli	f3, 0.000000
+	j	beq_cont.16627
+beq_then.16626:
+	fle	r30, f3, f0
+	beq	r0, r30, fle_else.16628
+	addi	r6, r0, 0
+	j	fle_cont.16629
+fle_else.16628:
+	addi	r6, r0, 1
+fle_cont.16629:
+	beqi	0, r6, beq_then.16630
+	flup	f3, 2		# fli	f3, 1.000000
+	j	beq_cont.16631
+beq_then.16630:
+	flup	f3, 11		# fli	f3, -1.000000
+beq_cont.16631:
+beq_cont.16627:
+	fneg	f3, f3
+	add	r30, r7, r8
+	fsw	f3, 0(r30)
+beq_cont.16621:
+	flw	f1, 727(r0)
+	fsw	f1, 748(r0)
+	flw	f1, 728(r0)
+	fsw	f1, 749(r0)
+	flw	f1, 729(r0)
+	fsw	f1, 750(r0)
 	addi	r2, r0, 727				# set min_caml_intersection_point
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	veccpy.2880				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	addi	r2, r0, 727				# set min_caml_intersection_point
-	lw	r1, 10(r3)
+	lw	r1, 13(r3)
 	sw	r31, 14(r3)
 	addi	r3, r3, 15
 	jal	utexture.3185				
 	addi	r3, r3, -15
 	lw	r31, 14(r3)
-	lw	r1, 9(r3)
+	lw	r1, 12(r3)
 	slli	r1, r1, 2
 	lw	r2, 725(r0)
 	add	r1, r1, r2
-	lw	r2, 6(r3)
+	lw	r2, 7(r3)
 	lw	r5, 8(r3)
 	add	r30, r5, r2
 	sw	r1, 0(r30)
 	lw	r1, 2(r3)
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	p_intersection_points.2960				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	lw	r2, 6(r3)
-	add	r30, r1, r2
-	lw	r1, 0(r30)
-	addi	r5, r0, 727				# set min_caml_intersection_point
-	add	r2, r0, r5
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	veccpy.2880				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	lw	r1, 2(r3)
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	p_calc_diffuse.2964				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
+	lw	r6, 1(r1)
+	add	r30, r6, r2
+	lw	r6, 0(r30)
+	flw	f1, 727(r0)
+	fsw	f1, 0(r6)
+	flw	f1, 728(r0)
+	fsw	f1, 1(r6)
+	flw	f1, 729(r0)
+	fsw	f1, 2(r6)
+	lw	r6, 3(r1)
 	flup	f1, 1		# fli	f1, 0.500000
-	lw	r2, 10(r3)
-	sw	r1, 14(r3)
-	fsw	f1, 16(r3)
-	add	r1, r0, r2
-	sw	r31, 18(r3)
-	addi	r3, r3, 19
-	jal	o_diffuse.2940				
-	addi	r3, r3, -19
-	lw	r31, 18(r3)
-	flw	f2, 16(r3)
-	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8690
-	addi	r1, r0, 1
-	lw	r2, 6(r3)
-	lw	r5, 14(r3)
-	add	r30, r5, r2
-	sw	r1, 0(r30)
-	lw	r1, 2(r3)
-	sw	r31, 18(r3)
-	addi	r3, r3, 19
-	jal	p_energy.2966				
-	addi	r3, r3, -19
-	lw	r31, 18(r3)
-	lw	r2, 6(r3)
-	add	r30, r1, r2
-	lw	r5, 0(r30)
-	addi	r6, r0, 734				# set min_caml_texture_color
-	sw	r1, 18(r3)
-	add	r2, r0, r6
-	add	r1, r0, r5
-	sw	r31, 19(r3)
-	addi	r3, r3, 20
-	jal	veccpy.2880				
-	addi	r3, r3, -20
-	lw	r31, 19(r3)
-	lw	r1, 6(r3)
-	lw	r2, 18(r3)
-	add	r30, r2, r1
-	lw	r2, 0(r30)
+	lw	r7, 13(r3)
+	lw	r8, 7(r7)
+	flw	f2, 0(r8)
+	fle	r30, f1, f2
+	beq	r0, r30, fle_else.16632
+	addi	r8, r0, 1
+	add	r30, r6, r2
+	sw	r8, 0(r30)
+	lw	r6, 4(r1)
+	add	r30, r6, r2
+	lw	r8, 0(r30)
+	flw	f1, 734(r0)
+	fsw	f1, 0(r8)
+	flw	f1, 735(r0)
+	fsw	f1, 1(r8)
+	flw	f1, 736(r0)
+	fsw	f1, 2(r8)
+	add	r30, r6, r2
+	lw	r6, 0(r30)
 	flup	f1, 43		# fli	f1, 0.003906
-	flw	f2, 12(r3)
+	flw	f2, 10(r3)
 	fmul	f1, f1, f2
-	add	r1, r0, r2
-	sw	r31, 19(r3)
-	addi	r3, r3, 20
-	jal	vecscale.2909				
-	addi	r3, r3, -20
-	lw	r31, 19(r3)
-	lw	r1, 2(r3)
-	sw	r31, 19(r3)
-	addi	r3, r3, 20
-	jal	p_nvectors.2975				
-	addi	r3, r3, -20
-	lw	r31, 19(r3)
-	lw	r2, 6(r3)
-	add	r30, r1, r2
-	lw	r1, 0(r30)
-	addi	r5, r0, 731				# set min_caml_nvector
-	add	r2, r0, r5
-	sw	r31, 19(r3)
-	addi	r3, r3, 20
-	jal	veccpy.2880				
-	addi	r3, r3, -20
-	lw	r31, 19(r3)
-	j	fle_cont.8691
-fle_else.8690:
-	lw	r1, 6(r3)
-	lw	r2, 14(r3)
-	add	r30, r2, r1
-	sw	r0, 0(r30)
-fle_cont.8691:
+	flw	f3, 0(r6)
+	fmul	f3, f3, f1
+	fsw	f3, 0(r6)
+	flw	f3, 1(r6)
+	fmul	f3, f3, f1
+	fsw	f3, 1(r6)
+	flw	f3, 2(r6)
+	fmul	f1, f3, f1
+	fsw	f1, 2(r6)
+	lw	r6, 7(r1)
+	add	r30, r6, r2
+	lw	r6, 0(r30)
+	flw	f1, 731(r0)
+	fsw	f1, 0(r6)
+	flw	f1, 732(r0)
+	fsw	f1, 1(r6)
+	flw	f1, 733(r0)
+	fsw	f1, 2(r6)
+	j	fle_cont.16633
+fle_else.16632:
+	addi	r8, r0, 0
+	add	r30, r6, r2
+	sw	r8, 0(r30)
+fle_cont.16633:
 	flup	f1, 44		# fli	f1, -2.000000
-	addi	r2, r0, 731				# set min_caml_nvector
-	lw	r1, 7(r3)
-	fsw	f1, 20(r3)
-	sw	r31, 22(r3)
-	addi	r3, r3, 23
-	jal	veciprod.2891				
-	addi	r3, r3, -23
-	lw	r31, 22(r3)
-	flw	f2, 20(r3)
-	fmul	f1, f2, f1
-	addi	r2, r0, 731				# set min_caml_nvector
-	lw	r1, 7(r3)
-	sw	r31, 22(r3)
-	addi	r3, r3, 23
-	jal	vecaccum.2899				
-	addi	r3, r3, -23
-	lw	r31, 22(r3)
-	lw	r1, 10(r3)
-	sw	r31, 22(r3)
-	addi	r3, r3, 23
-	jal	o_hilight.2942				
-	addi	r3, r3, -23
-	lw	r31, 22(r3)
+	lw	r6, 6(r3)
+	flw	f2, 0(r6)
+	flw	f3, 731(r0)
+	fmul	f2, f2, f3
+	flw	f3, 1(r6)
+	flw	f4, 732(r0)
+	fmul	f3, f3, f4
+	fadd	f2, f2, f3
+	flw	f3, 2(r6)
+	flw	f4, 733(r0)
+	fmul	f3, f3, f4
+	fadd	f2, f2, f3
+	fmul	f1, f1, f2
+	flw	f2, 0(r6)
+	flw	f3, 731(r0)
+	fmul	f3, f1, f3
+	fadd	f2, f2, f3
+	fsw	f2, 0(r6)
+	flw	f2, 1(r6)
+	flw	f3, 732(r0)
+	fmul	f3, f1, f3
+	fadd	f2, f2, f3
+	fsw	f2, 1(r6)
+	flw	f2, 2(r6)
+	flw	f3, 733(r0)
+	fmul	f1, f1, f3
+	fadd	f1, f2, f1
+	fsw	f1, 2(r6)
+	lw	r8, 7(r7)
+	flw	f1, 1(r8)
 	flw	f2, 4(r3)
 	fmul	f1, f2, f1
-	addi	r1, r0, 0
-	lw	r2, 723(r0)
-	fsw	f1, 22(r3)
-	sw	r31, 24(r3)
-	addi	r3, r3, 25
+	addi	r8, r0, 0
+	lw	r9, 723(r0)
+	fsw	f1, 14(r3)
+	add	r2, r0, r9
+	add	r1, r0, r8
+	sw	r31, 16(r3)
+	addi	r3, r3, 17
 	jal	shadow_check_one_or_matrix.3145				
-	addi	r3, r3, -25
-	lw	r31, 24(r3)
-	beqi	0, r1, beq_then.8693
-	j	beq_cont.8694
-beq_then.8693:
-	addi	r1, r0, 731				# set min_caml_nvector
-	addi	r2, r0, 667				# set min_caml_light
-	sw	r31, 24(r3)
-	addi	r3, r3, 25
-	jal	veciprod.2891				
-	addi	r3, r3, -25
-	lw	r31, 24(r3)
-	fneg	f1, f1
-	flw	f2, 12(r3)
+	addi	r3, r3, -17
+	lw	r31, 16(r3)
+	beqi	0, r1, beq_then.16634
+	j	beq_cont.16635
+beq_then.16634:
+	flw	f1, 731(r0)
+	flw	f2, 667(r0)
 	fmul	f1, f1, f2
-	addi	r2, r0, 667				# set min_caml_light
-	lw	r1, 7(r3)
-	fsw	f1, 24(r3)
-	sw	r31, 26(r3)
-	addi	r3, r3, 27
-	jal	veciprod.2891				
-	addi	r3, r3, -27
-	lw	r31, 26(r3)
-	fneg	f2, f1
-	flw	f1, 24(r3)
-	flw	f3, 22(r3)
-	sw	r31, 26(r3)
-	addi	r3, r3, 27
+	flw	f2, 732(r0)
+	flw	f3, 668(r0)
+	fmul	f2, f2, f3
+	fadd	f1, f1, f2
+	flw	f2, 733(r0)
+	flw	f3, 669(r0)
+	fmul	f2, f2, f3
+	fadd	f1, f1, f2
+	fneg	f1, f1
+	flw	f2, 10(r3)
+	fmul	f1, f1, f2
+	lw	r1, 6(r3)
+	flw	f3, 0(r1)
+	flw	f4, 667(r0)
+	fmul	f3, f3, f4
+	flw	f4, 1(r1)
+	flw	f5, 668(r0)
+	fmul	f4, f4, f5
+	fadd	f3, f3, f4
+	flw	f4, 2(r1)
+	flw	f5, 669(r0)
+	fmul	f4, f4, f5
+	fadd	f3, f3, f4
+	fneg	f3, f3
+	flw	f4, 14(r3)
+	fadd	f2, f0, f3
+	fadd	f3, f0, f4
+	sw	r31, 16(r3)
+	addi	r3, r3, 17
 	jal	add_light.3188				
-	addi	r3, r3, -27
-	lw	r31, 26(r3)
-beq_cont.8694:
+	addi	r3, r3, -17
+	lw	r31, 16(r3)
+beq_cont.16635:
 	addi	r1, r0, 727				# set min_caml_intersection_point
-	sw	r31, 26(r3)
-	addi	r3, r3, 27
-	jal	setup_startp.3111				
-	addi	r3, r3, -27
-	lw	r31, 26(r3)
+	flw	f1, 727(r0)
+	fsw	f1, 751(r0)
+	flw	f1, 728(r0)
+	fsw	f1, 752(r0)
+	flw	f1, 729(r0)
+	fsw	f1, 753(r0)
+	lw	r2, 0(r0)
+	addi	r2, r2, -1
+	sw	r31, 16(r3)
+	addi	r3, r3, 17
+	jal	setup_startp_constants.3108				
+	addi	r3, r3, -17
+	lw	r31, 16(r3)
 	lw	r1, 1023(r0)
 	addi	r1, r1, -1
-	flw	f1, 12(r3)
-	flw	f2, 22(r3)
-	lw	r2, 7(r3)
-	sw	r31, 26(r3)
-	addi	r3, r3, 27
+	flw	f1, 10(r3)
+	flw	f2, 14(r3)
+	lw	r2, 6(r3)
+	sw	r31, 16(r3)
+	addi	r3, r3, 17
 	jal	trace_reflections.3192				
-	addi	r3, r3, -27
-	lw	r31, 26(r3)
+	addi	r3, r3, -17
+	lw	r31, 16(r3)
 	flup	f1, 45		# fli	f1, 0.100000
 	flw	f2, 4(r3)
 	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8695
+	beq	r0, r30, fle_else.16636
 	jr	r31				#
-fle_else.8695:
-	lw	r1, 6(r3)
-	bgei	4, r1, bge_then.8697
+fle_else.16636:
+	lw	r1, 7(r3)
+	bgei	4, r1, bge_then.16638
 	addi	r2, r1, 1
 	addi	r5, r0, -1
 	lw	r6, 8(r3)
 	add	r30, r6, r2
 	sw	r5, 0(r30)
-	j	bge_cont.8698
-bge_then.8697:
-bge_cont.8698:
-	lw	r2, 11(r3)
-	beqi	2, r2, beq_then.8699
-	j	beq_cont.8700
-beq_then.8699:
+	j	bge_cont.16639
+bge_then.16638:
+bge_cont.16639:
+	lw	r2, 9(r3)
+	beqi	2, r2, beq_then.16640
+	j	beq_cont.16641
+beq_then.16640:
 	flup	f1, 2		# fli	f1, 1.000000
-	lw	r2, 10(r3)
-	fsw	f1, 26(r3)
-	add	r1, r0, r2
-	sw	r31, 28(r3)
-	addi	r3, r3, 29
-	jal	o_diffuse.2940				
-	addi	r3, r3, -29
-	lw	r31, 28(r3)
-	flw	f2, 26(r3)
-	fsub	f1, f2, f1
-	flw	f2, 4(r3)
+	lw	r2, 13(r3)
+	lw	r2, 7(r2)
+	flw	f3, 0(r2)
+	fsub	f1, f1, f3
 	fmul	f1, f2, f1
-	lw	r1, 6(r3)
 	addi	r1, r1, 1
 	flw	f2, 726(r0)
 	flw	f3, 0(r3)
 	fadd	f2, f3, f2
-	lw	r2, 7(r3)
-	lw	r5, 2(r3)
-	sw	r31, 28(r3)
-	addi	r3, r3, 29
-	jal	trace_ray.3197				
-	addi	r3, r3, -29
-	lw	r31, 28(r3)
-beq_cont.8700:
-	jr	r31				#
-beq_then.8688:
-	addi	r1, r0, -1
 	lw	r2, 6(r3)
+	lw	r5, 2(r3)
+	sw	r31, 16(r3)
+	addi	r3, r3, 17
+	jal	trace_ray.3197				
+	addi	r3, r3, -17
+	lw	r31, 16(r3)
+beq_cont.16641:
+	jr	r31				#
+beq_then.16619:
+	addi	r1, r0, -1
+	lw	r2, 7(r3)
 	lw	r5, 8(r3)
 	add	r30, r5, r2
 	sw	r1, 0(r30)
-	beqi	0, r2, beq_then.8702
-	addi	r2, r0, 667				# set min_caml_light
-	lw	r1, 7(r3)
-	sw	r31, 28(r3)
-	addi	r3, r3, 29
-	jal	veciprod.2891				
-	addi	r3, r3, -29
-	lw	r31, 28(r3)
-	fneg	f1, f1
-	fsw	f1, 28(r3)
-	sw	r31, 30(r3)
-	addi	r3, r3, 31
-	jal	fispos.2803				
-	addi	r3, r3, -31
-	lw	r31, 30(r3)
-	beqi	0, r1, beq_then.8703
-	flw	f1, 28(r3)
-	sw	r31, 30(r3)
-	addi	r3, r3, 31
-	jal	fsqr.2814				
-	addi	r3, r3, -31
-	lw	r31, 30(r3)
-	flw	f2, 28(r3)
+	beqi	0, r2, beq_then.16643
+	lw	r1, 6(r3)
+	flw	f1, 0(r1)
+	flw	f2, 667(r0)
 	fmul	f1, f1, f2
+	flw	f2, 1(r1)
+	flw	f3, 668(r0)
+	fmul	f2, f2, f3
+	fadd	f1, f1, f2
+	flw	f2, 2(r1)
+	flw	f3, 669(r0)
+	fmul	f2, f2, f3
+	fadd	f1, f1, f2
+	fneg	f1, f1
+	fle	r30, f1, f0
+	beq	r0, r30, fle_else.16644
+	addi	r1, r0, 0
+	j	fle_cont.16645
+fle_else.16644:
+	addi	r1, r0, 1
+fle_cont.16645:
+	beqi	0, r1, beq_then.16646
+	fmul	f2, f1, f1
+	fmul	f1, f2, f1
 	flw	f2, 4(r3)
 	fmul	f1, f1, f2
 	flw	f2, 670(r0)
@@ -7212,545 +9187,791 @@ beq_then.8688:
 	fadd	f1, f2, f1
 	fsw	f1, 742(r0)
 	jr	r31				#
-beq_then.8703:
+beq_then.16646:
 	jr	r31				#
-beq_then.8702:
+beq_then.16643:
 	jr	r31				#
 trace_diffuse_ray.3203:
+	flup	f2, 31		# fli	f2, 1000000000.000000
+	fsw	f2, 726(r0)
+	lw	r2, 723(r0)
+	addi	r5, r0, 0
 	fsw	f1, 0(r3)
 	sw	r1, 2(r3)
+	add	r28, r0, r5
+	add	r5, r0, r1
+	add	r1, r0, r28
 	sw	r31, 3(r3)
 	addi	r3, r3, 4
-	jal	judge_intersection_fast.3174				
+	jal	trace_or_matrix_fast.3170				
 	addi	r3, r3, -4
 	lw	r31, 3(r3)
-	beqi	0, r1, beq_then.8707
+	flw	f1, 726(r0)
+	flup	f2, 30		# fli	f2, -0.100000
+	fle	r30, f1, f2
+	beq	r0, r30, fle_else.16650
+	addi	r1, r0, 0
+	j	fle_cont.16651
+fle_else.16650:
+	flup	f2, 32		# fli	f2, 100000000.000000
+	fle	r30, f2, f1
+	beq	r0, r30, fle_else.16652
+	addi	r1, r0, 0
+	j	fle_cont.16653
+fle_else.16652:
+	addi	r1, r0, 1
+fle_cont.16653:
+fle_cont.16651:
+	beqi	0, r1, beq_then.16654
 	lw	r1, 730(r0)
 	addi	r2, r0, 1				# set min_caml_objects
-	lw	r5, 723(r0)
-	addi	r6, r0, 727				# set min_caml_intersection_point
-	addi	r7, r0, 0
+	lw	r5, 2(r3)
+	lw	r5, 0(r5)
 	add	r30, r2, r1
 	lw	r1, 0(r30)
-	lw	r2, 2(r3)
-	sw	r5, 3(r3)
-	sw	r7, 4(r3)
-	sw	r6, 5(r3)
-	sw	r1, 6(r3)
-	add	r1, r0, r2
-	sw	r31, 7(r3)
-	addi	r3, r3, 8
-	jal	d_vec.2977				
-	addi	r3, r3, -8
-	lw	r31, 7(r3)
-	add	r2, r0, r1
-	lw	r1, 6(r3)
-	sw	r31, 7(r3)
-	addi	r3, r3, 8
-	jal	get_nvector.3182				
-	addi	r3, r3, -8
-	lw	r31, 7(r3)
-	lw	r1, 6(r3)
-	lw	r2, 5(r3)
-	sw	r31, 7(r3)
-	addi	r3, r3, 8
-	jal	utexture.3185				
-	addi	r3, r3, -8
-	lw	r31, 7(r3)
-	lw	r1, 4(r3)
-	lw	r2, 3(r3)
-	sw	r31, 7(r3)
-	addi	r3, r3, 8
-	jal	shadow_check_one_or_matrix.3145				
-	addi	r3, r3, -8
-	lw	r31, 7(r3)
-	beqi	0, r1, beq_then.8708
-	jr	r31				#
-beq_then.8708:
-	addi	r1, r0, 731				# set min_caml_nvector
-	addi	r2, r0, 667				# set min_caml_light
-	sw	r31, 7(r3)
-	addi	r3, r3, 8
-	jal	veciprod.2891				
-	addi	r3, r3, -8
-	lw	r31, 7(r3)
+	lw	r2, 1(r1)
+	sw	r1, 3(r3)
+	beqi	1, r2, beq_then.16655
+	beqi	2, r2, beq_then.16657
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	get_nvector_second.3180				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	j	beq_cont.16658
+beq_then.16657:
+	lw	r2, 4(r1)
+	flw	f1, 0(r2)
 	fneg	f1, f1
-	fsw	f1, 8(r3)
-	sw	r31, 10(r3)
-	addi	r3, r3, 11
-	jal	fispos.2803				
-	addi	r3, r3, -11
-	lw	r31, 10(r3)
-	beqi	0, r1, beq_then.8711
-	flw	f1, 8(r3)
-	j	beq_cont.8712
-beq_then.8711:
+	fsw	f1, 731(r0)
+	lw	r2, 4(r1)
+	flw	f1, 1(r2)
+	fneg	f1, f1
+	fsw	f1, 732(r0)
+	lw	r2, 4(r1)
+	flw	f1, 2(r2)
+	fneg	f1, f1
+	fsw	f1, 733(r0)
+beq_cont.16658:
+	j	beq_cont.16656
+beq_then.16655:
+	lw	r2, 725(r0)
+	fsw	f0, 731(r0)
+	fsw	f0, 732(r0)
+	fsw	f0, 733(r0)
+	addi	r6, r2, -1
+	addi	r7, r0, 731				# set min_caml_nvector
+	addi	r2, r2, -1
+	add	r30, r5, r6
+	flw	f1, 0(r30)
+	feq	r30, f1, f0
+	beq	r0, r30, feq_else.16659
+	addi	r5, r0, 1
+	j	feq_cont.16660
+feq_else.16659:
+	addi	r5, r0, 0
+feq_cont.16660:
+	beqi	0, r5, beq_then.16661
 	flup	f1, 0		# fli	f1, 0.000000
-beq_cont.8712:
+	j	beq_cont.16662
+beq_then.16661:
+	fle	r30, f1, f0
+	beq	r0, r30, fle_else.16663
+	addi	r5, r0, 0
+	j	fle_cont.16664
+fle_else.16663:
+	addi	r5, r0, 1
+fle_cont.16664:
+	beqi	0, r5, beq_then.16665
+	flup	f1, 2		# fli	f1, 1.000000
+	j	beq_cont.16666
+beq_then.16665:
+	flup	f1, 11		# fli	f1, -1.000000
+beq_cont.16666:
+beq_cont.16662:
+	fneg	f1, f1
+	add	r30, r7, r2
+	fsw	f1, 0(r30)
+beq_cont.16656:
+	addi	r2, r0, 727				# set min_caml_intersection_point
+	lw	r1, 3(r3)
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	utexture.3185				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	lw	r2, 723(r0)
+	addi	r1, r0, 0
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	shadow_check_one_or_matrix.3145				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	beqi	0, r1, beq_then.16667
+	jr	r31				#
+beq_then.16667:
+	flw	f1, 731(r0)
+	flw	f2, 667(r0)
+	flw	f3, 732(r0)
+	flw	f4, 668(r0)
+	flw	f5, 733(r0)
+	flw	f6, 669(r0)
+	fmul	f1, f1, f2
+	fmul	f2, f3, f4
+	fadd	f1, f1, f2
+	fmul	f2, f5, f6
+	fadd	f1, f1, f2
+	fneg	f1, f1
+	fle	r30, f1, f0
+	beq	r0, r30, fle_else.16669
+	addi	r1, r0, 0
+	j	fle_cont.16670
+fle_else.16669:
+	addi	r1, r0, 1
+fle_cont.16670:
+	beqi	0, r1, beq_then.16671
+	j	beq_cont.16672
+beq_then.16671:
+	flup	f1, 0		# fli	f1, 0.000000
+beq_cont.16672:
+	lw	r1, 3(r3)
+	lw	r1, 7(r1)
 	flw	f2, 0(r3)
 	fmul	f1, f2, f1
-	addi	r1, r0, 737				# set min_caml_diffuse_ray
-	lw	r2, 6(r3)
-	sw	r1, 10(r3)
-	fsw	f1, 12(r3)
-	add	r1, r0, r2
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	o_diffuse.2940				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	addi	r2, r0, 734				# set min_caml_texture_color
-	flw	f2, 12(r3)
-	fmul	f1, f2, f1
-	lw	r1, 10(r3)
-	j	vecaccum.2899
-beq_then.8707:
+	flw	f2, 734(r0)
+	flw	f3, 737(r0)
+	flw	f4, 0(r1)
+	fmul	f1, f1, f4
+	fmul	f2, f1, f2
+	fadd	f2, f3, f2
+	fsw	f2, 737(r0)
+	flw	f2, 735(r0)
+	flw	f3, 738(r0)
+	fmul	f2, f1, f2
+	fadd	f2, f3, f2
+	fsw	f2, 738(r0)
+	flw	f2, 736(r0)
+	flw	f3, 739(r0)
+	fmul	f1, f1, f2
+	fadd	f1, f3, f1
+	fsw	f1, 739(r0)
+	jr	r31				#
+beq_then.16654:
 	jr	r31				#
 iter_trace_diffuse_rays.3206:
-	bgei	0, r6, bge_then.8715
+	bgei	0, r6, bge_then.16675
 	jr	r31				#
-bge_then.8715:
+bge_then.16675:
 	add	r30, r1, r6
 	lw	r7, 0(r30)
-	sw	r5, 0(r3)
-	sw	r6, 1(r3)
-	sw	r1, 2(r3)
-	sw	r2, 3(r3)
-	add	r1, r0, r7
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	d_vec.2977				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
-	lw	r2, 3(r3)
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	veciprod.2891				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
-	fsw	f1, 4(r3)
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	fisneg.2805				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	beqi	0, r1, beq_then.8717
-	lw	r1, 1(r3)
-	addi	r2, r1, 1
-	lw	r5, 2(r3)
-	add	r30, r5, r2
-	lw	r2, 0(r30)
-	flup	f1, 46		# fli	f1, -150.000000
-	flw	f2, 4(r3)
-	fdiv	f1, f2, f1
-	add	r1, r0, r2
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	trace_diffuse_ray.3203				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	j	beq_cont.8718
-beq_then.8717:
-	lw	r1, 1(r3)
-	lw	r2, 2(r3)
-	add	r30, r2, r1
-	lw	r5, 0(r30)
-	flup	f1, 47		# fli	f1, 150.000000
-	flw	f2, 4(r3)
-	fdiv	f1, f2, f1
-	add	r1, r0, r5
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	trace_diffuse_ray.3203				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-beq_cont.8718:
-	lw	r1, 1(r3)
-	addi	r6, r1, -2
-	lw	r1, 2(r3)
-	lw	r2, 3(r3)
-	lw	r5, 0(r3)
-	j	iter_trace_diffuse_rays.3206
-trace_diffuse_rays.3211:
-	addi	r6, r0, 118
-	sw	r6, 0(r3)
-	sw	r5, 1(r3)
-	sw	r2, 2(r3)
-	sw	r1, 3(r3)
-	add	r1, r0, r5
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	setup_startp.3111				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
-	lw	r1, 3(r3)
-	lw	r2, 2(r3)
-	lw	r5, 1(r3)
-	lw	r6, 0(r3)
-	j	iter_trace_diffuse_rays.3206
-trace_diffuse_ray_80percent.3215:
+	lw	r7, 0(r7)
+	flw	f1, 0(r7)
+	flw	f2, 0(r2)
+	fmul	f1, f1, f2
+	flw	f2, 1(r7)
+	flw	f3, 1(r2)
+	fmul	f2, f2, f3
+	fadd	f1, f1, f2
+	flw	f2, 2(r7)
+	flw	f3, 2(r2)
+	fmul	f2, f2, f3
+	fadd	f1, f1, f2
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16677
+	addi	r7, r0, 0
+	j	fle_cont.16678
+fle_else.16677:
+	addi	r7, r0, 1
+fle_cont.16678:
 	sw	r5, 0(r3)
 	sw	r2, 1(r3)
 	sw	r1, 2(r3)
-	beqi	0, r1, beq_then.8719
-	lw	r6, 766(r0)
-	add	r1, r0, r6
-	sw	r31, 3(r3)
-	addi	r3, r3, 4
-	jal	trace_diffuse_rays.3211				
-	addi	r3, r3, -4
-	lw	r31, 3(r3)
-	j	beq_cont.8720
-beq_then.8719:
-beq_cont.8720:
-	lw	r1, 2(r3)
-	beqi	1, r1, beq_then.8721
-	lw	r2, 767(r0)
-	lw	r5, 1(r3)
-	lw	r6, 0(r3)
-	add	r1, r0, r2
-	add	r2, r0, r5
-	add	r5, r0, r6
-	sw	r31, 3(r3)
-	addi	r3, r3, 4
-	jal	trace_diffuse_rays.3211				
-	addi	r3, r3, -4
-	lw	r31, 3(r3)
-	j	beq_cont.8722
-beq_then.8721:
-beq_cont.8722:
-	lw	r1, 2(r3)
-	beqi	2, r1, beq_then.8723
-	lw	r2, 768(r0)
-	lw	r5, 1(r3)
-	lw	r6, 0(r3)
-	add	r1, r0, r2
-	add	r2, r0, r5
-	add	r5, r0, r6
-	sw	r31, 3(r3)
-	addi	r3, r3, 4
-	jal	trace_diffuse_rays.3211				
-	addi	r3, r3, -4
-	lw	r31, 3(r3)
-	j	beq_cont.8724
-beq_then.8723:
-beq_cont.8724:
-	lw	r1, 2(r3)
-	beqi	3, r1, beq_then.8725
-	lw	r2, 769(r0)
-	lw	r5, 1(r3)
-	lw	r6, 0(r3)
-	add	r1, r0, r2
-	add	r2, r0, r5
-	add	r5, r0, r6
-	sw	r31, 3(r3)
-	addi	r3, r3, 4
-	jal	trace_diffuse_rays.3211				
-	addi	r3, r3, -4
-	lw	r31, 3(r3)
-	j	beq_cont.8726
-beq_then.8725:
-beq_cont.8726:
-	lw	r1, 2(r3)
-	beqi	4, r1, beq_then.8727
-	lw	r1, 770(r0)
-	lw	r2, 1(r3)
-	lw	r5, 0(r3)
-	j	trace_diffuse_rays.3211
-beq_then.8727:
-	jr	r31				#
-calc_diffuse_using_1point.3219:
-	sw	r2, 0(r3)
-	sw	r1, 1(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	p_received_ray_20percent.2968				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	lw	r2, 1(r3)
-	sw	r1, 2(r3)
-	add	r1, r0, r2
-	sw	r31, 3(r3)
-	addi	r3, r3, 4
-	jal	p_nvectors.2975				
-	addi	r3, r3, -4
-	lw	r31, 3(r3)
-	lw	r2, 1(r3)
-	sw	r1, 3(r3)
-	add	r1, r0, r2
+	sw	r6, 3(r3)
+	beqi	0, r7, beq_then.16679
+	addi	r7, r6, 1
+	add	r30, r1, r7
+	lw	r7, 0(r30)
+	flup	f2, 46		# fli	f2, -150.000000
+	fdiv	f1, f1, f2
+	add	r1, r0, r7
 	sw	r31, 4(r3)
 	addi	r3, r3, 5
-	jal	p_intersection_points.2960				
+	jal	trace_diffuse_ray.3203				
 	addi	r3, r3, -5
 	lw	r31, 4(r3)
-	lw	r2, 1(r3)
+	j	beq_cont.16680
+beq_then.16679:
+	add	r30, r1, r6
+	lw	r7, 0(r30)
+	flup	f2, 47		# fli	f2, 150.000000
+	fdiv	f1, f1, f2
+	add	r1, r0, r7
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	trace_diffuse_ray.3203				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+beq_cont.16680:
+	lw	r1, 3(r3)
+	addi	r1, r1, -2
+	bgei	0, r1, bge_then.16681
+	jr	r31				#
+bge_then.16681:
+	lw	r2, 2(r3)
+	add	r30, r2, r1
+	lw	r5, 0(r30)
+	lw	r5, 0(r5)
+	flw	f1, 0(r5)
+	lw	r6, 1(r3)
+	flw	f2, 0(r6)
+	fmul	f1, f1, f2
+	flw	f2, 1(r5)
+	flw	f3, 1(r6)
+	fmul	f2, f2, f3
+	fadd	f1, f1, f2
+	flw	f2, 2(r5)
+	flw	f3, 2(r6)
+	fmul	f2, f2, f3
+	fadd	f1, f1, f2
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16683
+	addi	r5, r0, 0
+	j	fle_cont.16684
+fle_else.16683:
+	addi	r5, r0, 1
+fle_cont.16684:
 	sw	r1, 4(r3)
-	add	r1, r0, r2
+	beqi	0, r5, beq_then.16685
+	addi	r5, r1, 1
+	add	r30, r2, r5
+	lw	r5, 0(r30)
+	flup	f2, 46		# fli	f2, -150.000000
+	fdiv	f1, f1, f2
+	add	r1, r0, r5
 	sw	r31, 5(r3)
 	addi	r3, r3, 6
-	jal	p_energy.2966				
+	jal	trace_diffuse_ray.3203				
 	addi	r3, r3, -6
 	lw	r31, 5(r3)
-	addi	r2, r0, 737				# set min_caml_diffuse_ray
-	addi	r5, r0, 740				# set min_caml_rgb
-	addi	r6, r0, 737				# set min_caml_diffuse_ray
-	lw	r7, 0(r3)
-	lw	r8, 2(r3)
-	add	r30, r8, r7
-	lw	r8, 0(r30)
-	sw	r6, 5(r3)
-	sw	r5, 6(r3)
-	sw	r1, 7(r3)
+	j	beq_cont.16686
+beq_then.16685:
+	add	r30, r2, r1
+	lw	r5, 0(r30)
+	flup	f2, 47		# fli	f2, 150.000000
+	fdiv	f1, f1, f2
+	add	r1, r0, r5
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	trace_diffuse_ray.3203				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+beq_cont.16686:
+	lw	r1, 4(r3)
+	addi	r6, r1, -2
+	lw	r1, 2(r3)
+	lw	r2, 1(r3)
+	lw	r5, 0(r3)
+	j	iter_trace_diffuse_rays.3206
+trace_diffuse_rays.3211:
+	flw	f1, 0(r5)
+	fsw	f1, 751(r0)
+	flw	f1, 1(r5)
+	fsw	f1, 752(r0)
+	flw	f1, 2(r5)
+	fsw	f1, 753(r0)
+	lw	r6, 0(r0)
+	addi	r6, r6, -1
+	sw	r5, 0(r3)
+	sw	r2, 1(r3)
+	sw	r1, 2(r3)
+	add	r2, r0, r6
+	add	r1, r0, r5
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	setup_startp_constants.3108				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	lw	r1, 2(r3)
+	lw	r2, 118(r1)
+	lw	r5, 1(r3)
+	flw	f1, 0(r5)
+	flw	f2, 1(r5)
+	flw	f3, 2(r5)
+	lw	r2, 0(r2)
+	flw	f4, 0(r2)
+	fmul	f1, f4, f1
+	flw	f4, 1(r2)
+	fmul	f2, f4, f2
+	fadd	f1, f1, f2
+	flw	f2, 2(r2)
+	fmul	f2, f2, f3
+	fadd	f1, f1, f2
+	fle	r30, f0, f1
+	beq	r0, r30, fle_else.16687
+	addi	r2, r0, 0
+	j	fle_cont.16688
+fle_else.16687:
+	addi	r2, r0, 1
+fle_cont.16688:
+	beqi	0, r2, beq_then.16689
+	lw	r2, 119(r1)
+	flup	f2, 46		# fli	f2, -150.000000
+	fdiv	f1, f1, f2
 	add	r1, r0, r2
-	add	r2, r0, r8
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	veccpy.2880				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	lw	r1, 1(r3)
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	p_group_id.2970				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	trace_diffuse_ray.3203				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	j	beq_cont.16690
+beq_then.16689:
+	lw	r2, 118(r1)
+	flup	f2, 47		# fli	f2, 150.000000
+	fdiv	f1, f1, f2
+	add	r1, r0, r2
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	trace_diffuse_ray.3203				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+beq_cont.16690:
+	addi	r6, r0, 116
+	lw	r1, 2(r3)
+	lw	r2, 1(r3)
+	lw	r5, 0(r3)
+	j	iter_trace_diffuse_rays.3206
+trace_diffuse_ray_80percent.3215:
+	sw	r2, 0(r3)
+	sw	r5, 1(r3)
+	sw	r1, 2(r3)
+	beqi	0, r1, beq_then.16691
+	flw	f1, 0(r5)
+	lw	r6, 766(r0)
+	fsw	f1, 751(r0)
+	flw	f1, 1(r5)
+	fsw	f1, 752(r0)
+	flw	f1, 2(r5)
+	fsw	f1, 753(r0)
+	lw	r7, 0(r0)
+	addi	r7, r7, -1
+	sw	r6, 3(r3)
+	add	r2, r0, r7
+	add	r1, r0, r5
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	setup_startp_constants.3108				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	addi	r6, r0, 118
+	lw	r1, 3(r3)
 	lw	r2, 0(r3)
-	lw	r5, 3(r3)
+	lw	r5, 1(r3)
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	iter_trace_diffuse_rays.3206				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	j	beq_cont.16692
+beq_then.16691:
+beq_cont.16692:
+	lw	r1, 2(r3)
+	beqi	1, r1, beq_then.16693
+	lw	r2, 1(r3)
+	flw	f1, 0(r2)
+	lw	r5, 767(r0)
+	fsw	f1, 751(r0)
+	flw	f1, 1(r2)
+	fsw	f1, 752(r0)
+	flw	f1, 2(r2)
+	fsw	f1, 753(r0)
+	lw	r6, 0(r0)
+	addi	r6, r6, -1
+	sw	r5, 4(r3)
+	add	r1, r0, r2
+	add	r2, r0, r6
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	setup_startp_constants.3108				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	addi	r6, r0, 118
+	lw	r1, 4(r3)
+	lw	r2, 0(r3)
+	lw	r5, 1(r3)
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	iter_trace_diffuse_rays.3206				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	j	beq_cont.16694
+beq_then.16693:
+beq_cont.16694:
+	lw	r1, 2(r3)
+	beqi	2, r1, beq_then.16695
+	lw	r2, 1(r3)
+	flw	f1, 0(r2)
+	lw	r5, 768(r0)
+	fsw	f1, 751(r0)
+	flw	f1, 1(r2)
+	fsw	f1, 752(r0)
+	flw	f1, 2(r2)
+	fsw	f1, 753(r0)
+	lw	r6, 0(r0)
+	addi	r6, r6, -1
+	sw	r5, 5(r3)
+	add	r1, r0, r2
+	add	r2, r0, r6
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	setup_startp_constants.3108				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	addi	r6, r0, 118
+	lw	r1, 5(r3)
+	lw	r2, 0(r3)
+	lw	r5, 1(r3)
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	iter_trace_diffuse_rays.3206				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	j	beq_cont.16696
+beq_then.16695:
+beq_cont.16696:
+	lw	r1, 2(r3)
+	beqi	3, r1, beq_then.16697
+	lw	r2, 1(r3)
+	flw	f1, 0(r2)
+	lw	r5, 769(r0)
+	fsw	f1, 751(r0)
+	flw	f1, 1(r2)
+	fsw	f1, 752(r0)
+	flw	f1, 2(r2)
+	fsw	f1, 753(r0)
+	lw	r6, 0(r0)
+	addi	r6, r6, -1
+	sw	r5, 6(r3)
+	add	r1, r0, r2
+	add	r2, r0, r6
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	setup_startp_constants.3108				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+	addi	r6, r0, 118
+	lw	r1, 6(r3)
+	lw	r2, 0(r3)
+	lw	r5, 1(r3)
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	iter_trace_diffuse_rays.3206				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+	j	beq_cont.16698
+beq_then.16697:
+beq_cont.16698:
+	lw	r1, 2(r3)
+	beqi	4, r1, beq_then.16699
+	lw	r1, 1(r3)
+	flw	f1, 0(r1)
+	lw	r2, 770(r0)
+	fsw	f1, 751(r0)
+	flw	f1, 1(r1)
+	fsw	f1, 752(r0)
+	flw	f1, 2(r1)
+	fsw	f1, 753(r0)
+	lw	r5, 0(r0)
+	addi	r5, r5, -1
+	sw	r2, 7(r3)
+	add	r2, r0, r5
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	setup_startp_constants.3108				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	addi	r6, r0, 118
+	lw	r1, 7(r3)
+	lw	r2, 0(r3)
+	lw	r5, 1(r3)
+	j	iter_trace_diffuse_rays.3206
+beq_then.16699:
+	jr	r31				#
+calc_diffuse_using_1point.3219:
+	lw	r5, 5(r1)
+	lw	r6, 7(r1)
+	lw	r7, 1(r1)
+	lw	r8, 4(r1)
 	add	r30, r5, r2
 	lw	r5, 0(r30)
-	lw	r6, 4(r3)
+	flw	f1, 0(r5)
+	fsw	f1, 737(r0)
+	flw	f1, 1(r5)
+	fsw	f1, 738(r0)
+	flw	f1, 2(r5)
+	fsw	f1, 739(r0)
+	lw	r1, 6(r1)
 	add	r30, r6, r2
+	lw	r5, 0(r30)
+	add	r30, r7, r2
 	lw	r6, 0(r30)
+	lw	r1, 0(r1)
+	sw	r2, 0(r3)
+	sw	r8, 1(r3)
 	add	r2, r0, r5
 	add	r5, r0, r6
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
+	sw	r31, 2(r3)
+	addi	r3, r3, 3
 	jal	trace_diffuse_ray_80percent.3215				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
+	addi	r3, r3, -3
+	lw	r31, 2(r3)
 	lw	r1, 0(r3)
-	lw	r2, 7(r3)
+	lw	r2, 1(r3)
 	add	r30, r2, r1
 	lw	r2, 0(r30)
-	lw	r1, 6(r3)
-	lw	r5, 5(r3)
+	addi	r1, r0, 740				# set min_caml_rgb
+	addi	r5, r0, 737				# set min_caml_diffuse_ray
 	j	vecaccumv.2912
 calc_diffuse_using_5points.3222:
-	addi	r8, r1, -1
-	addi	r9, r1, 1
 	add	r30, r2, r1
 	lw	r2, 0(r30)
+	addi	r8, r1, -1
+	addi	r9, r1, 1
 	add	r30, r5, r1
 	lw	r10, 0(r30)
 	add	r30, r6, r1
 	lw	r6, 0(r30)
+	lw	r2, 5(r2)
+	add	r30, r5, r8
+	lw	r8, 0(r30)
+	lw	r8, 5(r8)
+	lw	r10, 5(r10)
+	add	r30, r5, r9
+	lw	r9, 0(r30)
+	lw	r9, 5(r9)
+	lw	r6, 5(r6)
+	add	r30, r2, r7
+	lw	r2, 0(r30)
+	flw	f1, 0(r2)
+	fsw	f1, 737(r0)
+	flw	f1, 1(r2)
+	fsw	f1, 738(r0)
+	flw	f1, 2(r2)
+	fsw	f1, 739(r0)
+	add	r30, r8, r7
+	lw	r2, 0(r30)
+	flw	f1, 737(r0)
+	flw	f2, 0(r2)
+	fadd	f1, f1, f2
+	fsw	f1, 737(r0)
+	flw	f1, 738(r0)
+	flw	f2, 1(r2)
+	fadd	f1, f1, f2
+	fsw	f1, 738(r0)
+	flw	f1, 739(r0)
+	flw	f2, 2(r2)
+	fadd	f1, f1, f2
+	fsw	f1, 739(r0)
+	add	r30, r10, r7
+	lw	r2, 0(r30)
+	flw	f1, 737(r0)
+	flw	f2, 0(r2)
+	fadd	f1, f1, f2
+	fsw	f1, 737(r0)
+	flw	f1, 738(r0)
+	flw	f2, 1(r2)
+	fadd	f1, f1, f2
+	fsw	f1, 738(r0)
+	flw	f1, 739(r0)
+	flw	f2, 2(r2)
+	fadd	f1, f1, f2
+	fsw	f1, 739(r0)
+	add	r30, r9, r7
+	lw	r2, 0(r30)
+	flw	f1, 737(r0)
+	flw	f2, 0(r2)
+	fadd	f1, f1, f2
+	fsw	f1, 737(r0)
+	flw	f1, 738(r0)
+	flw	f2, 1(r2)
+	fadd	f1, f1, f2
+	fsw	f1, 738(r0)
+	flw	f1, 739(r0)
+	flw	f2, 2(r2)
+	fadd	f1, f1, f2
+	fsw	f1, 739(r0)
+	add	r30, r6, r7
+	lw	r2, 0(r30)
+	flw	f1, 737(r0)
+	flw	f2, 0(r2)
+	fadd	f1, f1, f2
+	fsw	f1, 737(r0)
+	flw	f1, 738(r0)
+	flw	f2, 1(r2)
+	fadd	f1, f1, f2
+	fsw	f1, 738(r0)
+	flw	f1, 739(r0)
+	flw	f2, 2(r2)
+	fadd	f1, f1, f2
+	fsw	f1, 739(r0)
 	add	r30, r5, r1
 	lw	r1, 0(r30)
-	addi	r11, r0, 737				# set min_caml_diffuse_ray
-	addi	r12, r0, 737				# set min_caml_diffuse_ray
-	addi	r13, r0, 737				# set min_caml_diffuse_ray
-	addi	r14, r0, 737				# set min_caml_diffuse_ray
-	addi	r15, r0, 737				# set min_caml_diffuse_ray
-	addi	r16, r0, 740				# set min_caml_rgb
-	addi	r17, r0, 737				# set min_caml_diffuse_ray
-	sw	r17, 0(r3)
-	sw	r16, 1(r3)
-	sw	r1, 2(r3)
-	sw	r15, 3(r3)
-	sw	r14, 4(r3)
-	sw	r13, 5(r3)
-	sw	r12, 6(r3)
-	sw	r11, 7(r3)
-	sw	r7, 8(r3)
-	sw	r6, 9(r3)
-	sw	r9, 10(r3)
-	sw	r10, 11(r3)
-	sw	r8, 12(r3)
-	sw	r5, 13(r3)
-	add	r1, r0, r2
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	p_received_ray_20percent.2968				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	lw	r2, 12(r3)
-	lw	r5, 13(r3)
-	add	r30, r5, r2
-	lw	r2, 0(r30)
-	sw	r1, 14(r3)
-	add	r1, r0, r2
-	sw	r31, 15(r3)
-	addi	r3, r3, 16
-	jal	p_received_ray_20percent.2968				
-	addi	r3, r3, -16
-	lw	r31, 15(r3)
-	lw	r2, 11(r3)
-	sw	r1, 15(r3)
-	add	r1, r0, r2
-	sw	r31, 16(r3)
-	addi	r3, r3, 17
-	jal	p_received_ray_20percent.2968				
-	addi	r3, r3, -17
-	lw	r31, 16(r3)
-	lw	r2, 10(r3)
-	lw	r5, 13(r3)
-	add	r30, r5, r2
-	lw	r2, 0(r30)
-	sw	r1, 16(r3)
-	add	r1, r0, r2
-	sw	r31, 17(r3)
-	addi	r3, r3, 18
-	jal	p_received_ray_20percent.2968				
-	addi	r3, r3, -18
-	lw	r31, 17(r3)
-	lw	r2, 9(r3)
-	sw	r1, 17(r3)
-	add	r1, r0, r2
-	sw	r31, 18(r3)
-	addi	r3, r3, 19
-	jal	p_received_ray_20percent.2968				
-	addi	r3, r3, -19
-	lw	r31, 18(r3)
-	lw	r2, 8(r3)
-	lw	r5, 14(r3)
-	add	r30, r5, r2
-	lw	r5, 0(r30)
-	lw	r6, 7(r3)
-	sw	r1, 18(r3)
-	add	r2, r0, r5
-	add	r1, r0, r6
-	sw	r31, 19(r3)
-	addi	r3, r3, 20
-	jal	veccpy.2880				
-	addi	r3, r3, -20
-	lw	r31, 19(r3)
-	lw	r1, 8(r3)
-	lw	r2, 15(r3)
-	add	r30, r2, r1
-	lw	r2, 0(r30)
-	lw	r5, 6(r3)
-	add	r1, r0, r5
-	sw	r31, 19(r3)
-	addi	r3, r3, 20
-	jal	vecadd.2903				
-	addi	r3, r3, -20
-	lw	r31, 19(r3)
-	lw	r1, 8(r3)
-	lw	r2, 16(r3)
-	add	r30, r2, r1
-	lw	r2, 0(r30)
-	lw	r5, 5(r3)
-	add	r1, r0, r5
-	sw	r31, 19(r3)
-	addi	r3, r3, 20
-	jal	vecadd.2903				
-	addi	r3, r3, -20
-	lw	r31, 19(r3)
-	lw	r1, 8(r3)
-	lw	r2, 17(r3)
-	add	r30, r2, r1
-	lw	r2, 0(r30)
-	lw	r5, 4(r3)
-	add	r1, r0, r5
-	sw	r31, 19(r3)
-	addi	r3, r3, 20
-	jal	vecadd.2903				
-	addi	r3, r3, -20
-	lw	r31, 19(r3)
-	lw	r1, 8(r3)
-	lw	r2, 18(r3)
-	add	r30, r2, r1
-	lw	r2, 0(r30)
-	lw	r5, 3(r3)
-	add	r1, r0, r5
-	sw	r31, 19(r3)
-	addi	r3, r3, 20
-	jal	vecadd.2903				
-	addi	r3, r3, -20
-	lw	r31, 19(r3)
-	lw	r1, 2(r3)
-	sw	r31, 19(r3)
-	addi	r3, r3, 20
-	jal	p_energy.2966				
-	addi	r3, r3, -20
-	lw	r31, 19(r3)
-	lw	r2, 8(r3)
-	add	r30, r1, r2
-	lw	r2, 0(r30)
-	lw	r1, 1(r3)
-	lw	r5, 0(r3)
+	addi	r2, r0, 740				# set min_caml_rgb
+	addi	r5, r0, 737				# set min_caml_diffuse_ray
+	lw	r1, 4(r1)
+	add	r30, r1, r7
+	lw	r1, 0(r30)
+	add	r28, r0, r2
+	add	r2, r0, r1
+	add	r1, r0, r28
 	j	vecaccumv.2912
 do_without_neighbors.3228:
-	blei	4, r2, ble_then.8729
+	blei	4, r2, ble_then.16701
 	jr	r31				#
-ble_then.8729:
+ble_then.16701:
+	lw	r5, 2(r1)
+	add	r30, r5, r2
+	lw	r5, 0(r30)
+	bgei	0, r5, bge_then.16703
+	jr	r31				#
+bge_then.16703:
+	lw	r5, 3(r1)
+	add	r30, r5, r2
+	lw	r5, 0(r30)
 	sw	r1, 0(r3)
 	sw	r2, 1(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	p_surface_ids.2962				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
+	beqi	0, r5, beq_then.16705
+	lw	r5, 5(r1)
+	lw	r6, 7(r1)
+	lw	r7, 1(r1)
+	lw	r8, 4(r1)
+	add	r30, r5, r2
+	lw	r5, 0(r30)
+	flw	f1, 0(r5)
+	fsw	f1, 737(r0)
+	flw	f1, 1(r5)
+	fsw	f1, 738(r0)
+	flw	f1, 2(r5)
+	fsw	f1, 739(r0)
+	lw	r5, 6(r1)
+	lw	r5, 0(r5)
+	add	r30, r6, r2
+	lw	r6, 0(r30)
+	add	r30, r7, r2
+	lw	r7, 0(r30)
+	sw	r8, 2(r3)
+	add	r2, r0, r6
+	add	r1, r0, r5
+	add	r5, r0, r7
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	trace_diffuse_ray_80percent.3215				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	addi	r1, r0, 740				# set min_caml_rgb
 	lw	r2, 1(r3)
-	add	r30, r1, r2
-	lw	r1, 0(r30)
-	bgei	0, r1, bge_then.8731
-	jr	r31				#
-bge_then.8731:
-	lw	r1, 0(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	p_calc_diffuse.2964				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	lw	r2, 1(r3)
-	add	r30, r1, r2
-	lw	r1, 0(r30)
-	beqi	0, r1, beq_then.8733
-	lw	r1, 0(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	calc_diffuse_using_1point.3219				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	j	beq_cont.8734
-beq_then.8733:
-beq_cont.8734:
+	lw	r5, 2(r3)
+	add	r30, r5, r2
+	lw	r5, 0(r30)
+	addi	r6, r0, 737				# set min_caml_diffuse_ray
+	add	r2, r0, r5
+	add	r5, r0, r6
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	vecaccumv.2912				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	j	beq_cont.16706
+beq_then.16705:
+beq_cont.16706:
 	lw	r1, 1(r3)
+	addi	r1, r1, 1
+	blei	4, r1, ble_then.16707
+	jr	r31				#
+ble_then.16707:
+	lw	r2, 0(r3)
+	lw	r5, 2(r2)
+	add	r30, r5, r1
+	lw	r5, 0(r30)
+	bgei	0, r5, bge_then.16709
+	jr	r31				#
+bge_then.16709:
+	lw	r5, 3(r2)
+	add	r30, r5, r1
+	lw	r5, 0(r30)
+	sw	r1, 3(r3)
+	beqi	0, r5, beq_then.16711
+	lw	r5, 5(r2)
+	lw	r6, 7(r2)
+	lw	r7, 1(r2)
+	lw	r8, 4(r2)
+	add	r30, r5, r1
+	lw	r5, 0(r30)
+	flw	f1, 0(r5)
+	fsw	f1, 737(r0)
+	flw	f1, 1(r5)
+	fsw	f1, 738(r0)
+	flw	f1, 2(r5)
+	fsw	f1, 739(r0)
+	lw	r5, 6(r2)
+	lw	r5, 0(r5)
+	add	r30, r6, r1
+	lw	r6, 0(r30)
+	add	r30, r7, r1
+	lw	r7, 0(r30)
+	sw	r8, 4(r3)
+	add	r2, r0, r6
+	add	r1, r0, r5
+	add	r5, r0, r7
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	trace_diffuse_ray_80percent.3215				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	addi	r1, r0, 740				# set min_caml_rgb
+	lw	r2, 3(r3)
+	lw	r5, 4(r3)
+	add	r30, r5, r2
+	lw	r5, 0(r30)
+	addi	r6, r0, 737				# set min_caml_diffuse_ray
+	add	r2, r0, r5
+	add	r5, r0, r6
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	vecaccumv.2912				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	j	beq_cont.16712
+beq_then.16711:
+beq_cont.16712:
+	lw	r1, 3(r3)
 	addi	r2, r1, 1
 	lw	r1, 0(r3)
 	j	do_without_neighbors.3228
 neighbors_exist.3231:
 	lw	r5, 744(r0)
 	addi	r6, r2, 1
-	ble	r5, r6, ble_then.8735
-	blei	0, r2, ble_then.8736
+	ble	r5, r6, ble_then.16713
+	blei	0, r2, ble_then.16714
 	lw	r2, 743(r0)
 	addi	r5, r1, 1
-	ble	r2, r5, ble_then.8737
-	blei	0, r1, ble_then.8738
+	ble	r2, r5, ble_then.16715
+	blei	0, r1, ble_then.16716
 	addi	r1, r0, 1
 	jr	r31				#
-ble_then.8738:
+ble_then.16716:
 	addi	r1, r0, 0
 	jr	r31				#
-ble_then.8737:
+ble_then.16715:
 	addi	r1, r0, 0
 	jr	r31				#
-ble_then.8736:
+ble_then.16714:
 	addi	r1, r0, 0
 	jr	r31				#
-ble_then.8735:
+ble_then.16713:
 	addi	r1, r0, 0
 	jr	r31				#
 get_surface_id.3235:
-	sw	r2, 0(r3)
-	sw	r31, 1(r3)
-	addi	r3, r3, 2
-	jal	p_surface_ids.2962				
-	addi	r3, r3, -2
-	lw	r31, 1(r3)
-	lw	r2, 0(r3)
+	lw	r1, 2(r1)
 	add	r30, r1, r2
 	lw	r1, 0(r30)
 	jr	r31				#
@@ -7759,508 +9980,573 @@ neighbors_are_available.3238:
 	lw	r8, 0(r30)
 	add	r30, r2, r1
 	lw	r2, 0(r30)
-	sw	r5, 0(r3)
-	sw	r1, 1(r3)
-	sw	r6, 2(r3)
-	sw	r7, 3(r3)
-	sw	r2, 4(r3)
-	add	r2, r0, r7
-	add	r1, r0, r8
-	sw	r31, 5(r3)
-	addi	r3, r3, 6
-	jal	get_surface_id.3235				
-	addi	r3, r3, -6
-	lw	r31, 5(r3)
-	lw	r2, 4(r3)
-	lw	r5, 3(r3)
-	sw	r1, 5(r3)
-	add	r1, r0, r2
-	add	r2, r0, r5
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	get_surface_id.3235				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	lw	r2, 5(r3)
-	beq	r1, r2, beq_then.8739
+	lw	r8, 2(r8)
+	add	r30, r8, r7
+	lw	r8, 0(r30)
+	lw	r2, 2(r2)
+	add	r30, r2, r7
+	lw	r2, 0(r30)
+	beq	r2, r8, beq_then.16717
 	addi	r1, r0, 0
 	jr	r31				#
-beq_then.8739:
-	lw	r1, 1(r3)
-	lw	r5, 2(r3)
-	add	r30, r5, r1
-	lw	r5, 0(r30)
-	lw	r6, 3(r3)
-	add	r2, r0, r6
-	add	r1, r0, r5
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	get_surface_id.3235				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	lw	r2, 5(r3)
-	beq	r1, r2, beq_then.8740
+beq_then.16717:
+	add	r30, r6, r1
+	lw	r2, 0(r30)
+	lw	r2, 2(r2)
+	add	r30, r2, r7
+	lw	r2, 0(r30)
+	beq	r2, r8, beq_then.16718
 	addi	r1, r0, 0
 	jr	r31				#
-beq_then.8740:
-	lw	r1, 1(r3)
-	addi	r5, r1, -1
-	lw	r6, 0(r3)
-	add	r30, r6, r5
-	lw	r5, 0(r30)
-	lw	r7, 3(r3)
-	add	r2, r0, r7
-	add	r1, r0, r5
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	get_surface_id.3235				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	lw	r2, 5(r3)
-	beq	r1, r2, beq_then.8741
+beq_then.16718:
+	addi	r2, r1, -1
+	add	r30, r5, r2
+	lw	r2, 0(r30)
+	lw	r2, 2(r2)
+	add	r30, r2, r7
+	lw	r2, 0(r30)
+	beq	r2, r8, beq_then.16719
 	addi	r1, r0, 0
 	jr	r31				#
-beq_then.8741:
-	lw	r1, 1(r3)
+beq_then.16719:
 	addi	r1, r1, 1
-	lw	r5, 0(r3)
 	add	r30, r5, r1
 	lw	r1, 0(r30)
-	lw	r5, 3(r3)
-	add	r2, r0, r5
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	get_surface_id.3235				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	lw	r2, 5(r3)
-	beq	r1, r2, beq_then.8742
+	lw	r1, 2(r1)
+	add	r30, r1, r7
+	lw	r1, 0(r30)
+	beq	r1, r8, beq_then.16720
 	addi	r1, r0, 0
 	jr	r31				#
-beq_then.8742:
+beq_then.16720:
 	addi	r1, r0, 1
 	jr	r31				#
 try_exploit_neighbors.3244:
 	add	r30, r6, r1
 	lw	r9, 0(r30)
-	blei	4, r8, ble_then.8743
+	blei	4, r8, ble_then.16721
 	jr	r31				#
-ble_then.8743:
+ble_then.16721:
+	lw	r10, 2(r9)
+	add	r30, r10, r8
+	lw	r10, 0(r30)
+	bgei	0, r10, bge_then.16723
+	jr	r31				#
+bge_then.16723:
+	add	r30, r6, r1
+	lw	r10, 0(r30)
+	add	r30, r5, r1
+	lw	r11, 0(r30)
+	lw	r10, 2(r10)
+	add	r30, r10, r8
+	lw	r10, 0(r30)
+	lw	r11, 2(r11)
+	add	r30, r11, r8
+	lw	r11, 0(r30)
+	beq	r11, r10, beq_then.16725
+	addi	r10, r0, 0
+	j	beq_cont.16726
+beq_then.16725:
+	add	r30, r7, r1
+	lw	r11, 0(r30)
+	lw	r11, 2(r11)
+	add	r30, r11, r8
+	lw	r11, 0(r30)
+	beq	r11, r10, beq_then.16727
+	addi	r10, r0, 0
+	j	beq_cont.16728
+beq_then.16727:
+	addi	r11, r1, -1
+	add	r30, r6, r11
+	lw	r11, 0(r30)
+	lw	r11, 2(r11)
+	add	r30, r11, r8
+	lw	r11, 0(r30)
+	beq	r11, r10, beq_then.16729
+	addi	r10, r0, 0
+	j	beq_cont.16730
+beq_then.16729:
+	addi	r11, r1, 1
+	add	r30, r6, r11
+	lw	r11, 0(r30)
+	lw	r11, 2(r11)
+	add	r30, r11, r8
+	lw	r11, 0(r30)
+	beq	r11, r10, beq_then.16731
+	addi	r10, r0, 0
+	j	beq_cont.16732
+beq_then.16731:
+	addi	r10, r0, 1
+beq_cont.16732:
+beq_cont.16730:
+beq_cont.16728:
+beq_cont.16726:
+	beqi	0, r10, beq_then.16733
+	lw	r9, 3(r9)
+	add	r30, r9, r8
+	lw	r9, 0(r30)
 	sw	r2, 0(r3)
-	sw	r9, 1(r3)
-	sw	r8, 2(r3)
-	sw	r7, 3(r3)
-	sw	r6, 4(r3)
-	sw	r5, 5(r3)
-	sw	r1, 6(r3)
-	add	r2, r0, r8
-	add	r1, r0, r9
-	sw	r31, 7(r3)
-	addi	r3, r3, 8
-	jal	get_surface_id.3235				
-	addi	r3, r3, -8
-	lw	r31, 7(r3)
-	bgei	0, r1, bge_then.8745
+	sw	r7, 1(r3)
+	sw	r5, 2(r3)
+	sw	r8, 3(r3)
+	sw	r1, 4(r3)
+	sw	r6, 5(r3)
+	beqi	0, r9, beq_then.16734
+	add	r2, r0, r5
+	add	r5, r0, r6
+	add	r6, r0, r7
+	add	r7, r0, r8
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	calc_diffuse_using_5points.3222				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	j	beq_cont.16735
+beq_then.16734:
+beq_cont.16735:
+	lw	r1, 4(r3)
+	lw	r5, 5(r3)
+	add	r30, r5, r1
+	lw	r2, 0(r30)
+	lw	r6, 3(r3)
+	addi	r7, r6, 1
+	blei	4, r7, ble_then.16736
 	jr	r31				#
-bge_then.8745:
-	lw	r1, 6(r3)
-	lw	r2, 5(r3)
-	lw	r5, 4(r3)
-	lw	r6, 3(r3)
-	lw	r7, 2(r3)
-	sw	r31, 7(r3)
-	addi	r3, r3, 8
-	jal	neighbors_are_available.3238				
-	addi	r3, r3, -8
-	lw	r31, 7(r3)
-	beqi	0, r1, beq_then.8747
-	lw	r1, 1(r3)
-	sw	r31, 7(r3)
-	addi	r3, r3, 8
-	jal	p_calc_diffuse.2964				
-	addi	r3, r3, -8
-	lw	r31, 7(r3)
-	lw	r7, 2(r3)
-	add	r30, r1, r7
-	lw	r1, 0(r30)
-	beqi	0, r1, beq_then.8748
-	lw	r1, 6(r3)
-	lw	r2, 5(r3)
-	lw	r5, 4(r3)
-	lw	r6, 3(r3)
+ble_then.16736:
+	lw	r6, 2(r2)
+	add	r30, r6, r7
+	lw	r6, 0(r30)
+	bgei	0, r6, bge_then.16738
+	jr	r31				#
+bge_then.16738:
+	add	r30, r5, r1
+	lw	r6, 0(r30)
+	lw	r8, 2(r3)
+	add	r30, r8, r1
+	lw	r9, 0(r30)
+	lw	r6, 2(r6)
+	add	r30, r6, r7
+	lw	r6, 0(r30)
+	lw	r9, 2(r9)
+	add	r30, r9, r7
+	lw	r9, 0(r30)
+	beq	r9, r6, beq_then.16740
+	addi	r6, r0, 0
+	j	beq_cont.16741
+beq_then.16740:
+	lw	r9, 1(r3)
+	add	r30, r9, r1
+	lw	r10, 0(r30)
+	lw	r10, 2(r10)
+	add	r30, r10, r7
+	lw	r10, 0(r30)
+	beq	r10, r6, beq_then.16742
+	addi	r6, r0, 0
+	j	beq_cont.16743
+beq_then.16742:
+	addi	r10, r1, -1
+	add	r30, r5, r10
+	lw	r10, 0(r30)
+	lw	r10, 2(r10)
+	add	r30, r10, r7
+	lw	r10, 0(r30)
+	beq	r10, r6, beq_then.16744
+	addi	r6, r0, 0
+	j	beq_cont.16745
+beq_then.16744:
+	addi	r10, r1, 1
+	add	r30, r5, r10
+	lw	r10, 0(r30)
+	lw	r10, 2(r10)
+	add	r30, r10, r7
+	lw	r10, 0(r30)
+	beq	r10, r6, beq_then.16746
+	addi	r6, r0, 0
+	j	beq_cont.16747
+beq_then.16746:
+	addi	r6, r0, 1
+beq_cont.16747:
+beq_cont.16745:
+beq_cont.16743:
+beq_cont.16741:
+	beqi	0, r6, beq_then.16748
+	lw	r2, 3(r2)
+	add	r30, r2, r7
+	lw	r2, 0(r30)
+	sw	r7, 6(r3)
+	beqi	0, r2, beq_then.16749
+	lw	r6, 1(r3)
+	add	r2, r0, r8
 	sw	r31, 7(r3)
 	addi	r3, r3, 8
 	jal	calc_diffuse_using_5points.3222				
 	addi	r3, r3, -8
 	lw	r31, 7(r3)
-	j	beq_cont.8749
-beq_then.8748:
-beq_cont.8749:
-	lw	r1, 2(r3)
+	j	beq_cont.16750
+beq_then.16749:
+beq_cont.16750:
+	lw	r1, 6(r3)
 	addi	r8, r1, 1
-	lw	r1, 6(r3)
+	lw	r1, 4(r3)
 	lw	r2, 0(r3)
-	lw	r5, 5(r3)
-	lw	r6, 4(r3)
-	lw	r7, 3(r3)
+	lw	r5, 2(r3)
+	lw	r6, 5(r3)
+	lw	r7, 1(r3)
 	j	try_exploit_neighbors.3244
-beq_then.8747:
-	lw	r1, 6(r3)
-	lw	r2, 4(r3)
-	add	r30, r2, r1
+beq_then.16748:
+	add	r30, r5, r1
 	lw	r1, 0(r30)
-	lw	r2, 2(r3)
+	add	r2, r0, r7
+	j	do_without_neighbors.3228
+beq_then.16733:
+	add	r30, r6, r1
+	lw	r1, 0(r30)
+	blei	4, r8, ble_then.16751
+	jr	r31				#
+ble_then.16751:
+	lw	r2, 2(r1)
+	add	r30, r2, r8
+	lw	r2, 0(r30)
+	bgei	0, r2, bge_then.16753
+	jr	r31				#
+bge_then.16753:
+	lw	r2, 3(r1)
+	add	r30, r2, r8
+	lw	r2, 0(r30)
+	sw	r1, 7(r3)
+	sw	r8, 3(r3)
+	beqi	0, r2, beq_then.16755
+	lw	r2, 5(r1)
+	lw	r5, 7(r1)
+	lw	r6, 1(r1)
+	lw	r7, 4(r1)
+	add	r30, r2, r8
+	lw	r2, 0(r30)
+	flw	f1, 0(r2)
+	fsw	f1, 737(r0)
+	flw	f1, 1(r2)
+	fsw	f1, 738(r0)
+	flw	f1, 2(r2)
+	fsw	f1, 739(r0)
+	lw	r2, 6(r1)
+	add	r30, r5, r8
+	lw	r5, 0(r30)
+	add	r30, r6, r8
+	lw	r6, 0(r30)
+	lw	r2, 0(r2)
+	sw	r7, 8(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
+	add	r5, r0, r6
+	sw	r31, 9(r3)
+	addi	r3, r3, 10
+	jal	trace_diffuse_ray_80percent.3215				
+	addi	r3, r3, -10
+	lw	r31, 9(r3)
+	lw	r1, 3(r3)
+	lw	r2, 8(r3)
+	add	r30, r2, r1
+	lw	r2, 0(r30)
+	addi	r5, r0, 740				# set min_caml_rgb
+	addi	r6, r0, 737				# set min_caml_diffuse_ray
+	add	r1, r0, r5
+	add	r5, r0, r6
+	sw	r31, 9(r3)
+	addi	r3, r3, 10
+	jal	vecaccumv.2912				
+	addi	r3, r3, -10
+	lw	r31, 9(r3)
+	j	beq_cont.16756
+beq_then.16755:
+beq_cont.16756:
+	lw	r1, 3(r3)
+	addi	r2, r1, 1
+	lw	r1, 7(r3)
 	j	do_without_neighbors.3228
 write_ppm_header.3251:
+	addi	r1, r0, 80
+	out	r1
+	addi	r1, r0, 51
+	out	r1
+	addi	r1, r0, 10
+	out	r1
 	lw	r1, 743(r0)
-	lw	r2, 744(r0)
-	addi	r5, r0, 80
-	addi	r6, r0, 51
-	addi	r7, r0, 10
-	addi	r8, r0, 32
-	addi	r9, r0, 32
-	addi	r10, r0, 255
-	addi	r11, r0, 10
-	sw	r11, 0(r3)
-	sw	r10, 1(r3)
-	sw	r9, 2(r3)
-	sw	r2, 3(r3)
-	sw	r8, 4(r3)
-	sw	r1, 5(r3)
-	sw	r7, 6(r3)
-	sw	r6, 7(r3)
-	add	r1, r0, r5
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	print_char.2801				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	lw	r1, 7(r3)
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	print_char.2801				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	lw	r1, 6(r3)
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	print_char.2801				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	lw	r1, 5(r3)
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	print_int.2857				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	lw	r1, 4(r3)
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	print_char.2801				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	lw	r1, 3(r3)
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	print_int.2857				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	lw	r1, 2(r3)
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	print_char.2801				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	lw	r1, 1(r3)
-	sw	r31, 8(r3)
-	addi	r3, r3, 9
-	jal	print_int.2857				
-	addi	r3, r3, -9
-	lw	r31, 8(r3)
-	lw	r1, 0(r3)
-	j	print_char.2801
-write_rgb_element.3253:
 	sw	r31, 0(r3)
 	addi	r3, r3, 1
-	jal	int_of_float.2818				
+	jal	print_int.2857				
 	addi	r3, r3, -1
 	lw	r31, 0(r3)
-	addi	r2, r0, 255
-	ble	r1, r2, ble_then.8750
+	addi	r1, r0, 32
+	out	r1
+	lw	r1, 744(r0)
+	sw	r31, 0(r3)
+	addi	r3, r3, 1
+	jal	print_int.2857				
+	addi	r3, r3, -1
+	lw	r31, 0(r3)
+	addi	r1, r0, 32
+	out	r1
 	addi	r1, r0, 255
-	j	ble_cont.8751
-ble_then.8750:
-	bgei	0, r1, bge_then.8752
+	sw	r31, 0(r3)
+	addi	r3, r3, 1
+	jal	print_int.2857				
+	addi	r3, r3, -1
+	lw	r31, 0(r3)
+	addi	r1, r0, 10
+	out	r1
+	jr	r31				#
+write_rgb_element.3253:
+	ftoi	r1, f1
+	addi	r2, r0, 255
+	ble	r1, r2, ble_then.16757
+	addi	r1, r0, 255
+	j	ble_cont.16758
+ble_then.16757:
+	bgei	0, r1, bge_then.16759
 	addi	r1, r0, 0
-	j	bge_cont.8753
-bge_then.8752:
-bge_cont.8753:
-ble_cont.8751:
+	j	bge_cont.16760
+bge_then.16759:
+bge_cont.16760:
+ble_cont.16758:
 	j	print_int.2857
 write_rgb.3255:
 	flw	f1, 740(r0)
-	flw	f2, 741(r0)
-	flw	f3, 742(r0)
+	addi	r1, r0, 255
+	ftoi	r2, f1
+	ble	r2, r1, ble_then.16761
+	addi	r1, r0, 255
+	j	ble_cont.16762
+ble_then.16761:
+	bgei	0, r2, bge_then.16763
+	addi	r1, r0, 0
+	j	bge_cont.16764
+bge_then.16763:
+	add	r1, r0, r2
+bge_cont.16764:
+ble_cont.16762:
+	sw	r31, 0(r3)
+	addi	r3, r3, 1
+	jal	print_int.2857				
+	addi	r3, r3, -1
+	lw	r31, 0(r3)
 	addi	r1, r0, 32
-	addi	r2, r0, 32
-	addi	r5, r0, 10
-	sw	r5, 0(r3)
-	fsw	f3, 2(r3)
-	sw	r2, 4(r3)
-	fsw	f2, 6(r3)
-	sw	r1, 8(r3)
-	sw	r31, 9(r3)
-	addi	r3, r3, 10
-	jal	write_rgb_element.3253				
-	addi	r3, r3, -10
-	lw	r31, 9(r3)
-	lw	r1, 8(r3)
-	sw	r31, 9(r3)
-	addi	r3, r3, 10
-	jal	print_char.2801				
-	addi	r3, r3, -10
-	lw	r31, 9(r3)
-	flw	f1, 6(r3)
-	sw	r31, 9(r3)
-	addi	r3, r3, 10
-	jal	write_rgb_element.3253				
-	addi	r3, r3, -10
-	lw	r31, 9(r3)
-	lw	r1, 4(r3)
-	sw	r31, 9(r3)
-	addi	r3, r3, 10
-	jal	print_char.2801				
-	addi	r3, r3, -10
-	lw	r31, 9(r3)
-	flw	f1, 2(r3)
-	sw	r31, 9(r3)
-	addi	r3, r3, 10
-	jal	write_rgb_element.3253				
-	addi	r3, r3, -10
-	lw	r31, 9(r3)
-	lw	r1, 0(r3)
-	j	print_char.2801
+	out	r1
+	flw	f1, 741(r0)
+	addi	r1, r0, 255
+	ftoi	r2, f1
+	ble	r2, r1, ble_then.16765
+	addi	r1, r0, 255
+	j	ble_cont.16766
+ble_then.16765:
+	bgei	0, r2, bge_then.16767
+	addi	r1, r0, 0
+	j	bge_cont.16768
+bge_then.16767:
+	add	r1, r0, r2
+bge_cont.16768:
+ble_cont.16766:
+	sw	r31, 0(r3)
+	addi	r3, r3, 1
+	jal	print_int.2857				
+	addi	r3, r3, -1
+	lw	r31, 0(r3)
+	addi	r1, r0, 32
+	out	r1
+	flw	f1, 742(r0)
+	addi	r1, r0, 255
+	ftoi	r2, f1
+	ble	r2, r1, ble_then.16769
+	addi	r1, r0, 255
+	j	ble_cont.16770
+ble_then.16769:
+	bgei	0, r2, bge_then.16771
+	addi	r1, r0, 0
+	j	bge_cont.16772
+bge_then.16771:
+	add	r1, r0, r2
+bge_cont.16772:
+ble_cont.16770:
+	sw	r31, 0(r3)
+	addi	r3, r3, 1
+	jal	print_int.2857				
+	addi	r3, r3, -1
+	lw	r31, 0(r3)
+	addi	r1, r0, 10
+	out	r1
+	jr	r31				#
 pretrace_diffuse_rays.3257:
-	blei	4, r2, ble_then.8756
+	blei	4, r2, ble_then.16773
 	jr	r31				#
-ble_then.8756:
+ble_then.16773:
+	lw	r5, 2(r1)
+	add	r30, r5, r2
+	lw	r5, 0(r30)
+	bgei	0, r5, bge_then.16775
+	jr	r31				#
+bge_then.16775:
+	lw	r5, 3(r1)
+	add	r30, r5, r2
+	lw	r5, 0(r30)
 	sw	r2, 0(r3)
+	beqi	0, r5, beq_then.16777
+	lw	r5, 6(r1)
+	lw	r5, 0(r5)
+	fsw	f0, 737(r0)
+	fsw	f0, 738(r0)
+	fsw	f0, 739(r0)
+	lw	r6, 7(r1)
+	lw	r7, 1(r1)
+	addi	r8, r0, 766				# set min_caml_dirvecs
+	add	r30, r8, r5
+	lw	r5, 0(r30)
+	add	r30, r6, r2
+	lw	r6, 0(r30)
+	add	r30, r7, r2
+	lw	r7, 0(r30)
+	flw	f1, 0(r7)
+	fsw	f1, 751(r0)
+	flw	f1, 1(r7)
+	fsw	f1, 752(r0)
+	flw	f1, 2(r7)
+	fsw	f1, 753(r0)
+	lw	r8, 0(r0)
+	addi	r8, r8, -1
 	sw	r1, 1(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	get_surface_id.3235				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	bgei	0, r1, bge_then.8758
-	jr	r31				#
-bge_then.8758:
-	lw	r1, 1(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	p_calc_diffuse.2964				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	lw	r2, 0(r3)
-	add	r30, r1, r2
-	lw	r1, 0(r30)
-	beqi	0, r1, beq_then.8760
-	lw	r1, 1(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	p_group_id.2970				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	addi	r2, r0, 737				# set min_caml_diffuse_ray
-	sw	r1, 2(r3)
-	add	r1, r0, r2
-	sw	r31, 3(r3)
-	addi	r3, r3, 4
-	jal	vecbzero.2878				
-	addi	r3, r3, -4
-	lw	r31, 3(r3)
-	lw	r1, 1(r3)
-	sw	r31, 3(r3)
-	addi	r3, r3, 4
-	jal	p_nvectors.2975				
-	addi	r3, r3, -4
-	lw	r31, 3(r3)
-	lw	r2, 1(r3)
-	sw	r1, 3(r3)
-	add	r1, r0, r2
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	p_intersection_points.2960				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
-	addi	r2, r0, 766				# set min_caml_dirvecs
+	sw	r7, 2(r3)
+	sw	r6, 3(r3)
+	sw	r5, 4(r3)
+	add	r2, r0, r8
+	add	r1, r0, r7
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	setup_startp_constants.3108				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	addi	r6, r0, 118
+	lw	r1, 4(r3)
+	lw	r2, 3(r3)
 	lw	r5, 2(r3)
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	iter_trace_diffuse_rays.3206				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	lw	r1, 1(r3)
+	lw	r2, 5(r1)
+	lw	r5, 0(r3)
 	add	r30, r2, r5
 	lw	r2, 0(r30)
-	lw	r5, 0(r3)
-	lw	r6, 3(r3)
-	add	r30, r6, r5
-	lw	r6, 0(r30)
-	add	r30, r1, r5
-	lw	r1, 0(r30)
-	add	r5, r0, r1
-	add	r1, r0, r2
-	add	r2, r0, r6
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	trace_diffuse_rays.3211				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
-	lw	r1, 1(r3)
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	p_received_ray_20percent.2968				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
+	flw	f1, 737(r0)
+	fsw	f1, 0(r2)
+	flw	f1, 738(r0)
+	fsw	f1, 1(r2)
+	flw	f1, 739(r0)
+	fsw	f1, 2(r2)
+	j	beq_cont.16778
+beq_then.16777:
+beq_cont.16778:
 	lw	r2, 0(r3)
-	add	r30, r1, r2
-	lw	r1, 0(r30)
-	addi	r5, r0, 737				# set min_caml_diffuse_ray
-	add	r2, r0, r5
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	veccpy.2880				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
-	j	beq_cont.8761
-beq_then.8760:
-beq_cont.8761:
-	lw	r1, 0(r3)
-	addi	r2, r1, 1
-	lw	r1, 1(r3)
+	addi	r2, r2, 1
 	j	pretrace_diffuse_rays.3257
 pretrace_pixels.3260:
-	bgei	0, r2, bge_then.8762
+	bgei	0, r2, bge_then.16779
 	jr	r31				#
-bge_then.8762:
+bge_then.16779:
 	flw	f4, 747(r0)
 	lw	r6, 745(r0)
 	sub	r6, r2, r6
-	sw	r5, 0(r3)
-	sw	r2, 1(r3)
-	sw	r1, 2(r3)
-	fsw	f3, 4(r3)
-	fsw	f2, 6(r3)
-	fsw	f1, 8(r3)
-	fsw	f4, 10(r3)
+	itof	f5, r6
+	fmul	f4, f4, f5
+	flw	f5, 754(r0)
+	fmul	f5, f4, f5
+	fadd	f5, f5, f1
+	fsw	f5, 763(r0)
+	flw	f5, 755(r0)
+	fmul	f5, f4, f5
+	fadd	f5, f5, f2
+	fsw	f5, 764(r0)
+	flw	f5, 756(r0)
+	fmul	f4, f4, f5
+	fadd	f4, f4, f3
+	fsw	f4, 765(r0)
+	addi	r6, r0, 763				# set min_caml_ptrace_dirvec
+	addi	r7, r0, 0
+	fsw	f3, 0(r3)
+	fsw	f2, 2(r3)
+	fsw	f1, 4(r3)
+	sw	r5, 6(r3)
+	sw	r2, 7(r3)
+	sw	r1, 8(r3)
+	add	r2, r0, r7
 	add	r1, r0, r6
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	float_of_int.2820				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	flw	f2, 10(r3)
-	fmul	f1, f2, f1
-	flw	f2, 754(r0)
-	fmul	f2, f1, f2
-	flw	f3, 8(r3)
-	fadd	f2, f2, f3
-	fsw	f2, 763(r0)
-	flw	f2, 755(r0)
-	fmul	f2, f1, f2
-	flw	f4, 6(r3)
-	fadd	f2, f2, f4
-	fsw	f2, 764(r0)
-	flw	f2, 756(r0)
-	fmul	f1, f1, f2
-	flw	f2, 4(r3)
-	fadd	f1, f1, f2
-	fsw	f1, 765(r0)
-	addi	r1, r0, 763				# set min_caml_ptrace_dirvec
-	addi	r2, r0, 0
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
+	sw	r31, 9(r3)
+	addi	r3, r3, 10
 	jal	vecunit_sgn.2888				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	addi	r1, r0, 740				# set min_caml_rgb
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	vecbzero.2878				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	addi	r1, r0, 748				# set min_caml_startp
-	addi	r2, r0, 664				# set min_caml_viewpoint
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	veccpy.2880				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
+	addi	r3, r3, -10
+	lw	r31, 9(r3)
+	fsw	f0, 740(r0)
+	fsw	f0, 741(r0)
+	fsw	f0, 742(r0)
+	flw	f1, 664(r0)
+	fsw	f1, 748(r0)
+	flw	f1, 665(r0)
+	fsw	f1, 749(r0)
+	flw	f1, 666(r0)
+	fsw	f1, 750(r0)
 	addi	r1, r0, 0
 	flup	f1, 2		# fli	f1, 1.000000
 	addi	r2, r0, 763				# set min_caml_ptrace_dirvec
-	lw	r5, 1(r3)
-	lw	r6, 2(r3)
+	lw	r5, 7(r3)
+	lw	r6, 8(r3)
 	add	r30, r6, r5
 	lw	r7, 0(r30)
 	flup	f2, 0		# fli	f2, 0.000000
 	add	r5, r0, r7
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
+	sw	r31, 9(r3)
+	addi	r3, r3, 10
 	jal	trace_ray.3197				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	lw	r1, 1(r3)
-	lw	r2, 2(r3)
+	addi	r3, r3, -10
+	lw	r31, 9(r3)
+	lw	r1, 7(r3)
+	lw	r2, 8(r3)
 	add	r30, r2, r1
 	lw	r5, 0(r30)
-	add	r1, r0, r5
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	p_rgb.2958				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	addi	r2, r0, 740				# set min_caml_rgb
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	veccpy.2880				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	lw	r1, 1(r3)
-	lw	r2, 2(r3)
+	lw	r5, 0(r5)
+	flw	f1, 740(r0)
+	fsw	f1, 0(r5)
+	flw	f1, 741(r0)
+	fsw	f1, 1(r5)
+	flw	f1, 742(r0)
+	fsw	f1, 2(r5)
 	add	r30, r2, r1
 	lw	r5, 0(r30)
-	lw	r6, 0(r3)
-	add	r2, r0, r6
-	add	r1, r0, r5
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	p_set_group_id.2972				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	lw	r1, 1(r3)
-	lw	r2, 2(r3)
+	lw	r5, 6(r5)
+	lw	r6, 6(r3)
+	sw	r6, 0(r5)
 	add	r30, r2, r1
 	lw	r5, 0(r30)
-	addi	r6, r0, 0
-	add	r2, r0, r6
+	addi	r7, r0, 0
+	add	r2, r0, r7
 	add	r1, r0, r5
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
+	sw	r31, 9(r3)
+	addi	r3, r3, 10
 	jal	pretrace_diffuse_rays.3257				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	lw	r1, 1(r3)
-	addi	r1, r1, -1
-	addi	r2, r0, 1
-	lw	r5, 0(r3)
-	sw	r1, 12(r3)
-	add	r1, r0, r5
-	sw	r31, 13(r3)
-	addi	r3, r3, 14
-	jal	add_mod5.2867				
-	addi	r3, r3, -14
-	lw	r31, 13(r3)
+	addi	r3, r3, -10
+	lw	r31, 9(r3)
+	lw	r1, 7(r3)
+	addi	r2, r1, -1
+	lw	r1, 6(r3)
+	addi	r1, r1, 1
+	bgei	5, r1, bge_then.16781
 	add	r5, r0, r1
-	flw	f1, 8(r3)
-	flw	f2, 6(r3)
-	flw	f3, 4(r3)
-	lw	r1, 2(r3)
-	lw	r2, 12(r3)
+	j	bge_cont.16782
+bge_then.16781:
+	addi	r5, r1, -5
+bge_cont.16782:
+	flw	f1, 4(r3)
+	flw	f2, 2(r3)
+	flw	f3, 0(r3)
+	lw	r1, 8(r3)
 	j	pretrace_pixels.3260
 pretrace_line.3267:
 	lw	r6, 746(r0)
@@ -8273,40 +10559,15 @@ pretrace_line.3267:
 	flw	f7, 762(r0)
 	lw	r7, 743(r0)
 	sub	r2, r2, r6
-	sw	r5, 0(r3)
-	sw	r1, 1(r3)
-	sw	r7, 2(r3)
-	fsw	f7, 4(r3)
-	fsw	f4, 6(r3)
-	fsw	f6, 8(r3)
-	fsw	f3, 10(r3)
-	fsw	f5, 12(r3)
-	fsw	f2, 14(r3)
-	fsw	f1, 16(r3)
-	add	r1, r0, r2
-	sw	r31, 18(r3)
-	addi	r3, r3, 19
-	jal	float_of_int.2820				
-	addi	r3, r3, -19
-	lw	r31, 18(r3)
-	flw	f2, 16(r3)
-	fmul	f1, f2, f1
-	flw	f2, 14(r3)
+	itof	f8, r2
+	fmul	f1, f1, f8
 	fmul	f2, f1, f2
-	flw	f3, 12(r3)
-	fadd	f2, f2, f3
-	flw	f3, 10(r3)
+	fadd	f2, f2, f5
 	fmul	f3, f1, f3
-	flw	f4, 8(r3)
-	fadd	f3, f3, f4
-	flw	f4, 6(r3)
+	fadd	f3, f3, f6
 	fmul	f1, f1, f4
-	flw	f4, 4(r3)
-	fadd	f1, f1, f4
-	lw	r1, 2(r3)
-	addi	r2, r1, -1
-	lw	r1, 1(r3)
-	lw	r5, 0(r3)
+	fadd	f1, f1, f7
+	addi	r2, r7, -1
 	fadd	f30, f0, f3
 	fadd	f3, f0, f1
 	fadd	f1, f0, f2
@@ -8314,91 +10575,352 @@ pretrace_line.3267:
 	j	pretrace_pixels.3260
 scan_pixel.3271:
 	lw	r8, 743(r0)
-	ble	r8, r1, ble_then.8766
+	ble	r8, r1, ble_then.16783
 	add	r30, r6, r1
 	lw	r8, 0(r30)
-	addi	r9, r0, 740				# set min_caml_rgb
-	sw	r5, 0(r3)
-	sw	r6, 1(r3)
-	sw	r7, 2(r3)
-	sw	r2, 3(r3)
-	sw	r1, 4(r3)
-	sw	r9, 5(r3)
-	add	r1, r0, r8
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	p_rgb.2958				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	add	r2, r0, r1
-	lw	r1, 5(r3)
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	veccpy.2880				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	lw	r1, 4(r3)
-	lw	r2, 3(r3)
-	lw	r5, 2(r3)
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	neighbors_exist.3231				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	beqi	0, r1, beq_then.8767
+	lw	r8, 0(r8)
+	flw	f1, 0(r8)
+	fsw	f1, 740(r0)
+	flw	f1, 1(r8)
+	fsw	f1, 741(r0)
+	flw	f1, 2(r8)
+	fsw	f1, 742(r0)
+	lw	r8, 744(r0)
+	addi	r9, r2, 1
+	ble	r8, r9, ble_then.16784
+	blei	0, r2, ble_then.16786
+	lw	r8, 743(r0)
+	addi	r9, r1, 1
+	ble	r8, r9, ble_then.16788
+	blei	0, r1, ble_then.16790
+	addi	r8, r0, 1
+	j	ble_cont.16791
+ble_then.16790:
 	addi	r8, r0, 0
+ble_cont.16791:
+	j	ble_cont.16789
+ble_then.16788:
+	addi	r8, r0, 0
+ble_cont.16789:
+	j	ble_cont.16787
+ble_then.16786:
+	addi	r8, r0, 0
+ble_cont.16787:
+	j	ble_cont.16785
+ble_then.16784:
+	addi	r8, r0, 0
+ble_cont.16785:
+	sw	r7, 0(r3)
+	sw	r5, 1(r3)
+	sw	r2, 2(r3)
+	sw	r6, 3(r3)
+	sw	r1, 4(r3)
+	beqi	0, r8, beq_then.16792
+	add	r30, r6, r1
+	lw	r8, 0(r30)
+	addi	r9, r0, 0
+	lw	r10, 2(r8)
+	lw	r10, 0(r10)
+	bgei	0, r10, bge_then.16794
+	j	bge_cont.16795
+bge_then.16794:
+	add	r30, r6, r1
+	lw	r10, 0(r30)
+	add	r30, r5, r1
+	lw	r11, 0(r30)
+	lw	r10, 2(r10)
+	lw	r10, 0(r10)
+	lw	r11, 2(r11)
+	lw	r11, 0(r11)
+	beq	r11, r10, beq_then.16796
+	addi	r10, r0, 0
+	j	beq_cont.16797
+beq_then.16796:
+	add	r30, r7, r1
+	lw	r11, 0(r30)
+	lw	r11, 2(r11)
+	lw	r11, 0(r11)
+	beq	r11, r10, beq_then.16798
+	addi	r10, r0, 0
+	j	beq_cont.16799
+beq_then.16798:
+	addi	r11, r1, -1
+	add	r30, r6, r11
+	lw	r11, 0(r30)
+	lw	r11, 2(r11)
+	lw	r11, 0(r11)
+	beq	r11, r10, beq_then.16800
+	addi	r10, r0, 0
+	j	beq_cont.16801
+beq_then.16800:
+	addi	r11, r1, 1
+	add	r30, r6, r11
+	lw	r11, 0(r30)
+	lw	r11, 2(r11)
+	lw	r11, 0(r11)
+	beq	r11, r10, beq_then.16802
+	addi	r10, r0, 0
+	j	beq_cont.16803
+beq_then.16802:
+	addi	r10, r0, 1
+beq_cont.16803:
+beq_cont.16801:
+beq_cont.16799:
+beq_cont.16797:
+	beqi	0, r10, beq_then.16804
+	lw	r8, 3(r8)
+	lw	r8, 0(r8)
+	beqi	0, r8, beq_then.16806
+	add	r2, r0, r5
+	add	r5, r0, r6
+	add	r6, r0, r7
+	add	r7, r0, r9
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	calc_diffuse_using_5points.3222				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	j	beq_cont.16807
+beq_then.16806:
+beq_cont.16807:
+	addi	r8, r0, 1
 	lw	r1, 4(r3)
-	lw	r2, 3(r3)
-	lw	r5, 0(r3)
-	lw	r6, 1(r3)
-	lw	r7, 2(r3)
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
+	lw	r2, 2(r3)
+	lw	r5, 1(r3)
+	lw	r6, 3(r3)
+	lw	r7, 0(r3)
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
 	jal	try_exploit_neighbors.3244				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	j	beq_cont.8768
-beq_then.8767:
-	lw	r1, 4(r3)
-	lw	r2, 1(r3)
-	add	r30, r2, r1
-	lw	r5, 0(r30)
-	addi	r6, r0, 0
-	add	r2, r0, r6
-	add	r1, r0, r5
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	j	beq_cont.16805
+beq_then.16804:
+	add	r30, r6, r1
+	lw	r8, 0(r30)
+	add	r2, r0, r9
+	add	r1, r0, r8
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
 	jal	do_without_neighbors.3228				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-beq_cont.8768:
-	lw	r1, 4(r3)
-	addi	r1, r1, 1
-	sw	r1, 6(r3)
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+beq_cont.16805:
+bge_cont.16795:
+	j	beq_cont.16793
+beq_then.16792:
+	add	r30, r6, r1
+	lw	r8, 0(r30)
+	lw	r9, 2(r8)
+	lw	r9, 0(r9)
+	bgei	0, r9, bge_then.16808
+	j	bge_cont.16809
+bge_then.16808:
+	lw	r9, 3(r8)
+	lw	r9, 0(r9)
+	sw	r8, 5(r3)
+	beqi	0, r9, beq_then.16810
+	lw	r9, 5(r8)
+	lw	r10, 7(r8)
+	lw	r11, 1(r8)
+	lw	r12, 4(r8)
+	lw	r9, 0(r9)
+	flw	f1, 0(r9)
+	fsw	f1, 737(r0)
+	flw	f1, 1(r9)
+	fsw	f1, 738(r0)
+	flw	f1, 2(r9)
+	fsw	f1, 739(r0)
+	lw	r9, 6(r8)
+	lw	r10, 0(r10)
+	lw	r11, 0(r11)
+	lw	r9, 0(r9)
+	sw	r12, 6(r3)
+	add	r5, r0, r11
+	add	r2, r0, r10
+	add	r1, r0, r9
 	sw	r31, 7(r3)
 	addi	r3, r3, 8
-	jal	write_rgb.3255				
+	jal	trace_diffuse_ray_80percent.3215				
 	addi	r3, r3, -8
 	lw	r31, 7(r3)
 	lw	r1, 6(r3)
-	lw	r2, 3(r3)
-	lw	r5, 0(r3)
-	lw	r6, 1(r3)
-	lw	r7, 2(r3)
+	lw	r2, 0(r1)
+	addi	r1, r0, 740				# set min_caml_rgb
+	addi	r5, r0, 737				# set min_caml_diffuse_ray
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	vecaccumv.2912				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+	j	beq_cont.16811
+beq_then.16810:
+beq_cont.16811:
+	addi	r2, r0, 1
+	lw	r1, 5(r3)
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	do_without_neighbors.3228				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+bge_cont.16809:
+beq_cont.16793:
+	flw	f1, 740(r0)
+	addi	r1, r0, 255
+	ftoi	r2, f1
+	ble	r2, r1, ble_then.16812
+	addi	r1, r0, 255
+	j	ble_cont.16813
+ble_then.16812:
+	bgei	0, r2, bge_then.16814
+	addi	r1, r0, 0
+	j	bge_cont.16815
+bge_then.16814:
+	add	r1, r0, r2
+bge_cont.16815:
+ble_cont.16813:
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	print_int.2857				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+	addi	r1, r0, 32
+	out	r1
+	flw	f1, 741(r0)
+	addi	r1, r0, 255
+	ftoi	r2, f1
+	ble	r2, r1, ble_then.16816
+	addi	r1, r0, 255
+	j	ble_cont.16817
+ble_then.16816:
+	bgei	0, r2, bge_then.16818
+	addi	r1, r0, 0
+	j	bge_cont.16819
+bge_then.16818:
+	add	r1, r0, r2
+bge_cont.16819:
+ble_cont.16817:
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	print_int.2857				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+	addi	r1, r0, 32
+	out	r1
+	flw	f1, 742(r0)
+	addi	r1, r0, 255
+	ftoi	r2, f1
+	ble	r2, r1, ble_then.16820
+	addi	r1, r0, 255
+	j	ble_cont.16821
+ble_then.16820:
+	bgei	0, r2, bge_then.16822
+	addi	r1, r0, 0
+	j	bge_cont.16823
+bge_then.16822:
+	add	r1, r0, r2
+bge_cont.16823:
+ble_cont.16821:
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	print_int.2857				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+	addi	r1, r0, 10
+	out	r1
+	lw	r1, 743(r0)
+	lw	r2, 4(r3)
+	addi	r2, r2, 1
+	ble	r1, r2, ble_then.16824
+	lw	r6, 3(r3)
+	add	r30, r6, r2
+	lw	r1, 0(r30)
+	lw	r1, 0(r1)
+	flw	f1, 0(r1)
+	fsw	f1, 740(r0)
+	flw	f1, 1(r1)
+	fsw	f1, 741(r0)
+	flw	f1, 2(r1)
+	fsw	f1, 742(r0)
+	lw	r1, 744(r0)
+	lw	r5, 2(r3)
+	addi	r7, r5, 1
+	ble	r1, r7, ble_then.16825
+	blei	0, r5, ble_then.16827
+	lw	r1, 743(r0)
+	addi	r7, r2, 1
+	ble	r1, r7, ble_then.16829
+	blei	0, r2, ble_then.16831
+	addi	r1, r0, 1
+	j	ble_cont.16832
+ble_then.16831:
+	addi	r1, r0, 0
+ble_cont.16832:
+	j	ble_cont.16830
+ble_then.16829:
+	addi	r1, r0, 0
+ble_cont.16830:
+	j	ble_cont.16828
+ble_then.16827:
+	addi	r1, r0, 0
+ble_cont.16828:
+	j	ble_cont.16826
+ble_then.16825:
+	addi	r1, r0, 0
+ble_cont.16826:
+	sw	r2, 7(r3)
+	beqi	0, r1, beq_then.16833
+	addi	r8, r0, 0
+	lw	r1, 1(r3)
+	lw	r7, 0(r3)
+	add	r28, r0, r5
+	add	r5, r0, r1
+	add	r1, r0, r2
+	add	r2, r0, r28
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	try_exploit_neighbors.3244				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	j	beq_cont.16834
+beq_then.16833:
+	add	r30, r6, r2
+	lw	r1, 0(r30)
+	addi	r7, r0, 0
+	add	r2, r0, r7
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	do_without_neighbors.3228				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+beq_cont.16834:
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	write_rgb.3255				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	lw	r1, 7(r3)
+	addi	r1, r1, 1
+	lw	r2, 2(r3)
+	lw	r5, 1(r3)
+	lw	r6, 3(r3)
+	lw	r7, 0(r3)
 	j	scan_pixel.3271
-ble_then.8766:
+ble_then.16824:
+	jr	r31				#
+ble_then.16783:
 	jr	r31				#
 scan_line.3277:
 	lw	r8, 744(r0)
-	ble	r8, r1, ble_then.8770
+	ble	r8, r1, ble_then.16837
 	lw	r8, 744(r0)
 	addi	r8, r8, -1
 	sw	r7, 0(r3)
 	sw	r6, 1(r3)
-	sw	r5, 2(r3)
-	sw	r2, 3(r3)
-	sw	r1, 4(r3)
-	ble	r8, r1, ble_then.8771
+	sw	r2, 2(r3)
+	sw	r1, 3(r3)
+	sw	r5, 4(r3)
+	ble	r8, r1, ble_then.16838
 	addi	r8, r1, 1
 	add	r5, r0, r7
 	add	r2, r0, r8
@@ -8408,166 +10930,383 @@ scan_line.3277:
 	jal	pretrace_line.3267				
 	addi	r3, r3, -6
 	lw	r31, 5(r3)
-	j	ble_cont.8772
-ble_then.8771:
-ble_cont.8772:
+	j	ble_cont.16839
+ble_then.16838:
+ble_cont.16839:
+	lw	r1, 743(r0)
+	addi	r2, r0, 0
+	blei	0, r1, ble_then.16840
+	lw	r6, 4(r3)
+	lw	r1, 0(r6)
+	lw	r1, 0(r1)
+	flw	f1, 0(r1)
+	fsw	f1, 740(r0)
+	flw	f1, 1(r1)
+	fsw	f1, 741(r0)
+	flw	f1, 2(r1)
+	fsw	f1, 742(r0)
+	lw	r1, 744(r0)
+	lw	r5, 3(r3)
+	addi	r7, r5, 1
+	ble	r1, r7, ble_then.16842
+	blei	0, r5, ble_then.16844
+	lw	r1, 743(r0)
+	blei	1, r1, ble_then.16846
 	addi	r1, r0, 0
-	addi	r2, r0, 2
-	lw	r5, 4(r3)
-	addi	r6, r5, 1
-	lw	r7, 3(r3)
-	lw	r8, 2(r3)
-	lw	r9, 1(r3)
-	sw	r6, 5(r3)
+	j	ble_cont.16847
+ble_then.16846:
+	addi	r1, r0, 0
+ble_cont.16847:
+	j	ble_cont.16845
+ble_then.16844:
+	addi	r1, r0, 0
+ble_cont.16845:
+	j	ble_cont.16843
+ble_then.16842:
+	addi	r1, r0, 0
+ble_cont.16843:
+	beqi	0, r1, beq_then.16848
+	addi	r8, r0, 0
+	lw	r1, 2(r3)
+	lw	r7, 1(r3)
+	add	r28, r0, r5
+	add	r5, r0, r1
+	add	r1, r0, r2
+	add	r2, r0, r28
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	try_exploit_neighbors.3244				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	j	beq_cont.16849
+beq_then.16848:
+	lw	r1, 0(r6)
+	addi	r2, r0, 0
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	do_without_neighbors.3228				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+beq_cont.16849:
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	write_rgb.3255				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	addi	r1, r0, 1
+	lw	r2, 3(r3)
+	lw	r5, 2(r3)
+	lw	r6, 4(r3)
+	lw	r7, 1(r3)
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	scan_pixel.3271				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	j	ble_cont.16841
+ble_then.16840:
+ble_cont.16841:
+	lw	r1, 3(r3)
+	addi	r2, r1, 1
+	lw	r1, 0(r3)
+	addi	r1, r1, 2
+	bgei	5, r1, bge_then.16850
+	add	r5, r0, r1
+	j	bge_cont.16851
+bge_then.16850:
+	addi	r5, r1, -5
+bge_cont.16851:
+	lw	r1, 744(r0)
+	ble	r1, r2, ble_then.16852
+	lw	r1, 744(r0)
+	addi	r1, r1, -1
+	sw	r5, 5(r3)
 	sw	r2, 6(r3)
-	add	r6, r0, r8
-	add	r2, r0, r5
-	add	r5, r0, r7
-	add	r7, r0, r9
+	ble	r1, r2, ble_then.16854
+	addi	r1, r2, 1
+	lw	r6, 2(r3)
+	add	r2, r0, r1
+	add	r1, r0, r6
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	pretrace_line.3267				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+	j	ble_cont.16855
+ble_then.16854:
+ble_cont.16855:
+	addi	r1, r0, 0
+	lw	r2, 6(r3)
+	lw	r5, 4(r3)
+	lw	r6, 1(r3)
+	lw	r7, 2(r3)
 	sw	r31, 7(r3)
 	addi	r3, r3, 8
 	jal	scan_pixel.3271				
 	addi	r3, r3, -8
 	lw	r31, 7(r3)
-	lw	r1, 0(r3)
-	lw	r2, 6(r3)
-	sw	r31, 7(r3)
-	addi	r3, r3, 8
-	jal	add_mod5.2867				
-	addi	r3, r3, -8
-	lw	r31, 7(r3)
-	add	r7, r0, r1
-	lw	r1, 5(r3)
-	lw	r2, 2(r3)
-	lw	r5, 1(r3)
-	lw	r6, 3(r3)
+	lw	r1, 6(r3)
+	addi	r1, r1, 1
+	lw	r2, 5(r3)
+	addi	r2, r2, 2
+	bgei	5, r2, bge_then.16856
+	add	r7, r0, r2
+	j	bge_cont.16857
+bge_then.16856:
+	addi	r7, r2, -5
+bge_cont.16857:
+	lw	r2, 1(r3)
+	lw	r5, 2(r3)
+	lw	r6, 4(r3)
 	sw	r31, 7(r3)
 	addi	r3, r3, 8
 	jal	scan_line.3277				
 	addi	r3, r3, -8
 	lw	r31, 7(r3)
+	j	ble_cont.16853
+ble_then.16852:
+ble_cont.16853:
 	jr	r31				#
-ble_then.8770:
+ble_then.16837:
 	jr	r31				#
 create_float5x3array.3283:
 	addi	r1, r0, 3
 	flup	f1, 0		# fli	f1, 0.000000
-	addi	r2, r0, 5
-	addi	r5, r0, 3
-	flup	f2, 0		# fli	f2, 0.000000
-	addi	r6, r0, 3
-	flup	f3, 0		# fli	f3, 0.000000
-	addi	r7, r0, 3
-	flup	f4, 0		# fli	f4, 0.000000
-	addi	r8, r0, 3
-	flup	f5, 0		# fli	f5, 0.000000
-	fsw	f5, 0(r3)
-	sw	r8, 2(r3)
-	fsw	f4, 4(r3)
-	sw	r7, 6(r3)
-	fsw	f3, 8(r3)
-	sw	r6, 10(r3)
-	fsw	f2, 12(r3)
-	sw	r5, 14(r3)
-	sw	r2, 15(r3)
-	sw	r31, 16(r3)
-	addi	r3, r3, 17
+	sw	r31, 0(r3)
+	addi	r3, r3, 1
 	jal	lib_create_float_array				
-	addi	r3, r3, -17
-	lw	r31, 16(r3)
+	addi	r3, r3, -1
+	lw	r31, 0(r3)
 	add	r2, r0, r1
-	lw	r1, 15(r3)
-	sw	r31, 16(r3)
-	addi	r3, r3, 17
+	addi	r1, r0, 5
+	sw	r31, 0(r3)
+	addi	r3, r3, 1
 	jal	lib_create_array				
-	addi	r3, r3, -17
-	lw	r31, 16(r3)
-	flw	f1, 12(r3)
-	lw	r2, 14(r3)
-	sw	r1, 16(r3)
+	addi	r3, r3, -1
+	lw	r31, 0(r3)
+	addi	r2, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	sw	r1, 0(r3)
 	add	r1, r0, r2
-	sw	r31, 17(r3)
-	addi	r3, r3, 18
+	sw	r31, 1(r3)
+	addi	r3, r3, 2
 	jal	lib_create_float_array				
-	addi	r3, r3, -18
-	lw	r31, 17(r3)
-	lw	r2, 16(r3)
+	addi	r3, r3, -2
+	lw	r31, 1(r3)
+	lw	r2, 0(r3)
 	sw	r1, 1(r2)
-	flw	f1, 8(r3)
-	lw	r1, 10(r3)
-	sw	r31, 17(r3)
-	addi	r3, r3, 18
+	addi	r1, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	sw	r31, 1(r3)
+	addi	r3, r3, 2
 	jal	lib_create_float_array				
-	addi	r3, r3, -18
-	lw	r31, 17(r3)
-	lw	r2, 16(r3)
+	addi	r3, r3, -2
+	lw	r31, 1(r3)
+	lw	r2, 0(r3)
 	sw	r1, 2(r2)
-	flw	f1, 4(r3)
-	lw	r1, 6(r3)
-	sw	r31, 17(r3)
-	addi	r3, r3, 18
+	addi	r1, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	sw	r31, 1(r3)
+	addi	r3, r3, 2
 	jal	lib_create_float_array				
-	addi	r3, r3, -18
-	lw	r31, 17(r3)
-	lw	r2, 16(r3)
+	addi	r3, r3, -2
+	lw	r31, 1(r3)
+	lw	r2, 0(r3)
 	sw	r1, 3(r2)
-	flw	f1, 0(r3)
-	lw	r1, 2(r3)
-	sw	r31, 17(r3)
-	addi	r3, r3, 18
+	addi	r1, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	sw	r31, 1(r3)
+	addi	r3, r3, 2
 	jal	lib_create_float_array				
-	addi	r3, r3, -18
-	lw	r31, 17(r3)
-	lw	r2, 16(r3)
+	addi	r3, r3, -2
+	lw	r31, 1(r3)
+	lw	r2, 0(r3)
 	sw	r1, 4(r2)
 	add	r1, r0, r2
 	jr	r31				#
 create_pixel.3285:
 	addi	r1, r0, 3
 	flup	f1, 0		# fli	f1, 0.000000
+	sw	r31, 0(r3)
+	addi	r3, r3, 1
+	jal	lib_create_float_array				
+	addi	r3, r3, -1
+	lw	r31, 0(r3)
+	sw	r1, 0(r3)
+	sw	r31, 1(r3)
+	addi	r3, r3, 2
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -2
+	lw	r31, 1(r3)
 	addi	r2, r0, 5
 	addi	r5, r0, 0
-	addi	r6, r0, 5
-	addi	r7, r0, 0
-	addi	r8, r0, 1
-	addi	r9, r0, 0
-	add	r10, r0, r4
-	sw	r10, 0(r3)
-	sw	r9, 1(r3)
-	sw	r8, 2(r3)
-	sw	r7, 3(r3)
-	sw	r6, 4(r3)
-	sw	r5, 5(r3)
-	sw	r2, 6(r3)
+	sw	r1, 1(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
+	sw	r31, 2(r3)
+	addi	r3, r3, 3
+	jal	lib_create_array				
+	addi	r3, r3, -3
+	lw	r31, 2(r3)
+	addi	r2, r0, 5
+	addi	r5, r0, 0
+	sw	r1, 2(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	lib_create_array				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	sw	r1, 3(r3)
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	sw	r1, 4(r3)
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	addi	r2, r0, 1
+	addi	r5, r0, 0
+	sw	r1, 5(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	lib_create_array				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	sw	r1, 6(r3)
 	sw	r31, 7(r3)
 	addi	r3, r3, 8
-	jal	lib_create_float_array				
+	jal	create_float5x3array.3283				
 	addi	r3, r3, -8
 	lw	r31, 7(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 8
+	sw	r1, 7(r2)
+	lw	r1, 6(r3)
+	sw	r1, 6(r2)
+	lw	r1, 5(r3)
+	sw	r1, 5(r2)
+	lw	r1, 4(r3)
+	sw	r1, 4(r2)
+	lw	r1, 3(r3)
+	sw	r1, 3(r2)
+	lw	r1, 2(r3)
+	sw	r1, 2(r2)
+	lw	r1, 1(r3)
+	sw	r1, 1(r2)
+	lw	r1, 0(r3)
+	sw	r1, 0(r2)
+	add	r1, r0, r2
+	jr	r31				#
+init_line_elements.3287:
+	bgei	0, r2, bge_then.16860
+	jr	r31				#
+bge_then.16860:
+	addi	r5, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	sw	r2, 0(r3)
+	sw	r1, 1(r3)
+	add	r1, r0, r5
+	sw	r31, 2(r3)
+	addi	r3, r3, 3
+	jal	lib_create_float_array				
+	addi	r3, r3, -3
+	lw	r31, 2(r3)
+	sw	r1, 2(r3)
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	addi	r2, r0, 5
+	addi	r5, r0, 0
+	sw	r1, 3(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	lib_create_array				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	addi	r2, r0, 5
+	addi	r5, r0, 0
+	sw	r1, 4(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	lib_create_array				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	sw	r1, 5(r3)
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	sw	r1, 6(r3)
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+	addi	r2, r0, 1
+	addi	r5, r0, 0
 	sw	r1, 7(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
 	sw	r31, 8(r3)
 	addi	r3, r3, 9
-	jal	create_float5x3array.3283				
+	jal	lib_create_array				
 	addi	r3, r3, -9
 	lw	r31, 8(r3)
-	lw	r2, 6(r3)
-	lw	r5, 5(r3)
 	sw	r1, 8(r3)
-	add	r1, r0, r2
-	add	r2, r0, r5
 	sw	r31, 9(r3)
 	addi	r3, r3, 10
-	jal	lib_create_array				
+	jal	create_float5x3array.3283				
 	addi	r3, r3, -10
 	lw	r31, 9(r3)
-	lw	r2, 4(r3)
-	lw	r5, 3(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 8
+	sw	r1, 7(r2)
+	lw	r1, 8(r3)
+	sw	r1, 6(r2)
+	lw	r1, 7(r3)
+	sw	r1, 5(r2)
+	lw	r1, 6(r3)
+	sw	r1, 4(r2)
+	lw	r1, 5(r3)
+	sw	r1, 3(r2)
+	lw	r1, 4(r3)
+	sw	r1, 2(r2)
+	lw	r1, 3(r3)
+	sw	r1, 1(r2)
+	lw	r1, 2(r3)
+	sw	r1, 0(r2)
+	add	r1, r0, r2
+	lw	r2, 0(r3)
+	lw	r5, 1(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+	addi	r1, r2, -1
+	bgei	0, r1, bge_then.16861
+	add	r1, r0, r5
+	jr	r31				#
+bge_then.16861:
+	addi	r2, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
 	sw	r1, 9(r3)
 	add	r1, r0, r2
-	add	r2, r0, r5
 	sw	r31, 10(r3)
 	addi	r3, r3, 11
-	jal	lib_create_array				
+	jal	lib_create_float_array				
 	addi	r3, r3, -11
 	lw	r31, 10(r3)
 	sw	r1, 10(r3)
@@ -8576,14 +11315,18 @@ create_pixel.3285:
 	jal	create_float5x3array.3283				
 	addi	r3, r3, -12
 	lw	r31, 11(r3)
+	addi	r2, r0, 5
+	addi	r5, r0, 0
 	sw	r1, 11(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
 	sw	r31, 12(r3)
 	addi	r3, r3, 13
-	jal	create_float5x3array.3283				
+	jal	lib_create_array				
 	addi	r3, r3, -13
 	lw	r31, 12(r3)
-	lw	r2, 2(r3)
-	lw	r5, 1(r3)
+	addi	r2, r0, 5
+	addi	r5, r0, 0
 	sw	r1, 12(r3)
 	add	r1, r0, r2
 	add	r2, r0, r5
@@ -8598,37 +11341,47 @@ create_pixel.3285:
 	jal	create_float5x3array.3283				
 	addi	r3, r3, -15
 	lw	r31, 14(r3)
+	sw	r1, 14(r3)
+	sw	r31, 15(r3)
+	addi	r3, r3, 16
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -16
+	lw	r31, 15(r3)
+	addi	r2, r0, 1
+	addi	r5, r0, 0
+	sw	r1, 15(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
+	sw	r31, 16(r3)
+	addi	r3, r3, 17
+	jal	lib_create_array				
+	addi	r3, r3, -17
+	lw	r31, 16(r3)
+	sw	r1, 16(r3)
+	sw	r31, 17(r3)
+	addi	r3, r3, 18
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -18
+	lw	r31, 17(r3)
+	add	r2, r0, r4
 	addi	r4, r4, 8
-	lw	r2, 0(r3)
 	sw	r1, 7(r2)
-	lw	r1, 13(r3)
+	lw	r1, 16(r3)
 	sw	r1, 6(r2)
-	lw	r1, 12(r3)
+	lw	r1, 15(r3)
 	sw	r1, 5(r2)
-	lw	r1, 11(r3)
+	lw	r1, 14(r3)
 	sw	r1, 4(r2)
-	lw	r1, 10(r3)
+	lw	r1, 13(r3)
 	sw	r1, 3(r2)
-	lw	r1, 9(r3)
+	lw	r1, 12(r3)
 	sw	r1, 2(r2)
-	lw	r1, 8(r3)
+	lw	r1, 11(r3)
 	sw	r1, 1(r2)
-	lw	r1, 7(r3)
+	lw	r1, 10(r3)
 	sw	r1, 0(r2)
 	add	r1, r0, r2
-	jr	r31				#
-init_line_elements.3287:
-	bgei	0, r2, bge_then.8778
-	jr	r31				#
-bge_then.8778:
-	sw	r2, 0(r3)
-	sw	r1, 1(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	create_pixel.3285				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	lw	r2, 0(r3)
+	lw	r2, 9(r3)
 	lw	r5, 1(r3)
 	add	r30, r5, r2
 	sw	r1, 0(r30)
@@ -8636,24 +11389,185 @@ bge_then.8778:
 	add	r1, r0, r5
 	j	init_line_elements.3287
 create_pixelline.3290:
-	lw	r1, 743(r0)
+	addi	r1, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
 	lw	r2, 743(r0)
 	sw	r2, 0(r3)
+	sw	r31, 1(r3)
+	addi	r3, r3, 2
+	jal	lib_create_float_array				
+	addi	r3, r3, -2
+	lw	r31, 1(r3)
 	sw	r1, 1(r3)
 	sw	r31, 2(r3)
 	addi	r3, r3, 3
-	jal	create_pixel.3285				
+	jal	create_float5x3array.3283				
 	addi	r3, r3, -3
 	lw	r31, 2(r3)
-	add	r2, r0, r1
-	lw	r1, 1(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
+	addi	r2, r0, 5
+	addi	r5, r0, 0
+	sw	r1, 2(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
 	jal	lib_create_array				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	lw	r2, 0(r3)
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	addi	r2, r0, 5
+	addi	r5, r0, 0
+	sw	r1, 3(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	lib_create_array				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	sw	r1, 4(r3)
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	sw	r1, 5(r3)
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	addi	r2, r0, 1
+	addi	r5, r0, 0
+	sw	r1, 6(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	lib_create_array				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+	sw	r1, 7(r3)
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 8
+	sw	r1, 7(r2)
+	lw	r1, 7(r3)
+	sw	r1, 6(r2)
+	lw	r1, 6(r3)
+	sw	r1, 5(r2)
+	lw	r1, 5(r3)
+	sw	r1, 4(r2)
+	lw	r1, 4(r3)
+	sw	r1, 3(r2)
+	lw	r1, 3(r3)
+	sw	r1, 2(r2)
+	lw	r1, 2(r3)
+	sw	r1, 1(r2)
+	lw	r1, 1(r3)
+	sw	r1, 0(r2)
+	lw	r1, 0(r3)
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	lib_create_array				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	lw	r2, 743(r0)
 	addi	r2, r2, -2
+	bgei	0, r2, bge_then.16862
+	jr	r31				#
+bge_then.16862:
+	addi	r5, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	sw	r2, 8(r3)
+	sw	r1, 9(r3)
+	add	r1, r0, r5
+	sw	r31, 10(r3)
+	addi	r3, r3, 11
+	jal	lib_create_float_array				
+	addi	r3, r3, -11
+	lw	r31, 10(r3)
+	sw	r1, 10(r3)
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	addi	r2, r0, 5
+	addi	r5, r0, 0
+	sw	r1, 11(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
+	sw	r31, 12(r3)
+	addi	r3, r3, 13
+	jal	lib_create_array				
+	addi	r3, r3, -13
+	lw	r31, 12(r3)
+	addi	r2, r0, 5
+	addi	r5, r0, 0
+	sw	r1, 12(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
+	sw	r31, 13(r3)
+	addi	r3, r3, 14
+	jal	lib_create_array				
+	addi	r3, r3, -14
+	lw	r31, 13(r3)
+	sw	r1, 13(r3)
+	sw	r31, 14(r3)
+	addi	r3, r3, 15
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -15
+	lw	r31, 14(r3)
+	sw	r1, 14(r3)
+	sw	r31, 15(r3)
+	addi	r3, r3, 16
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -16
+	lw	r31, 15(r3)
+	addi	r2, r0, 1
+	addi	r5, r0, 0
+	sw	r1, 15(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
+	sw	r31, 16(r3)
+	addi	r3, r3, 17
+	jal	lib_create_array				
+	addi	r3, r3, -17
+	lw	r31, 16(r3)
+	sw	r1, 16(r3)
+	sw	r31, 17(r3)
+	addi	r3, r3, 18
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -18
+	lw	r31, 17(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 8
+	sw	r1, 7(r2)
+	lw	r1, 16(r3)
+	sw	r1, 6(r2)
+	lw	r1, 15(r3)
+	sw	r1, 5(r2)
+	lw	r1, 14(r3)
+	sw	r1, 4(r2)
+	lw	r1, 13(r3)
+	sw	r1, 3(r2)
+	lw	r1, 12(r3)
+	sw	r1, 2(r2)
+	lw	r1, 11(r3)
+	sw	r1, 1(r2)
+	lw	r1, 10(r3)
+	sw	r1, 0(r2)
+	add	r1, r0, r2
+	lw	r2, 8(r3)
+	lw	r5, 9(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+	addi	r2, r2, -1
+	add	r1, r0, r5
 	j	init_line_elements.3287
 tan.3292:
 	fsw	f1, 0(r3)
@@ -8680,356 +11594,601 @@ adjust_position.3294:
 	fadd	f1, f1, f3
 	fsqrt	f1, f1
 	fdiv	f3, f4, f1
+	fle	r30, f0, f3
+	beq	r0, r30, fle_else.16863
+	flup	f4, 2		# fli	f4, 1.000000
+	j	fle_cont.16864
+fle_else.16863:
+	flup	f4, 11		# fli	f4, -1.000000
+fle_cont.16864:
+	fmul	f3, f3, f4
+	flup	f5, 23		# fli	f5, 4.375000
 	fsw	f1, 0(r3)
 	fsw	f2, 2(r3)
+	fle	r30, f5, f3
+	beq	r0, r30, fle_else.16865
+	flup	f5, 24		# fli	f5, 2.437500
+	fle	r30, f5, f3
+	beq	r0, r30, fle_else.16867
+	flup	f5, 2		# fli	f5, 1.000000
+	flup	f6, 15		# fli	f6, 1.570796
+	fdiv	f3, f5, f3
+	fsw	f4, 4(r3)
+	fsw	f6, 6(r3)
 	fadd	f1, f0, f3
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	atan.2843				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	atan_body.2841				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	flw	f2, 6(r3)
+	fadd	f1, f2, f1
+	flw	f2, 4(r3)
+	fmul	f1, f1, f2
+	j	fle_cont.16868
+fle_else.16867:
+	flup	f5, 2		# fli	f5, 1.000000
+	flup	f6, 2		# fli	f6, 1.000000
+	flup	f7, 16		# fli	f7, 0.785398
+	fsub	f5, f3, f5
+	fadd	f3, f3, f6
+	fdiv	f3, f5, f3
+	fsw	f4, 4(r3)
+	fsw	f7, 8(r3)
+	fadd	f1, f0, f3
+	sw	r31, 10(r3)
+	addi	r3, r3, 11
+	jal	atan_body.2841				
+	addi	r3, r3, -11
+	lw	r31, 10(r3)
+	flw	f2, 8(r3)
+	fadd	f1, f2, f1
+	flw	f2, 4(r3)
+	fmul	f1, f1, f2
+fle_cont.16868:
+	j	fle_cont.16866
+fle_else.16865:
+	fadd	f1, f0, f3
+	sw	r31, 10(r3)
+	addi	r3, r3, 11
+	jal	atan_body.2841				
+	addi	r3, r3, -11
+	lw	r31, 10(r3)
+fle_cont.16866:
 	flw	f2, 2(r3)
 	fmul	f1, f1, f2
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	tan.3292				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
+	fsw	f1, 10(r3)
+	sw	r31, 12(r3)
+	addi	r3, r3, 13
+	jal	sin.2837				
+	addi	r3, r3, -13
+	lw	r31, 12(r3)
+	flw	f2, 10(r3)
+	fsw	f1, 12(r3)
+	fadd	f1, f0, f2
+	sw	r31, 14(r3)
+	addi	r3, r3, 15
+	jal	cos.2839				
+	addi	r3, r3, -15
+	lw	r31, 14(r3)
+	flw	f2, 12(r3)
+	fdiv	f1, f2, f1
 	flw	f2, 0(r3)
 	fmul	f1, f1, f2
 	jr	r31				#
 calc_dirvec.3297:
-	bgei	5, r1, bge_then.8779
-	fsw	f3, 0(r3)
-	sw	r5, 2(r3)
-	sw	r2, 3(r3)
-	fsw	f4, 4(r3)
-	sw	r1, 6(r3)
+	bgei	5, r1, bge_then.16869
+	fmul	f1, f2, f2
+	flup	f2, 45		# fli	f2, 0.100000
+	fadd	f1, f1, f2
+	fsqrt	f1, f1
+	flup	f2, 2		# fli	f2, 1.000000
+	fdiv	f2, f2, f1
+	fle	r30, f0, f2
+	beq	r0, r30, fle_else.16870
+	flup	f5, 2		# fli	f5, 1.000000
+	j	fle_cont.16871
+fle_else.16870:
+	flup	f5, 11		# fli	f5, -1.000000
+fle_cont.16871:
+	fmul	f2, f2, f5
+	flup	f6, 23		# fli	f6, 4.375000
+	sw	r5, 0(r3)
+	sw	r2, 1(r3)
+	fsw	f4, 2(r3)
+	sw	r1, 4(r3)
+	fsw	f1, 6(r3)
+	fsw	f3, 8(r3)
+	fle	r30, f6, f2
+	beq	r0, r30, fle_else.16873
+	flup	f6, 24		# fli	f6, 2.437500
+	fle	r30, f6, f2
+	beq	r0, r30, fle_else.16875
+	flup	f6, 15		# fli	f6, 1.570796
+	flup	f7, 2		# fli	f7, 1.000000
+	fdiv	f2, f7, f2
+	fsw	f5, 10(r3)
+	fsw	f6, 12(r3)
 	fadd	f1, f0, f2
-	fadd	f2, f0, f3
-	sw	r31, 7(r3)
-	addi	r3, r3, 8
-	jal	adjust_position.3294				
-	addi	r3, r3, -8
-	lw	r31, 7(r3)
-	lw	r1, 6(r3)
-	addi	r1, r1, 1
-	flw	f2, 4(r3)
-	fsw	f1, 8(r3)
-	sw	r1, 10(r3)
-	sw	r31, 11(r3)
-	addi	r3, r3, 12
-	jal	adjust_position.3294				
-	addi	r3, r3, -12
-	lw	r31, 11(r3)
-	fadd	f2, f0, f1
-	flw	f1, 8(r3)
-	flw	f3, 0(r3)
-	flw	f4, 4(r3)
-	lw	r1, 10(r3)
-	lw	r2, 3(r3)
-	lw	r5, 2(r3)
-	j	calc_dirvec.3297
-bge_then.8779:
-	sw	r5, 2(r3)
-	sw	r2, 3(r3)
-	fsw	f1, 12(r3)
-	fsw	f2, 14(r3)
+	sw	r31, 14(r3)
+	addi	r3, r3, 15
+	jal	atan_body.2841				
+	addi	r3, r3, -15
+	lw	r31, 14(r3)
+	flw	f2, 12(r3)
+	fadd	f1, f2, f1
+	flw	f2, 10(r3)
+	fmul	f1, f1, f2
+	j	fle_cont.16876
+fle_else.16875:
+	flup	f6, 16		# fli	f6, 0.785398
+	flup	f7, 2		# fli	f7, 1.000000
+	fsub	f7, f2, f7
+	flup	f8, 2		# fli	f8, 1.000000
+	fadd	f2, f2, f8
+	fdiv	f2, f7, f2
+	fsw	f5, 10(r3)
+	fsw	f6, 14(r3)
+	fadd	f1, f0, f2
 	sw	r31, 16(r3)
 	addi	r3, r3, 17
-	jal	fsqr.2814				
+	jal	atan_body.2841				
 	addi	r3, r3, -17
 	lw	r31, 16(r3)
 	flw	f2, 14(r3)
-	fsw	f1, 16(r3)
+	fadd	f1, f2, f1
+	flw	f2, 10(r3)
+	fmul	f1, f1, f2
+fle_cont.16876:
+	j	fle_cont.16874
+fle_else.16873:
 	fadd	f1, f0, f2
+	sw	r31, 16(r3)
+	addi	r3, r3, 17
+	jal	atan_body.2841				
+	addi	r3, r3, -17
+	lw	r31, 16(r3)
+fle_cont.16874:
+	flw	f2, 8(r3)
+	fmul	f1, f1, f2
+	fsw	f1, 16(r3)
 	sw	r31, 18(r3)
 	addi	r3, r3, 19
-	jal	fsqr.2814				
+	jal	sin.2837				
 	addi	r3, r3, -19
 	lw	r31, 18(r3)
 	flw	f2, 16(r3)
-	fadd	f1, f2, f1
-	flup	f2, 2		# fli	f2, 1.000000
-	fadd	f1, f1, f2
-	fsqrt	f1, f1
-	flw	f2, 12(r3)
-	fdiv	f2, f2, f1
-	flw	f3, 14(r3)
-	fdiv	f3, f3, f1
-	flup	f4, 2		# fli	f4, 1.000000
-	fdiv	f1, f4, f1
-	addi	r1, r0, 766				# set min_caml_dirvecs
-	lw	r2, 3(r3)
-	add	r30, r1, r2
-	lw	r1, 0(r30)
-	lw	r2, 2(r3)
-	add	r30, r1, r2
-	lw	r5, 0(r30)
-	sw	r1, 18(r3)
-	fsw	f1, 20(r3)
-	fsw	f3, 22(r3)
-	fsw	f2, 24(r3)
-	add	r1, r0, r5
-	sw	r31, 26(r3)
-	addi	r3, r3, 27
-	jal	d_vec.2977				
-	addi	r3, r3, -27
-	lw	r31, 26(r3)
-	flw	f1, 24(r3)
-	flw	f2, 22(r3)
-	flw	f3, 20(r3)
-	sw	r31, 26(r3)
-	addi	r3, r3, 27
-	jal	vecset.2870				
-	addi	r3, r3, -27
-	lw	r31, 26(r3)
-	lw	r1, 2(r3)
-	addi	r2, r1, 40
-	lw	r5, 18(r3)
-	add	r30, r5, r2
-	lw	r2, 0(r30)
-	add	r1, r0, r2
-	sw	r31, 26(r3)
-	addi	r3, r3, 27
-	jal	d_vec.2977				
-	addi	r3, r3, -27
-	lw	r31, 26(r3)
-	flw	f1, 22(r3)
-	fneg	f3, f1
-	flw	f2, 24(r3)
-	flw	f4, 20(r3)
-	fsw	f3, 26(r3)
+	fsw	f1, 18(r3)
 	fadd	f1, f0, f2
-	fadd	f2, f0, f4
-	sw	r31, 28(r3)
-	addi	r3, r3, 29
-	jal	vecset.2870				
-	addi	r3, r3, -29
-	lw	r31, 28(r3)
-	lw	r1, 2(r3)
-	addi	r2, r1, 80
-	lw	r5, 18(r3)
-	add	r30, r5, r2
-	lw	r2, 0(r30)
-	add	r1, r0, r2
-	sw	r31, 28(r3)
-	addi	r3, r3, 29
-	jal	d_vec.2977				
-	addi	r3, r3, -29
-	lw	r31, 28(r3)
-	flw	f1, 24(r3)
-	fneg	f2, f1
-	flw	f3, 20(r3)
-	flw	f4, 26(r3)
-	fsw	f2, 28(r3)
-	fadd	f1, f0, f3
-	fadd	f3, f0, f4
-	sw	r31, 30(r3)
-	addi	r3, r3, 31
-	jal	vecset.2870				
-	addi	r3, r3, -31
-	lw	r31, 30(r3)
-	lw	r1, 2(r3)
-	addi	r2, r1, 1
-	lw	r5, 18(r3)
-	add	r30, r5, r2
-	lw	r2, 0(r30)
-	add	r1, r0, r2
-	sw	r31, 30(r3)
-	addi	r3, r3, 31
-	jal	d_vec.2977				
-	addi	r3, r3, -31
-	lw	r31, 30(r3)
-	flw	f1, 20(r3)
-	fneg	f3, f1
-	flw	f1, 28(r3)
-	flw	f2, 26(r3)
-	fsw	f3, 30(r3)
-	sw	r31, 32(r3)
-	addi	r3, r3, 33
-	jal	vecset.2870				
-	addi	r3, r3, -33
-	lw	r31, 32(r3)
-	lw	r1, 2(r3)
-	addi	r2, r1, 41
-	lw	r5, 18(r3)
-	add	r30, r5, r2
-	lw	r2, 0(r30)
-	add	r1, r0, r2
-	sw	r31, 32(r3)
-	addi	r3, r3, 33
-	jal	d_vec.2977				
-	addi	r3, r3, -33
-	lw	r31, 32(r3)
-	flw	f1, 28(r3)
-	flw	f2, 30(r3)
-	flw	f3, 22(r3)
-	sw	r31, 32(r3)
-	addi	r3, r3, 33
-	jal	vecset.2870				
-	addi	r3, r3, -33
-	lw	r31, 32(r3)
-	lw	r1, 2(r3)
-	addi	r1, r1, 81
-	lw	r2, 18(r3)
-	add	r30, r2, r1
-	lw	r1, 0(r30)
-	sw	r31, 32(r3)
-	addi	r3, r3, 33
-	jal	d_vec.2977				
-	addi	r3, r3, -33
-	lw	r31, 32(r3)
-	flw	f1, 30(r3)
-	flw	f2, 24(r3)
-	flw	f3, 22(r3)
-	j	vecset.2870
-calc_dirvecs.3305:
-	bgei	0, r1, bge_then.8783
-	jr	r31				#
-bge_then.8783:
-	sw	r1, 0(r3)
-	fsw	f1, 2(r3)
-	sw	r5, 4(r3)
-	sw	r2, 5(r3)
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	float_of_int.2820				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	flup	f2, 18		# fli	f2, 0.200000
+	sw	r31, 20(r3)
+	addi	r3, r3, 21
+	jal	cos.2839				
+	addi	r3, r3, -21
+	lw	r31, 20(r3)
+	flw	f2, 18(r3)
+	fdiv	f1, f2, f1
+	flw	f2, 6(r3)
 	fmul	f1, f1, f2
-	flup	f2, 48		# fli	f2, 0.900000
-	fsub	f3, f1, f2
-	addi	r1, r0, 0
-	flup	f1, 0		# fli	f1, 0.000000
-	flup	f2, 0		# fli	f2, 0.000000
+	lw	r1, 4(r3)
+	addi	r1, r1, 1
+	fmul	f2, f1, f1
+	flup	f3, 45		# fli	f3, 0.100000
+	fadd	f2, f2, f3
+	fsqrt	f2, f2
+	flup	f3, 2		# fli	f3, 1.000000
+	fdiv	f3, f3, f2
+	fle	r30, f0, f3
+	beq	r0, r30, fle_else.16877
+	flup	f4, 2		# fli	f4, 1.000000
+	j	fle_cont.16878
+fle_else.16877:
+	flup	f4, 11		# fli	f4, -1.000000
+fle_cont.16878:
+	fmul	f3, f3, f4
+	flup	f5, 23		# fli	f5, 4.375000
+	fsw	f1, 20(r3)
+	sw	r1, 22(r3)
+	fsw	f2, 24(r3)
+	fle	r30, f5, f3
+	beq	r0, r30, fle_else.16880
+	flup	f5, 24		# fli	f5, 2.437500
+	fle	r30, f5, f3
+	beq	r0, r30, fle_else.16882
+	flup	f5, 15		# fli	f5, 1.570796
+	flup	f6, 2		# fli	f6, 1.000000
+	fdiv	f3, f6, f3
+	fsw	f4, 26(r3)
+	fsw	f5, 28(r3)
+	fadd	f1, f0, f3
+	sw	r31, 30(r3)
+	addi	r3, r3, 31
+	jal	atan_body.2841				
+	addi	r3, r3, -31
+	lw	r31, 30(r3)
+	flw	f2, 28(r3)
+	fadd	f1, f2, f1
+	flw	f2, 26(r3)
+	fmul	f1, f1, f2
+	j	fle_cont.16883
+fle_else.16882:
+	flup	f5, 16		# fli	f5, 0.785398
+	flup	f6, 2		# fli	f6, 1.000000
+	fsub	f6, f3, f6
+	flup	f7, 2		# fli	f7, 1.000000
+	fadd	f3, f3, f7
+	fdiv	f3, f6, f3
+	fsw	f4, 26(r3)
+	fsw	f5, 30(r3)
+	fadd	f1, f0, f3
+	sw	r31, 32(r3)
+	addi	r3, r3, 33
+	jal	atan_body.2841				
+	addi	r3, r3, -33
+	lw	r31, 32(r3)
+	flw	f2, 30(r3)
+	fadd	f1, f2, f1
+	flw	f2, 26(r3)
+	fmul	f1, f1, f2
+fle_cont.16883:
+	j	fle_cont.16881
+fle_else.16880:
+	fadd	f1, f0, f3
+	sw	r31, 32(r3)
+	addi	r3, r3, 33
+	jal	atan_body.2841				
+	addi	r3, r3, -33
+	lw	r31, 32(r3)
+fle_cont.16881:
+	flw	f2, 2(r3)
+	fmul	f1, f1, f2
+	fsw	f1, 32(r3)
+	sw	r31, 34(r3)
+	addi	r3, r3, 35
+	jal	sin.2837				
+	addi	r3, r3, -35
+	lw	r31, 34(r3)
+	flw	f2, 32(r3)
+	fsw	f1, 34(r3)
+	fadd	f1, f0, f2
+	sw	r31, 36(r3)
+	addi	r3, r3, 37
+	jal	cos.2839				
+	addi	r3, r3, -37
+	lw	r31, 36(r3)
+	flw	f2, 34(r3)
+	fdiv	f1, f2, f1
+	flw	f2, 24(r3)
+	fmul	f2, f1, f2
+	flw	f1, 20(r3)
+	flw	f3, 8(r3)
 	flw	f4, 2(r3)
-	lw	r2, 5(r3)
-	lw	r5, 4(r3)
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
+	lw	r1, 22(r3)
+	lw	r2, 1(r3)
+	lw	r5, 0(r3)
+	j	calc_dirvec.3297
+bge_then.16869:
+	fmul	f3, f1, f1
+	fmul	f4, f2, f2
+	fadd	f3, f3, f4
+	flup	f4, 2		# fli	f4, 1.000000
+	fadd	f3, f3, f4
+	fsqrt	f3, f3
+	fdiv	f1, f1, f3
+	fdiv	f2, f2, f3
+	flup	f4, 2		# fli	f4, 1.000000
+	fdiv	f3, f4, f3
+	addi	r1, r0, 766				# set min_caml_dirvecs
+	add	r30, r1, r2
+	lw	r1, 0(r30)
+	add	r30, r1, r5
+	lw	r2, 0(r30)
+	lw	r2, 0(r2)
+	fsw	f1, 0(r2)
+	fsw	f2, 1(r2)
+	fsw	f3, 2(r2)
+	addi	r2, r5, 40
+	add	r30, r1, r2
+	lw	r2, 0(r30)
+	lw	r2, 0(r2)
+	fneg	f4, f2
+	fsw	f1, 0(r2)
+	fsw	f3, 1(r2)
+	fsw	f4, 2(r2)
+	addi	r2, r5, 80
+	add	r30, r1, r2
+	lw	r2, 0(r30)
+	lw	r2, 0(r2)
+	fneg	f5, f1
+	fsw	f3, 0(r2)
+	fsw	f5, 1(r2)
+	fsw	f4, 2(r2)
+	addi	r2, r5, 1
+	add	r30, r1, r2
+	lw	r2, 0(r30)
+	lw	r2, 0(r2)
+	fneg	f3, f3
+	fsw	f5, 0(r2)
+	fsw	f4, 1(r2)
+	fsw	f3, 2(r2)
+	addi	r2, r5, 41
+	add	r30, r1, r2
+	lw	r2, 0(r30)
+	lw	r2, 0(r2)
+	fsw	f5, 0(r2)
+	fsw	f3, 1(r2)
+	fsw	f2, 2(r2)
+	addi	r2, r5, 81
+	add	r30, r1, r2
+	lw	r1, 0(r30)
+	lw	r1, 0(r1)
+	fsw	f3, 0(r1)
+	fsw	f1, 1(r1)
+	fsw	f2, 2(r1)
+	jr	r31				#
+calc_dirvecs.3305:
+	bgei	0, r1, bge_then.16885
+	jr	r31				#
+bge_then.16885:
+	itof	f2, r1
+	flup	f3, 18		# fli	f3, 0.200000
+	fmul	f2, f2, f3
+	flup	f3, 48		# fli	f3, 0.900000
+	fsub	f3, f2, f3
+	addi	r6, r0, 0
+	flup	f2, 0		# fli	f2, 0.000000
+	flup	f4, 0		# fli	f4, 0.000000
+	fsw	f1, 0(r3)
+	sw	r2, 2(r3)
+	sw	r5, 3(r3)
+	sw	r1, 4(r3)
+	add	r1, r0, r6
+	fadd	f30, f0, f4
+	fadd	f4, f0, f1
+	fadd	f1, f0, f2
+	fadd	f2, f0, f30
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
 	jal	calc_dirvec.3297				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	lw	r1, 0(r3)
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
-	jal	float_of_int.2820				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	lw	r1, 4(r3)
+	itof	f1, r1
 	flup	f2, 18		# fli	f2, 0.200000
 	fmul	f1, f1, f2
 	flup	f2, 45		# fli	f2, 0.100000
 	fadd	f3, f1, f2
-	addi	r1, r0, 0
+	addi	r2, r0, 0
 	flup	f1, 0		# fli	f1, 0.000000
 	flup	f2, 0		# fli	f2, 0.000000
-	lw	r2, 4(r3)
-	addi	r5, r2, 2
-	flw	f4, 2(r3)
-	lw	r6, 5(r3)
-	add	r2, r0, r6
-	sw	r31, 6(r3)
-	addi	r3, r3, 7
+	lw	r5, 3(r3)
+	addi	r6, r5, 2
+	flw	f4, 0(r3)
+	lw	r7, 2(r3)
+	add	r5, r0, r6
+	add	r1, r0, r2
+	add	r2, r0, r7
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
 	jal	calc_dirvec.3297				
-	addi	r3, r3, -7
-	lw	r31, 6(r3)
-	lw	r1, 0(r3)
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	lw	r1, 4(r3)
 	addi	r1, r1, -1
-	addi	r2, r0, 1
-	lw	r5, 5(r3)
-	sw	r1, 6(r3)
-	add	r1, r0, r5
-	sw	r31, 7(r3)
-	addi	r3, r3, 8
-	jal	add_mod5.2867				
-	addi	r3, r3, -8
-	lw	r31, 7(r3)
-	add	r2, r0, r1
-	flw	f1, 2(r3)
-	lw	r1, 6(r3)
-	lw	r5, 4(r3)
+	lw	r2, 2(r3)
+	addi	r2, r2, 1
+	bgei	5, r2, bge_then.16887
+	j	bge_cont.16888
+bge_then.16887:
+	addi	r2, r2, -5
+bge_cont.16888:
+	flw	f1, 0(r3)
+	lw	r5, 3(r3)
 	j	calc_dirvecs.3305
 calc_dirvec_rows.3310:
-	bgei	0, r1, bge_then.8786
+	bgei	0, r1, bge_then.16889
 	jr	r31				#
-bge_then.8786:
-	sw	r1, 0(r3)
-	sw	r5, 1(r3)
-	sw	r2, 2(r3)
-	sw	r31, 3(r3)
-	addi	r3, r3, 4
-	jal	float_of_int.2820				
-	addi	r3, r3, -4
-	lw	r31, 3(r3)
+bge_then.16889:
+	itof	f1, r1
 	flup	f2, 18		# fli	f2, 0.200000
 	fmul	f1, f1, f2
 	flup	f2, 48		# fli	f2, 0.900000
 	fsub	f1, f1, f2
-	addi	r1, r0, 4
-	lw	r2, 2(r3)
-	lw	r5, 1(r3)
+	addi	r6, r0, 4
+	sw	r5, 0(r3)
+	sw	r2, 1(r3)
+	sw	r1, 2(r3)
+	add	r1, r0, r6
 	sw	r31, 3(r3)
 	addi	r3, r3, 4
 	jal	calc_dirvecs.3305				
 	addi	r3, r3, -4
 	lw	r31, 3(r3)
-	lw	r1, 0(r3)
+	lw	r1, 2(r3)
 	addi	r1, r1, -1
-	addi	r2, r0, 2
-	lw	r5, 2(r3)
-	sw	r1, 3(r3)
-	add	r1, r0, r5
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	add_mod5.2867				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
-	add	r2, r0, r1
-	lw	r1, 1(r3)
-	addi	r5, r1, 4
-	lw	r1, 3(r3)
+	lw	r2, 1(r3)
+	addi	r2, r2, 2
+	bgei	5, r2, bge_then.16891
+	j	bge_cont.16892
+bge_then.16891:
+	addi	r2, r2, -5
+bge_cont.16892:
+	lw	r5, 0(r3)
+	addi	r5, r5, 4
+	bgei	0, r1, bge_then.16893
+	jr	r31				#
+bge_then.16893:
+	itof	f1, r1
+	flup	f2, 18		# fli	f2, 0.200000
+	fmul	f1, f1, f2
+	flup	f2, 48		# fli	f2, 0.900000
+	fsub	f1, f1, f2
+	addi	r6, r0, 4
+	sw	r5, 3(r3)
+	sw	r2, 4(r3)
+	sw	r1, 5(r3)
+	add	r1, r0, r6
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	calc_dirvecs.3305				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	lw	r1, 5(r3)
+	addi	r1, r1, -1
+	lw	r2, 4(r3)
+	addi	r2, r2, 2
+	bgei	5, r2, bge_then.16895
+	j	bge_cont.16896
+bge_then.16895:
+	addi	r2, r2, -5
+bge_cont.16896:
+	lw	r5, 3(r3)
+	addi	r5, r5, 4
 	j	calc_dirvec_rows.3310
 create_dirvec.3314:
 	addi	r1, r0, 3
 	flup	f1, 0		# fli	f1, 0.000000
-	lw	r2, 0(r0)
-	add	r5, r0, r4
-	sw	r5, 0(r3)
-	sw	r2, 1(r3)
+	sw	r31, 0(r3)
+	addi	r3, r3, 1
+	jal	lib_create_float_array				
+	addi	r3, r3, -1
+	lw	r31, 0(r3)
+	add	r2, r0, r1
+	lw	r1, 0(r0)
+	sw	r2, 0(r3)
+	sw	r31, 1(r3)
+	addi	r3, r3, 2
+	jal	lib_create_array				
+	addi	r3, r3, -2
+	lw	r31, 1(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 2
+	sw	r1, 1(r2)
+	lw	r1, 0(r3)
+	sw	r1, 0(r2)
+	add	r1, r0, r2
+	jr	r31				#
+create_dirvec_elements.3316:
+	bgei	0, r2, bge_then.16897
+	jr	r31				#
+bge_then.16897:
+	addi	r5, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	sw	r2, 0(r3)
+	sw	r1, 1(r3)
+	add	r1, r0, r5
 	sw	r31, 2(r3)
 	addi	r3, r3, 3
 	jal	lib_create_float_array				
 	addi	r3, r3, -3
 	lw	r31, 2(r3)
 	add	r2, r0, r1
-	lw	r1, 1(r3)
+	lw	r1, 0(r0)
 	sw	r2, 2(r3)
 	sw	r31, 3(r3)
 	addi	r3, r3, 4
 	jal	lib_create_array				
 	addi	r3, r3, -4
 	lw	r31, 3(r3)
+	add	r2, r0, r4
 	addi	r4, r4, 2
-	lw	r2, 0(r3)
 	sw	r1, 1(r2)
 	lw	r1, 2(r3)
 	sw	r1, 0(r2)
 	add	r1, r0, r2
-	jr	r31				#
-create_dirvec_elements.3316:
-	bgei	0, r2, bge_then.8788
-	jr	r31				#
-bge_then.8788:
-	sw	r2, 0(r3)
-	sw	r1, 1(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	create_dirvec.3314				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
 	lw	r2, 0(r3)
+	lw	r5, 1(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+	addi	r1, r2, -1
+	bgei	0, r1, bge_then.16899
+	jr	r31				#
+bge_then.16899:
+	addi	r2, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	sw	r1, 3(r3)
+	add	r1, r0, r2
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	lib_create_float_array				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	add	r2, r0, r1
+	lw	r1, 0(r0)
+	sw	r2, 4(r3)
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	lib_create_array				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 2
+	sw	r1, 1(r2)
+	lw	r1, 4(r3)
+	sw	r1, 0(r2)
+	add	r1, r0, r2
+	lw	r2, 3(r3)
+	lw	r5, 1(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+	addi	r1, r2, -1
+	bgei	0, r1, bge_then.16901
+	jr	r31				#
+bge_then.16901:
+	addi	r2, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	sw	r1, 5(r3)
+	add	r1, r0, r2
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	lib_create_float_array				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	add	r2, r0, r1
+	lw	r1, 0(r0)
+	sw	r2, 6(r3)
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	lib_create_array				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 2
+	sw	r1, 1(r2)
+	lw	r1, 6(r3)
+	sw	r1, 0(r2)
+	add	r1, r0, r2
+	lw	r2, 5(r3)
+	lw	r5, 1(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+	addi	r1, r2, -1
+	bgei	0, r1, bge_then.16903
+	jr	r31				#
+bge_then.16903:
+	addi	r2, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	sw	r1, 7(r3)
+	add	r1, r0, r2
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	lib_create_float_array				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	add	r2, r0, r1
+	lw	r1, 0(r0)
+	sw	r2, 8(r3)
+	sw	r31, 9(r3)
+	addi	r3, r3, 10
+	jal	lib_create_array				
+	addi	r3, r3, -10
+	lw	r31, 9(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 2
+	sw	r1, 1(r2)
+	lw	r1, 8(r3)
+	sw	r1, 0(r2)
+	add	r1, r0, r2
+	lw	r2, 7(r3)
 	lw	r5, 1(r3)
 	add	r30, r5, r2
 	sw	r1, 0(r30)
@@ -9037,26 +12196,41 @@ bge_then.8788:
 	add	r1, r0, r5
 	j	create_dirvec_elements.3316
 create_dirvecs.3319:
-	bgei	0, r1, bge_then.8790
+	bgei	0, r1, bge_then.16905
 	jr	r31				#
-bge_then.8790:
+bge_then.16905:
 	addi	r2, r0, 766				# set min_caml_dirvecs
 	addi	r5, r0, 120
+	addi	r6, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
 	sw	r1, 0(r3)
 	sw	r2, 1(r3)
 	sw	r5, 2(r3)
+	add	r1, r0, r6
 	sw	r31, 3(r3)
 	addi	r3, r3, 4
-	jal	create_dirvec.3314				
+	jal	lib_create_float_array				
 	addi	r3, r3, -4
 	lw	r31, 3(r3)
 	add	r2, r0, r1
-	lw	r1, 2(r3)
-	sw	r31, 3(r3)
-	addi	r3, r3, 4
+	lw	r1, 0(r0)
+	sw	r2, 3(r3)
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
 	jal	lib_create_array				
-	addi	r3, r3, -4
-	lw	r31, 3(r3)
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 2
+	sw	r1, 1(r2)
+	lw	r1, 3(r3)
+	sw	r1, 0(r2)
+	lw	r1, 2(r3)
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	lib_create_array				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
 	lw	r2, 0(r3)
 	lw	r5, 1(r3)
 	add	r30, r5, r2
@@ -9064,459 +12238,2212 @@ bge_then.8790:
 	addi	r1, r0, 766				# set min_caml_dirvecs
 	add	r30, r1, r2
 	lw	r1, 0(r30)
-	addi	r5, r0, 118
-	add	r2, r0, r5
-	sw	r31, 3(r3)
-	addi	r3, r3, 4
+	addi	r5, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	sw	r1, 4(r3)
+	add	r1, r0, r5
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	lib_create_float_array				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	add	r2, r0, r1
+	lw	r1, 0(r0)
+	sw	r2, 5(r3)
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	lib_create_array				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 2
+	sw	r1, 1(r2)
+	lw	r1, 5(r3)
+	sw	r1, 0(r2)
+	add	r1, r0, r2
+	lw	r2, 4(r3)
+	sw	r1, 118(r2)
+	addi	r1, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	lib_create_float_array				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	add	r2, r0, r1
+	lw	r1, 0(r0)
+	sw	r2, 6(r3)
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	lib_create_array				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 2
+	sw	r1, 1(r2)
+	lw	r1, 6(r3)
+	sw	r1, 0(r2)
+	add	r1, r0, r2
+	lw	r2, 4(r3)
+	sw	r1, 117(r2)
+	addi	r1, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	lib_create_float_array				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+	add	r2, r0, r1
+	lw	r1, 0(r0)
+	sw	r2, 7(r3)
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	lib_create_array				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 2
+	sw	r1, 1(r2)
+	lw	r1, 7(r3)
+	sw	r1, 0(r2)
+	add	r1, r0, r2
+	lw	r2, 4(r3)
+	sw	r1, 116(r2)
+	addi	r1, r0, 115
+	add	r28, r0, r2
+	add	r2, r0, r1
+	add	r1, r0, r28
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
 	jal	create_dirvec_elements.3316				
-	addi	r3, r3, -4
-	lw	r31, 3(r3)
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
 	lw	r1, 0(r3)
+	addi	r1, r1, -1
+	bgei	0, r1, bge_then.16907
+	jr	r31				#
+bge_then.16907:
+	addi	r2, r0, 766				# set min_caml_dirvecs
+	addi	r5, r0, 120
+	addi	r6, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	sw	r1, 8(r3)
+	sw	r2, 9(r3)
+	sw	r5, 10(r3)
+	add	r1, r0, r6
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	lib_create_float_array				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	add	r2, r0, r1
+	lw	r1, 0(r0)
+	sw	r2, 11(r3)
+	sw	r31, 12(r3)
+	addi	r3, r3, 13
+	jal	lib_create_array				
+	addi	r3, r3, -13
+	lw	r31, 12(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 2
+	sw	r1, 1(r2)
+	lw	r1, 11(r3)
+	sw	r1, 0(r2)
+	lw	r1, 10(r3)
+	sw	r31, 12(r3)
+	addi	r3, r3, 13
+	jal	lib_create_array				
+	addi	r3, r3, -13
+	lw	r31, 12(r3)
+	lw	r2, 8(r3)
+	lw	r5, 9(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+	addi	r1, r0, 766				# set min_caml_dirvecs
+	add	r30, r1, r2
+	lw	r1, 0(r30)
+	addi	r5, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	sw	r1, 12(r3)
+	add	r1, r0, r5
+	sw	r31, 13(r3)
+	addi	r3, r3, 14
+	jal	lib_create_float_array				
+	addi	r3, r3, -14
+	lw	r31, 13(r3)
+	add	r2, r0, r1
+	lw	r1, 0(r0)
+	sw	r2, 13(r3)
+	sw	r31, 14(r3)
+	addi	r3, r3, 15
+	jal	lib_create_array				
+	addi	r3, r3, -15
+	lw	r31, 14(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 2
+	sw	r1, 1(r2)
+	lw	r1, 13(r3)
+	sw	r1, 0(r2)
+	add	r1, r0, r2
+	lw	r2, 12(r3)
+	sw	r1, 118(r2)
+	addi	r1, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	sw	r31, 14(r3)
+	addi	r3, r3, 15
+	jal	lib_create_float_array				
+	addi	r3, r3, -15
+	lw	r31, 14(r3)
+	add	r2, r0, r1
+	lw	r1, 0(r0)
+	sw	r2, 14(r3)
+	sw	r31, 15(r3)
+	addi	r3, r3, 16
+	jal	lib_create_array				
+	addi	r3, r3, -16
+	lw	r31, 15(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 2
+	sw	r1, 1(r2)
+	lw	r1, 14(r3)
+	sw	r1, 0(r2)
+	add	r1, r0, r2
+	lw	r2, 12(r3)
+	sw	r1, 117(r2)
+	addi	r1, r0, 116
+	add	r28, r0, r2
+	add	r2, r0, r1
+	add	r1, r0, r28
+	sw	r31, 15(r3)
+	addi	r3, r3, 16
+	jal	create_dirvec_elements.3316				
+	addi	r3, r3, -16
+	lw	r31, 15(r3)
+	lw	r1, 8(r3)
 	addi	r1, r1, -1
 	j	create_dirvecs.3319
 init_dirvec_constants.3321:
-	bgei	0, r2, bge_then.8792
+	bgei	0, r2, bge_then.16909
 	jr	r31				#
-bge_then.8792:
+bge_then.16909:
 	add	r30, r1, r2
 	lw	r5, 0(r30)
+	lw	r6, 0(r0)
+	addi	r6, r6, -1
 	sw	r1, 0(r3)
 	sw	r2, 1(r3)
+	add	r2, r0, r6
 	add	r1, r0, r5
 	sw	r31, 2(r3)
 	addi	r3, r3, 3
-	jal	setup_dirvec_constants.3106				
+	jal	iter_setup_dirvec_constants.3103				
 	addi	r3, r3, -3
 	lw	r31, 2(r3)
 	lw	r1, 1(r3)
+	addi	r1, r1, -1
+	bgei	0, r1, bge_then.16911
+	jr	r31				#
+bge_then.16911:
+	lw	r2, 0(r3)
+	add	r30, r2, r1
+	lw	r5, 0(r30)
+	lw	r6, 0(r0)
+	addi	r6, r6, -1
+	sw	r1, 2(r3)
+	bgei	0, r6, bge_then.16913
+	j	bge_cont.16914
+bge_then.16913:
+	addi	r7, r0, 1				# set min_caml_objects
+	add	r30, r7, r6
+	lw	r7, 0(r30)
+	lw	r8, 1(r5)
+	lw	r9, 0(r5)
+	lw	r10, 1(r7)
+	sw	r5, 3(r3)
+	beqi	1, r10, beq_then.16915
+	beqi	2, r10, beq_then.16917
+	sw	r6, 4(r3)
+	sw	r8, 5(r3)
+	add	r2, r0, r7
+	add	r1, r0, r9
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	setup_second_table.3100				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	lw	r2, 4(r3)
+	lw	r5, 5(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+	j	beq_cont.16918
+beq_then.16917:
+	sw	r6, 4(r3)
+	sw	r8, 5(r3)
+	add	r2, r0, r7
+	add	r1, r0, r9
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	setup_surface_table.3097				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	lw	r2, 4(r3)
+	lw	r5, 5(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16918:
+	j	beq_cont.16916
+beq_then.16915:
+	sw	r6, 4(r3)
+	sw	r8, 5(r3)
+	add	r2, r0, r7
+	add	r1, r0, r9
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	setup_rect_table.3094				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	lw	r2, 4(r3)
+	lw	r5, 5(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16916:
+	addi	r2, r2, -1
+	lw	r1, 3(r3)
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	iter_setup_dirvec_constants.3103				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+bge_cont.16914:
+	lw	r1, 2(r3)
+	addi	r1, r1, -1
+	bgei	0, r1, bge_then.16919
+	jr	r31				#
+bge_then.16919:
+	lw	r2, 0(r3)
+	add	r30, r2, r1
+	lw	r5, 0(r30)
+	lw	r6, 0(r0)
+	addi	r6, r6, -1
+	sw	r1, 6(r3)
+	add	r2, r0, r6
+	add	r1, r0, r5
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	iter_setup_dirvec_constants.3103				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+	lw	r1, 6(r3)
+	addi	r1, r1, -1
+	bgei	0, r1, bge_then.16921
+	jr	r31				#
+bge_then.16921:
+	lw	r2, 0(r3)
+	add	r30, r2, r1
+	lw	r5, 0(r30)
+	lw	r6, 0(r0)
+	addi	r6, r6, -1
+	sw	r1, 7(r3)
+	bgei	0, r6, bge_then.16923
+	j	bge_cont.16924
+bge_then.16923:
+	addi	r7, r0, 1				# set min_caml_objects
+	add	r30, r7, r6
+	lw	r7, 0(r30)
+	lw	r8, 1(r5)
+	lw	r9, 0(r5)
+	lw	r10, 1(r7)
+	sw	r5, 8(r3)
+	beqi	1, r10, beq_then.16925
+	beqi	2, r10, beq_then.16927
+	sw	r6, 9(r3)
+	sw	r8, 10(r3)
+	add	r2, r0, r7
+	add	r1, r0, r9
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	setup_second_table.3100				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	lw	r2, 9(r3)
+	lw	r5, 10(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+	j	beq_cont.16928
+beq_then.16927:
+	sw	r6, 9(r3)
+	sw	r8, 10(r3)
+	add	r2, r0, r7
+	add	r1, r0, r9
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	setup_surface_table.3097				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	lw	r2, 9(r3)
+	lw	r5, 10(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16928:
+	j	beq_cont.16926
+beq_then.16925:
+	sw	r6, 9(r3)
+	sw	r8, 10(r3)
+	add	r2, r0, r7
+	add	r1, r0, r9
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	setup_rect_table.3094				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	lw	r2, 9(r3)
+	lw	r5, 10(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16926:
+	addi	r2, r2, -1
+	lw	r1, 8(r3)
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	iter_setup_dirvec_constants.3103				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+bge_cont.16924:
+	lw	r1, 7(r3)
 	addi	r2, r1, -1
 	lw	r1, 0(r3)
 	j	init_dirvec_constants.3321
 init_vecset_constants.3324:
-	bgei	0, r1, bge_then.8794
+	bgei	0, r1, bge_then.16929
 	jr	r31				#
-bge_then.8794:
+bge_then.16929:
+	addi	r2, r0, 766				# set min_caml_dirvecs
+	add	r30, r2, r1
+	lw	r2, 0(r30)
+	lw	r5, 119(r2)
+	lw	r6, 0(r0)
+	addi	r6, r6, -1
+	sw	r1, 0(r3)
+	sw	r2, 1(r3)
+	bgei	0, r6, bge_then.16931
+	j	bge_cont.16932
+bge_then.16931:
+	addi	r7, r0, 1				# set min_caml_objects
+	add	r30, r7, r6
+	lw	r7, 0(r30)
+	lw	r8, 1(r5)
+	lw	r9, 0(r5)
+	lw	r10, 1(r7)
+	sw	r5, 2(r3)
+	beqi	1, r10, beq_then.16933
+	beqi	2, r10, beq_then.16935
+	sw	r6, 3(r3)
+	sw	r8, 4(r3)
+	add	r2, r0, r7
+	add	r1, r0, r9
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	setup_second_table.3100				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	lw	r2, 3(r3)
+	lw	r5, 4(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+	j	beq_cont.16936
+beq_then.16935:
+	sw	r6, 3(r3)
+	sw	r8, 4(r3)
+	add	r2, r0, r7
+	add	r1, r0, r9
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	setup_surface_table.3097				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	lw	r2, 3(r3)
+	lw	r5, 4(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16936:
+	j	beq_cont.16934
+beq_then.16933:
+	sw	r6, 3(r3)
+	sw	r8, 4(r3)
+	add	r2, r0, r7
+	add	r1, r0, r9
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	setup_rect_table.3094				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	lw	r2, 3(r3)
+	lw	r5, 4(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16934:
+	addi	r2, r2, -1
+	lw	r1, 2(r3)
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	iter_setup_dirvec_constants.3103				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+bge_cont.16932:
+	lw	r1, 1(r3)
+	lw	r2, 118(r1)
+	lw	r5, 0(r0)
+	addi	r5, r5, -1
+	add	r1, r0, r2
+	add	r2, r0, r5
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	iter_setup_dirvec_constants.3103				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	lw	r1, 1(r3)
+	lw	r2, 117(r1)
+	lw	r5, 0(r0)
+	addi	r5, r5, -1
+	bgei	0, r5, bge_then.16937
+	j	bge_cont.16938
+bge_then.16937:
+	addi	r6, r0, 1				# set min_caml_objects
+	add	r30, r6, r5
+	lw	r6, 0(r30)
+	lw	r7, 1(r2)
+	lw	r8, 0(r2)
+	lw	r9, 1(r6)
+	sw	r2, 5(r3)
+	beqi	1, r9, beq_then.16939
+	beqi	2, r9, beq_then.16941
+	sw	r5, 6(r3)
+	sw	r7, 7(r3)
+	add	r2, r0, r6
+	add	r1, r0, r8
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	setup_second_table.3100				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	lw	r2, 6(r3)
+	lw	r5, 7(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+	j	beq_cont.16942
+beq_then.16941:
+	sw	r5, 6(r3)
+	sw	r7, 7(r3)
+	add	r2, r0, r6
+	add	r1, r0, r8
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	setup_surface_table.3097				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	lw	r2, 6(r3)
+	lw	r5, 7(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16942:
+	j	beq_cont.16940
+beq_then.16939:
+	sw	r5, 6(r3)
+	sw	r7, 7(r3)
+	add	r2, r0, r6
+	add	r1, r0, r8
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	setup_rect_table.3094				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	lw	r2, 6(r3)
+	lw	r5, 7(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16940:
+	addi	r2, r2, -1
+	lw	r1, 5(r3)
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	iter_setup_dirvec_constants.3103				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+bge_cont.16938:
+	addi	r2, r0, 116
+	lw	r1, 1(r3)
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	init_dirvec_constants.3321				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	lw	r1, 0(r3)
+	addi	r1, r1, -1
+	bgei	0, r1, bge_then.16943
+	jr	r31				#
+bge_then.16943:
+	addi	r2, r0, 766				# set min_caml_dirvecs
+	add	r30, r2, r1
+	lw	r2, 0(r30)
+	lw	r5, 119(r2)
+	lw	r6, 0(r0)
+	addi	r6, r6, -1
+	sw	r1, 8(r3)
+	sw	r2, 9(r3)
+	add	r2, r0, r6
+	add	r1, r0, r5
+	sw	r31, 10(r3)
+	addi	r3, r3, 11
+	jal	iter_setup_dirvec_constants.3103				
+	addi	r3, r3, -11
+	lw	r31, 10(r3)
+	lw	r1, 9(r3)
+	lw	r2, 118(r1)
+	lw	r5, 0(r0)
+	addi	r5, r5, -1
+	bgei	0, r5, bge_then.16945
+	j	bge_cont.16946
+bge_then.16945:
+	addi	r6, r0, 1				# set min_caml_objects
+	add	r30, r6, r5
+	lw	r6, 0(r30)
+	lw	r7, 1(r2)
+	lw	r8, 0(r2)
+	lw	r9, 1(r6)
+	sw	r2, 10(r3)
+	beqi	1, r9, beq_then.16947
+	beqi	2, r9, beq_then.16949
+	sw	r5, 11(r3)
+	sw	r7, 12(r3)
+	add	r2, r0, r6
+	add	r1, r0, r8
+	sw	r31, 13(r3)
+	addi	r3, r3, 14
+	jal	setup_second_table.3100				
+	addi	r3, r3, -14
+	lw	r31, 13(r3)
+	lw	r2, 11(r3)
+	lw	r5, 12(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+	j	beq_cont.16950
+beq_then.16949:
+	sw	r5, 11(r3)
+	sw	r7, 12(r3)
+	add	r2, r0, r6
+	add	r1, r0, r8
+	sw	r31, 13(r3)
+	addi	r3, r3, 14
+	jal	setup_surface_table.3097				
+	addi	r3, r3, -14
+	lw	r31, 13(r3)
+	lw	r2, 11(r3)
+	lw	r5, 12(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16950:
+	j	beq_cont.16948
+beq_then.16947:
+	sw	r5, 11(r3)
+	sw	r7, 12(r3)
+	add	r2, r0, r6
+	add	r1, r0, r8
+	sw	r31, 13(r3)
+	addi	r3, r3, 14
+	jal	setup_rect_table.3094				
+	addi	r3, r3, -14
+	lw	r31, 13(r3)
+	lw	r2, 11(r3)
+	lw	r5, 12(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16948:
+	addi	r2, r2, -1
+	lw	r1, 10(r3)
+	sw	r31, 13(r3)
+	addi	r3, r3, 14
+	jal	iter_setup_dirvec_constants.3103				
+	addi	r3, r3, -14
+	lw	r31, 13(r3)
+bge_cont.16946:
+	addi	r2, r0, 117
+	lw	r1, 9(r3)
+	sw	r31, 13(r3)
+	addi	r3, r3, 14
+	jal	init_dirvec_constants.3321				
+	addi	r3, r3, -14
+	lw	r31, 13(r3)
+	lw	r1, 8(r3)
+	addi	r1, r1, -1
+	bgei	0, r1, bge_then.16951
+	jr	r31				#
+bge_then.16951:
+	addi	r2, r0, 766				# set min_caml_dirvecs
+	add	r30, r2, r1
+	lw	r2, 0(r30)
+	lw	r5, 119(r2)
+	lw	r6, 0(r0)
+	addi	r6, r6, -1
+	sw	r1, 13(r3)
+	sw	r2, 14(r3)
+	bgei	0, r6, bge_then.16953
+	j	bge_cont.16954
+bge_then.16953:
+	addi	r7, r0, 1				# set min_caml_objects
+	add	r30, r7, r6
+	lw	r7, 0(r30)
+	lw	r8, 1(r5)
+	lw	r9, 0(r5)
+	lw	r10, 1(r7)
+	sw	r5, 15(r3)
+	beqi	1, r10, beq_then.16955
+	beqi	2, r10, beq_then.16957
+	sw	r6, 16(r3)
+	sw	r8, 17(r3)
+	add	r2, r0, r7
+	add	r1, r0, r9
+	sw	r31, 18(r3)
+	addi	r3, r3, 19
+	jal	setup_second_table.3100				
+	addi	r3, r3, -19
+	lw	r31, 18(r3)
+	lw	r2, 16(r3)
+	lw	r5, 17(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+	j	beq_cont.16958
+beq_then.16957:
+	sw	r6, 16(r3)
+	sw	r8, 17(r3)
+	add	r2, r0, r7
+	add	r1, r0, r9
+	sw	r31, 18(r3)
+	addi	r3, r3, 19
+	jal	setup_surface_table.3097				
+	addi	r3, r3, -19
+	lw	r31, 18(r3)
+	lw	r2, 16(r3)
+	lw	r5, 17(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16958:
+	j	beq_cont.16956
+beq_then.16955:
+	sw	r6, 16(r3)
+	sw	r8, 17(r3)
+	add	r2, r0, r7
+	add	r1, r0, r9
+	sw	r31, 18(r3)
+	addi	r3, r3, 19
+	jal	setup_rect_table.3094				
+	addi	r3, r3, -19
+	lw	r31, 18(r3)
+	lw	r2, 16(r3)
+	lw	r5, 17(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16956:
+	addi	r2, r2, -1
+	lw	r1, 15(r3)
+	sw	r31, 18(r3)
+	addi	r3, r3, 19
+	jal	iter_setup_dirvec_constants.3103				
+	addi	r3, r3, -19
+	lw	r31, 18(r3)
+bge_cont.16954:
+	addi	r2, r0, 118
+	lw	r1, 14(r3)
+	sw	r31, 18(r3)
+	addi	r3, r3, 19
+	jal	init_dirvec_constants.3321				
+	addi	r3, r3, -19
+	lw	r31, 18(r3)
+	lw	r1, 13(r3)
+	addi	r1, r1, -1
+	bgei	0, r1, bge_then.16959
+	jr	r31				#
+bge_then.16959:
 	addi	r2, r0, 766				# set min_caml_dirvecs
 	add	r30, r2, r1
 	lw	r2, 0(r30)
 	addi	r5, r0, 119
-	sw	r1, 0(r3)
+	sw	r1, 18(r3)
 	add	r1, r0, r2
 	add	r2, r0, r5
-	sw	r31, 1(r3)
-	addi	r3, r3, 2
+	sw	r31, 19(r3)
+	addi	r3, r3, 20
 	jal	init_dirvec_constants.3321				
-	addi	r3, r3, -2
-	lw	r31, 1(r3)
-	lw	r1, 0(r3)
+	addi	r3, r3, -20
+	lw	r31, 19(r3)
+	lw	r1, 18(r3)
 	addi	r1, r1, -1
 	j	init_vecset_constants.3324
 init_dirvecs.3326:
-	addi	r1, r0, 4
-	addi	r2, r0, 9
-	addi	r5, r0, 0
-	addi	r6, r0, 0
-	addi	r7, r0, 4
-	sw	r7, 0(r3)
-	sw	r6, 1(r3)
-	sw	r5, 2(r3)
+	addi	r1, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	addi	r2, r0, 120
+	sw	r2, 0(r3)
+	sw	r31, 1(r3)
+	addi	r3, r3, 2
+	jal	lib_create_float_array				
+	addi	r3, r3, -2
+	lw	r31, 1(r3)
+	add	r2, r0, r1
+	lw	r1, 0(r0)
+	sw	r2, 1(r3)
+	sw	r31, 2(r3)
+	addi	r3, r3, 3
+	jal	lib_create_array				
+	addi	r3, r3, -3
+	lw	r31, 2(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 2
+	sw	r1, 1(r2)
+	lw	r1, 1(r3)
+	sw	r1, 0(r2)
+	lw	r1, 0(r3)
+	sw	r31, 2(r3)
+	addi	r3, r3, 3
+	jal	lib_create_array				
+	addi	r3, r3, -3
+	lw	r31, 2(r3)
+	sw	r1, 770(r0)
+	addi	r1, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	lw	r2, 770(r0)
+	sw	r2, 2(r3)
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	lib_create_float_array				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	add	r2, r0, r1
+	lw	r1, 0(r0)
 	sw	r2, 3(r3)
 	sw	r31, 4(r3)
 	addi	r3, r3, 5
-	jal	create_dirvecs.3319				
+	jal	lib_create_array				
 	addi	r3, r3, -5
 	lw	r31, 4(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 2
+	sw	r1, 1(r2)
 	lw	r1, 3(r3)
+	sw	r1, 0(r2)
+	add	r1, r0, r2
 	lw	r2, 2(r3)
-	lw	r5, 1(r3)
+	sw	r1, 118(r2)
+	addi	r1, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
 	sw	r31, 4(r3)
 	addi	r3, r3, 5
-	jal	calc_dirvec_rows.3310				
+	jal	lib_create_float_array				
 	addi	r3, r3, -5
 	lw	r31, 4(r3)
-	lw	r1, 0(r3)
-	j	init_vecset_constants.3324
-add_reflection.3328:
-	add	r5, r0, r4
-	sw	r1, 0(r3)
-	sw	r2, 1(r3)
-	sw	r5, 2(r3)
-	fsw	f1, 4(r3)
-	fsw	f4, 6(r3)
-	fsw	f3, 8(r3)
-	fsw	f2, 10(r3)
-	sw	r31, 12(r3)
-	addi	r3, r3, 13
-	jal	create_dirvec.3314				
-	addi	r3, r3, -13
-	lw	r31, 12(r3)
-	addi	r2, r0, 778				# set min_caml_reflections
-	sw	r2, 12(r3)
-	sw	r1, 13(r3)
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	d_vec.2977				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	flw	f1, 10(r3)
-	flw	f2, 8(r3)
-	flw	f3, 6(r3)
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	vecset.2870				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	lw	r1, 13(r3)
-	sw	r31, 14(r3)
-	addi	r3, r3, 15
-	jal	setup_dirvec_constants.3106				
-	addi	r3, r3, -15
-	lw	r31, 14(r3)
-	addi	r4, r4, 3
-	lw	r1, 2(r3)
-	flw	f1, 4(r3)
-	fsw	f1, 2(r1)
-	lw	r2, 13(r3)
-	sw	r2, 1(r1)
-	lw	r2, 1(r3)
-	sw	r2, 0(r1)
-	lw	r2, 0(r3)
+	add	r2, r0, r1
+	lw	r1, 0(r0)
+	sw	r2, 4(r3)
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	lib_create_array				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 2
+	sw	r1, 1(r2)
+	lw	r1, 4(r3)
+	sw	r1, 0(r2)
+	add	r1, r0, r2
+	lw	r2, 2(r3)
+	sw	r1, 117(r2)
+	addi	r1, r0, 116
+	add	r28, r0, r2
+	add	r2, r0, r1
+	add	r1, r0, r28
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	create_dirvec_elements.3316				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	addi	r1, r0, 3
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	create_dirvecs.3319				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	addi	r1, r0, 9
+	flup	f1, 18		# fli	f1, 0.200000
+	flup	f2, 48		# fli	f2, 0.900000
+	addi	r2, r0, 0
+	addi	r5, r0, 0
+	addi	r6, r0, 4
+	itof	f3, r1
+	fmul	f1, f3, f1
+	fsub	f1, f1, f2
+	add	r1, r0, r6
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	calc_dirvecs.3305				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	addi	r1, r0, 8
+	addi	r2, r0, 2
+	addi	r5, r0, 4
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	calc_dirvec_rows.3310				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	lw	r1, 770(r0)
+	lw	r2, 0(r0)
+	lw	r5, 119(r1)
+	addi	r2, r2, -1
+	sw	r1, 5(r3)
+	add	r1, r0, r5
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	iter_setup_dirvec_constants.3103				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	lw	r1, 0(r0)
+	lw	r2, 5(r3)
+	lw	r5, 118(r2)
+	addi	r1, r1, -1
+	bgei	0, r1, bge_then.16961
+	j	bge_cont.16962
+bge_then.16961:
+	addi	r6, r0, 1				# set min_caml_objects
+	lw	r7, 1(r5)
+	lw	r8, 0(r5)
+	add	r30, r6, r1
+	lw	r6, 0(r30)
+	lw	r9, 1(r6)
+	sw	r5, 6(r3)
+	beqi	1, r9, beq_then.16963
+	beqi	2, r9, beq_then.16965
+	sw	r1, 7(r3)
+	sw	r7, 8(r3)
+	add	r2, r0, r6
+	add	r1, r0, r8
+	sw	r31, 9(r3)
+	addi	r3, r3, 10
+	jal	setup_second_table.3100				
+	addi	r3, r3, -10
+	lw	r31, 9(r3)
+	lw	r2, 7(r3)
+	lw	r5, 8(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+	j	beq_cont.16966
+beq_then.16965:
+	sw	r1, 7(r3)
+	sw	r7, 8(r3)
+	add	r2, r0, r6
+	add	r1, r0, r8
+	sw	r31, 9(r3)
+	addi	r3, r3, 10
+	jal	setup_surface_table.3097				
+	addi	r3, r3, -10
+	lw	r31, 9(r3)
+	lw	r2, 7(r3)
+	lw	r5, 8(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16966:
+	j	beq_cont.16964
+beq_then.16963:
+	sw	r1, 7(r3)
+	sw	r7, 8(r3)
+	add	r2, r0, r6
+	add	r1, r0, r8
+	sw	r31, 9(r3)
+	addi	r3, r3, 10
+	jal	setup_rect_table.3094				
+	addi	r3, r3, -10
+	lw	r31, 9(r3)
+	lw	r2, 7(r3)
+	lw	r5, 8(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16964:
+	addi	r2, r2, -1
+	lw	r1, 6(r3)
+	sw	r31, 9(r3)
+	addi	r3, r3, 10
+	jal	iter_setup_dirvec_constants.3103				
+	addi	r3, r3, -10
+	lw	r31, 9(r3)
+bge_cont.16962:
+	addi	r2, r0, 117
+	lw	r1, 5(r3)
+	sw	r31, 9(r3)
+	addi	r3, r3, 10
+	jal	init_dirvec_constants.3321				
+	addi	r3, r3, -10
+	lw	r31, 9(r3)
+	lw	r1, 769(r0)
+	lw	r2, 0(r0)
+	lw	r5, 119(r1)
+	addi	r2, r2, -1
+	sw	r1, 9(r3)
+	bgei	0, r2, bge_then.16967
+	j	bge_cont.16968
+bge_then.16967:
+	addi	r6, r0, 1				# set min_caml_objects
+	lw	r7, 1(r5)
+	lw	r8, 0(r5)
+	add	r30, r6, r2
+	lw	r6, 0(r30)
+	lw	r9, 1(r6)
+	sw	r5, 10(r3)
+	beqi	1, r9, beq_then.16969
+	beqi	2, r9, beq_then.16971
+	sw	r2, 11(r3)
+	sw	r7, 12(r3)
+	add	r2, r0, r6
+	add	r1, r0, r8
+	sw	r31, 13(r3)
+	addi	r3, r3, 14
+	jal	setup_second_table.3100				
+	addi	r3, r3, -14
+	lw	r31, 13(r3)
+	lw	r2, 11(r3)
 	lw	r5, 12(r3)
 	add	r30, r5, r2
 	sw	r1, 0(r30)
-	jr	r31				#
-setup_rect_reflection.3335:
-	slli	r1, r1, 2
-	lw	r5, 1023(r0)
-	flup	f1, 2		# fli	f1, 1.000000
-	flw	f2, 667(r0)
-	flw	f3, 668(r0)
-	flw	f4, 669(r0)
-	sw	r5, 0(r3)
-	sw	r1, 1(r3)
-	fsw	f4, 2(r3)
-	fsw	f3, 4(r3)
-	fsw	f2, 6(r3)
-	fsw	f1, 8(r3)
-	add	r1, r0, r2
+	j	beq_cont.16972
+beq_then.16971:
+	sw	r2, 11(r3)
+	sw	r7, 12(r3)
+	add	r2, r0, r6
+	add	r1, r0, r8
+	sw	r31, 13(r3)
+	addi	r3, r3, 14
+	jal	setup_surface_table.3097				
+	addi	r3, r3, -14
+	lw	r31, 13(r3)
+	lw	r2, 11(r3)
+	lw	r5, 12(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16972:
+	j	beq_cont.16970
+beq_then.16969:
+	sw	r2, 11(r3)
+	sw	r7, 12(r3)
+	add	r2, r0, r6
+	add	r1, r0, r8
+	sw	r31, 13(r3)
+	addi	r3, r3, 14
+	jal	setup_rect_table.3094				
+	addi	r3, r3, -14
+	lw	r31, 13(r3)
+	lw	r2, 11(r3)
+	lw	r5, 12(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16970:
+	addi	r2, r2, -1
+	lw	r1, 10(r3)
+	sw	r31, 13(r3)
+	addi	r3, r3, 14
+	jal	iter_setup_dirvec_constants.3103				
+	addi	r3, r3, -14
+	lw	r31, 13(r3)
+bge_cont.16968:
+	addi	r2, r0, 118
+	lw	r1, 9(r3)
+	sw	r31, 13(r3)
+	addi	r3, r3, 14
+	jal	init_dirvec_constants.3321				
+	addi	r3, r3, -14
+	lw	r31, 13(r3)
+	lw	r1, 768(r0)
+	addi	r2, r0, 119
+	sw	r31, 13(r3)
+	addi	r3, r3, 14
+	jal	init_dirvec_constants.3321				
+	addi	r3, r3, -14
+	lw	r31, 13(r3)
+	addi	r1, r0, 1
+	j	init_vecset_constants.3324
+add_reflection.3328:
+	addi	r5, r0, 3
+	flup	f5, 0		# fli	f5, 0.000000
+	sw	r1, 0(r3)
+	sw	r2, 1(r3)
+	fsw	f1, 2(r3)
+	fsw	f4, 4(r3)
+	fsw	f3, 6(r3)
+	fsw	f2, 8(r3)
+	add	r1, r0, r5
+	fadd	f1, f0, f5
 	sw	r31, 10(r3)
 	addi	r3, r3, 11
-	jal	o_diffuse.2940				
+	jal	lib_create_float_array				
 	addi	r3, r3, -11
 	lw	r31, 10(r3)
-	flw	f2, 667(r0)
-	flw	f3, 668(r0)
-	flw	f4, 669(r0)
-	flw	f5, 8(r3)
-	fsub	f1, f5, f1
-	flw	f5, 6(r3)
-	fneg	f5, f5
-	flw	f6, 4(r3)
-	fneg	f6, f6
-	flw	f7, 2(r3)
-	fneg	f7, f7
-	lw	r1, 1(r3)
-	addi	r2, r1, 1
+	add	r2, r0, r1
+	lw	r1, 0(r0)
+	sw	r2, 10(r3)
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	lib_create_array				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 2
+	sw	r1, 1(r2)
+	lw	r1, 10(r3)
+	sw	r1, 0(r2)
+	flw	f1, 8(r3)
+	fsw	f1, 0(r1)
+	flw	f1, 6(r3)
+	fsw	f1, 1(r1)
+	flw	f1, 4(r3)
+	fsw	f1, 2(r1)
+	lw	r1, 0(r0)
+	addi	r1, r1, -1
+	sw	r2, 11(r3)
+	add	r28, r0, r2
+	add	r2, r0, r1
+	add	r1, r0, r28
+	sw	r31, 12(r3)
+	addi	r3, r3, 13
+	jal	iter_setup_dirvec_constants.3103				
+	addi	r3, r3, -13
+	lw	r31, 12(r3)
+	add	r1, r0, r4
+	addi	r2, r0, 778				# set min_caml_reflections
+	addi	r4, r4, 3
+	flw	f1, 2(r3)
+	fsw	f1, 2(r1)
+	lw	r5, 11(r3)
+	sw	r5, 1(r1)
+	lw	r5, 1(r3)
+	sw	r5, 0(r1)
 	lw	r5, 0(r3)
-	fsw	f4, 10(r3)
-	fsw	f6, 12(r3)
-	fsw	f7, 14(r3)
-	fsw	f3, 16(r3)
-	fsw	f5, 18(r3)
-	fsw	f1, 20(r3)
-	add	r1, r0, r5
-	fadd	f4, f0, f7
-	fadd	f3, f0, f6
-	sw	r31, 22(r3)
-	addi	r3, r3, 23
-	jal	add_reflection.3328				
-	addi	r3, r3, -23
-	lw	r31, 22(r3)
-	lw	r1, 0(r3)
+	add	r30, r2, r5
+	sw	r1, 0(r30)
+	jr	r31				#
+setup_rect_reflection.3335:
+	lw	r2, 7(r2)
+	flw	f1, 667(r0)
+	flw	f2, 668(r0)
+	flw	f3, 669(r0)
+	slli	r1, r1, 2
+	flup	f4, 2		# fli	f4, 1.000000
+	addi	r5, r0, 3
+	flup	f5, 0		# fli	f5, 0.000000
+	lw	r6, 1023(r0)
+	flw	f6, 667(r0)
+	flw	f7, 0(r2)
+	fsub	f4, f4, f7
+	fneg	f1, f1
+	fneg	f2, f2
+	fneg	f3, f3
 	addi	r2, r1, 1
-	lw	r5, 1(r3)
-	addi	r6, r5, 2
-	flw	f1, 20(r3)
-	flw	f2, 18(r3)
-	flw	f3, 16(r3)
-	flw	f4, 14(r3)
-	add	r1, r0, r2
-	add	r2, r0, r6
+	fsw	f1, 0(r3)
+	sw	r1, 2(r3)
+	sw	r6, 3(r3)
+	sw	r2, 4(r3)
+	fsw	f4, 6(r3)
+	fsw	f3, 8(r3)
+	fsw	f2, 10(r3)
+	fsw	f6, 12(r3)
+	add	r1, r0, r5
+	fadd	f1, f0, f5
+	sw	r31, 14(r3)
+	addi	r3, r3, 15
+	jal	lib_create_float_array				
+	addi	r3, r3, -15
+	lw	r31, 14(r3)
+	add	r2, r0, r1
+	lw	r1, 0(r0)
+	sw	r2, 14(r3)
+	sw	r31, 15(r3)
+	addi	r3, r3, 16
+	jal	lib_create_array				
+	addi	r3, r3, -16
+	lw	r31, 15(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 2
+	sw	r1, 1(r2)
+	lw	r5, 14(r3)
+	sw	r5, 0(r2)
+	flw	f1, 12(r3)
+	fsw	f1, 0(r5)
+	flw	f1, 10(r3)
+	fsw	f1, 1(r5)
+	flw	f2, 8(r3)
+	fsw	f2, 2(r5)
+	lw	r6, 0(r0)
+	addi	r6, r6, -1
+	sw	r2, 15(r3)
+	bgei	0, r6, bge_then.16975
+	j	bge_cont.16976
+bge_then.16975:
+	addi	r7, r0, 1				# set min_caml_objects
+	add	r30, r7, r6
+	lw	r7, 0(r30)
+	lw	r8, 1(r7)
+	beqi	1, r8, beq_then.16977
+	beqi	2, r8, beq_then.16979
+	sw	r6, 16(r3)
+	sw	r1, 17(r3)
+	add	r2, r0, r7
+	add	r1, r0, r5
+	sw	r31, 18(r3)
+	addi	r3, r3, 19
+	jal	setup_second_table.3100				
+	addi	r3, r3, -19
+	lw	r31, 18(r3)
+	lw	r2, 16(r3)
+	lw	r5, 17(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+	j	beq_cont.16980
+beq_then.16979:
+	sw	r6, 16(r3)
+	sw	r1, 17(r3)
+	add	r2, r0, r7
+	add	r1, r0, r5
+	sw	r31, 18(r3)
+	addi	r3, r3, 19
+	jal	setup_surface_table.3097				
+	addi	r3, r3, -19
+	lw	r31, 18(r3)
+	lw	r2, 16(r3)
+	lw	r5, 17(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16980:
+	j	beq_cont.16978
+beq_then.16977:
+	sw	r6, 16(r3)
+	sw	r1, 17(r3)
+	add	r2, r0, r7
+	add	r1, r0, r5
+	sw	r31, 18(r3)
+	addi	r3, r3, 19
+	jal	setup_rect_table.3094				
+	addi	r3, r3, -19
+	lw	r31, 18(r3)
+	lw	r2, 16(r3)
+	lw	r5, 17(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16978:
+	addi	r2, r2, -1
+	lw	r1, 15(r3)
+	sw	r31, 18(r3)
+	addi	r3, r3, 19
+	jal	iter_setup_dirvec_constants.3103				
+	addi	r3, r3, -19
+	lw	r31, 18(r3)
+bge_cont.16976:
+	add	r1, r0, r4
+	addi	r2, r0, 778				# set min_caml_reflections
+	addi	r4, r4, 3
+	flw	f1, 6(r3)
+	fsw	f1, 2(r1)
+	lw	r5, 15(r3)
+	sw	r5, 1(r1)
+	lw	r5, 4(r3)
+	sw	r5, 0(r1)
+	lw	r5, 3(r3)
+	add	r30, r2, r5
+	sw	r1, 0(r30)
+	addi	r1, r0, 3
+	flup	f2, 0		# fli	f2, 0.000000
+	addi	r2, r5, 1
+	lw	r6, 2(r3)
+	addi	r7, r6, 2
+	flw	f3, 668(r0)
+	sw	r2, 18(r3)
+	sw	r7, 19(r3)
+	fsw	f3, 20(r3)
+	fadd	f1, f0, f2
 	sw	r31, 22(r3)
 	addi	r3, r3, 23
-	jal	add_reflection.3328				
+	jal	lib_create_float_array				
 	addi	r3, r3, -23
 	lw	r31, 22(r3)
-	lw	r1, 0(r3)
-	addi	r2, r1, 2
-	lw	r5, 1(r3)
-	addi	r5, r5, 3
-	flw	f1, 20(r3)
-	flw	f2, 18(r3)
-	flw	f3, 12(r3)
-	flw	f4, 10(r3)
-	add	r1, r0, r2
-	add	r2, r0, r5
-	sw	r31, 22(r3)
-	addi	r3, r3, 23
-	jal	add_reflection.3328				
-	addi	r3, r3, -23
-	lw	r31, 22(r3)
-	lw	r1, 0(r3)
+	add	r2, r0, r1
+	lw	r1, 0(r0)
+	sw	r2, 22(r3)
+	sw	r31, 23(r3)
+	addi	r3, r3, 24
+	jal	lib_create_array				
+	addi	r3, r3, -24
+	lw	r31, 23(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 2
+	sw	r1, 1(r2)
+	lw	r5, 22(r3)
+	sw	r5, 0(r2)
+	flw	f1, 0(r3)
+	fsw	f1, 0(r5)
+	flw	f2, 20(r3)
+	fsw	f2, 1(r5)
+	flw	f2, 8(r3)
+	fsw	f2, 2(r5)
+	lw	r6, 0(r0)
+	addi	r6, r6, -1
+	sw	r2, 23(r3)
+	bgei	0, r6, bge_then.16981
+	j	bge_cont.16982
+bge_then.16981:
+	addi	r7, r0, 1				# set min_caml_objects
+	add	r30, r7, r6
+	lw	r7, 0(r30)
+	lw	r8, 1(r7)
+	beqi	1, r8, beq_then.16983
+	beqi	2, r8, beq_then.16985
+	sw	r6, 24(r3)
+	sw	r1, 25(r3)
+	add	r2, r0, r7
+	add	r1, r0, r5
+	sw	r31, 26(r3)
+	addi	r3, r3, 27
+	jal	setup_second_table.3100				
+	addi	r3, r3, -27
+	lw	r31, 26(r3)
+	lw	r2, 24(r3)
+	lw	r5, 25(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+	j	beq_cont.16986
+beq_then.16985:
+	sw	r6, 24(r3)
+	sw	r1, 25(r3)
+	add	r2, r0, r7
+	add	r1, r0, r5
+	sw	r31, 26(r3)
+	addi	r3, r3, 27
+	jal	setup_surface_table.3097				
+	addi	r3, r3, -27
+	lw	r31, 26(r3)
+	lw	r2, 24(r3)
+	lw	r5, 25(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16986:
+	j	beq_cont.16984
+beq_then.16983:
+	sw	r6, 24(r3)
+	sw	r1, 25(r3)
+	add	r2, r0, r7
+	add	r1, r0, r5
+	sw	r31, 26(r3)
+	addi	r3, r3, 27
+	jal	setup_rect_table.3094				
+	addi	r3, r3, -27
+	lw	r31, 26(r3)
+	lw	r2, 24(r3)
+	lw	r5, 25(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16984:
+	addi	r2, r2, -1
+	lw	r1, 23(r3)
+	sw	r31, 26(r3)
+	addi	r3, r3, 27
+	jal	iter_setup_dirvec_constants.3103				
+	addi	r3, r3, -27
+	lw	r31, 26(r3)
+bge_cont.16982:
+	add	r1, r0, r4
+	addi	r2, r0, 778				# set min_caml_reflections
+	addi	r4, r4, 3
+	flw	f1, 6(r3)
+	fsw	f1, 2(r1)
+	lw	r5, 23(r3)
+	sw	r5, 1(r1)
+	lw	r5, 19(r3)
+	sw	r5, 0(r1)
+	lw	r5, 18(r3)
+	add	r30, r2, r5
+	sw	r1, 0(r30)
+	addi	r1, r0, 3
+	flup	f2, 0		# fli	f2, 0.000000
+	lw	r2, 3(r3)
+	addi	r5, r2, 2
+	lw	r6, 2(r3)
+	addi	r6, r6, 3
+	flw	f3, 669(r0)
+	sw	r5, 26(r3)
+	sw	r6, 27(r3)
+	fsw	f3, 28(r3)
+	fadd	f1, f0, f2
+	sw	r31, 30(r3)
+	addi	r3, r3, 31
+	jal	lib_create_float_array				
+	addi	r3, r3, -31
+	lw	r31, 30(r3)
+	add	r2, r0, r1
+	lw	r1, 0(r0)
+	sw	r2, 30(r3)
+	sw	r31, 31(r3)
+	addi	r3, r3, 32
+	jal	lib_create_array				
+	addi	r3, r3, -32
+	lw	r31, 31(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 2
+	sw	r1, 1(r2)
+	lw	r5, 30(r3)
+	sw	r5, 0(r2)
+	flw	f1, 0(r3)
+	fsw	f1, 0(r5)
+	flw	f1, 10(r3)
+	fsw	f1, 1(r5)
+	flw	f1, 28(r3)
+	fsw	f1, 2(r5)
+	lw	r6, 0(r0)
+	addi	r6, r6, -1
+	sw	r2, 31(r3)
+	bgei	0, r6, bge_then.16987
+	j	bge_cont.16988
+bge_then.16987:
+	addi	r7, r0, 1				# set min_caml_objects
+	add	r30, r7, r6
+	lw	r7, 0(r30)
+	lw	r8, 1(r7)
+	beqi	1, r8, beq_then.16989
+	beqi	2, r8, beq_then.16991
+	sw	r6, 32(r3)
+	sw	r1, 33(r3)
+	add	r2, r0, r7
+	add	r1, r0, r5
+	sw	r31, 34(r3)
+	addi	r3, r3, 35
+	jal	setup_second_table.3100				
+	addi	r3, r3, -35
+	lw	r31, 34(r3)
+	lw	r2, 32(r3)
+	lw	r5, 33(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+	j	beq_cont.16992
+beq_then.16991:
+	sw	r6, 32(r3)
+	sw	r1, 33(r3)
+	add	r2, r0, r7
+	add	r1, r0, r5
+	sw	r31, 34(r3)
+	addi	r3, r3, 35
+	jal	setup_surface_table.3097				
+	addi	r3, r3, -35
+	lw	r31, 34(r3)
+	lw	r2, 32(r3)
+	lw	r5, 33(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16992:
+	j	beq_cont.16990
+beq_then.16989:
+	sw	r6, 32(r3)
+	sw	r1, 33(r3)
+	add	r2, r0, r7
+	add	r1, r0, r5
+	sw	r31, 34(r3)
+	addi	r3, r3, 35
+	jal	setup_rect_table.3094				
+	addi	r3, r3, -35
+	lw	r31, 34(r3)
+	lw	r2, 32(r3)
+	lw	r5, 33(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16990:
+	addi	r2, r2, -1
+	lw	r1, 31(r3)
+	sw	r31, 34(r3)
+	addi	r3, r3, 35
+	jal	iter_setup_dirvec_constants.3103				
+	addi	r3, r3, -35
+	lw	r31, 34(r3)
+bge_cont.16988:
+	add	r1, r0, r4
+	addi	r2, r0, 778				# set min_caml_reflections
+	addi	r4, r4, 3
+	flw	f1, 6(r3)
+	fsw	f1, 2(r1)
+	lw	r5, 31(r3)
+	sw	r5, 1(r1)
+	lw	r5, 27(r3)
+	sw	r5, 0(r1)
+	lw	r5, 26(r3)
+	add	r30, r2, r5
+	sw	r1, 0(r30)
+	lw	r1, 3(r3)
 	addi	r1, r1, 3
 	sw	r1, 1023(r0)
 	jr	r31				#
 setup_surface_reflection.3338:
-	slli	r1, r1, 2
-	flup	f1, 2		# fli	f1, 1.000000
-	lw	r5, 1023(r0)
-	addi	r6, r0, 667				# set min_caml_light
-	flup	f2, 3		# fli	f2, 2.000000
-	flw	f3, 667(r0)
+	lw	r5, 4(r2)
+	flw	f1, 667(r0)
+	flw	f2, 668(r0)
+	lw	r6, 4(r2)
+	lw	r7, 4(r2)
+	lw	r8, 4(r2)
+	flw	f3, 669(r0)
+	lw	r2, 7(r2)
 	flup	f4, 3		# fli	f4, 2.000000
-	flw	f5, 668(r0)
+	flup	f5, 3		# fli	f5, 2.000000
 	flup	f6, 3		# fli	f6, 2.000000
-	flw	f7, 669(r0)
+	flw	f7, 667(r0)
+	flw	f8, 668(r0)
+	flw	f9, 669(r0)
+	slli	r1, r1, 2
+	flup	f10, 2		# fli	f10, 1.000000
+	addi	r9, r0, 3
+	flup	f11, 0		# fli	f11, 0.000000
+	lw	r10, 1023(r0)
 	addi	r1, r1, 1
-	sw	r1, 0(r3)
-	sw	r5, 1(r3)
-	fsw	f7, 2(r3)
-	fsw	f6, 4(r3)
-	fsw	f5, 6(r3)
-	fsw	f4, 8(r3)
-	fsw	f3, 10(r3)
-	fsw	f2, 12(r3)
-	sw	r6, 14(r3)
-	sw	r2, 15(r3)
-	fsw	f1, 16(r3)
-	add	r1, r0, r2
-	sw	r31, 18(r3)
-	addi	r3, r3, 19
-	jal	o_diffuse.2940				
-	addi	r3, r3, -19
-	lw	r31, 18(r3)
-	flw	f2, 16(r3)
-	fsub	f1, f2, f1
-	lw	r1, 15(r3)
-	fsw	f1, 18(r3)
-	sw	r31, 20(r3)
-	addi	r3, r3, 21
-	jal	o_param_abc.2932				
-	addi	r3, r3, -21
-	lw	r31, 20(r3)
+	flw	f12, 0(r2)
+	fsub	f10, f10, f12
+	flw	f12, 0(r5)
+	fmul	f1, f1, f12
+	flw	f12, 1(r5)
+	fmul	f2, f2, f12
+	fadd	f1, f1, f2
+	flw	f2, 2(r5)
+	fmul	f2, f3, f2
+	fadd	f1, f1, f2
+	flw	f2, 0(r6)
+	fmul	f2, f4, f2
+	fmul	f2, f2, f1
+	fsub	f2, f2, f7
+	flw	f3, 1(r7)
+	fmul	f3, f5, f3
+	fmul	f3, f3, f1
+	fsub	f3, f3, f8
+	flw	f4, 2(r8)
+	fmul	f4, f6, f4
+	fmul	f1, f4, f1
+	fsub	f1, f1, f9
+	sw	r10, 0(r3)
+	sw	r1, 1(r3)
+	fsw	f10, 2(r3)
+	fsw	f1, 4(r3)
+	fsw	f3, 6(r3)
+	fsw	f2, 8(r3)
+	add	r1, r0, r9
+	fadd	f1, f0, f11
+	sw	r31, 10(r3)
+	addi	r3, r3, 11
+	jal	lib_create_float_array				
+	addi	r3, r3, -11
+	lw	r31, 10(r3)
 	add	r2, r0, r1
-	lw	r1, 14(r3)
-	sw	r31, 20(r3)
-	addi	r3, r3, 21
-	jal	veciprod.2891				
-	addi	r3, r3, -21
-	lw	r31, 20(r3)
-	lw	r1, 15(r3)
-	fsw	f1, 20(r3)
-	sw	r31, 22(r3)
-	addi	r3, r3, 23
-	jal	o_param_a.2926				
-	addi	r3, r3, -23
-	lw	r31, 22(r3)
-	flw	f2, 12(r3)
-	fmul	f1, f2, f1
-	flw	f2, 20(r3)
-	fmul	f1, f1, f2
-	flw	f3, 10(r3)
-	fsub	f1, f1, f3
-	lw	r1, 15(r3)
-	fsw	f1, 22(r3)
-	sw	r31, 24(r3)
-	addi	r3, r3, 25
-	jal	o_param_b.2928				
-	addi	r3, r3, -25
-	lw	r31, 24(r3)
-	flw	f2, 8(r3)
-	fmul	f1, f2, f1
-	flw	f2, 20(r3)
-	fmul	f1, f1, f2
-	flw	f3, 6(r3)
-	fsub	f1, f1, f3
-	lw	r1, 15(r3)
-	fsw	f1, 24(r3)
-	sw	r31, 26(r3)
-	addi	r3, r3, 27
-	jal	o_param_c.2930				
-	addi	r3, r3, -27
-	lw	r31, 26(r3)
-	flw	f2, 4(r3)
-	fmul	f1, f2, f1
-	flw	f2, 20(r3)
-	fmul	f1, f1, f2
-	flw	f2, 2(r3)
-	fsub	f4, f1, f2
-	flw	f1, 18(r3)
-	flw	f2, 22(r3)
-	flw	f3, 24(r3)
-	lw	r1, 1(r3)
-	lw	r2, 0(r3)
-	sw	r31, 26(r3)
-	addi	r3, r3, 27
-	jal	add_reflection.3328				
-	addi	r3, r3, -27
-	lw	r31, 26(r3)
-	lw	r1, 1(r3)
-	addi	r1, r1, 1
+	lw	r1, 0(r0)
+	sw	r2, 10(r3)
+	sw	r31, 11(r3)
+	addi	r3, r3, 12
+	jal	lib_create_array				
+	addi	r3, r3, -12
+	lw	r31, 11(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 2
+	sw	r1, 1(r2)
+	lw	r5, 10(r3)
+	sw	r5, 0(r2)
+	flw	f1, 8(r3)
+	fsw	f1, 0(r5)
+	flw	f1, 6(r3)
+	fsw	f1, 1(r5)
+	flw	f1, 4(r3)
+	fsw	f1, 2(r5)
+	lw	r6, 0(r0)
+	addi	r6, r6, -1
+	sw	r2, 11(r3)
+	bgei	0, r6, bge_then.16994
+	j	bge_cont.16995
+bge_then.16994:
+	addi	r7, r0, 1				# set min_caml_objects
+	add	r30, r7, r6
+	lw	r7, 0(r30)
+	lw	r8, 1(r7)
+	beqi	1, r8, beq_then.16996
+	beqi	2, r8, beq_then.16998
+	sw	r6, 12(r3)
+	sw	r1, 13(r3)
+	add	r2, r0, r7
+	add	r1, r0, r5
+	sw	r31, 14(r3)
+	addi	r3, r3, 15
+	jal	setup_second_table.3100				
+	addi	r3, r3, -15
+	lw	r31, 14(r3)
+	lw	r2, 12(r3)
+	lw	r5, 13(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+	j	beq_cont.16999
+beq_then.16998:
+	sw	r6, 12(r3)
+	sw	r1, 13(r3)
+	add	r2, r0, r7
+	add	r1, r0, r5
+	sw	r31, 14(r3)
+	addi	r3, r3, 15
+	jal	setup_surface_table.3097				
+	addi	r3, r3, -15
+	lw	r31, 14(r3)
+	lw	r2, 12(r3)
+	lw	r5, 13(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16999:
+	j	beq_cont.16997
+beq_then.16996:
+	sw	r6, 12(r3)
+	sw	r1, 13(r3)
+	add	r2, r0, r7
+	add	r1, r0, r5
+	sw	r31, 14(r3)
+	addi	r3, r3, 15
+	jal	setup_rect_table.3094				
+	addi	r3, r3, -15
+	lw	r31, 14(r3)
+	lw	r2, 12(r3)
+	lw	r5, 13(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.16997:
+	addi	r2, r2, -1
+	lw	r1, 11(r3)
+	sw	r31, 14(r3)
+	addi	r3, r3, 15
+	jal	iter_setup_dirvec_constants.3103				
+	addi	r3, r3, -15
+	lw	r31, 14(r3)
+bge_cont.16995:
+	add	r1, r0, r4
+	addi	r2, r0, 778				# set min_caml_reflections
+	addi	r4, r4, 3
+	flw	f1, 2(r3)
+	fsw	f1, 2(r1)
+	lw	r5, 11(r3)
+	sw	r5, 1(r1)
+	lw	r5, 1(r3)
+	sw	r5, 0(r1)
+	lw	r5, 0(r3)
+	add	r30, r2, r5
+	sw	r1, 0(r30)
+	addi	r1, r5, 1
 	sw	r1, 1023(r0)
 	jr	r31				#
 setup_reflections.3341:
-	bgei	0, r1, bge_then.8800
+	bgei	0, r1, bge_then.17001
 	jr	r31				#
-bge_then.8800:
+bge_then.17001:
 	addi	r2, r0, 1				# set min_caml_objects
 	add	r30, r2, r1
 	lw	r2, 0(r30)
-	sw	r1, 0(r3)
-	sw	r2, 1(r3)
-	add	r1, r0, r2
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	o_reflectiontype.2920				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	beqi	2, r1, beq_then.8802
+	lw	r5, 2(r2)
+	beqi	2, r5, beq_then.17003
 	jr	r31				#
-beq_then.8802:
+beq_then.17003:
 	flup	f1, 2		# fli	f1, 1.000000
-	lw	r1, 1(r3)
-	fsw	f1, 2(r3)
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	o_diffuse.2940				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
-	flw	f2, 2(r3)
-	fle	r30, f2, f1
-	beq	r0, r30, fle_else.8804
+	lw	r5, 7(r2)
+	flw	f2, 0(r5)
+	fle	r30, f1, f2
+	beq	r0, r30, fle_else.17005
 	jr	r31				#
-fle_else.8804:
-	lw	r1, 1(r3)
-	sw	r31, 4(r3)
-	addi	r3, r3, 5
-	jal	o_form.2918				
-	addi	r3, r3, -5
-	lw	r31, 4(r3)
-	beqi	1, r1, beq_then.8806
-	beqi	2, r1, beq_then.8807
+fle_else.17005:
+	lw	r5, 1(r2)
+	beqi	1, r5, beq_then.17007
+	beqi	2, r5, beq_then.17008
 	jr	r31				#
-beq_then.8807:
-	lw	r1, 0(r3)
-	lw	r2, 1(r3)
+beq_then.17008:
 	j	setup_surface_reflection.3338
-beq_then.8806:
-	lw	r1, 0(r3)
-	lw	r2, 1(r3)
+beq_then.17007:
 	j	setup_rect_reflection.3335
 rt.3343:
-	srai	r5, r1, 1
-	srai	r6, r2, 1
-	flup	f1, 49		# fli	f1, 128.000000
 	sw	r1, 743(r0)
 	sw	r2, 744(r0)
-	lw	r2, 0(r0)
-	addi	r7, r0, 1021				# set min_caml_light_dirvec
-	addi	r8, r0, 667				# set min_caml_light
-	addi	r9, r0, 1021				# set min_caml_light_dirvec
-	addi	r10, r0, 0
-	addi	r11, r0, 0
-	addi	r12, r0, 0
-	addi	r13, r0, 2
+	srai	r5, r1, 1
 	sw	r5, 745(r0)
-	sw	r6, 746(r0)
-	sw	r13, 0(r3)
-	sw	r12, 1(r3)
-	sw	r11, 2(r3)
-	sw	r10, 3(r3)
-	sw	r2, 4(r3)
-	sw	r9, 5(r3)
-	sw	r8, 6(r3)
-	sw	r7, 7(r3)
-	fsw	f1, 8(r3)
-	sw	r31, 10(r3)
-	addi	r3, r3, 11
-	jal	float_of_int.2820				
-	addi	r3, r3, -11
-	lw	r31, 10(r3)
-	flw	f2, 8(r3)
-	fdiv	f1, f2, f1
+	srai	r2, r2, 1
+	sw	r2, 746(r0)
+	flup	f1, 49		# fli	f1, 128.000000
+	itof	f2, r1
+	fdiv	f1, f1, f2
 	fsw	f1, 747(r0)
+	addi	r1, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	lw	r2, 743(r0)
+	sw	r2, 0(r3)
+	sw	r31, 1(r3)
+	addi	r3, r3, 2
+	jal	lib_create_float_array				
+	addi	r3, r3, -2
+	lw	r31, 1(r3)
+	sw	r1, 1(r3)
+	sw	r31, 2(r3)
+	addi	r3, r3, 3
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -3
+	lw	r31, 2(r3)
+	addi	r2, r0, 5
+	addi	r5, r0, 0
+	sw	r1, 2(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	lib_create_array				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	addi	r2, r0, 5
+	addi	r5, r0, 0
+	sw	r1, 3(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
+	sw	r31, 4(r3)
+	addi	r3, r3, 5
+	jal	lib_create_array				
+	addi	r3, r3, -5
+	lw	r31, 4(r3)
+	sw	r1, 4(r3)
+	sw	r31, 5(r3)
+	addi	r3, r3, 6
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -6
+	lw	r31, 5(r3)
+	sw	r1, 5(r3)
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	addi	r2, r0, 1
+	addi	r5, r0, 0
+	sw	r1, 6(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
+	sw	r31, 7(r3)
+	addi	r3, r3, 8
+	jal	lib_create_array				
+	addi	r3, r3, -8
+	lw	r31, 7(r3)
+	sw	r1, 7(r3)
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 8
+	sw	r1, 7(r2)
+	lw	r1, 7(r3)
+	sw	r1, 6(r2)
+	lw	r1, 6(r3)
+	sw	r1, 5(r2)
+	lw	r1, 5(r3)
+	sw	r1, 4(r2)
+	lw	r1, 4(r3)
+	sw	r1, 3(r2)
+	lw	r1, 3(r3)
+	sw	r1, 2(r2)
+	lw	r1, 2(r3)
+	sw	r1, 1(r2)
+	lw	r1, 1(r3)
+	sw	r1, 0(r2)
+	lw	r1, 0(r3)
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	lib_create_array				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	lw	r2, 743(r0)
+	addi	r2, r2, -2
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	init_line_elements.3287				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	addi	r2, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	lw	r5, 743(r0)
+	sw	r1, 8(r3)
+	sw	r5, 9(r3)
+	add	r1, r0, r2
 	sw	r31, 10(r3)
 	addi	r3, r3, 11
-	jal	create_pixelline.3290				
+	jal	lib_create_float_array				
 	addi	r3, r3, -11
 	lw	r31, 10(r3)
 	sw	r1, 10(r3)
 	sw	r31, 11(r3)
 	addi	r3, r3, 12
-	jal	create_pixelline.3290				
+	jal	create_float5x3array.3283				
 	addi	r3, r3, -12
 	lw	r31, 11(r3)
+	addi	r2, r0, 5
+	addi	r5, r0, 0
 	sw	r1, 11(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
 	sw	r31, 12(r3)
 	addi	r3, r3, 13
-	jal	create_pixelline.3290				
+	jal	lib_create_array				
 	addi	r3, r3, -13
 	lw	r31, 12(r3)
+	addi	r2, r0, 5
+	addi	r5, r0, 0
 	sw	r1, 12(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
 	sw	r31, 13(r3)
 	addi	r3, r3, 14
-	jal	read_parameter.3008				
+	jal	lib_create_array				
 	addi	r3, r3, -14
 	lw	r31, 13(r3)
-	sw	r31, 13(r3)
-	addi	r3, r3, 14
-	jal	write_ppm_header.3251				
-	addi	r3, r3, -14
-	lw	r31, 13(r3)
-	sw	r31, 13(r3)
-	addi	r3, r3, 14
-	jal	init_dirvecs.3326				
-	addi	r3, r3, -14
-	lw	r31, 13(r3)
-	lw	r1, 7(r3)
-	sw	r31, 13(r3)
-	addi	r3, r3, 14
-	jal	d_vec.2977				
-	addi	r3, r3, -14
-	lw	r31, 13(r3)
-	lw	r2, 6(r3)
-	sw	r31, 13(r3)
-	addi	r3, r3, 14
-	jal	veccpy.2880				
-	addi	r3, r3, -14
-	lw	r31, 13(r3)
-	lw	r1, 5(r3)
-	sw	r31, 13(r3)
-	addi	r3, r3, 14
-	jal	setup_dirvec_constants.3106				
-	addi	r3, r3, -14
-	lw	r31, 13(r3)
-	lw	r1, 4(r3)
-	addi	r1, r1, -1
-	sw	r31, 13(r3)
-	addi	r3, r3, 14
-	jal	setup_reflections.3341				
-	addi	r3, r3, -14
-	lw	r31, 13(r3)
+	sw	r1, 13(r3)
+	sw	r31, 14(r3)
+	addi	r3, r3, 15
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -15
+	lw	r31, 14(r3)
+	sw	r1, 14(r3)
+	sw	r31, 15(r3)
+	addi	r3, r3, 16
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -16
+	lw	r31, 15(r3)
+	addi	r2, r0, 1
+	addi	r5, r0, 0
+	sw	r1, 15(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
+	sw	r31, 16(r3)
+	addi	r3, r3, 17
+	jal	lib_create_array				
+	addi	r3, r3, -17
+	lw	r31, 16(r3)
+	sw	r1, 16(r3)
+	sw	r31, 17(r3)
+	addi	r3, r3, 18
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -18
+	lw	r31, 17(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 8
+	sw	r1, 7(r2)
+	lw	r1, 16(r3)
+	sw	r1, 6(r2)
+	lw	r1, 15(r3)
+	sw	r1, 5(r2)
+	lw	r1, 14(r3)
+	sw	r1, 4(r2)
+	lw	r1, 13(r3)
+	sw	r1, 3(r2)
+	lw	r1, 12(r3)
+	sw	r1, 2(r2)
 	lw	r1, 11(r3)
-	lw	r2, 3(r3)
-	lw	r5, 2(r3)
-	sw	r31, 13(r3)
-	addi	r3, r3, 14
+	sw	r1, 1(r2)
+	lw	r1, 10(r3)
+	sw	r1, 0(r2)
+	lw	r1, 9(r3)
+	sw	r31, 17(r3)
+	addi	r3, r3, 18
+	jal	lib_create_array				
+	addi	r3, r3, -18
+	lw	r31, 17(r3)
+	lw	r2, 743(r0)
+	addi	r2, r2, -2
+	sw	r31, 17(r3)
+	addi	r3, r3, 18
+	jal	init_line_elements.3287				
+	addi	r3, r3, -18
+	lw	r31, 17(r3)
+	addi	r2, r0, 3
+	flup	f1, 0		# fli	f1, 0.000000
+	lw	r5, 743(r0)
+	sw	r1, 17(r3)
+	sw	r5, 18(r3)
+	add	r1, r0, r2
+	sw	r31, 19(r3)
+	addi	r3, r3, 20
+	jal	lib_create_float_array				
+	addi	r3, r3, -20
+	lw	r31, 19(r3)
+	sw	r1, 19(r3)
+	sw	r31, 20(r3)
+	addi	r3, r3, 21
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -21
+	lw	r31, 20(r3)
+	addi	r2, r0, 5
+	addi	r5, r0, 0
+	sw	r1, 20(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
+	sw	r31, 21(r3)
+	addi	r3, r3, 22
+	jal	lib_create_array				
+	addi	r3, r3, -22
+	lw	r31, 21(r3)
+	addi	r2, r0, 5
+	addi	r5, r0, 0
+	sw	r1, 21(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
+	sw	r31, 22(r3)
+	addi	r3, r3, 23
+	jal	lib_create_array				
+	addi	r3, r3, -23
+	lw	r31, 22(r3)
+	sw	r1, 22(r3)
+	sw	r31, 23(r3)
+	addi	r3, r3, 24
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -24
+	lw	r31, 23(r3)
+	sw	r1, 23(r3)
+	sw	r31, 24(r3)
+	addi	r3, r3, 25
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -25
+	lw	r31, 24(r3)
+	addi	r2, r0, 1
+	addi	r5, r0, 0
+	sw	r1, 24(r3)
+	add	r1, r0, r2
+	add	r2, r0, r5
+	sw	r31, 25(r3)
+	addi	r3, r3, 26
+	jal	lib_create_array				
+	addi	r3, r3, -26
+	lw	r31, 25(r3)
+	sw	r1, 25(r3)
+	sw	r31, 26(r3)
+	addi	r3, r3, 27
+	jal	create_float5x3array.3283				
+	addi	r3, r3, -27
+	lw	r31, 26(r3)
+	add	r2, r0, r4
+	addi	r4, r4, 8
+	sw	r1, 7(r2)
+	lw	r1, 25(r3)
+	sw	r1, 6(r2)
+	lw	r1, 24(r3)
+	sw	r1, 5(r2)
+	lw	r1, 23(r3)
+	sw	r1, 4(r2)
+	lw	r1, 22(r3)
+	sw	r1, 3(r2)
+	lw	r1, 21(r3)
+	sw	r1, 2(r2)
+	lw	r1, 20(r3)
+	sw	r1, 1(r2)
+	lw	r1, 19(r3)
+	sw	r1, 0(r2)
+	lw	r1, 18(r3)
+	sw	r31, 26(r3)
+	addi	r3, r3, 27
+	jal	lib_create_array				
+	addi	r3, r3, -27
+	lw	r31, 26(r3)
+	lw	r2, 743(r0)
+	addi	r2, r2, -2
+	sw	r31, 26(r3)
+	addi	r3, r3, 27
+	jal	init_line_elements.3287				
+	addi	r3, r3, -27
+	lw	r31, 26(r3)
+	sw	r1, 26(r3)
+	sw	r31, 27(r3)
+	addi	r3, r3, 28
+	jal	read_screen_settings.2989				
+	addi	r3, r3, -28
+	lw	r31, 27(r3)
+	sw	r31, 27(r3)
+	addi	r3, r3, 28
+	jal	read_light.2991				
+	addi	r3, r3, -28
+	lw	r31, 27(r3)
+	addi	r1, r0, 0
+	sw	r1, 27(r3)
+	sw	r31, 28(r3)
+	addi	r3, r3, 29
+	jal	read_nth_object.2996				
+	addi	r3, r3, -29
+	lw	r31, 28(r3)
+	beqi	0, r1, beq_then.17010
+	addi	r1, r0, 1
+	sw	r31, 28(r3)
+	addi	r3, r3, 29
+	jal	read_object.2998				
+	addi	r3, r3, -29
+	lw	r31, 28(r3)
+	j	beq_cont.17011
+beq_then.17010:
+	lw	r1, 27(r3)
+	sw	r1, 0(r0)
+beq_cont.17011:
+	addi	r1, r0, 0
+	sw	r31, 28(r3)
+	addi	r3, r3, 29
+	jal	read_and_network.3006				
+	addi	r3, r3, -29
+	lw	r31, 28(r3)
+	addi	r1, r0, 0
+	sw	r31, 28(r3)
+	addi	r3, r3, 29
+	jal	read_or_network.3004				
+	addi	r3, r3, -29
+	lw	r31, 28(r3)
+	sw	r1, 723(r0)
+	addi	r1, r0, 80
+	out	r1
+	addi	r1, r0, 51
+	out	r1
+	addi	r1, r0, 10
+	out	r1
+	lw	r1, 743(r0)
+	sw	r31, 28(r3)
+	addi	r3, r3, 29
+	jal	print_int.2857				
+	addi	r3, r3, -29
+	lw	r31, 28(r3)
+	addi	r1, r0, 32
+	out	r1
+	lw	r1, 744(r0)
+	sw	r31, 28(r3)
+	addi	r3, r3, 29
+	jal	print_int.2857				
+	addi	r3, r3, -29
+	lw	r31, 28(r3)
+	addi	r1, r0, 32
+	out	r1
+	addi	r1, r0, 255
+	sw	r31, 28(r3)
+	addi	r3, r3, 29
+	jal	print_int.2857				
+	addi	r3, r3, -29
+	lw	r31, 28(r3)
+	addi	r1, r0, 10
+	out	r1
+	addi	r1, r0, 4
+	sw	r31, 28(r3)
+	addi	r3, r3, 29
+	jal	create_dirvecs.3319				
+	addi	r3, r3, -29
+	lw	r31, 28(r3)
+	addi	r1, r0, 9
+	addi	r2, r0, 0
+	addi	r5, r0, 0
+	sw	r31, 28(r3)
+	addi	r3, r3, 29
+	jal	calc_dirvec_rows.3310				
+	addi	r3, r3, -29
+	lw	r31, 28(r3)
+	lw	r1, 770(r0)
+	lw	r2, 0(r0)
+	lw	r5, 119(r1)
+	addi	r2, r2, -1
+	sw	r1, 28(r3)
+	bgei	0, r2, bge_then.17012
+	j	bge_cont.17013
+bge_then.17012:
+	addi	r6, r0, 1				# set min_caml_objects
+	lw	r7, 1(r5)
+	lw	r8, 0(r5)
+	add	r30, r6, r2
+	lw	r6, 0(r30)
+	lw	r9, 1(r6)
+	sw	r5, 29(r3)
+	beqi	1, r9, beq_then.17014
+	beqi	2, r9, beq_then.17016
+	sw	r2, 30(r3)
+	sw	r7, 31(r3)
+	add	r2, r0, r6
+	add	r1, r0, r8
+	sw	r31, 32(r3)
+	addi	r3, r3, 33
+	jal	setup_second_table.3100				
+	addi	r3, r3, -33
+	lw	r31, 32(r3)
+	lw	r2, 30(r3)
+	lw	r5, 31(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+	j	beq_cont.17017
+beq_then.17016:
+	sw	r2, 30(r3)
+	sw	r7, 31(r3)
+	add	r2, r0, r6
+	add	r1, r0, r8
+	sw	r31, 32(r3)
+	addi	r3, r3, 33
+	jal	setup_surface_table.3097				
+	addi	r3, r3, -33
+	lw	r31, 32(r3)
+	lw	r2, 30(r3)
+	lw	r5, 31(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.17017:
+	j	beq_cont.17015
+beq_then.17014:
+	sw	r2, 30(r3)
+	sw	r7, 31(r3)
+	add	r2, r0, r6
+	add	r1, r0, r8
+	sw	r31, 32(r3)
+	addi	r3, r3, 33
+	jal	setup_rect_table.3094				
+	addi	r3, r3, -33
+	lw	r31, 32(r3)
+	lw	r2, 30(r3)
+	lw	r5, 31(r3)
+	add	r30, r5, r2
+	sw	r1, 0(r30)
+beq_cont.17015:
+	addi	r2, r2, -1
+	lw	r1, 29(r3)
+	sw	r31, 32(r3)
+	addi	r3, r3, 33
+	jal	iter_setup_dirvec_constants.3103				
+	addi	r3, r3, -33
+	lw	r31, 32(r3)
+bge_cont.17013:
+	addi	r2, r0, 118
+	lw	r1, 28(r3)
+	sw	r31, 32(r3)
+	addi	r3, r3, 33
+	jal	init_dirvec_constants.3321				
+	addi	r3, r3, -33
+	lw	r31, 32(r3)
+	lw	r1, 769(r0)
+	addi	r2, r0, 119
+	sw	r31, 32(r3)
+	addi	r3, r3, 33
+	jal	init_dirvec_constants.3321				
+	addi	r3, r3, -33
+	lw	r31, 32(r3)
+	addi	r1, r0, 2
+	sw	r31, 32(r3)
+	addi	r3, r3, 33
+	jal	init_vecset_constants.3324				
+	addi	r3, r3, -33
+	lw	r31, 32(r3)
+	addi	r1, r0, 1021				# set min_caml_light_dirvec
+	flw	f1, 667(r0)
+	lw	r1, 0(r1)
+	fsw	f1, 0(r1)
+	flw	f1, 668(r0)
+	fsw	f1, 1(r1)
+	flw	f1, 669(r0)
+	fsw	f1, 2(r1)
+	lw	r1, 0(r0)
+	addi	r2, r0, 1021				# set min_caml_light_dirvec
+	addi	r1, r1, -1
+	add	r28, r0, r2
+	add	r2, r0, r1
+	add	r1, r0, r28
+	sw	r31, 32(r3)
+	addi	r3, r3, 33
+	jal	iter_setup_dirvec_constants.3103				
+	addi	r3, r3, -33
+	lw	r31, 32(r3)
+	lw	r1, 0(r0)
+	addi	r1, r1, -1
+	bgei	0, r1, bge_then.17018
+	j	bge_cont.17019
+bge_then.17018:
+	addi	r2, r0, 1				# set min_caml_objects
+	add	r30, r2, r1
+	lw	r2, 0(r30)
+	lw	r5, 2(r2)
+	beqi	2, r5, beq_then.17020
+	j	beq_cont.17021
+beq_then.17020:
+	lw	r5, 7(r2)
+	flup	f1, 2		# fli	f1, 1.000000
+	flw	f2, 0(r5)
+	fle	r30, f1, f2
+	beq	r0, r30, fle_else.17022
+	j	fle_cont.17023
+fle_else.17022:
+	lw	r5, 1(r2)
+	beqi	1, r5, beq_then.17024
+	beqi	2, r5, beq_then.17026
+	j	beq_cont.17027
+beq_then.17026:
+	sw	r31, 32(r3)
+	addi	r3, r3, 33
+	jal	setup_surface_reflection.3338				
+	addi	r3, r3, -33
+	lw	r31, 32(r3)
+beq_cont.17027:
+	j	beq_cont.17025
+beq_then.17024:
+	sw	r31, 32(r3)
+	addi	r3, r3, 33
+	jal	setup_rect_reflection.3335				
+	addi	r3, r3, -33
+	lw	r31, 32(r3)
+beq_cont.17025:
+fle_cont.17023:
+beq_cont.17021:
+bge_cont.17019:
+	addi	r2, r0, 0
+	addi	r5, r0, 0
+	lw	r1, 17(r3)
+	sw	r31, 32(r3)
+	addi	r3, r3, 33
 	jal	pretrace_line.3267				
-	addi	r3, r3, -14
-	lw	r31, 13(r3)
-	lw	r1, 1(r3)
-	lw	r2, 10(r3)
-	lw	r5, 11(r3)
-	lw	r6, 12(r3)
-	lw	r7, 0(r3)
-	j	scan_line.3277
+	addi	r3, r3, -33
+	lw	r31, 32(r3)
+	lw	r1, 744(r0)
+	addi	r2, r0, 0
+	addi	r5, r0, 2
+	blei	0, r1, ble_then.17028
+	lw	r1, 744(r0)
+	addi	r1, r1, -1
+	sw	r2, 32(r3)
+	blei	0, r1, ble_then.17029
+	addi	r1, r0, 1
+	lw	r6, 26(r3)
+	add	r2, r0, r1
+	add	r1, r0, r6
+	sw	r31, 33(r3)
+	addi	r3, r3, 34
+	jal	pretrace_line.3267				
+	addi	r3, r3, -34
+	lw	r31, 33(r3)
+	j	ble_cont.17030
+ble_then.17029:
+ble_cont.17030:
+	addi	r1, r0, 0
+	lw	r2, 32(r3)
+	lw	r5, 8(r3)
+	lw	r6, 17(r3)
+	lw	r7, 26(r3)
+	sw	r31, 33(r3)
+	addi	r3, r3, 34
+	jal	scan_pixel.3271				
+	addi	r3, r3, -34
+	lw	r31, 33(r3)
+	addi	r1, r0, 1
+	addi	r7, r0, 4
+	lw	r2, 17(r3)
+	lw	r5, 26(r3)
+	lw	r6, 8(r3)
+	sw	r31, 33(r3)
+	addi	r3, r3, 34
+	jal	scan_line.3277				
+	addi	r3, r3, -34
+	lw	r31, 33(r3)
+	jr	r31				#
+ble_then.17028:
+	jr	r31				#
 _R_0:
 _min_caml_start: # main entry point
   addi  r3, r0, 32500
