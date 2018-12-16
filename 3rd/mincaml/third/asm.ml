@@ -72,6 +72,7 @@ let reg_fsw = fregs.(Array.length fregs - 1) (* temporary for swap *)
 let reg_sp = "%r3" (* stack pointer *)
 let reg_hp = "%r4" (* heap pointer (caml2html: sparcasm_reghp) *)
 let reg_tmp = "%r30" (* [XX] ad hoc *)
+let freg_tmp = "%f31" (* [XX] ad hoc *)
 let reg_lr = "%r31"
 let is_reg x = (x.[0] = '%')
 

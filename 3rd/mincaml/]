@@ -18,25 +18,13 @@ let classify_fv_exp = function
   | CallDir(_, ys, zs) -> S.of_lsit ys, S.of_list zs
   | _ -> assert(false)
 
-let rec defined_ans = function
-  | Let(_, _, _, cont) -> defined_ans cont
-  | Ane(e, _) -> defined e
-and
 
- defined = function
+let rec defined = function
   | Nop | Comment _ | In _ | Out _ | Sw _ | FSw _ -> Unit
   | Li _ | SetL _ | SetGlb _ | Mr _ | Neg _ | FtoI _ | Add _ | Sub _ | Lw _ | Sll _ | Srl _ | Sra _ -> Gen
-  | FLi _ | ItoF _ | FMr _ | FNeg _ | FSqrt _ | FLw _ | FAdd _ | FSub _ | FMul _ | FDiv _ -> Float
-  | IfEq(_, _, e1, e2) | IfLE(_, _, e1, e2) | IfGE(_, _, e1, e2) |
-  | IfFEq(_, _, e1, e2) | IfFLE(_, _, e1, e2) -> 
-      let t1 = defined_ans e1 in
-      let t2 = defined_ans e2 in
-      assert (t1 = t2); t1
-  (* [TODO] 関数呼び出しをなんとかする *)
-  | _ -> assert false
+  | FLi _ | ItoF _ | FMr _ | FNeg _ | FSqrt _ | FLw _ | FAdd
 
 
-(* live[i]の更新 *)
 let rec update lives flives succ =
   match succ with
   | [] -> S.empty
@@ -48,12 +36,7 @@ let rec update lives flives succ =
       let live_j = if (Int_M.mem j lives) then Int_M.find j lives else S.empty in
       let flive_j = if (Int_M.mem j flives) then Int_M.find j flives else S.empty in
       let lives', flives' = update lives flives es in
-      let def, fdef = 
-        (match defined e with
-        | Unit -> S.empty, S.empty
-        | Gen -> S.singleton x, S.emtpy
-        | Float -> S.empty, S.singleton x
-        ) in
+      let def, fdef =
       let lives_j' = S.union (S.union (S.diff (live_j) def) fv_g) lives' in
       let flives_j' = S.union (S.union (S.diff (flive_j) fdef) fv_f) flives' in
       (live_j', flive_j')
@@ -67,17 +50,18 @@ let rec update lives flives succ =
       (live_j', flive_j')
     )
 
+      
 
 
-let rec liveness_analysis_main lives flives t succ =
+let rec liveness_analysis_main lives t succ =
   match t with
   | Let((x, t), e, i, cont) ->
     (match e with 
     | IfEq(a, b', e1, e2) | IfLE(a, b', e1, e2) | IfGE(a, b', e1, e2) -> (* ここの(x, t)に対応する命令は比較であることにする *)
-      let live_i, flive_i = update lives flives [e1; e2] in
-      let lives1 = liveness_analysis_main lives flives e1 [cont] in 
-      let lives2 = liveness_analysis_main lives1 flives e2 [cont] in 
-      liveness_analysis_main (Int_M.add i live_i lives2) (Int_M.add i flive_i f)cont succ
+      let live_i = update lives [e1; e2] in
+      let lives1 = liveness_analysis_main lives e1 [cont] in 
+      let lives2 = liveness_analysis_main lives1 e2 [cont] in 
+      liveness_analysis_main (Int_M.add i live_i lives2) cont succ
     | IfFEq(a, b', e1, e2) | IfFLE(a, b', e1, e2) -> (* ここの(x, t)に対応する命令は比較であることにする *)
       let live_i = update lives [e1; e2] in
       let lives1 = liveness_analysis_main lives e1 [cont] in 
