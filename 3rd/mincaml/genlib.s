@@ -322,13 +322,13 @@ lib_fuga:
 	beq	r0, r30, _fle_else.742
 	fsub	f1, f1, f2
 	flup	f4, 3		# fli	f4, 2.000000
-	finv	f2, f4
-	fmul	f2, f2, f2
+	finv	f31, f4
+	fmul	f2, f2, f31
 	j lib_fuga
 _fle_else.742:
 	flup	f4, 3		# fli	f4, 2.000000
-	finv	f2, f4
-	fmul	f2, f2, f2
+	finv	f31, f4
+	fmul	f2, f2, f31
 	j lib_fuga
 _fle_else.741:
 	jr	r31				#
@@ -730,8 +730,8 @@ _fle_cont.767:
 	beq	r0, r30, _fle_else.769
 	flup	f3, 15		# fli	f3, 1.570796
 	flup	f4, 2		# fli	f4, 1.000000
-	finv	f1, f1
-	fmul	f1, f4, f1
+	finv	f31, f1
+	fmul	f1, f4, f31
 	fsw	f2, 0(r3)
 	fsw	f3, 2(r3)
 	sw	r31, 4(r3)
@@ -750,8 +750,8 @@ _fle_else.769:
 	fsub	f4, f1, f4
 	flup	f5, 2		# fli	f5, 1.000000
 	fadd	f1, f1, f5
-	finv	f1, f1
-	fmul	f1, f4, f1
+	finv	f31, f1
+	fmul	f1, f4, f31
 	fsw	f2, 0(r3)
 	fsw	f3, 4(r3)
 	sw	r31, 6(r3)
