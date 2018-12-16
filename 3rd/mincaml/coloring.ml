@@ -249,14 +249,21 @@ let rec save_before_call e g fg map fmap =
       let e = S.fold (fun y e -> seq (Save(M.find y fmap, y), e)) (S.remove x (Int_M.find i fg)) e in
       e
     | IfEq(a, b, e1, e2) -> Let((x, t), IfEq(a, b, save_before_call e1 g fg map fmap, save_before_call e2 g fg map fmap), i, save_before_call cont g fg map fmap)
-    | IfLE(a, b, e1, e2) -> Let((x, t), IfLE(a, b, save_before_call e1 g fg map fmap, save_before_call e2 g fg map fmap), i, save_before_call cont g fg map fmap)
     | IfGE(a, b, e1, e2) -> Let((x, t), IfGE(a, b, save_before_call e1 g fg map fmap, save_before_call e2 g fg map fmap), i, save_before_call cont g fg map fmap)
+    | IfLE(a, b, e1, e2) -> print_endline "hoge"; Let((x, t), IfLE(a, b, save_before_call e1 g fg map fmap, save_before_call e2 g fg map fmap), i, save_before_call cont g fg map fmap)
     | IfFEq(a, b, e1, e2) -> Let((x, t), IfFEq(a, b, save_before_call e1 g fg map fmap, save_before_call e2 g fg map fmap), i, save_before_call cont g fg map fmap)
     | IfFLE(a, b, e1, e2) -> Let((x, t), IfFLE(a, b, save_before_call e1 g fg map fmap, save_before_call e2 g fg map fmap), i, save_before_call cont g fg map fmap)
     | e' -> Let((x, t), e', i, save_before_call cont g fg map fmap)
     )
-  | Ans(e, i) ->
-    Ans(e, i)
+  | Ans(e', i) ->
+    (match e' with
+    | IfEq(a, b, e1, e2) -> Ans(IfEq(a, b, save_before_call e1 g fg map fmap, save_before_call e2 g fg map fmap), i)
+    | IfGE(a, b, e1, e2) -> Ans(IfGE(a, b, save_before_call e1 g fg map fmap, save_before_call e2 g fg map fmap), i)
+    | IfLE(a, b, e1, e2) -> Ans(IfLE(a, b, save_before_call e1 g fg map fmap, save_before_call e2 g fg map fmap), i)
+    | IfFEq(a, b, e1, e2) -> Ans(IfFEq(a, b, save_before_call e1 g fg map fmap, save_before_call e2 g fg map fmap), i)
+    | IfFLE(a, b, e1, e2) -> Ans(IfFLE(a, b, save_before_call e1 g fg map fmap, save_before_call e2 g fg map fmap), i)
+    | e' -> Ans(e', i)
+    )
 
 
 let rec allocate e =
@@ -270,6 +277,7 @@ let rec allocate e =
 
 
 let rec allocate_fun { name = Id.L(x); args = ys; fargs = zs; body = e; ret = t } =
+  print_endline ("allocate "^x);
   let graph, fgraph = iter_analysis Int_M.empty Int_M.empty e in
   Int_M.iter (fun i s -> print_int i; print_string "  "; S.iter (fun y -> print_string (y^" ")) s; print_newline ()) graph; 
   (* まずは汎用レジスタから *)
