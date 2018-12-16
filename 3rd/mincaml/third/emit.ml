@@ -1,5 +1,7 @@
 open Asm
 
+let print = ref false
+
 external gethi : float -> int32 = "gethi"
 external getlo : float -> int32 = "getlo"
 external internal_of_float : float -> int32 = "internal_of_float"
@@ -363,6 +365,18 @@ let cat ic oc =
 
 
 let f oc (Prog(data, fundefs, e)) =
+  (if (!print) then (
+    Printf.printf ("Prog after register allocation\n");
+    print_endline "functions :";
+    List.iter (fun f -> print_newline (); Asm.print_fundef f) fundefs;
+    print_newline ();
+    print_endline "main :";
+    Asm.print_t 1 e
+  )
+  else ()
+  )
+  ;
+ 
   let lib = open_in "lib.s" in
   let init = open_in "init.s" in
   Format.eprintf "generating assembly...@.";

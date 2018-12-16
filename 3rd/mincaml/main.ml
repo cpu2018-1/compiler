@@ -34,7 +34,7 @@ let lexbuf outchan l = (* バッファをコンパイルしてチャンネルへ出力する (caml2htm
   let a = Parser.exp Lexer.token l in
 (*  Syntax.print_syntax a; print_newline ();*)
   Emit.f outchan
-    (RegAlloc.f
+    ((*RegAlloc.f*)
     (Glbsimm.f
     (Num_asm.g
       (Coloring.f
@@ -71,7 +71,7 @@ let () = (* ここからコンパイラの実行が開始される (caml2html: main_entry) *)
      ("-simm", Arg.Set(Simm.print), "print asm.t after simm");
      ("-nasm", Arg.Set(Num_asm.print_b), "print num_asm.t before register allocation");
      ("-breg", Arg.Set(Num_asm.print_a), "print num_asm.t before register allocation");
-     ("-areg", Arg.Set(RegAlloc.print), "print asm.t after register allocation")]
+     ("-areg", Arg.Set(Emit.print), "print asm.t after register allocation")]
     (fun s -> files := !files @ [s])
     ("Mitou Min-Caml Compiler (C) Eijiro Sumii\n" ^
      Printf.sprintf "usage: %s [-inline m] [-iter n] ...filenames without \".ml\"..." Sys.argv.(0));

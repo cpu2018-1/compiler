@@ -2095,10 +2095,11 @@ _min_caml_start: # main entry point
 	jal	lib_cos				
 	addi	r3, r3, -1
 	lw	r31, 0(r3)
+	fadd	f2, f0, f1
 	addi	r30, r0, 0
 	lui	r30, r30, 16528	# to load float		4.500000
-	fmvfr	f2, r30
-	fadd	f1, f1, f2
+	fmvfr	f1, r30
+	fadd	f1, f2, f1
 	addi	r30, r0, 13186
 	lui	r30, r30, 16961	# to load float		48.300300
 	fmvfr	f2, r30
@@ -2108,9 +2109,10 @@ _min_caml_start: # main entry point
 	jal	lib_sin				
 	addi	r3, r3, -1
 	lw	r31, 0(r3)
+	fadd	f2, f0, f1
 	addi	r1, r0, 16960
 	lui	r1, r1, 15
-	fsw	f1, 0(r3)
+	fsw	f2, 0(r3)
 	sw	r31, 2(r3)
 	addi	r3, r3, 3
 	jal	lib_float_of_int				

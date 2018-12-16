@@ -1,6 +1,7 @@
 
 let print_b = ref false
 let print_a = ref false
+let counter = ref 0
 
 type id_or_imm = V of Id.t | C of int | FC of float
 type t = (* 命令の列 (caml2html: sparcasm_t) *)
@@ -49,6 +50,8 @@ and exp = (* 一つ一つの命令に対応する式 (caml2html: sparcasm_exp) *
   | SetGlb of Id.l
 type fundef = { name : Id.l; args : Id.t list; fargs : Id.t list; body : t; ret : Type.t }
 
+let seq (e1, e2) = incr counter; Let((Id.gentmp Type.Unit, Type.Unit), e1, !counter, e2) (** 順に実行 **)
+
 let rec remove_and_uniq xs = function
   | [] -> []
   | x :: ys when S.mem x xs -> remove_and_uniq xs ys
@@ -76,7 +79,6 @@ let fv e = remove_and_uniq S.empty (fv e)
 type prog =
   Prog of (Id.l * float) list * fundef list * t
 
-let counter = ref 0
 
 let rec convert_id_or_imm = function
   | Asm.V(x) -> V(x)

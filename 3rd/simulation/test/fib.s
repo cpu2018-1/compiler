@@ -1011,28 +1011,24 @@ _fle_else.783:
 _R_0:
 # library ends
 fib.10:
-	blei	1, r1, ble_then.24
+	beqi	1, r1, beq_then.21
 	addi	r2, r1, -1
-	sw	r1, 0(r3)
 	add	r1, r0, r2
-	sw	r31, 1(r3)
-	addi	r3, r3, 2
+	sw	r31, 0(r3)
+	addi	r3, r3, 1
 	jal	fib.10				
-	addi	r3, r3, -2
-	lw	r31, 1(r3)
-	lw	r2, 0(r3)
-	addi	r2, r2, -2
-	sw	r1, 1(r3)
-	add	r1, r0, r2
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
+	addi	r3, r3, -1
+	lw	r31, 0(r3)
+	add	r2, r0, r1
+	addi	r1, r1, -2
+	sw	r31, 0(r3)
+	addi	r3, r3, 1
 	jal	fib.10				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	lw	r2, 1(r3)
+	addi	r3, r3, -1
+	lw	r31, 0(r3)
 	add	r1, r2, r1
 	jr	r31				#
-ble_then.24:
+beq_then.21:
 	jr	r31				#
 _R_0:
 _min_caml_start: # main entry point
