@@ -1014,7 +1014,7 @@ dbl.42:
 	fadd	f1, f1, f1
 	jr	r31				#
 iloop.61:
-	beqi	0, r1, beq_then.120
+	beqi	0, r1, beq_then.121
 	fsub	f3, f3, f4
 	fadd	f3, f3, f5
 	fsw	f5, 0(r3)
@@ -1039,20 +1039,20 @@ iloop.61:
 	lui	r30, r30, 16512	# to load float		4.000000
 	fmvfr	f7, r30
 	fle	r30, f5, f7
-	beq	r0, r30, fle_else.122
+	beq	r0, r30, fle_else.123
 	lw	r1, 2(r3)
 	addi	r1, r1, -1
 	flw	f5, 0(r3)
 	j	iloop.61
-fle_else.122:
+fle_else.123:
 	addi	r1, r0, 0
 	j	lib_print_int
-beq_then.120:
+beq_then.121:
 	addi	r1, r0, 1
 	j	lib_print_int
 xloop.51:
 	addi	r5, r0, 100
-	ble	r5, r1, ble_then.123
+	ble	r5, r1, ble_then.124
 	sw	r1, 0(r3)
 	sw	r2, 1(r3)
 	sw	r31, 2(r3)
@@ -1108,11 +1108,11 @@ xloop.51:
 	addi	r1, r1, 1
 	lw	r2, 1(r3)
 	j	xloop.51
-ble_then.123:
+ble_then.124:
 	jr	r31				#
 yloop.44:
 	addi	r2, r0, 100
-	ble	r2, r1, ble_then.125
+	ble	r2, r1, ble_then.126
 	sw	r1, 0(r3)
 	sw	r31, 1(r3)
 	addi	r3, r3, 2
@@ -1129,7 +1129,7 @@ yloop.44:
 	lw	r1, 0(r3)
 	addi	r1, r1, 1
 	j	yloop.44
-ble_then.125:
+ble_then.126:
 	jr	r31				#
 _R_0:
 _min_caml_start: # main entry point

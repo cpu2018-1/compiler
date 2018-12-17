@@ -120,7 +120,7 @@ sprint_type t =
   | Type.Float -> "float" 
   | Type.Fun (tl, t) -> "fun ("^(sprint_type_list tl)^" -> "^(sprint_type t)^")"  (* arguments are uncurried *)
   | Type.Tuple tl -> "tuple "^(sprint_type_list tl)
-  | Type.Array t -> ("array ")^(sprint_type t)
+  | Type.Array t -> (sprint_type t)^(" array")
   | Type.Var t -> "var"
 
 let rec print_type t = 

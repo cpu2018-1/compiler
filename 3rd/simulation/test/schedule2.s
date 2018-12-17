@@ -322,11 +322,13 @@ lib_fuga:
 	beq	r0, r30, _fle_else.742
 	fsub	f1, f1, f2
 	flup	f4, 3		# fli	f4, 2.000000
-	fdiv	f2, f2, f4
+	finv	f31, f4
+	fmul	f2, f2, f31
 	j lib_fuga
 _fle_else.742:
 	flup	f4, 3		# fli	f4, 2.000000
-	fdiv	f2, f2, f4
+	finv	f31, f4
+	fmul	f2, f2, f31
 	j lib_fuga
 _fle_else.741:
 	jr	r31				#
@@ -342,10 +344,10 @@ lib_modulo_2pi:
 	fmvfr	f2, r30
 	sw	r31, 4(r3)
 	addi	r3, r3, 5
-	jal lib_hoge				#	bl lib_hoge
+	jal lib_hoge				
 	addi	r3, r3, -5
 	lw	r31, 4(r3)
-	fadd	f2, f0, f1				# fmr	f2, f1
+	fadd	f2, f0, f1
 	j	_fle_cont.744
 _fle_else.743:
 _fle_cont.744:
@@ -409,7 +411,7 @@ _fle_cont.749:
 	fsw	f2, 2(r3)
 	sw	r31, 4(r3)
 	addi	r3, r3, 5
-	jal lib_modulo_2pi				#	bl lib_modulo_2pi
+	jal lib_modulo_2pi				
 	addi	r3, r3, -5
 	lw	r31, 4(r3)
 	flw	f2, 2(r3)
@@ -428,7 +430,7 @@ _fle_cont.749:
 	fsw	f3, 4(r3)
 	sw	r31, 6(r3)
 	addi	r3, r3, 7
-	jal lib_sin_body				#	bl lib_sin_body
+	jal lib_sin_body				
 	addi	r3, r3, -7
 	lw	r31, 6(r3)
 	flw	f2, 4(r3)
@@ -440,7 +442,7 @@ _fle_else.752:
 	fsw	f3, 4(r3)
 	sw	r31, 6(r3)
 	addi	r3, r3, 7
-	jal lib_cos_body				#	bl lib_cos_body
+	jal lib_cos_body				
 	addi	r3, r3, -7
 	lw	r31, 6(r3)
 	flw	f2, 4(r3)
@@ -453,7 +455,7 @@ _fle_else.751:
 	fsw	f3, 4(r3)
 	sw	r31, 6(r3)
 	addi	r3, r3, 7
-	jal lib_sin_body				#	bl lib_sin_body
+	jal lib_sin_body				
 	addi	r3, r3, -7
 	lw	r31, 6(r3)
 	flw	f2, 4(r3)
@@ -465,7 +467,7 @@ _fle_else.753:
 	fsw	f3, 4(r3)
 	sw	r31, 6(r3)
 	addi	r3, r3, 7
-	jal lib_cos_body				#	bl lib_cos_body
+	jal lib_cos_body				
 	addi	r3, r3, -7
 	lw	r31, 6(r3)
 	flw	f2, 4(r3)
@@ -481,7 +483,7 @@ _fle_else.750:
 	beq	r0, r30, _fle_else.755
 	sw	r31, 6(r3)
 	addi	r3, r3, 7
-	jal lib_sin_body				#	bl lib_sin_body
+	jal lib_sin_body				
 	addi	r3, r3, -7
 	lw	r31, 6(r3)
 	flw	f2, 0(r3)
@@ -492,7 +494,7 @@ _fle_else.755:
 	fsub	f1, f2, f1
 	sw	r31, 6(r3)
 	addi	r3, r3, 7
-	jal lib_cos_body				#	bl lib_cos_body
+	jal lib_cos_body				
 	addi	r3, r3, -7
 	lw	r31, 6(r3)
 	flw	f2, 0(r3)
@@ -504,7 +506,7 @@ _fle_else.754:
 	beq	r0, r30, _fle_else.756
 	sw	r31, 6(r3)
 	addi	r3, r3, 7
-	jal lib_sin_body				#	bl lib_sin_body
+	jal lib_sin_body				
 	addi	r3, r3, -7
 	lw	r31, 6(r3)
 	flw	f2, 0(r3)
@@ -515,7 +517,7 @@ _fle_else.756:
 	fsub	f1, f2, f1
 	sw	r31, 6(r3)
 	addi	r3, r3, 7
-	jal lib_cos_body				#	bl lib_cos_body
+	jal lib_cos_body				
 	addi	r3, r3, -7
 	lw	r31, 6(r3)
 	flw	f2, 0(r3)
@@ -534,7 +536,7 @@ _fle_cont.758:
 	fsw	f2, 2(r3)
 	sw	r31, 4(r3)
 	addi	r3, r3, 5
-	jal lib_modulo_2pi				#	bl lib_modulo_2pi
+	jal lib_modulo_2pi				
 	addi	r3, r3, -5
 	lw	r31, 4(r3)
 	flw	f2, 2(r3)
@@ -553,7 +555,7 @@ _fle_cont.758:
 	fsw	f2, 4(r3)
 	sw	r31, 6(r3)
 	addi	r3, r3, 7
-	jal lib_cos_body				#	bl lib_cos_body
+	jal lib_cos_body				
 	addi	r3, r3, -7
 	lw	r31, 6(r3)
 	flw	f2, 4(r3)
@@ -565,7 +567,7 @@ _fle_else.761:
 	fsw	f2, 4(r3)
 	sw	r31, 6(r3)
 	addi	r3, r3, 7
-	jal lib_sin_body				#	bl lib_sin_body
+	jal lib_sin_body				
 	addi	r3, r3, -7
 	lw	r31, 6(r3)
 	flw	f2, 4(r3)
@@ -578,7 +580,7 @@ _fle_else.760:
 	fsw	f3, 6(r3)
 	sw	r31, 8(r3)
 	addi	r3, r3, 9
-	jal lib_cos_body				#	bl lib_cos_body
+	jal lib_cos_body				
 	addi	r3, r3, -9
 	lw	r31, 8(r3)
 	flw	f2, 6(r3)
@@ -590,7 +592,7 @@ _fle_else.762:
 	fsw	f3, 6(r3)
 	sw	r31, 8(r3)
 	addi	r3, r3, 9
-	jal lib_sin_body				#	bl lib_sin_body
+	jal lib_sin_body				
 	addi	r3, r3, -9
 	lw	r31, 8(r3)
 	flw	f2, 6(r3)
@@ -608,7 +610,7 @@ _fle_else.759:
 	fsw	f2, 8(r3)
 	sw	r31, 10(r3)
 	addi	r3, r3, 11
-	jal lib_cos_body				#	bl lib_cos_body
+	jal lib_cos_body				
 	addi	r3, r3, -11
 	lw	r31, 10(r3)
 	flw	f2, 8(r3)
@@ -620,7 +622,7 @@ _fle_else.764:
 	fsw	f2, 8(r3)
 	sw	r31, 10(r3)
 	addi	r3, r3, 11
-	jal lib_sin_body				#	bl lib_sin_body
+	jal lib_sin_body				
 	addi	r3, r3, -11
 	lw	r31, 10(r3)
 	flw	f2, 8(r3)
@@ -632,7 +634,7 @@ _fle_else.763:
 	beq	r0, r30, _fle_else.765
 	sw	r31, 10(r3)
 	addi	r3, r3, 11
-	jal lib_cos_body				#	bl lib_cos_body
+	jal lib_cos_body				
 	addi	r3, r3, -11
 	lw	r31, 10(r3)
 	flw	f2, 0(r3)
@@ -643,7 +645,7 @@ _fle_else.765:
 	fsub	f1, f2, f1
 	sw	r31, 10(r3)
 	addi	r3, r3, 11
-	jal lib_sin_body				#	bl lib_sin_body
+	jal lib_sin_body				
 	addi	r3, r3, -11
 	lw	r31, 10(r3)
 	flw	f2, 0(r3)
@@ -728,12 +730,13 @@ _fle_cont.767:
 	beq	r0, r30, _fle_else.769
 	flup	f3, 15		# fli	f3, 1.570796
 	flup	f4, 2		# fli	f4, 1.000000
-	fdiv	f1, f4, f1
+	finv	f31, f1
+	fmul	f1, f4, f31
 	fsw	f2, 0(r3)
 	fsw	f3, 2(r3)
 	sw	r31, 4(r3)
 	addi	r3, r3, 5
-	jal lib_atan_body				#	bl lib_atan_body
+	jal lib_atan_body				
 	addi	r3, r3, -5
 	lw	r31, 4(r3)
 	flw	f2, 2(r3)
@@ -747,12 +750,13 @@ _fle_else.769:
 	fsub	f4, f1, f4
 	flup	f5, 2		# fli	f5, 1.000000
 	fadd	f1, f1, f5
-	fdiv	f1, f4, f1
+	finv	f31, f1
+	fmul	f1, f4, f31
 	fsw	f2, 0(r3)
 	fsw	f3, 4(r3)
 	sw	r31, 6(r3)
 	addi	r3, r3, 7
-	jal lib_atan_body				#	bl lib_atan_body
+	jal lib_atan_body				
 	addi	r3, r3, -7
 	lw	r31, 6(r3)
 	flw	f2, 4(r3)
@@ -777,7 +781,7 @@ lib_div10_sub:
 	slli	r8, r6, 1
 	add	r7, r7, r8
 	ble	r7, r1, _ble_then.770
-	add	r5, r0, r6				# mr	r5, r6
+	add	r5, r0, r6
 	j lib_div10_sub
 _ble_then.770:
 	slli	r2, r6, 3
@@ -785,14 +789,14 @@ _ble_then.770:
 	add	r2, r2, r7
 	addi	r2, r2, 9
 	ble	r1, r2, _ble_then.771
-	add	r2, r0, r6				# mr	r2, r6
+	add	r2, r0, r6
 	j lib_div10_sub
 _ble_then.771:
 	add	r1, r0, r6
 	jr	r31				#
 lib_div10:
 	addi	r2, r0, 0
-	add	r5, r0, r1				# mr	r5, r1
+	add	r5, r0, r1
 	j lib_div10_sub
 lib_iter_mul10:
 	beqi	0, r2, _beq_then.772
@@ -807,11 +811,11 @@ lib_iter_div10:
 	beqi	0, r2, _beq_then.773
 	addi	r5, r0, 0
 	sw	r2, 0(r3)
-	add	r2, r0, r5				# mr	r2, r5
-	add	r5, r0, r1				# mr	r5, r1
+	add	r2, r0, r5
+	add	r5, r0, r1
 	sw	r31, 1(r3)
 	addi	r3, r3, 2
-	jal lib_div10_sub				#	bl lib_div10_sub
+	jal lib_div10_sub				
 	addi	r3, r3, -2
 	lw	r31, 1(r3)
 	lw	r2, 0(r3)
@@ -820,18 +824,17 @@ lib_iter_div10:
 _beq_then.773:
 	jr	r31				#
 lib_keta_sub:
-	addi	r5, r0, 10
-	ble	r5, r1, _ble_then.774
+	bgei	10, r1, bge_then.774
 	addi	r1, r2, 1
 	jr	r31				#
-_ble_then.774:
+bge_then.774:
 	addi	r5, r0, 0
 	sw	r2, 0(r3)
-	add	r2, r0, r5				# mr	r2, r5
-	add	r5, r0, r1				# mr	r5, r1
+	add	r2, r0, r5
+	add	r5, r0, r1
 	sw	r31, 1(r3)
 	addi	r3, r3, 2
-	jal lib_div10_sub				#	bl lib_div10_sub
+	jal lib_div10_sub				
 	addi	r3, r3, -2
 	lw	r31, 1(r3)
 	lw	r2, 0(r3)
@@ -846,11 +849,11 @@ lib_print_uint_keta:
 	addi	r6, r2, -1
 	sw	r2, 0(r3)
 	sw	r1, 1(r3)
-	add	r2, r0, r6				# mr	r2, r6
-	add	r1, r0, r5				# mr	r1, r5
+	add	r2, r0, r6
+	add	r1, r0, r5
 	sw	r31, 2(r3)
 	addi	r3, r3, 3
-	jal lib_iter_mul10				#	bl lib_iter_mul10
+	jal lib_iter_mul10				
 	addi	r3, r3, -3
 	lw	r31, 2(r3)
 	lw	r2, 1(r3)
@@ -858,7 +861,7 @@ lib_print_uint_keta:
 	addi	r1, r0, 48
 	sw	r31, 2(r3)
 	addi	r3, r3, 3
-	jal	lib_print_char				#	bl	lib_print_char
+	jal	lib_print_char				
 	addi	r3, r3, -3
 	lw	r31, 2(r3)
 	lw	r1, 0(r3)
@@ -868,28 +871,28 @@ lib_print_uint_keta:
 _ble_then.776:
 	lw	r1, 0(r3)
 	addi	r5, r1, -1
-	add	r1, r0, r2				# mr	r1, r2
-	add	r2, r0, r5				# mr	r2, r5
+	add	r1, r0, r2
+	add	r2, r0, r5
 	sw	r31, 2(r3)
 	addi	r3, r3, 3
-	jal lib_iter_div10				#	bl lib_iter_div10
+	jal lib_iter_div10				
 	addi	r3, r3, -3
 	lw	r31, 2(r3)
 	addi	r2, r1, 48
 	sw	r1, 2(r3)
-	add	r1, r0, r2				# mr	r1, r2
+	add	r1, r0, r2
 	sw	r31, 3(r3)
 	addi	r3, r3, 4
-	jal	lib_print_char				#	bl	lib_print_char
+	jal	lib_print_char				
 	addi	r3, r3, -4
 	lw	r31, 3(r3)
 	lw	r1, 0(r3)
 	addi	r2, r1, -1
 	lw	r5, 2(r3)
-	add	r1, r0, r5				# mr	r1, r5
+	add	r1, r0, r5
 	sw	r31, 3(r3)
 	addi	r3, r3, 4
-	jal lib_iter_mul10				#	bl lib_iter_mul10
+	jal lib_iter_mul10				
 	addi	r3, r3, -4
 	lw	r31, 3(r3)
 	lw	r2, 1(r3)
@@ -901,23 +904,22 @@ _beq_then.775:
 	addi	r1, r1, 48
 	j	lib_print_char
 lib_print_uint:
-	addi	r2, r0, 10
-	ble	r2, r1, _ble_then.777
+	bgei	10, r1, bge_then.777
 	addi	r1, r1, 48
 	j	lib_print_char
-_ble_then.777:
+bge_then.777:
 	addi	r2, r0, 0
 	sw	r1, 0(r3)
-	add	r5, r0, r1				# mr	r5, r1
+	add	r5, r0, r1
 	sw	r31, 1(r3)
 	addi	r3, r3, 2
-	jal lib_div10_sub				#	bl lib_div10_sub
+	jal lib_div10_sub				
 	addi	r3, r3, -2
 	lw	r31, 1(r3)
 	sw	r1, 1(r3)
 	sw	r31, 2(r3)
 	addi	r3, r3, 3
-	jal lib_print_uint				#	bl lib_print_uint
+	jal lib_print_uint				
 	addi	r3, r3, -3
 	lw	r31, 2(r3)
 	lw	r1, 1(r3)
@@ -929,20 +931,19 @@ _ble_then.777:
 	addi	r1, r1, 48
 	j	lib_print_char
 lib_print_int:
-	addi	r2, r0, 0
-	ble	r2, r1, _ble_then.778
+	bgei	0, r1, bge_then.778
 	addi	r2, r0, 45
 	sw	r1, 0(r3)
-	add	r1, r0, r2				# mr	r1, r2
+	add	r1, r0, r2
 	sw	r31, 1(r3)
 	addi	r3, r3, 2
-	jal	lib_print_char				#	bl	lib_print_char
+	jal	lib_print_char				
 	addi	r3, r3, -2
 	lw	r31, 1(r3)
 	lw	r1, 0(r3)
 	sub	r1, r0, r1
 	j lib_print_uint
-_ble_then.778:
+bge_then.778:
 	j lib_print_uint
 lib_truncate:
 	ftoi	f1, f1
@@ -958,7 +959,7 @@ _feq_else.779:
 	fsw	f1, 0(r3)
 	sw	r31, 2(r3)
 	addi	r3, r3, 3
-	jal lib_print_int				#	bl lib_print_int
+	jal lib_print_int				
 	addi	r3, r3, -3
 	lw	r31, 2(r3)
 	lw	r1, 0(r3)
@@ -971,13 +972,13 @@ lib_print_ufloat:
 	fsw	f1, 0(r3)
 	sw	r31, 2(r3)
 	addi	r3, r3, 3
-	jal lib_print_int				#	bl lib_print_int
+	jal lib_print_int				
 	addi	r3, r3, -3
 	lw	r31, 2(r3)
 	addi	r1, r0, 46
 	sw	r31, 2(r3)
 	addi	r3, r3, 3
-	jal	lib_print_char				#	bl	lib_print_char
+	jal	lib_print_char				
 	addi	r3, r3, -3
 	lw	r31, 2(r3)
 	lw	r1, 0(r3)
@@ -1001,7 +1002,7 @@ _fle_else.783:
 	fsw	f1, 0(r3)
 	sw	r31, 2(r3)
 	addi	r3, r3, 3
-	jal	lib_print_char				#	bl	lib_print_char
+	jal	lib_print_char				
 	addi	r3, r3, -3
 	lw	r31, 2(r3)
 	flw	f1, 0(r3)
@@ -1009,93 +1010,101 @@ _fle_else.783:
 	j lib_print_ufloat
 _R_0:
 # library ends
-read_screen_settings.94:
+rad.94:
+	jr	r31				#
+read_screen_settings.96:
+	fsw	f0, 661(r0)
 	flup	f1, 2		# fli	f1, 1.000000
-	flup	f2, 3		# fli	f2, 2.000000
+	fsw	f1, 662(r0)
+	flup	f1, 3		# fli	f1, 2.000000
+	fsw	f1, 663(r0)
 	addi	r30, r0, 0
 	lui	r30, r30, 16448	# to load float		3.000000
-	fmvfr	f3, r30
-	fsw	f0, 661(r0)
-	fsw	f1, 662(r0)
-	fsw	f2, 663(r0)
-	fadd	f1, f0, f3
+	fmvfr	f1, r30
 	sw	r31, 0(r3)
 	addi	r3, r3, 1
-	jal	lib_rad				
+	jal	rad.94				
 	addi	r3, r3, -1
 	lw	r31, 0(r3)
-	sw	r1, 0(r3)
-	sw	r31, 1(r3)
-	addi	r3, r3, 2
+	fsw	f1, 0(r3)
+	sw	r31, 2(r3)
+	addi	r3, r3, 3
 	jal	lib_cos				
-	addi	r3, r3, -2
-	lw	r31, 1(r3)
-	lw	r1, 0(r3)
-	fsw	f1, 2(r3)
+	addi	r3, r3, -3
+	lw	r31, 2(r3)
+	fadd	f4, f0, f1
+	flw	f1, 0(r3)
+	fsw	f4, 2(r3)
 	sw	r31, 4(r3)
 	addi	r3, r3, 5
 	jal	lib_sin				
 	addi	r3, r3, -5
 	lw	r31, 4(r3)
+	fadd	f2, f0, f1
+	flw	f4, 2(r3)
 	addi	r30, r0, 0
 	lui	r30, r30, 16512	# to load float		4.000000
-	fmvfr	f2, r30
-	fsw	f1, 4(r3)
-	fadd	f1, f0, f2
+	fmvfr	f1, r30
+	fsw	f2, 4(r3)
 	sw	r31, 6(r3)
 	addi	r3, r3, 7
-	jal	lib_rad				
+	jal	rad.94				
 	addi	r3, r3, -7
 	lw	r31, 6(r3)
-	sw	r1, 6(r3)
-	sw	r31, 7(r3)
-	addi	r3, r3, 8
+	flw	f2, 4(r3)
+	flw	f4, 2(r3)
+	fsw	f1, 6(r3)
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
 	jal	lib_cos				
-	addi	r3, r3, -8
-	lw	r31, 7(r3)
-	lw	r1, 6(r3)
-	fsw	f1, 8(r3)
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	fadd	f3, f0, f1
+	flw	f1, 6(r3)
+	flw	f2, 4(r3)
+	flw	f4, 2(r3)
+	fsw	f3, 8(r3)
 	sw	r31, 10(r3)
 	addi	r3, r3, 11
 	jal	lib_sin				
 	addi	r3, r3, -11
 	lw	r31, 10(r3)
-	flw	f2, 661(r0)
-	flw	f3, 760(r0)
-	flw	f4, 662(r0)
-	flw	f5, 761(r0)
-	flw	f6, 663(r0)
-	flw	f7, 762(r0)
-	flup	f8, 26		# fli	f8, 200.000000
-	flup	f9, 27		# fli	f9, -200.000000
-	flw	f10, 8(r3)
-	flw	f11, 2(r3)
-	fmul	f12, f11, f10
-	flup	f13, 26		# fli	f13, 200.000000
-	flw	f14, 4(r3)
-	fneg	f15, f14
-	fneg	f16, f11
-	fsw	f10, 754(r0)
+	flw	f2, 4(r3)
+	flw	f3, 8(r3)
+	flw	f4, 2(r3)
+	fmul	f6, f4, f1
+	flup	f5, 26		# fli	f5, 200.000000
+	fmul	f5, f6, f5
+	fsw	f5, 760(r0)
+	flup	f5, 27		# fli	f5, -200.000000
+	fmul	f5, f2, f5
+	fsw	f5, 761(r0)
+	fmul	f6, f4, f3
+	flup	f5, 26		# fli	f5, 200.000000
+	fmul	f5, f6, f5
+	fsw	f5, 762(r0)
+	fsw	f3, 754(r0)
 	fsw	f0, 755(r0)
-	fmul	f11, f11, f1
-	fmul	f8, f11, f8
-	fsw	f8, 760(r0)
-	fmul	f8, f14, f9
-	fsw	f8, 761(r0)
-	fmul	f8, f12, f13
-	fsw	f8, 762(r0)
-	fneg	f8, f1
-	fsw	f8, 756(r0)
-	fmul	f1, f15, f1
+	fneg	f5, f1
+	fsw	f5, 756(r0)
+	fneg	f2, f2
+	fmul	f1, f2, f1
 	fsw	f1, 757(r0)
-	fsw	f16, 758(r0)
-	fmul	f1, f15, f10
+	fneg	f1, f4
+	fsw	f1, 758(r0)
+	fmul	f1, f2, f3
 	fsw	f1, 759(r0)
-	fsub	f1, f2, f3
+	flw	f2, 661(r0)
+	flw	f1, 760(r0)
+	fsub	f1, f2, f1
 	fsw	f1, 664(r0)
-	fsub	f1, f4, f5
+	flw	f2, 662(r0)
+	flw	f1, 761(r0)
+	fsub	f1, f2, f1
 	fsw	f1, 665(r0)
-	fsub	f1, f6, f7
+	flw	f2, 663(r0)
+	flw	f1, 762(r0)
+	fsub	f1, f2, f1
 	fsw	f1, 666(r0)
 	jr	r31				#
 _R_0:

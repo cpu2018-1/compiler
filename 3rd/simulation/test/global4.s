@@ -2081,41 +2081,5 @@ _min_caml_start: # main entry point
   sw r0, 1023(r4)
   addi  r4, r4, 1024
 #	main program starts
-	addi	r1, r0, 0
-	flup	f1, 0		# fli	f1, 0.000000
-	sw	r31, 0(r3)
-	addi	r3, r3, 1
-	jal	lib_create_float_array				
-	addi	r3, r3, -1
-	lw	r31, 0(r3)
-	add	r5, r0, r1
-	addi	r1, r0, 0
-	sw	r5, 0(r3)
-	add	r2, r0, r5
-	sw	r31, 1(r3)
-	addi	r3, r3, 2
-	jal	lib_create_array				
-	addi	r3, r3, -2
-	lw	r31, 1(r3)
-	add	r2, r0, r1
-	lw	r5, 0(r3)
-	add	r1, r0, r4
-	addi	r4, r4, 2
-	sw	r2, 1(r1)
-	sw	r5, 0(r1)
-	add	r2, r0, r1
-	addi	r6, r0, 180
-	addi	r5, r0, 0
-	flup	f1, 0		# fli	f1, 0.000000
-	add	r1, r0, r4
-	addi	r4, r4, 3
-	fsw	f1, 2(r1)
-	sw	r2, 1(r1)
-	sw	r5, 0(r1)
-	add	r2, r0, r1
-	add	r1, r0, r6
-	sw	r31, 1(r3)
-	addi	r3, r3, 2
-	jal	lib_create_array				
-	addi	r3, r3, -2
-	lw	r31, 1(r3)
+	lw	r1, 740(r0)
+	addi	_R_0, r1, 1

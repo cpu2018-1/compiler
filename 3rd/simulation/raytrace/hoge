@@ -1,963 +1,3980 @@
-free variable abs_float assumed as external
-free variable read_float assumed as external
-free variable screen assumed as external
-free variable screenz_dir assumed as external
-free variable screenx_dir assumed as external
-free variable screeny_dir assumed as external
-free variable viewpoint assumed as external
-free variable read_int assumed as external
-free variable light assumed as external
-free variable beam assumed as external
-free variable objects assumed as external
-free variable n_objects assumed as external
-free variable and_net assumed as external
-free variable or_net assumed as external
-free variable solver_dist assumed as external
-free variable startp_fast assumed as external
-free variable light_dirvec assumed as external
-free variable intersection_point assumed as external
-free variable startp assumed as external
-free variable tmin assumed as external
-free variable intersected_object_id assumed as external
-free variable intsec_rectside assumed as external
-free variable nvector assumed as external
-free variable texture_color assumed as external
-free variable rgb assumed as external
-free variable reflections assumed as external
-free variable n_reflections assumed as external
-free variable diffuse_ray assumed as external
-free variable dirvecs assumed as external
-free variable image_size assumed as external
-free variable scan_pitch assumed as external
-free variable image_center assumed as external
-free variable ptrace_dirvec assumed as external
-warning: final result does not have type unit
-top level does not have type unituninstantiated type variable detected; assuming int
-iteration 1000
-eliminating variable Ti687.3903
-eliminating variable Ti686.3902
-eliminating variable Td888.4155
-eliminating variable Td887.4154
-eliminating variable Ti920.4114
-eliminating variable Ti836.4208
-eliminating variable Ti1202.4556
-eliminating variable Ti1215.4566
-eliminating variable Ti1221.4625
-eliminating variable Ti1279.4658
-eliminating variable Ti1293.4668
-eliminating variable Ti1299.4726
-eliminating variable Ti1347.4751
-eliminating variable Ti1369.4762
-eliminating variable Ti1377.4813
-eliminating variable Ti1420.4822
-eliminating variable Ti2015.5520
-eliminating variable Ti2023.5532
-eliminating variable Ti2034.5543
-eliminating variable Ti2030.5545
-eliminating variable Ti2047.5682
-eliminating variable Td2632.6602
-eliminating variable Td2641.6594
-eliminating variable Td2635.6600
-eliminating variable pi.6581
-eliminating variable Td2706.6641
-eliminating variable Td2703.6643
-eliminating variable Td2699.6650
-eliminating variable Td2696.6652
-eliminating variable Td2694.6653
-eliminating variable Td2690.6661
-eliminating variable Td2687.6663
-eliminating variable Td2683.6670
-eliminating variable Td2680.6672
-eliminating variable Td2678.6673
-eliminating variable Td2711.6716
-eliminating variable Td2741.6683
-eliminating variable Td2738.6685
-eliminating variable Td2734.6691
-eliminating variable Td2731.6693
-eliminating variable Td2729.6694
-eliminating variable Td2725.6702
-eliminating variable Td2722.6704
-eliminating variable Td2718.6710
-eliminating variable Td2715.6712
-eliminating variable Td2713.6713
-eliminating variable Td2768.6745
-iteration 999
-beta-reducing Td472.3616 = Td466.3621
-beta-reducing Td477.3608 = Td471.3615
-beta-reducing Td478.3609 = Td466.3621
-beta-reducing Td484.3602 = Td471.3615
-beta-reducing Td485.3603 = Td479.3610
-beta-reducing Td490.3597 = Td479.3610
-beta-reducing Td2158.5775 = Td2152.5781
-beta-reducing Td2161.5772 = Td2155.5778
-beta-reducing Td2218.5717 = Td2207.5728
-beta-reducing Td2220.5716 = Td2209.5727
-beta-reducing Td2223.5713 = Td2212.5724
-beta-reducing Td2292.5872 = Td2285.5879
-iteration 998
-directly applying float_of_int.2810
-directly applying int_of_float.2808
-directly applying hoge.2814
-directly applying fuga.2817
-directly applying fuga.2817
-directly applying fuga.2817
-directly applying hoge.2814
-directly applying cos_body.2825
-directly applying sin_body.2823
-directly applying cos_body.2825
-directly applying sin_body.2823
-directly applying cos_body.2825
-directly applying sin_body.2823
-directly applying cos_body.2825
-directly applying sin_body.2823
-directly applying modulo_2pi.2821
-directly applying sin_body.2823
-directly applying cos_body.2825
-directly applying sin_body.2823
-directly applying cos_body.2825
-directly applying sin_body.2823
-directly applying cos_body.2825
-directly applying sin_body.2823
-directly applying cos_body.2825
-directly applying modulo_2pi.2821
-directly applying atan_body.2831
-directly applying atan_body.2831
-directly applying atan_body.2831
-directly applying div10_sub.2839
-directly applying div10_sub.2839
-directly applying mul10.2837
-directly applying mul10.2837
-directly applying div10_sub.2839
-directly applying print_num.2835
-directly applying print_num.2835
-directly applying mul10.2837
-directly applying print_uint.2845
-directly applying div10.2843
-directly applying print_int.2847
-directly applying print_char.2791
-directly applying print_num.2835
-directly applying print_num.2835
-directly applying print_num.2835
-directly applying print_num.2835
-directly applying print_num.2835
-directly applying print_num.2835
-directly applying fispos.2793
-directly applying fiszero.2797
-directly applying vecfill.2867
-directly applying fsqr.2804
-directly applying fsqr.2804
-directly applying fsqr.2804
-directly applying fsqr.2804
-directly applying fsqr.2804
-directly applying fsqr.2804
-directly applying fiszero.2797
-directly applying fsqr.2804
-directly applying fsqr.2804
-directly applying fsqr.2804
-directly applying sin.2827
-directly applying cos.2829
-directly applying rad.2979
-directly applying sin.2827
-directly applying cos.2829
-directly applying rad.2979
-directly applying cos.2829
-directly applying sin.2827
-directly applying cos.2829
-directly applying rad.2979
-directly applying sin.2827
-directly applying rad.2979
-directly applying fsqr.2804
-directly applying fsqr.2804
-directly applying fsqr.2804
-directly applying fsqr.2804
-directly applying fsqr.2804
-directly applying fsqr.2804
-directly applying fsqr.2804
-directly applying fsqr.2804
-directly applying fsqr.2804
-directly applying sin.2827
-directly applying cos.2829
-directly applying sin.2827
-directly applying cos.2829
-directly applying sin.2827
-directly applying cos.2829
-directly applying rotate_quadratic_matrix.2985
-directly applying vecunit_sgn.2880
-directly applying fsqr.2804
-directly applying sgn.2854
-directly applying fiszero.2797
-directly applying fsqr.2804
-directly applying sgn.2854
-directly applying fiszero.2797
-directly applying fsqr.2804
-directly applying sgn.2854
-directly applying fiszero.2797
-directly applying rad.2979
-directly applying rad.2979
-directly applying rad.2979
-directly applying fisneg.2795
-directly applying read_object.2990
-directly applying read_nth_object.2988
-directly applying read_object.2990
-directly applying read_net_item.2994
-directly applying read_or_network.2996
-directly applying read_net_item.2994
-directly applying read_and_network.2998
-directly applying read_net_item.2994
-directly applying read_or_network.2996
-directly applying read_and_network.2998
-directly applying read_all_object.2992
-directly applying read_light.2983
-directly applying read_screen_settings.2981
-directly applying fabs.2806
-directly applying fabs.2806
-directly applying fneg_cond.2856
-directly applying xor.2851
-directly applying fisneg.2795
-directly applying o_isinvert.2914
-directly applying o_param_abc.2924
-directly applying fiszero.2797
-directly applying solver_rect_surface.3002
-directly applying solver_rect_surface.3002
-directly applying solver_rect_surface.3002
-directly applying veciprod2.2886
-directly applying fispos.2793
-directly applying veciprod.2883
-directly applying o_param_abc.2924
-directly applying o_param_r3.2946
-directly applying o_param_r2.2944
-directly applying o_param_r1.2942
-directly applying o_isrot.2916
-directly applying o_param_c.2922
-directly applying fsqr.2804
-directly applying o_param_b.2920
-directly applying fsqr.2804
-directly applying o_param_a.2918
-directly applying fsqr.2804
-directly applying fhalf.2802
-directly applying o_param_r3.2946
-directly applying o_param_r2.2944
-directly applying o_param_r1.2942
-directly applying o_isrot.2916
-directly applying o_param_c.2922
-directly applying o_param_b.2920
-directly applying o_param_a.2918
-directly applying o_isinvert.2914
-directly applying fispos.2793
-directly applying fsqr.2804
-directly applying o_form.2910
-directly applying quadratic.3023
-directly applying bilinear.3028
-directly applying fiszero.2797
-directly applying quadratic.3023
-directly applying solver_second.3036
-directly applying solver_surface.3017
-directly applying solver_rect.3011
-directly applying o_form.2910
-directly applying o_param_z.2930
-directly applying o_param_y.2928
-directly applying o_param_x.2926
-directly applying fiszero.2797
-directly applying fabs.2806
-directly applying o_param_b.2920
-directly applying fabs.2806
-directly applying o_param_a.2918
-directly applying fiszero.2797
-directly applying fabs.2806
-directly applying o_param_c.2922
-directly applying fabs.2806
-directly applying o_param_a.2918
-directly applying fiszero.2797
-directly applying fabs.2806
-directly applying o_param_c.2922
-directly applying fabs.2806
-directly applying o_param_b.2920
-directly applying fisneg.2795
-directly applying o_isinvert.2914
-directly applying fispos.2793
-directly applying fsqr.2804
-directly applying o_form.2910
-directly applying quadratic.3023
-directly applying fiszero.2797
-directly applying solver_second_fast.3059
-directly applying solver_surface_fast.3053
-directly applying solver_rect_fast.3046
-directly applying d_vec.2969
-directly applying o_form.2910
-directly applying d_const.2971
-directly applying o_param_z.2930
-directly applying o_param_y.2928
-directly applying o_param_x.2926
-directly applying fisneg.2795
-directly applying o_isinvert.2914
-directly applying fispos.2793
-directly applying fsqr.2804
-directly applying fiszero.2797
-directly applying solver_second_fast2.3076
-directly applying solver_surface_fast2.3069
-directly applying solver_rect_fast.3046
-directly applying d_vec.2969
-directly applying o_form.2910
-directly applying d_const.2971
-directly applying o_param_ctbl.2948
-directly applying fneg_cond.2856
-directly applying o_param_c.2922
-directly applying xor.2851
-directly applying fisneg.2795
-directly applying o_isinvert.2914
-directly applying fiszero.2797
-directly applying fneg_cond.2856
-directly applying o_param_b.2920
-directly applying xor.2851
-directly applying fisneg.2795
-directly applying o_isinvert.2914
-directly applying fiszero.2797
-directly applying fneg_cond.2856
-directly applying o_param_a.2918
-directly applying xor.2851
-directly applying fisneg.2795
-directly applying o_isinvert.2914
-directly applying fiszero.2797
-directly applying o_param_c.2922
-directly applying o_param_b.2920
-directly applying o_param_a.2918
-directly applying fispos.2793
-directly applying o_param_c.2922
-directly applying o_param_b.2920
-directly applying o_param_a.2918
-directly applying fiszero.2797
-directly applying fhalf.2802
-directly applying o_param_r2.2944
-directly applying o_param_r1.2942
-directly applying fhalf.2802
-directly applying o_param_r3.2946
-directly applying o_param_r1.2942
-directly applying fhalf.2802
-directly applying o_param_r3.2946
-directly applying o_param_r2.2944
-directly applying o_isrot.2916
-directly applying o_param_c.2922
-directly applying o_param_b.2920
-directly applying o_param_a.2918
-directly applying quadratic.3023
-directly applying iter_setup_dirvec_constants.3095
-directly applying setup_second_table.3092
-directly applying setup_surface_table.3089
-directly applying setup_rect_table.3086
-directly applying o_form.2910
-directly applying d_vec.2969
-directly applying d_const.2971
-directly applying iter_setup_dirvec_constants.3095
-directly applying setup_startp_constants.3100
-directly applying quadratic.3023
-directly applying veciprod2.2886
-directly applying o_param_abc.2924
-directly applying o_param_z.2930
-directly applying o_param_y.2928
-directly applying o_param_x.2926
-directly applying o_form.2910
-directly applying o_param_ctbl.2948
-directly applying setup_startp_constants.3100
-directly applying veccpy.2872
-directly applying o_isinvert.2914
-directly applying o_isinvert.2914
-directly applying fabs.2806
-directly applying o_param_c.2922
-directly applying fabs.2806
-directly applying o_param_b.2920
-directly applying fabs.2806
-directly applying o_param_a.2918
-directly applying xor.2851
-directly applying fisneg.2795
-directly applying o_isinvert.2914
-directly applying veciprod2.2886
-directly applying o_param_abc.2924
-directly applying xor.2851
-directly applying fisneg.2795
-directly applying o_isinvert.2914
-directly applying o_form.2910
-directly applying quadratic.3023
-directly applying is_second_outside.3115
-directly applying is_plane_outside.3110
-directly applying is_rect_outside.3105
-directly applying o_form.2910
-directly applying o_param_z.2930
-directly applying o_param_y.2928
-directly applying o_param_x.2926
-directly applying check_all_inside.3125
-directly applying is_outside.3120
-directly applying shadow_check_and_group.3131
-directly applying check_all_inside.3125
-directly applying shadow_check_and_group.3131
-directly applying o_isinvert.2914
-directly applying solver_fast.3065
-directly applying shadow_check_one_or_group.3134
-directly applying shadow_check_and_group.3131
-directly applying shadow_check_one_or_matrix.3137
-directly applying shadow_check_one_or_group.3134
-directly applying shadow_check_one_or_matrix.3137
-directly applying shadow_check_one_or_group.3134
-directly applying solver_fast.3065
-directly applying solve_each_element.3140
-directly applying vecset.2862
-directly applying check_all_inside.3125
-directly applying solve_each_element.3140
-directly applying o_isinvert.2914
-directly applying solver.3042
-directly applying solve_one_or_network.3144
-directly applying solve_each_element.3140
-directly applying trace_or_matrix.3148
-directly applying solve_one_or_network.3144
-directly applying solver.3042
-directly applying solve_one_or_network.3144
-directly applying trace_or_matrix.3148
-directly applying solve_each_element_fast.3154
-directly applying vecset.2862
-directly applying check_all_inside.3125
-directly applying solve_each_element_fast.3154
-directly applying o_isinvert.2914
-directly applying solver_fast2.3083
-directly applying d_vec.2969
-directly applying solve_one_or_network_fast.3158
-directly applying solve_each_element_fast.3154
-directly applying trace_or_matrix_fast.3162
-directly applying solve_one_or_network_fast.3158
-directly applying solver_fast2.3083
-directly applying solve_one_or_network_fast.3158
-directly applying trace_or_matrix_fast.3162
-directly applying sgn.2854
-directly applying vecbzero.2870
-directly applying o_param_c.2922
-directly applying o_param_b.2920
-directly applying o_param_a.2918
-directly applying vecunit_sgn.2880
-directly applying o_isinvert.2914
-directly applying fhalf.2802
-directly applying o_param_r1.2942
-directly applying o_param_r2.2944
-directly applying fhalf.2802
-directly applying o_param_r1.2942
-directly applying o_param_r3.2946
-directly applying fhalf.2802
-directly applying o_param_r2.2944
-directly applying o_param_r3.2946
-directly applying o_isrot.2916
-directly applying o_param_c.2922
-directly applying o_param_b.2920
-directly applying o_param_a.2918
-directly applying o_param_z.2930
-directly applying o_param_y.2928
-directly applying o_param_x.2926
-directly applying get_nvector_second.3172
-directly applying get_nvector_plane.3170
-directly applying get_nvector_rect.3168
-directly applying o_form.2910
-directly applying fisneg.2795
-directly applying fsqr.2804
-directly applying fsqr.2804
-directly applying floor.2812
-directly applying atan.2833
-directly applying fabs.2806
-directly applying fabs.2806
-directly applying o_param_b.2920
-directly applying o_param_y.2928
-directly applying floor.2812
-directly applying atan.2833
-directly applying fabs.2806
-directly applying fabs.2806
-directly applying fsqr.2804
-directly applying fsqr.2804
-directly applying o_param_c.2922
-directly applying o_param_z.2930
-directly applying o_param_a.2918
-directly applying o_param_x.2926
-directly applying fsqr.2804
-directly applying cos.2829
-directly applying floor.2812
-directly applying fsqr.2804
-directly applying fsqr.2804
-directly applying o_param_z.2930
-directly applying o_param_x.2926
-directly applying fsqr.2804
-directly applying sin.2827
-directly applying floor.2812
-directly applying o_param_z.2930
-directly applying floor.2812
-directly applying o_param_x.2926
-directly applying o_color_blue.2940
-directly applying o_color_green.2938
-directly applying o_color_red.2936
-directly applying o_texturetype.2908
-directly applying fsqr.2804
-directly applying fsqr.2804
-directly applying fispos.2793
-directly applying vecaccum.2891
-directly applying fispos.2793
-directly applying trace_reflections.3184
-directly applying add_light.3180
-directly applying veciprod.2883
-directly applying d_vec.2969
-directly applying r_bright.2977
-directly applying veciprod.2883
-directly applying d_vec.2969
-directly applying shadow_check_one_or_matrix.3137
-directly applying r_surface_id.2973
-directly applying judge_intersection_fast.3166
-directly applying r_dvec.2975
-directly applying trace_ray.3189
-directly applying o_diffuse.2932
-directly applying trace_reflections.3184
-directly applying setup_startp.3103
-directly applying add_light.3180
-directly applying veciprod.2883
-directly applying veciprod.2883
-directly applying shadow_check_one_or_matrix.3137
-directly applying o_hilight.2934
-directly applying vecaccum.2891
-directly applying veciprod.2883
-directly applying veccpy.2872
-directly applying p_nvectors.2967
-directly applying vecscale.2901
-directly applying veccpy.2872
-directly applying p_energy.2958
-directly applying o_diffuse.2932
-directly applying p_calc_diffuse.2956
-directly applying veccpy.2872
-directly applying p_intersection_points.2952
-directly applying utexture.3177
-directly applying veccpy.2872
-directly applying get_nvector.3174
-directly applying o_diffuse.2932
-directly applying o_reflectiontype.2912
-directly applying fsqr.2804
-directly applying fispos.2793
-directly applying veciprod.2883
-directly applying judge_intersection.3152
-directly applying p_surface_ids.2954
-free variable(s) false.2850 true.2849 found in function trace_ray.3189
-function trace_ray.3189 cannot be directly applied in fact
-directly applying o_diffuse.2932
-directly applying trace_reflections.3184
-directly applying setup_startp.3103
-directly applying add_light.3180
-directly applying veciprod.2883
-directly applying veciprod.2883
-directly applying shadow_check_one_or_matrix.3137
-directly applying o_hilight.2934
-directly applying vecaccum.2891
-directly applying veciprod.2883
-directly applying veccpy.2872
-directly applying p_nvectors.2967
-directly applying vecscale.2901
-directly applying veccpy.2872
-directly applying p_energy.2958
-directly applying o_diffuse.2932
-directly applying p_calc_diffuse.2956
-directly applying veccpy.2872
-directly applying p_intersection_points.2952
-directly applying utexture.3177
-directly applying veccpy.2872
-directly applying get_nvector.3174
-directly applying o_diffuse.2932
-directly applying o_reflectiontype.2912
-directly applying fsqr.2804
-directly applying fispos.2793
-directly applying veciprod.2883
-directly applying judge_intersection.3152
-directly applying p_surface_ids.2954
-directly applying vecaccum.2891
-directly applying o_diffuse.2932
-directly applying fispos.2793
-directly applying veciprod.2883
-directly applying shadow_check_one_or_matrix.3137
-directly applying utexture.3177
-directly applying get_nvector.3174
-directly applying d_vec.2969
-directly applying judge_intersection_fast.3166
-directly applying iter_trace_diffuse_rays.3198
-directly applying trace_diffuse_ray.3195
-directly applying trace_diffuse_ray.3195
-directly applying fisneg.2795
-directly applying veciprod.2883
-directly applying d_vec.2969
-directly applying iter_trace_diffuse_rays.3198
-directly applying setup_startp.3103
-directly applying trace_diffuse_rays.3203
-directly applying trace_diffuse_rays.3203
-directly applying trace_diffuse_rays.3203
-directly applying trace_diffuse_rays.3203
-directly applying trace_diffuse_rays.3203
-directly applying vecaccumv.2904
-directly applying trace_diffuse_ray_80percent.3207
-directly applying p_group_id.2962
-directly applying veccpy.2872
-directly applying p_energy.2958
-directly applying p_intersection_points.2952
-directly applying p_nvectors.2967
-directly applying p_received_ray_20percent.2960
-directly applying vecaccumv.2904
-directly applying p_energy.2958
-directly applying vecadd.2895
-directly applying vecadd.2895
-directly applying vecadd.2895
-directly applying vecadd.2895
-directly applying veccpy.2872
-directly applying p_received_ray_20percent.2960
-directly applying p_received_ray_20percent.2960
-directly applying p_received_ray_20percent.2960
-directly applying p_received_ray_20percent.2960
-directly applying p_received_ray_20percent.2960
-directly applying do_without_neighbors.3220
-directly applying calc_diffuse_using_1point.3211
-directly applying p_calc_diffuse.2956
-directly applying p_surface_ids.2954
-directly applying p_surface_ids.2954
-directly applying get_surface_id.3227
-directly applying get_surface_id.3227
-directly applying get_surface_id.3227
-directly applying get_surface_id.3227
-directly applying get_surface_id.3227
-directly applying try_exploit_neighbors.3236
-directly applying calc_diffuse_using_5points.3214
-directly applying p_calc_diffuse.2956
-directly applying do_without_neighbors.3220
-directly applying neighbors_are_available.3230
-directly applying get_surface_id.3227
-directly applying print_char.2791
-directly applying print_int.2847
-directly applying print_char.2791
-directly applying print_int.2847
-directly applying print_char.2791
-directly applying print_int.2847
-directly applying print_char.2791
-directly applying print_char.2791
-directly applying print_char.2791
-directly applying print_int.2847
-directly applying int_of_float.2808
-directly applying print_char.2791
-directly applying write_rgb_element.3245
-directly applying print_char.2791
-directly applying write_rgb_element.3245
-directly applying print_char.2791
-directly applying write_rgb_element.3245
-directly applying pretrace_diffuse_rays.3249
-directly applying veccpy.2872
-directly applying p_received_ray_20percent.2960
-directly applying trace_diffuse_rays.3203
-directly applying p_intersection_points.2952
-directly applying p_nvectors.2967
-directly applying vecbzero.2870
-directly applying p_group_id.2962
-directly applying p_calc_diffuse.2956
-directly applying get_surface_id.3227
-directly applying pretrace_pixels.3252
-directly applying add_mod5.2859
-directly applying pretrace_diffuse_rays.3249
-directly applying p_set_group_id.2964
-directly applying veccpy.2872
-directly applying p_rgb.2950
-directly applying veccpy.2872
-directly applying vecbzero.2870
-directly applying vecunit_sgn.2880
-directly applying float_of_int.2810
-free variable(s) false.2850 trace_ray.3189 found in function pretrace_pixels.3252
-function pretrace_pixels.3252 cannot be directly applied in fact
-directly applying add_mod5.2859
-directly applying pretrace_diffuse_rays.3249
-directly applying p_set_group_id.2964
-directly applying veccpy.2872
-directly applying p_rgb.2950
-directly applying veccpy.2872
-directly applying vecbzero.2870
-directly applying vecunit_sgn.2880
-directly applying float_of_int.2810
-directly applying float_of_int.2810
-free variable(s) pretrace_pixels.3252 found in function pretrace_line.3259
-function pretrace_line.3259 cannot be directly applied in fact
-directly applying float_of_int.2810
-directly applying scan_pixel.3263
-directly applying write_rgb.3247
-directly applying try_exploit_neighbors.3236
-directly applying do_without_neighbors.3220
-directly applying neighbors_exist.3223
-directly applying veccpy.2872
-directly applying p_rgb.2950
-directly applying scan_line.3269
-directly applying add_mod5.2859
-directly applying scan_pixel.3263
-free variable(s) pretrace_line.3259 found in function scan_line.3269
-function scan_line.3269 cannot be directly applied in fact
-directly applying add_mod5.2859
-directly applying scan_pixel.3263
-directly applying create_float5x3array.3275
-directly applying create_float5x3array.3275
-directly applying create_float5x3array.3275
-directly applying create_float5x3array.3275
-free variable(s) false.2850 found in function create_pixel.3277
-function create_pixel.3277 cannot be directly applied in fact
-directly applying create_float5x3array.3275
-directly applying create_float5x3array.3275
-directly applying create_float5x3array.3275
-directly applying create_float5x3array.3275
-directly applying init_line_elements.3279
-free variable(s) create_pixel.3277 found in function init_line_elements.3279
-function init_line_elements.3279 cannot be directly applied in fact
-free variable(s) create_pixel.3277 init_line_elements.3279 found in function create_pixelline.3282
-function create_pixelline.3282 cannot be directly applied in fact
-directly applying cos.2829
-directly applying sin.2827
-directly applying tan.3284
-directly applying atan.2833
-directly applying calc_dirvec.3289
-directly applying adjust_position.3286
-directly applying adjust_position.3286
-directly applying vecset.2862
-directly applying d_vec.2969
-directly applying vecset.2862
-directly applying d_vec.2969
-directly applying vecset.2862
-directly applying d_vec.2969
-directly applying vecset.2862
-directly applying d_vec.2969
-directly applying vecset.2862
-directly applying d_vec.2969
-directly applying vecset.2862
-directly applying d_vec.2969
-directly applying fsqr.2804
-directly applying fsqr.2804
-directly applying calc_dirvecs.3297
-directly applying add_mod5.2859
-directly applying calc_dirvec.3289
-directly applying float_of_int.2810
-directly applying calc_dirvec.3289
-directly applying float_of_int.2810
-directly applying calc_dirvec_rows.3302
-directly applying add_mod5.2859
-directly applying calc_dirvecs.3297
-directly applying float_of_int.2810
-directly applying create_dirvec_elements.3308
-directly applying create_dirvec.3306
-directly applying create_dirvecs.3311
-directly applying create_dirvec_elements.3308
-directly applying create_dirvec.3306
-directly applying init_dirvec_constants.3313
-directly applying setup_dirvec_constants.3098
-directly applying init_vecset_constants.3316
-directly applying init_dirvec_constants.3313
-directly applying init_vecset_constants.3316
-directly applying calc_dirvec_rows.3302
-directly applying create_dirvecs.3311
-directly applying setup_dirvec_constants.3098
-directly applying vecset.2862
-directly applying d_vec.2969
-directly applying create_dirvec.3306
-directly applying add_reflection.3320
-directly applying add_reflection.3320
-directly applying add_reflection.3320
-directly applying o_diffuse.2932
-directly applying add_reflection.3320
-directly applying o_param_c.2922
-directly applying o_param_b.2920
-directly applying o_param_a.2918
-directly applying veciprod.2883
-directly applying o_param_abc.2924
-directly applying o_diffuse.2932
-directly applying setup_surface_reflection.3330
-directly applying setup_rect_reflection.3327
-directly applying o_form.2910
-directly applying o_diffuse.2932
-directly applying o_reflectiontype.2912
-directly applying setup_reflections.3333
-directly applying setup_dirvec_constants.3098
-directly applying veccpy.2872
-directly applying d_vec.2969
-directly applying init_dirvecs.3318
-directly applying write_ppm_header.3243
-directly applying read_parameter.3000
-directly applying float_of_int.2810
-free variable(s) create_pixelline.3282 pretrace_line.3259 scan_line.3269 found in function rt.3335
-function rt.3335 cannot be directly applied in fact
-directly applying setup_reflections.3333
-directly applying setup_dirvec_constants.3098
-directly applying veccpy.2872
-directly applying d_vec.2969
-directly applying init_dirvecs.3318
-directly applying write_ppm_header.3243
-directly applying read_parameter.3000
-directly applying float_of_int.2810
-create closure(s) rt.3335
-eliminating closure(s) setup_reflections.3333
-eliminating closure(s) setup_surface_reflection.3330
-eliminating closure(s) setup_rect_reflection.3327
-eliminating closure(s) add_reflection.3320
-eliminating closure(s) init_dirvecs.3318
-eliminating closure(s) init_vecset_constants.3316
-eliminating closure(s) init_dirvec_constants.3313
-eliminating closure(s) create_dirvecs.3311
-eliminating closure(s) create_dirvec_elements.3308
-eliminating closure(s) create_dirvec.3306
-eliminating closure(s) calc_dirvec_rows.3302
-eliminating closure(s) calc_dirvecs.3297
-eliminating closure(s) calc_dirvec.3289
-eliminating closure(s) adjust_position.3286
-eliminating closure(s) tan.3284
-create closure(s) create_pixelline.3282
-create closure(s) init_line_elements.3279
-create closure(s) create_pixel.3277
-eliminating closure(s) create_float5x3array.3275
-create closure(s) scan_line.3269
-eliminating closure(s) scan_pixel.3263
-create closure(s) pretrace_line.3259
-create closure(s) pretrace_pixels.3252
-eliminating closure(s) pretrace_diffuse_rays.3249
-eliminating closure(s) write_rgb.3247
-eliminating closure(s) write_rgb_element.3245
-eliminating closure(s) write_ppm_header.3243
-eliminating closure(s) try_exploit_neighbors.3236
-eliminating closure(s) neighbors_are_available.3230
-eliminating closure(s) get_surface_id.3227
-eliminating closure(s) neighbors_exist.3223
-eliminating closure(s) do_without_neighbors.3220
-eliminating closure(s) calc_diffuse_using_5points.3214
-eliminating closure(s) calc_diffuse_using_1point.3211
-eliminating closure(s) trace_diffuse_ray_80percent.3207
-eliminating closure(s) trace_diffuse_rays.3203
-eliminating closure(s) iter_trace_diffuse_rays.3198
-eliminating closure(s) trace_diffuse_ray.3195
-create closure(s) trace_ray.3189
-eliminating closure(s) trace_reflections.3184
-eliminating closure(s) add_light.3180
-eliminating closure(s) utexture.3177
-eliminating closure(s) get_nvector.3174
-eliminating closure(s) get_nvector_second.3172
-eliminating closure(s) get_nvector_plane.3170
-eliminating closure(s) get_nvector_rect.3168
-eliminating closure(s) judge_intersection_fast.3166
-eliminating closure(s) trace_or_matrix_fast.3162
-eliminating closure(s) solve_one_or_network_fast.3158
-eliminating closure(s) solve_each_element_fast.3154
-eliminating closure(s) judge_intersection.3152
-eliminating closure(s) trace_or_matrix.3148
-eliminating closure(s) solve_one_or_network.3144
-eliminating closure(s) solve_each_element.3140
-eliminating closure(s) shadow_check_one_or_matrix.3137
-eliminating closure(s) shadow_check_one_or_group.3134
-eliminating closure(s) shadow_check_and_group.3131
-eliminating closure(s) check_all_inside.3125
-eliminating closure(s) is_outside.3120
-eliminating closure(s) is_second_outside.3115
-eliminating closure(s) is_plane_outside.3110
-eliminating closure(s) is_rect_outside.3105
-eliminating closure(s) setup_startp.3103
-eliminating closure(s) setup_startp_constants.3100
-eliminating closure(s) setup_dirvec_constants.3098
-eliminating closure(s) iter_setup_dirvec_constants.3095
-eliminating closure(s) setup_second_table.3092
-eliminating closure(s) setup_surface_table.3089
-eliminating closure(s) setup_rect_table.3086
-eliminating closure(s) solver_fast2.3083
-eliminating closure(s) solver_second_fast2.3076
-eliminating closure(s) solver_surface_fast2.3069
-eliminating closure(s) solver_fast.3065
-eliminating closure(s) solver_second_fast.3059
-eliminating closure(s) solver_surface_fast.3053
-eliminating closure(s) solver_rect_fast.3046
-eliminating closure(s) solver.3042
-eliminating closure(s) solver_second.3036
-eliminating closure(s) bilinear.3028
-eliminating closure(s) quadratic.3023
-eliminating closure(s) solver_surface.3017
-eliminating closure(s) solver_rect.3011
-eliminating closure(s) solver_rect_surface.3002
-eliminating closure(s) read_parameter.3000
-eliminating closure(s) read_and_network.2998
-eliminating closure(s) read_or_network.2996
-eliminating closure(s) read_net_item.2994
-eliminating closure(s) read_all_object.2992
-eliminating closure(s) read_object.2990
-eliminating closure(s) read_nth_object.2988
-eliminating closure(s) rotate_quadratic_matrix.2985
-eliminating closure(s) read_light.2983
-eliminating closure(s) read_screen_settings.2981
-eliminating closure(s) rad.2979
-eliminating closure(s) r_bright.2977
-eliminating closure(s) r_dvec.2975
-eliminating closure(s) r_surface_id.2973
-eliminating closure(s) d_const.2971
-eliminating closure(s) d_vec.2969
-eliminating closure(s) p_nvectors.2967
-eliminating closure(s) p_set_group_id.2964
-eliminating closure(s) p_group_id.2962
-eliminating closure(s) p_received_ray_20percent.2960
-eliminating closure(s) p_energy.2958
-eliminating closure(s) p_calc_diffuse.2956
-eliminating closure(s) p_surface_ids.2954
-eliminating closure(s) p_intersection_points.2952
-eliminating closure(s) p_rgb.2950
-eliminating closure(s) o_param_ctbl.2948
-eliminating closure(s) o_param_r3.2946
-eliminating closure(s) o_param_r2.2944
-eliminating closure(s) o_param_r1.2942
-eliminating closure(s) o_color_blue.2940
-eliminating closure(s) o_color_green.2938
-eliminating closure(s) o_color_red.2936
-eliminating closure(s) o_hilight.2934
-eliminating closure(s) o_diffuse.2932
-eliminating closure(s) o_param_z.2930
-eliminating closure(s) o_param_y.2928
-eliminating closure(s) o_param_x.2926
-eliminating closure(s) o_param_abc.2924
-eliminating closure(s) o_param_c.2922
-eliminating closure(s) o_param_b.2920
-eliminating closure(s) o_param_a.2918
-eliminating closure(s) o_isrot.2916
-eliminating closure(s) o_isinvert.2914
-eliminating closure(s) o_reflectiontype.2912
-eliminating closure(s) o_form.2910
-eliminating closure(s) o_texturetype.2908
-eliminating closure(s) vecaccumv.2904
-eliminating closure(s) vecscale.2901
-eliminating closure(s) vecmul.2898
-eliminating closure(s) vecadd.2895
-eliminating closure(s) vecaccum.2891
-eliminating closure(s) veciprod2.2886
-eliminating closure(s) veciprod.2883
-eliminating closure(s) vecunit_sgn.2880
-eliminating closure(s) vecunit.2878
-eliminating closure(s) vecdist2.2875
-eliminating closure(s) veccpy.2872
-eliminating closure(s) vecbzero.2870
-eliminating closure(s) vecfill.2867
-eliminating closure(s) vecset.2862
-eliminating closure(s) add_mod5.2859
-eliminating closure(s) fneg_cond.2856
-eliminating closure(s) sgn.2854
-eliminating closure(s) xor.2851
-eliminating closure(s) print_int.2847
-eliminating closure(s) print_uint.2845
-eliminating closure(s) div10.2843
-eliminating closure(s) div10_sub.2839
-eliminating closure(s) mul10.2837
-eliminating closure(s) print_num.2835
-eliminating closure(s) atan.2833
-eliminating closure(s) atan_body.2831
-eliminating closure(s) cos.2829
-eliminating closure(s) sin.2827
-eliminating closure(s) cos_body.2825
-eliminating closure(s) sin_body.2823
-eliminating closure(s) modulo_2pi.2821
-eliminating closure(s) fuga.2817
-eliminating closure(s) hoge.2814
-eliminating closure(s) floor.2812
-eliminating closure(s) float_of_int.2810
-eliminating closure(s) int_of_float.2808
-eliminating closure(s) fabs.2806
-eliminating closure(s) fsqr.2804
-eliminating closure(s) fhalf.2802
-eliminating closure(s) xor.2799
-eliminating closure(s) fiszero.2797
-eliminating closure(s) fisneg.2795
-eliminating closure(s) fispos.2793
-eliminating closure(s) print_char.2791
-register allocation: may take some time (up to a few minutes, depending on the size of functions)
-generating assembly...
+1  Ti259.3347 
+2  Ti259.3347 Ti260.3348 
+3  
+4  
+print graph
+Ti259.3347  Ti260.3348 
+Ti260.3348  Ti259.3347 
+print map
+Ti259.3347 %r2
+Ti260.3348 %r1
+print fmap
+allocate print_char.2801
+5  
+allocate fispos.2803
+6  
+7  
+8  
+allocate fisneg.2805
+9  
+10  
+11  
+allocate fiszero.2807
+12  
+13  
+14  
+allocate xor.2809
+15  
+16  
+17  
+allocate fhalf.2812
+18  
+19  
+allocate fsqr.2814
+20  
+allocate fabs.2816
+21  
+22  
+23  
+allocate int_of_float.2818
+24  
+allocate float_of_int.2820
+25  
+allocate floor.2822
+26  Ti2794.6781 
+27  
+28  
+29  
+30  
+31  
+allocate hoge.2824
+32  
+33  
+34  
+35  
+36  
+allocate fuga.2827
+37  
+38  
+39  
+40  
+41  
+42  
+43  
+44  
+45  
+46  
+47  
+48  
+allocate modulo_2pi.2831
+49  
+50  
+51  
+52  
+allocate sin_body.2833
+53  
+54  
+55  
+56  
+57  
+58  
+59  
+60  
+61  
+62  
+63  
+64  
+65  
+66  
+67  
+68  
+allocate cos_body.2835
+69  
+70  
+71  
+72  
+73  
+74  
+75  
+76  
+77  
+78  
+79  
+allocate sin.2837
+80  
+81  
+82  
+83  
+84  
+85  
+86  
+87  
+88  
+89  
+90  
+91  
+92  
+93  
+94  
+95  
+96  
+97  
+98  
+99  
+100  
+101  
+102  
+103  
+104  
+105  
+106  
+107  
+108  
+109  
+110  
+111  
+112  
+113  
+114  
+115  
+116  
+117  
+118  
+119  
+120  
+121  
+122  
+123  
+124  
+125  
+126  
+allocate cos.2839
+127  
+128  
+129  
+130  
+131  
+132  
+133  
+134  
+135  
+136  
+137  
+138  
+139  
+140  
+141  
+142  
+143  
+144  
+145  
+146  
+147  
+148  
+149  
+150  
+151  
+152  
+153  
+154  
+155  
+156  
+157  
+158  
+159  
+160  
+161  
+162  
+163  
+164  
+165  
+166  
+167  
+168  
+169  
+170  
+171  
+172  
+173  
+allocate atan_body.2841
+174  
+175  
+176  
+177  
+178  
+179  
+180  
+181  
+182  
+183  
+184  
+185  
+186  
+187  
+188  
+189  
+190  
+191  
+192  
+193  
+194  
+195  
+196  
+197  
+198  
+199  
+200  
+201  
+202  
+203  
+204  
+allocate atan.2843
+205  
+206  
+207  
+208  
+209  
+210  
+211  
+212  
+213  
+214  
+215  
+216  
+217  
+218  
+219  
+220  
+221  
+222  
+223  
+224  
+225  
+226  
+227  
+228  
+allocate print_num.2845
+229  Ti2646.6603 
+230  
+allocate mul10.2847
+231  a.6599 n.2848 
+232  a.6599 b.6600 
+233  
+allocate div10_sub.2849
+234  Ti2637.6597 l.2851 n.2850 r.2852 
+235  k.6592 l.2851 n.2850 r.2852 
+236  Ti2639.6593 k.6592 l.2851 n.2850 r.2852 
+237  k.6592 l.2851 n.2850 r.2852 
+238  
+239  Ti2640.6595 k.6592 n.2850 r.2852 
+240  Ti2642.6594 k.6592 n.2850 r.2852 
+241  k.6592 n.2850 r.2852 
+242  
+243  
+allocate div10.2853
+244  Ti2625.6588 n.2854 
+245  Ti2625.6588 Ti2627.6589 n.2854 
+246  Ti2628.6585 n.2854 
+247  Ti2628.6585 Ti2630.6586 n.2854 
+248  Ti2631.6582 n.2854 
+249  Ti2631.6582 Ti2633.6583 n.2854 
+250  Ti2634.6581 n.2854 
+251  Ti2635.6579 
+252  
+allocate print_uint.2855
+253  n.2856 
+254  
+255  a.6575 n.2856 
+256  a.6575 n.2856 
+257  Ti2622.6578 n.2856 
+258  Ti2623.6577 
+259  
+allocate print_int.2857
+260  n.2858 
+261  Ti2619.6509 n.2858 
+262  n.2858 
+263  Ti2620.6508 
+264  
+265  n.2858 
+266  
+267  Ti2563.6511 n.2858 
+268  n.2858 
+269  Ti2601.6529 n.2858 
+270  Ti2601.6529 Ti2603.6530 n.2858 
+271  Ti2604.6526 n.2858 
+272  Ti2604.6526 Ti2606.6527 n.2858 
+273  Ti2607.6523 n.2858 
+274  Ti2607.6523 Ti2609.6524 n.2858 
+275  Ti2610.6522 n.2858 
+276  Ti2611.6520 n.2858 
+277  a.6512 n.2858 
+278  a.6512 n.2858 
+279  Ti2614.6516 a.6512 n.2858 
+280  Ti2614.6516 Ti2616.6517 n.2858 
+281  Ti2617.6515 n.2858 
+282  Ti2618.6514 
+283  
+284  Ti2565.6570 n.2858 
+285  Ti2565.6570 Ti2567.6571 n.2858 
+286  Ti2568.6567 n.2858 
+287  Ti2568.6567 Ti2570.6568 n.2858 
+288  Ti2571.6565 n.2858 
+289  b.6533 n.2858 
+290  Ti2574.6561 b.6533 n.2858 
+291  Ti2574.6561 Ti2576.6562 b.6533 n.2858 
+292  Ti2577.6558 b.6533 n.2858 
+293  Ti2577.6558 Ti2579.6559 b.6533 n.2858 
+294  Ti2580.6557 b.6533 n.2858 
+295  b.6533 n.6534 
+296  Ti2582.6553 b.6533 n.6534 
+297  Ti2582.6553 Ti2584.6554 b.6533 n.6534 
+298  Ti2585.6550 b.6533 n.6534 
+299  Ti2585.6550 Ti2587.6551 b.6533 n.6534 
+300  Ti2588.6547 b.6533 n.6534 
+301  Ti2588.6547 Ti2590.6548 b.6533 n.6534 
+302  Ti2591.6546 b.6533 n.6534 
+303  Ti2592.6544 b.6533 n.6534 
+304  a.6535 b.6533 n.6534 
+305  a.6535 n.6534 
+306  a.6535 n.6534 
+307  Ti2595.6540 a.6535 n.6534 
+308  Ti2595.6540 Ti2597.6541 n.6534 
+309  Ti2598.6539 n.6534 
+310  Ti2599.6538 
+311  
+allocate xor.2859
+312  y.2861 
+313  
+314  
+315  
+316  
+allocate sgn.2862
+317  Tb2555.6500 
+318  
+319  
+320  Tb2557.6502 
+321  
+322  
+323  
+allocate fneg_cond.2864
+324  
+325  
+326  
+allocate add_mod5.2867
+327  sum.6496 
+328  sum.6496 
+329  
+330  
+allocate vecset.2870
+331  v.2871 
+332  v.2871 
+333  
+allocate vecfill.2875
+334  v.2876 
+335  v.2876 
+336  
+allocate vecbzero.2878
+337  v.2879 
+338  
+allocate veccpy.2880
+339  dest.2881 src.2882 
+340  dest.2881 src.2882 
+341  dest.2881 src.2882 
+342  dest.2881 src.2882 
+343  dest.2881 
+344  
+allocate vecdist2.2883
+345  p.2884 q.2885 
+346  p.2884 q.2885 
+347  p.2884 q.2885 
+348  p.2884 q.2885 
+349  p.2884 q.2885 
+350  p.2884 q.2885 
+351  p.2884 q.2885 
+352  p.2884 q.2885 
+353  p.2884 q.2885 
+354  q.2885 
+355  
+356  
+357  
+358  
+allocate vecunit.2886
+359  v.2887 
+360  v.2887 
+361  v.2887 
+362  v.2887 
+363  v.2887 
+364  v.2887 
+365  v.2887 
+366  v.2887 
+367  v.2887 
+368  v.2887 
+369  v.2887 
+370  v.2887 
+371  v.2887 
+372  v.2887 
+373  v.2887 
+374  v.2887 
+375  v.2887 
+376  v.2887 
+377  v.2887 
+378  
+allocate vecunit_sgn.2888
+379  inv.2890 v.2889 
+380  inv.2890 v.2889 
+381  inv.2890 v.2889 
+382  inv.2890 v.2889 
+383  inv.2890 v.2889 
+384  inv.2890 v.2889 
+385  inv.2890 v.2889 
+386  inv.2890 v.2889 
+387  inv.2890 v.2889 
+388  Tb2475.6411 inv.2890 v.2889 
+389  inv.2890 v.2889 
+390  v.2889 
+391  v.2889 
+392  v.2889 
+393  v.2889 
+394  v.2889 
+395  v.2889 
+396  v.2889 
+397  v.2889 
+398  
+399  v.2889 
+400  
+401  
+402  
+403  
+404  
+allocate veciprod.2891
+405  v.2892 w.2893 
+406  v.2892 w.2893 
+407  v.2892 w.2893 
+408  v.2892 w.2893 
+409  v.2892 w.2893 
+410  v.2892 w.2893 
+411  v.2892 w.2893 
+412  w.2893 
+413  
+414  
+415  
+allocate veciprod2.2894
+416  v.2895 
+417  v.2895 
+418  v.2895 
+419  v.2895 
+420  v.2895 
+421  
+422  
+423  
+allocate vecaccum.2899
+424  dest.2900 v.2902 
+425  dest.2900 v.2902 
+426  dest.2900 v.2902 
+427  dest.2900 v.2902 
+428  dest.2900 v.2902 
+429  dest.2900 v.2902 
+430  dest.2900 v.2902 
+431  dest.2900 v.2902 
+432  dest.2900 v.2902 
+433  dest.2900 v.2902 
+434  dest.2900 v.2902 
+435  dest.2900 
+436  dest.2900 
+437  dest.2900 
+438  
+allocate vecadd.2903
+439  dest.2904 v.2905 
+440  dest.2904 v.2905 
+441  dest.2904 v.2905 
+442  dest.2904 v.2905 
+443  dest.2904 v.2905 
+444  dest.2904 v.2905 
+445  dest.2904 v.2905 
+446  dest.2904 v.2905 
+447  dest.2904 v.2905 
+448  dest.2904 
+449  dest.2904 
+450  
+allocate vecmul.2906
+451  dest.2907 v.2908 
+452  dest.2907 v.2908 
+453  dest.2907 v.2908 
+454  dest.2907 v.2908 
+455  dest.2907 v.2908 
+456  dest.2907 v.2908 
+457  dest.2907 v.2908 
+458  dest.2907 v.2908 
+459  dest.2907 v.2908 
+460  dest.2907 
+461  dest.2907 
+462  
+allocate vecscale.2909
+463  dest.2910 
+464  dest.2910 
+465  dest.2910 
+466  dest.2910 
+467  dest.2910 
+468  dest.2910 
+469  dest.2910 
+470  dest.2910 
+471  
+allocate vecaccumv.2912
+472  dest.2913 v.2914 w.2915 
+473  dest.2913 v.2914 w.2915 
+474  dest.2913 v.2914 w.2915 
+475  dest.2913 v.2914 w.2915 
+476  dest.2913 v.2914 w.2915 
+477  dest.2913 v.2914 w.2915 
+478  dest.2913 v.2914 w.2915 
+479  dest.2913 v.2914 w.2915 
+480  dest.2913 v.2914 w.2915 
+481  dest.2913 v.2914 w.2915 
+482  dest.2913 v.2914 w.2915 
+483  dest.2913 v.2914 w.2915 
+484  dest.2913 v.2914 w.2915 
+485  dest.2913 w.2915 
+486  dest.2913 
+487  dest.2913 
+488  dest.2913 
+489  
+allocate o_texturetype.2916
+490  m_tex.6252 
+491  
+allocate o_form.2918
+492  m_shape.6242 
+493  
+allocate o_reflectiontype.2920
+494  m_surface.6232 
+495  
+allocate o_isinvert.2922
+496  m_invert.6225 
+497  
+allocate o_isrot.2924
+498  m_isrot.6211 
+499  
+allocate o_param_a.2926
+500  m_abc.6200 
+501  
+allocate o_param_b.2928
+502  m_abc.6188 
+503  
+allocate o_param_c.2930
+504  m_abc.6176 
+505  
+allocate o_param_abc.2932
+506  m_abc.6165 
+507  
+allocate o_param_x.2934
+508  m_xyz.6154 
+509  
+allocate o_param_y.2936
+510  m_xyz.6142 
+511  
+allocate o_param_z.2938
+512  m_xyz.6130 
+513  
+allocate o_diffuse.2940
+514  m_surfparams.6120 
+515  
+allocate o_hilight.2942
+516  m_surfparams.6108 
+517  
+allocate o_color_red.2944
+518  m_color.6097 
+519  
+allocate o_color_green.2946
+520  m_color.6085 
+521  
+allocate o_color_blue.2948
+522  m_color.6073 
+523  
+allocate o_param_r1.2950
+524  m_rot123.6062 
+525  
+allocate o_param_r2.2952
+526  m_rot123.6050 
+527  
+allocate o_param_r3.2954
+528  m_rot123.6038 
+529  
+allocate o_param_ctbl.2956
+530  m_ctbl.6028 
+531  
+allocate p_rgb.2958
+532  m_rgb.6010 
+533  
+allocate p_intersection_points.2960
+534  m_isect_ps.6003 
+535  
+allocate p_surface_ids.2962
+536  m_sids.5996 
+537  
+allocate p_calc_diffuse.2964
+538  m_cdif.5989 
+539  
+allocate p_energy.2966
+540  m_engy.5982 
+541  
+allocate p_received_ray_20percent.2968
+542  m_r20p.5975 
+543  
+allocate p_group_id.2970
+544  m_gid.5967 
+545  
+allocate p_set_group_id.2972
+546  id.2974 m_gid.5958 
+547  
+allocate p_nvectors.2975
+548  m_nvectors.5951 
+549  
+allocate d_vec.2977
+550  m_vec.5942 
+551  
+allocate d_const.2979
+552  m_const.5941 
+553  
+allocate r_surface_id.2981
+554  m_sid.5937 
+555  
+allocate r_dvec.2983
+556  m_dvec.5935 
+557  
+allocate r_bright.2985
+558  
+559  
+allocate rad.2987
+560  
+561  
+allocate read_screen_settings.2989
+562  %r0 
+563  %r0 
+564  %r0 
+565  %r0 
+566  %r0 
+567  %r0 
+568  %r0 
+569  %r0 
+570  %r0 
+571  %r0 
+572  %r0 
+573  %r0 
+574  %r0 
+575  %r0 
+576  %r0 
+577  %r0 
+578  %r0 
+579  %r0 
+580  %r0 
+581  %r0 
+582  %r0 
+583  %r0 
+584  %r0 
+585  %r0 
+586  %r0 
+587  %r0 
+588  %r0 
+589  %r0 
+590  %r0 
+591  %r0 
+592  %r0 
+593  %r0 
+594  %r0 
+595  %r0 
+596  %r0 
+597  %r0 
+598  %r0 
+599  %r0 
+600  %r0 
+601  %r0 
+602  %r0 
+603  %r0 
+604  %r0 
+605  %r0 
+606  %r0 
+607  %r0 
+608  %r0 
+609  %r0 
+610  %r0 
+611  %r0 
+612  %r0 
+613  %r0 
+614  
+allocate read_light.2991
+615  %r0 
+616  %r0 
+617  %r0 
+618  %r0 
+619  %r0 
+620  %r0 
+621  %r0 
+622  %r0 
+623  %r0 
+624  %r0 
+625  %r0 
+626  %r0 
+627  %r0 
+628  %r0 
+629  %r0 
+630  %r0 
+631  %r0 
+632  %r0 
+633  %r0 
+634  %r0 
+635  
+allocate rotate_quadratic_matrix.2993
+636  abc.2994 rot.2995 
+637  abc.2994 rot.2995 
+638  abc.2994 rot.2995 
+639  abc.2994 rot.2995 
+640  abc.2994 rot.2995 
+641  abc.2994 rot.2995 
+642  abc.2994 rot.2995 
+643  abc.2994 rot.2995 
+644  abc.2994 rot.2995 
+645  abc.2994 rot.2995 
+646  abc.2994 rot.2995 
+647  abc.2994 rot.2995 
+648  abc.2994 rot.2995 
+649  abc.2994 rot.2995 
+650  abc.2994 rot.2995 
+651  abc.2994 rot.2995 
+652  abc.2994 rot.2995 
+653  abc.2994 rot.2995 
+654  abc.2994 rot.2995 
+655  abc.2994 rot.2995 
+656  abc.2994 rot.2995 
+657  abc.2994 rot.2995 
+658  abc.2994 rot.2995 
+659  abc.2994 rot.2995 
+660  abc.2994 rot.2995 
+661  abc.2994 rot.2995 
+662  abc.2994 rot.2995 
+663  abc.2994 rot.2995 
+664  abc.2994 rot.2995 
+665  abc.2994 rot.2995 
+666  abc.2994 rot.2995 
+667  abc.2994 rot.2995 
+668  abc.2994 rot.2995 
+669  abc.2994 rot.2995 
+670  abc.2994 rot.2995 
+671  abc.2994 rot.2995 
+672  abc.2994 rot.2995 
+673  abc.2994 rot.2995 
+674  abc.2994 rot.2995 
+675  abc.2994 rot.2995 
+676  abc.2994 rot.2995 
+677  abc.2994 rot.2995 
+678  abc.2994 rot.2995 
+679  abc.2994 rot.2995 
+680  abc.2994 rot.2995 
+681  abc.2994 rot.2995 
+682  abc.2994 rot.2995 
+683  abc.2994 rot.2995 
+684  abc.2994 rot.2995 
+685  abc.2994 rot.2995 
+686  abc.2994 rot.2995 
+687  abc.2994 rot.2995 
+688  abc.2994 rot.2995 
+689  abc.2994 rot.2995 
+690  abc.2994 rot.2995 
+691  abc.2994 rot.2995 
+692  abc.2994 rot.2995 
+693  abc.2994 rot.2995 
+694  abc.2994 rot.2995 
+695  abc.2994 rot.2995 
+696  rot.2995 
+697  rot.2995 
+698  rot.2995 
+699  rot.2995 
+700  rot.2995 
+701  rot.2995 
+702  rot.2995 
+703  rot.2995 
+704  rot.2995 
+705  rot.2995 
+706  rot.2995 
+707  rot.2995 
+708  rot.2995 
+709  rot.2995 
+710  rot.2995 
+711  rot.2995 
+712  rot.2995 
+713  rot.2995 
+714  rot.2995 
+715  rot.2995 
+716  rot.2995 
+717  rot.2995 
+718  rot.2995 
+719  rot.2995 
+720  rot.2995 
+721  rot.2995 
+722  rot.2995 
+723  rot.2995 
+724  rot.2995 
+725  rot.2995 
+726  
+allocate read_nth_object.2996
+727  %r4 n.2997 
+728  %r4 n.2997 texture.5567 
+729  %r4 n.2997 texture.5567 
+730  %r4 n.2997 texture.5567 
+731  %r4 form.5569 n.2997 texture.5567 
+732  %r4 form.5569 n.2997 texture.5567 
+733  %r4 form.5569 n.2997 refltype.5570 texture.5567 
+734  %r4 form.5569 n.2997 refltype.5570 texture.5567 
+735  %r4 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 
+736  %r4 Ti2056.5689 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 
+737  %r4 Ti2056.5689 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 
+738  %r4 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 
+739  %r4 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 
+740  %r4 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 
+741  %r4 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 
+742  %r4 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 
+743  %r4 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 
+744  %r4 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 
+745  %r4 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 
+746  %r4 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 
+747  %r4 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 
+748  %r4 Ti2067.5678 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 
+749  %r4 Ti2067.5678 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 
+750  %r4 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 xyz.5576 
+751  %r4 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 xyz.5576 
+752  %r4 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 xyz.5576 
+753  %r4 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 xyz.5576 
+754  %r4 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 xyz.5576 
+755  %r4 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 xyz.5576 
+756  %r4 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 xyz.5576 
+757  %r4 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 xyz.5576 
+758  %r4 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 xyz.5576 
+759  %r4 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 xyz.5576 
+760  %r4 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 xyz.5576 
+761  %r4 abc.5572 form.5569 isrot_p.5571 n.2997 refltype.5570 texture.5567 xyz.5576 
+762  %r4 abc.5572 form.5569 isrot_p.5571 m_invert.5580 n.2997 refltype.5570 texture.5567 xyz.5576 
+763  %r4 Ti2080.5665 abc.5572 form.5569 isrot_p.5571 m_invert.5580 n.2997 refltype.5570 texture.5567 xyz.5576 
+764  %r4 Ti2080.5665 abc.5572 form.5569 isrot_p.5571 m_invert.5580 n.2997 refltype.5570 texture.5567 xyz.5576 
+765  %r4 abc.5572 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 texture.5567 xyz.5576 
+766  %r4 abc.5572 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 texture.5567 xyz.5576 
+767  %r4 abc.5572 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 texture.5567 xyz.5576 
+768  %r4 abc.5572 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 texture.5567 xyz.5576 
+769  %r4 abc.5572 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 texture.5567 xyz.5576 
+770  %r4 abc.5572 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 texture.5567 xyz.5576 
+771  %r4 abc.5572 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 texture.5567 xyz.5576 
+772  %r4 Ti2088.5657 abc.5572 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 texture.5567 xyz.5576 
+773  %r4 Ti2088.5657 abc.5572 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 texture.5567 xyz.5576 
+774  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 texture.5567 xyz.5576 
+775  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 texture.5567 xyz.5576 
+776  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 texture.5567 xyz.5576 
+777  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 texture.5567 xyz.5576 
+778  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 texture.5567 xyz.5576 
+779  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 texture.5567 xyz.5576 
+780  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 texture.5567 xyz.5576 
+781  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 texture.5567 xyz.5576 
+782  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 texture.5567 xyz.5576 
+783  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 texture.5567 xyz.5576 
+784  %r4 Ti2099.5646 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 texture.5567 xyz.5576 
+785  %r4 Ti2099.5646 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 texture.5567 xyz.5576 
+786  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 rotation.5588 texture.5567 xyz.5576 
+787  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 rotation.5588 texture.5567 xyz.5576 
+788  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 m_invert2.5590 n.2997 reflparam.5581 refltype.5570 rotation.5588 texture.5567 xyz.5576 
+789  %r4 Ti2115.5628 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 m_invert2.5590 n.2997 reflparam.5581 refltype.5570 rotation.5588 texture.5567 xyz.5576 
+790  %r4 Ti2115.5628 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 m_invert2.5590 n.2997 reflparam.5581 refltype.5570 rotation.5588 texture.5567 xyz.5576 
+791  %r4 abc.5572 color.5584 ctbl.5591 form.5569 isrot_p.5571 m_invert.5580 m_invert2.5590 n.2997 reflparam.5581 refltype.5570 rotation.5588 texture.5567 xyz.5576 
+792  %r4 abc.5572 color.5584 ctbl.5591 form.5569 isrot_p.5571 m_invert.5580 m_invert2.5590 n.2997 reflparam.5581 refltype.5570 rotation.5588 t.6787 texture.5567 xyz.5576 
+793  abc.5572 color.5584 ctbl.5591 form.5569 isrot_p.5571 m_invert.5580 m_invert2.5590 n.2997 reflparam.5581 refltype.5570 rotation.5588 t.6787 texture.5567 xyz.5576 
+794  abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 m_invert2.5590 n.2997 reflparam.5581 refltype.5570 rotation.5588 t.6787 texture.5567 xyz.5576 
+795  abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 m_invert2.5590 n.2997 reflparam.5581 refltype.5570 rotation.5588 t.6787 texture.5567 xyz.5576 
+796  abc.5572 form.5569 isrot_p.5571 m_invert.5580 m_invert2.5590 n.2997 reflparam.5581 refltype.5570 rotation.5588 t.6787 texture.5567 xyz.5576 
+797  abc.5572 form.5569 isrot_p.5571 m_invert.5580 m_invert2.5590 n.2997 refltype.5570 rotation.5588 t.6787 texture.5567 xyz.5576 
+798  abc.5572 form.5569 isrot_p.5571 m_invert.5580 n.2997 refltype.5570 rotation.5588 t.6787 texture.5567 xyz.5576 
+799  abc.5572 form.5569 isrot_p.5571 m_invert.5580 n.2997 refltype.5570 rotation.5588 t.6787 texture.5567 
+800  abc.5572 form.5569 isrot_p.5571 m_invert.5580 n.2997 refltype.5570 rotation.5588 t.6787 texture.5567 
+801  abc.5572 form.5569 isrot_p.5571 m_invert.5580 n.2997 refltype.5570 rotation.5588 t.6787 texture.5567 
+802  abc.5572 form.5569 isrot_p.5571 m_invert.5580 n.2997 rotation.5588 t.6787 texture.5567 
+803  abc.5572 form.5569 isrot_p.5571 m_invert.5580 n.2997 rotation.5588 t.6787 texture.5567 
+804  abc.5572 form.5569 isrot_p.5571 m_invert.5580 n.2997 rotation.5588 t.6787 
+805  abc.5572 form.5569 isrot_p.5571 m_invert.5580 n.2997 obj.5592 rotation.5588 
+806  Ta2117.5627 abc.5572 form.5569 isrot_p.5571 m_invert.5580 n.2997 obj.5592 rotation.5588 
+807  abc.5572 form.5569 isrot_p.5571 m_invert.5580 rotation.5588 
+808  abc.5572 form.5569 isrot_p.5571 m_invert.5580 rotation.5588 
+809  abc.5572 rotation.5588 
+810  
+811  
+812  
+813  abc.5572 m_invert.5580 
+814  
+815  Ti2142.5599 abc.5572 
+816  
+817  Ti2142.5599 abc.5572 
+818  Ti2142.5599 abc.5572 
+819  abc.5572 isrot_p.5571 rotation.5588 
+820  Tb2121.5622 abc.5572 isrot_p.5571 rotation.5588 
+821  abc.5572 isrot_p.5571 rotation.5588 
+822  abc.5572 isrot_p.5571 rotation.5588 
+823  abc.5572 isrot_p.5571 rotation.5588 
+824  Tb2128.5615 abc.5572 isrot_p.5571 rotation.5588 
+825  abc.5572 isrot_p.5571 rotation.5588 
+826  abc.5572 isrot_p.5571 rotation.5588 
+827  abc.5572 isrot_p.5571 rotation.5588 
+828  Tb2135.5608 abc.5572 isrot_p.5571 rotation.5588 
+829  abc.5572 isrot_p.5571 rotation.5588 
+830  abc.5572 isrot_p.5571 rotation.5588 
+831  abc.5572 isrot_p.5571 rotation.5588 
+832  abc.5572 isrot_p.5571 rotation.5588 
+833  abc.5572 isrot_p.5571 rotation.5588 
+834  abc.5572 isrot_p.5571 rotation.5588 
+835  abc.5572 isrot_p.5571 rotation.5588 
+836  abc.5572 isrot_p.5571 rotation.5588 
+837  abc.5572 isrot_p.5571 rotation.5588 
+838  abc.5572 isrot_p.5571 rotation.5588 
+839  abc.5572 isrot_p.5571 rotation.5588 
+840  abc.5572 isrot_p.5571 rotation.5588 
+841  abc.5572 isrot_p.5571 rotation.5588 
+842  abc.5572 isrot_p.5571 rotation.5588 
+843  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 m_invert2.5590 n.2997 reflparam.5581 refltype.5570 rotation.5588 texture.5567 xyz.5576 
+844  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 m_invert2.5590 n.2997 reflparam.5581 refltype.5570 rotation.5588 texture.5567 xyz.5576 
+845  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 rotation.5588 texture.5567 xyz.5576 
+846  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 rotation.5588 texture.5567 xyz.5576 
+847  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 rotation.5588 texture.5567 xyz.5576 
+848  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 rotation.5588 texture.5567 xyz.5576 
+849  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 rotation.5588 texture.5567 xyz.5576 
+850  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 rotation.5588 texture.5567 xyz.5576 
+851  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 rotation.5588 texture.5567 xyz.5576 
+852  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 rotation.5588 texture.5567 xyz.5576 
+853  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 rotation.5588 texture.5567 xyz.5576 
+854  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 rotation.5588 texture.5567 xyz.5576 
+855  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 rotation.5588 texture.5567 xyz.5576 
+856  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 rotation.5588 texture.5567 xyz.5576 
+857  %r4 abc.5572 color.5584 form.5569 isrot_p.5571 m_invert.5580 n.2997 reflparam.5581 refltype.5570 rotation.5588 texture.5567 xyz.5576 
+858  
+allocate read_object.2998
+859  %r0 Ti2043.5560 n.2999 
+860  %r0 n.2999 
+861  %r0 Tb2044.5561 n.2999 
+862  %r0 n.2999 
+863  Ti2049.5563 
+864  
+865  
+866  
+allocate read_all_object.3000
+867  Ti2042.5559 
+868  
+allocate read_net_item.3002
+869  length.3003 
+870  item.5547 length.3003 
+871  item.5547 length.3003 
+872  Ti2041.5551 item.5547 length.3003 
+873  item.5547 length.3003 v.5549 
+874  v.5549 
+875  
+876  Ti2037.5553 
+877  Ti2037.5553 Ti2039.5554 
+878  
+allocate read_or_network.3004
+879  Ti2024.5546 length.3005 
+880  length.3005 net.5535 
+881  Ti2026.5536 length.3005 net.5535 
+882  length.3005 net.5535 
+883  Ti2032.5540 length.3005 net.5535 
+884  length.3005 net.5535 v.5538 
+885  v.5538 
+886  
+887  Ti2030.5542 net.5535 
+888  
+allocate read_and_network.3006
+889  Ti2016.5534 n.3007 
+890  n.3007 net.5525 
+891  Ti2018.5526 n.3007 net.5525 
+892  n.3007 net.5525 
+893  Ta2021.5531 n.3007 net.5525 
+894  n.3007 
+895  Ti2023.5529 
+896  
+897  
+allocate read_parameter.3008
+898  %r0 
+899  %r0 
+900  %r0 
+901  %r0 
+902  %r0 
+903  %r0 
+904  %r0 Ti2011.5521 
+905  %r0 
+906  %r0 Ti2014.5520 
+907  %r0 Ta2015.5519 
+908  
+allocate solver_rect_surface.3010
+909  %r0 dirvec.3012 i0.3016 i1.3017 i2.3018 m.3011 
+910  %r0 Tb1987.5487 dirvec.3012 i0.3016 i1.3017 i2.3018 m.3011 
+911  %r0 dirvec.3012 i0.3016 i1.3017 i2.3018 m.3011 
+912  
+913  %r0 abc.5489 dirvec.3012 i0.3016 i1.3017 i2.3018 m.3011 
+914  %r0 Tb1989.5509 abc.5489 dirvec.3012 i0.3016 i1.3017 i2.3018 
+915  %r0 Tb1989.5509 abc.5489 dirvec.3012 i0.3016 i1.3017 i2.3018 
+916  %r0 Tb1989.5509 Tb1991.5510 abc.5489 dirvec.3012 i0.3016 i1.3017 i2.3018 
+917  %r0 Tb1992.5507 abc.5489 dirvec.3012 i0.3016 i1.3017 i2.3018 
+918  %r0 Tb1992.5507 abc.5489 dirvec.3012 i0.3016 i1.3017 i2.3018 
+919  %r0 abc.5489 dirvec.3012 i0.3016 i1.3017 i2.3018 
+920  %r0 abc.5489 dirvec.3012 i0.3016 i1.3017 i2.3018 
+921  %r0 abc.5489 dirvec.3012 i1.3017 i2.3018 
+922  %r0 abc.5489 dirvec.3012 i1.3017 i2.3018 
+923  %r0 abc.5489 dirvec.3012 i1.3017 i2.3018 
+924  %r0 abc.5489 dirvec.3012 i2.3018 
+925  %r0 abc.5489 dirvec.3012 i2.3018 
+926  %r0 abc.5489 dirvec.3012 i2.3018 
+927  %r0 abc.5489 dirvec.3012 i2.3018 
+928  %r0 abc.5489 dirvec.3012 i2.3018 
+929  %r0 dirvec.3012 i2.3018 
+930  %r0 
+931  %r0 
+932  %r0 
+933  %r0 
+934  %r0 
+935  
+936  
+937  
+938  
+allocate solver_rect.3019
+939  Ti1971.5484 dirvec.3021 m.3020 
+940  Ti1971.5484 Ti1972.5485 dirvec.3021 m.3020 
+941  Ti1971.5484 Ti1972.5485 Ti1973.5486 dirvec.3021 m.3020 
+942  Tb1974.5472 dirvec.3021 m.3020 
+943  dirvec.3021 m.3020 
+944  
+945  Ti1976.5481 dirvec.3021 m.3020 
+946  Ti1976.5481 Ti1977.5482 dirvec.3021 m.3020 
+947  Ti1976.5481 Ti1977.5482 Ti1978.5483 dirvec.3021 m.3020 
+948  Tb1979.5474 dirvec.3021 m.3020 
+949  dirvec.3021 m.3020 
+950  
+951  Ti1981.5478 dirvec.3021 m.3020 
+952  Ti1981.5478 Ti1982.5479 dirvec.3021 m.3020 
+953  Ti1981.5478 Ti1982.5479 Ti1983.5480 dirvec.3021 m.3020 
+954  Tb1984.5476 
+955  
+956  
+957  
+allocate solver_surface.3025
+958  %r0 abc.5462 dirvec.3027 
+959  %r0 abc.5462 
+960  %r0 Tb1964.5464 abc.5462 
+961  %r0 abc.5462 
+962  %r0 
+963  %r0 
+964  %r0 
+965  
+966  
+967  
+allocate quadratic.3031
+968  m.3032 
+969  m.3032 
+970  m.3032 
+971  m.3032 
+972  m.3032 
+973  m.3032 
+974  m.3032 
+975  m.3032 
+976  m.3032 
+977  m.3032 
+978  m.3032 
+979  Ti1951.5439 m.3032 
+980  m.3032 
+981  m.3032 
+982  m.3032 
+983  m.3032 
+984  m.3032 
+985  m.3032 
+986  m.3032 
+987  m.3032 
+988  m.3032 
+989  m.3032 
+990  
+991  
+992  
+993  
+allocate bilinear.3036
+994  m.3037 
+995  m.3037 
+996  m.3037 
+997  m.3037 
+998  m.3037 
+999  m.3037 
+1000  m.3037 
+1001  m.3037 
+1002  m.3037 
+1003  m.3037 
+1004  m.3037 
+1005  Ti1921.5408 m.3037 
+1006  m.3037 
+1007  m.3037 
+1008  m.3037 
+1009  m.3037 
+1010  m.3037 
+1011  m.3037 
+1012  m.3037 
+1013  m.3037 
+1014  m.3037 
+1015  m.3037 
+1016  m.3037 
+1017  m.3037 
+1018  m.3037 
+1019  m.3037 
+1020  m.3037 
+1021  
+1022  
+1023  
+1024  
+1025  
+1026  
+allocate solver_second.3044
+1027  %r0 dirvec.3046 m.3045 
+1028  %r0 dirvec.3046 m.3045 
+1029  %r0 dirvec.3046 m.3045 
+1030  %r0 dirvec.3046 m.3045 
+1031  %r0 Tb1890.5373 dirvec.3046 m.3045 
+1032  %r0 dirvec.3046 m.3045 
+1033  
+1034  %r0 dirvec.3046 m.3045 
+1035  %r0 dirvec.3046 m.3045 
+1036  %r0 m.3045 
+1037  %r0 m.3045 
+1038  %r0 m.3045 
+1039  %r0 Ti1898.5392 m.3045 
+1040  %r0 m.3045 
+1041  %r0 m.3045 
+1042  %r0 m.3045 
+1043  %r0 m.3045 
+1044  %r0 Tb1903.5379 m.3045 
+1045  %r0 m.3045 
+1046  %r0 m.3045 
+1047  %r0 Tb1905.5388 
+1048  %r0 
+1049  %r0 
+1050  %r0 
+1051  
+1052  
+1053  %r0 
+1054  %r0 
+1055  
+1056  %r0 m.3045 
+1057  %r0 m.3045 
+1058  %r0 m.3045 
+allocate solver.3050
+1059  Ta1872.5371 dirvec.3052 index.3051 org.3053 
+1060  dirvec.3052 m.5355 org.3053 
+1061  dirvec.3052 m.5355 org.3053 
+1062  dirvec.3052 m.5355 org.3053 
+1063  dirvec.3052 m.5355 org.3053 
+1064  dirvec.3052 m.5355 org.3053 
+1065  dirvec.3052 m.5355 org.3053 
+1066  dirvec.3052 m.5355 org.3053 
+1067  dirvec.3052 m.5355 
+1068  dirvec.3052 m.5355 
+1069  dirvec.3052 m.5355 
+1070  dirvec.3052 m.5355 m_shape.5359 
+1071  dirvec.3052 m.5355 m_shape.5359 
+1072  dirvec.3052 m.5355 
+1073  
+1074  
+1075  
+allocate solver_rect_fast.3054
+1076  %r0 dconst.3057 m.3055 v.3056 
+1077  %r0 dconst.3057 m.3055 v.3056 
+1078  %r0 dconst.3057 m.3055 v.3056 
+1079  %r0 dconst.3057 m.3055 v.3056 
+1080  %r0 dconst.3057 m.3055 v.3056 
+1081  %r0 dconst.3057 m.3055 v.3056 
+1082  %r0 dconst.3057 m.3055 v.3056 
+1083  %r0 dconst.3057 m.3055 v.3056 
+1084  %r0 dconst.3057 m.3055 v.3056 
+1085  %r0 Ti1818.5275 dconst.3057 m.3055 v.3056 
+1086  %r0 dconst.3057 m.3055 v.3056 
+1087  
+1088  
+1089  %r0 dconst.3057 m.3055 v.3056 
+1090  %r0 dconst.3057 m.3055 v.3056 
+1091  %r0 dconst.3057 m.3055 v.3056 
+1092  %r0 dconst.3057 m.3055 v.3056 
+1093  %r0 dconst.3057 m.3055 v.3056 
+1094  %r0 dconst.3057 m.3055 v.3056 
+1095  %r0 dconst.3057 m.3055 v.3056 
+1096  %r0 dconst.3057 m.3055 v.3056 
+1097  %r0 dconst.3057 m.3055 v.3056 
+1098  %r0 Ti1841.5281 dconst.3057 m.3055 v.3056 
+1099  %r0 dconst.3057 m.3055 v.3056 
+1100  
+1101  
+1102  %r0 dconst.3057 m.3055 v.3056 
+1103  %r0 dconst.3057 m.3055 v.3056 
+1104  %r0 dconst.3057 m.3055 v.3056 
+1105  %r0 dconst.3057 m.3055 v.3056 
+1106  %r0 dconst.3057 m.3055 v.3056 
+1107  %r0 dconst.3057 m.3055 v.3056 
+1108  %r0 dconst.3057 m.3055 v.3056 
+1109  %r0 dconst.3057 m.3055 v.3056 
+1110  %r0 dconst.3057 m.3055 v.3056 
+1111  %r0 Ti1864.5287 dconst.3057 m.3055 v.3056 
+1112  %r0 
+1113  
+1114  
+1115  
+1116  dconst.3057 v.3056 
+1117  dconst.3057 
+1118  dconst.3057 
+1119  dconst.3057 
+1120  dconst.3057 
+1121  dconst.3057 
+1122  
+1123  Tb1862.5296 
+1124  
+1125  
+1126  
+1127  
+1128  %r0 Ti1864.5287 
+1129  dconst.3057 v.3056 
+1130  dconst.3057 
+1131  dconst.3057 
+1132  dconst.3057 
+1133  dconst.3057 
+1134  dconst.3057 
+1135  
+1136  Tb1839.5317 
+1137  
+1138  
+1139  
+1140  
+1141  %r0 Ti1841.5281 dconst.3057 m.3055 v.3056 
+1142  dconst.3057 v.3056 
+1143  dconst.3057 
+1144  dconst.3057 
+1145  dconst.3057 
+1146  dconst.3057 
+1147  dconst.3057 
+1148  
+1149  Tb1816.5338 
+1150  
+1151  
+1152  
+1153  
+1154  %r0 Ti1818.5275 dconst.3057 m.3055 v.3056 
+allocate solver_surface_fast.3061
+1155  %r0 dconst.3063 
+1156  %r0 Tb1782.5256 dconst.3063 
+1157  %r0 dconst.3063 
+1158  %r0 dconst.3063 
+1159  %r0 dconst.3063 
+1160  %r0 dconst.3063 
+1161  %r0 dconst.3063 
+1162  %r0 dconst.3063 
+1163  %r0 
+1164  %r0 
+1165  %r0 
+1166  
+1167  
+1168  
+allocate solver_second_fast.3067
+1169  %r0 dconst.3069 m.3068 
+1170  %r0 Tb1745.5215 dconst.3069 m.3068 
+1171  %r0 dconst.3069 m.3068 
+1172  
+1173  %r0 dconst.3069 m.3068 
+1174  %r0 dconst.3069 m.3068 
+1175  %r0 dconst.3069 m.3068 
+1176  %r0 dconst.3069 m.3068 
+1177  %r0 dconst.3069 m.3068 
+1178  %r0 dconst.3069 m.3068 
+1179  %r0 dconst.3069 m.3068 
+1180  %r0 dconst.3069 m.3068 
+1181  %r0 dconst.3069 m.3068 
+1182  %r0 Ti1757.5242 dconst.3069 m.3068 
+1183  %r0 dconst.3069 m.3068 
+1184  %r0 dconst.3069 m.3068 
+1185  %r0 dconst.3069 m.3068 
+1186  %r0 dconst.3069 m.3068 
+1187  %r0 Tb1762.5221 dconst.3069 m.3068 
+1188  %r0 dconst.3069 m.3068 
+1189  %r0 Tb1764.5224 dconst.3069 
+1190  %r0 dconst.3069 
+1191  
+1192  %r0 dconst.3069 
+1193  %r0 dconst.3069 
+1194  %r0 
+1195  %r0 
+1196  
+1197  %r0 dconst.3069 
+1198  %r0 dconst.3069 
+1199  %r0 
+1200  %r0 
+1201  
+1202  
+1203  %r0 dconst.3069 m.3068 
+1204  %r0 dconst.3069 m.3068 
+1205  %r0 dconst.3069 m.3068 
+allocate solver_fast.3073
+1206  Ta1731.5213 dirvec.3075 index.3074 org.3076 
+1207  dirvec.3075 index.3074 m.5194 org.3076 
+1208  dirvec.3075 index.3074 m.5194 org.3076 
+1209  dirvec.3075 index.3074 m.5194 org.3076 
+1210  dirvec.3075 index.3074 m.5194 org.3076 
+1211  dirvec.3075 index.3074 m.5194 org.3076 
+1212  dirvec.3075 index.3074 m.5194 org.3076 
+1213  dirvec.3075 index.3074 m.5194 org.3076 
+1214  dirvec.3075 index.3074 m.5194 
+1215  dirvec.3075 index.3074 m.5194 
+1216  dirvec.3075 index.3074 m.5194 
+1217  dconsts.5198 dirvec.3075 index.3074 m.5194 
+1218  dconst.5199 dirvec.3075 m.5194 
+1219  dconst.5199 dirvec.3075 m.5194 m_shape.5200 
+1220  dconst.5199 dirvec.3075 m.5194 m_shape.5200 
+1221  dconst.5199 m.5194 
+1222  
+1223  
+1224  Ta1742.5203 dconst.5199 m.5194 
+1225  
+allocate solver_surface_fast2.3077
+1226  %r0 dconst.3079 sconst.3080 
+1227  %r0 Tb1722.5182 dconst.3079 sconst.3080 
+1228  %r0 dconst.3079 sconst.3080 
+1229  %r0 sconst.3080 
+1230  %r0 
+1231  %r0 
+1232  
+1233  
+1234  
+allocate solver_second_fast2.3084
+1235  %r0 dconst.3086 m.3085 sconst.3087 
+1236  %r0 Tb1687.5144 dconst.3086 m.3085 sconst.3087 
+1237  %r0 dconst.3086 m.3085 sconst.3087 
+1238  
+1239  %r0 dconst.3086 m.3085 sconst.3087 
+1240  %r0 dconst.3086 m.3085 sconst.3087 
+1241  %r0 dconst.3086 m.3085 sconst.3087 
+1242  %r0 dconst.3086 m.3085 sconst.3087 
+1243  %r0 dconst.3086 m.3085 sconst.3087 
+1244  %r0 dconst.3086 m.3085 sconst.3087 
+1245  %r0 dconst.3086 m.3085 sconst.3087 
+1246  %r0 dconst.3086 m.3085 sconst.3087 
+1247  %r0 dconst.3086 m.3085 
+1248  %r0 dconst.3086 m.3085 
+1249  %r0 dconst.3086 m.3085 
+1250  %r0 dconst.3086 m.3085 
+1251  %r0 Tb1702.5149 dconst.3086 m.3085 
+1252  %r0 dconst.3086 m.3085 
+1253  %r0 Tb1704.5152 dconst.3086 
+1254  %r0 dconst.3086 
+1255  
+1256  %r0 dconst.3086 
+1257  %r0 dconst.3086 
+1258  %r0 
+1259  %r0 
+1260  
+1261  %r0 dconst.3086 
+1262  %r0 dconst.3086 
+1263  %r0 
+1264  %r0 
+1265  
+1266  
+allocate solver_fast2.3091
+1267  Ta1679.5142 dirvec.3093 index.3092 
+1268  dirvec.3093 index.3092 m.5128 
+1269  dirvec.3093 index.3092 m.5128 sconst.5129 
+1270  dirvec.3093 index.3092 m.5128 sconst.5129 
+1271  dirvec.3093 index.3092 m.5128 sconst.5129 
+1272  dirvec.3093 index.3092 m.5128 sconst.5129 
+1273  dconsts.5133 dirvec.3093 index.3092 m.5128 sconst.5129 
+1274  dconst.5134 dirvec.3093 m.5128 sconst.5129 
+1275  dconst.5134 dirvec.3093 m.5128 m_shape.5135 sconst.5129 
+1276  dconst.5134 dirvec.3093 m.5128 m_shape.5135 sconst.5129 
+1277  dconst.5134 m.5128 sconst.5129 
+1278  
+1279  
+1280  Ta1684.5138 dconst.5134 m.5128 
+1281  
+allocate setup_rect_table.3094
+1282  Ti1620.5126 m.3096 vec.3095 
+1283  Ti1620.5126 m.3096 vec.3095 
+1284  const.5062 m.3096 vec.3095 
+1285  const.5062 m.3096 vec.3095 
+1286  Tb1624.5106 const.5062 m.3096 vec.3095 
+1287  const.5062 m.3096 vec.3095 
+1288  const.5062 m.3096 vec.3095 
+1289  Tb1643.5086 const.5062 m.3096 vec.3095 
+1290  const.5062 m.3096 vec.3095 
+1291  const.5062 m.3096 vec.3095 
+1292  Tb1662.5066 const.5062 m.3096 vec.3095 
+1293  const.5062 m.3096 vec.3095 
+1294  
+1295  const.5062 
+1296  Tb1665.5080 const.5062 m.3096 vec.3095 
+1297  Tb1665.5080 const.5062 m.3096 vec.3095 
+1298  Tb1665.5080 Tb1668.5081 const.5062 m.3096 vec.3095 
+1299  Tb1669.5078 const.5062 m.3096 vec.3095 
+1300  Tb1669.5078 const.5062 vec.3095 
+1301  const.5062 vec.3095 
+1302  const.5062 vec.3095 
+1303  const.5062 vec.3095 
+1304  const.5062 
+1305  const.5062 
+1306  const.5062 
+1307  const.5062 m.3096 vec.3095 
+1308  Tb1646.5100 const.5062 m.3096 vec.3095 
+1309  Tb1646.5100 const.5062 m.3096 vec.3095 
+1310  Tb1646.5100 Tb1649.5101 const.5062 m.3096 vec.3095 
+1311  Tb1650.5098 const.5062 m.3096 vec.3095 
+1312  Tb1650.5098 const.5062 m.3096 vec.3095 
+1313  const.5062 m.3096 vec.3095 
+1314  const.5062 m.3096 vec.3095 
+1315  const.5062 m.3096 vec.3095 
+1316  const.5062 m.3096 vec.3095 
+1317  const.5062 m.3096 vec.3095 
+1318  const.5062 m.3096 vec.3095 
+1319  const.5062 m.3096 vec.3095 
+1320  Tb1627.5120 const.5062 m.3096 vec.3095 
+1321  Tb1627.5120 const.5062 m.3096 vec.3095 
+1322  Tb1627.5120 Tb1630.5121 const.5062 m.3096 vec.3095 
+1323  Tb1631.5118 const.5062 m.3096 vec.3095 
+1324  Tb1631.5118 const.5062 m.3096 vec.3095 
+1325  const.5062 m.3096 vec.3095 
+1326  const.5062 m.3096 vec.3095 
+1327  const.5062 m.3096 vec.3095 
+1328  const.5062 m.3096 vec.3095 
+1329  const.5062 m.3096 vec.3095 
+1330  const.5062 m.3096 vec.3095 
+allocate setup_surface_table.3097
+1331  Ti1586.5060 m.3099 vec.3098 
+1332  Ti1586.5060 m.3099 vec.3098 
+1333  const.5022 m.3099 vec.3098 
+1334  const.5022 m.3099 vec.3098 
+1335  const.5022 m.3099 vec.3098 
+1336  const.5022 m.3099 vec.3098 
+1337  const.5022 m.3099 vec.3098 
+1338  const.5022 m.3099 vec.3098 
+1339  const.5022 m.3099 vec.3098 
+1340  const.5022 m.3099 vec.3098 
+1341  const.5022 m.3099 
+1342  const.5022 m.3099 
+1343  const.5022 m.3099 
+1344  const.5022 m.3099 
+1345  Tb1601.5025 const.5022 m.3099 
+1346  const.5022 m.3099 
+1347  
+1348  const.5022 m.3099 
+1349  const.5022 m.3099 
+1350  const.5022 m.3099 
+1351  const.5022 m.3099 
+1352  const.5022 m.3099 
+1353  const.5022 m.3099 
+1354  const.5022 m.3099 
+1355  const.5022 m.3099 
+1356  const.5022 m.3099 
+1357  const.5022 m.3099 
+1358  const.5022 m.3099 
+1359  const.5022 
+1360  const.5022 
+1361  const.5022 
+1362  const.5022 
+1363  const.5022 
+allocate setup_second_table.3100
+1364  Ti1519.5020 m.3102 v.3101 
+1365  Ti1519.5020 m.3102 v.3101 
+1366  const.4943 m.3102 v.3101 
+1367  const.4943 m.3102 v.3101 
+1368  const.4943 m.3102 v.3101 
+1369  const.4943 m.3102 v.3101 
+1370  const.4943 m.3102 v.3101 
+1371  const.4943 m.3102 v.3101 
+1372  const.4943 m.3102 v.3101 
+1373  const.4943 m.3102 v.3101 
+1374  const.4943 m.3102 v.3101 
+1375  const.4943 m.3102 v.3101 
+1376  const.4943 m.3102 v.3101 
+1377  const.4943 m.3102 v.3101 
+1378  const.4943 m.3102 v.3101 
+1379  const.4943 m.3102 v.3101 
+1380  const.4943 m.3102 v.3101 
+1381  const.4943 m.3102 v.3101 
+1382  const.4943 m.3102 v.3101 
+1383  const.4943 m.3102 v.3101 
+1384  Ti1540.4956 const.4943 m.3102 v.3101 
+1385  const.4943 m.3102 v.3101 
+1386  Tb1581.4951 const.4943 
+1387  const.4943 
+1388  
+1389  const.4943 
+1390  const.4943 
+1391  const.4943 
+1392  const.4943 
+1393  const.4943 m.3102 v.3101 
+1394  const.4943 m.3102 v.3101 
+1395  const.4943 m.3102 v.3101 
+1396  const.4943 m.3102 v.3101 
+1397  const.4943 m.3102 v.3101 
+1398  const.4943 m.3102 v.3101 
+1399  const.4943 m.3102 v.3101 
+1400  const.4943 m.3102 v.3101 
+1401  const.4943 m.3102 v.3101 
+1402  const.4943 m.3102 v.3101 
+1403  const.4943 m.3102 v.3101 
+1404  const.4943 m.3102 v.3101 
+1405  const.4943 m.3102 v.3101 
+1406  const.4943 m.3102 v.3101 
+1407  const.4943 m.3102 v.3101 
+1408  const.4943 m.3102 v.3101 
+1409  const.4943 m.3102 v.3101 
+1410  const.4943 m.3102 v.3101 
+1411  const.4943 m.3102 v.3101 
+1412  const.4943 m.3102 v.3101 
+1413  const.4943 m.3102 v.3101 
+1414  const.4943 m.3102 v.3101 
+1415  const.4943 m.3102 v.3101 
+1416  const.4943 m.3102 
+1417  const.4943 
+1418  const.4943 
+1419  const.4943 
+1420  const.4943 
+1421  const.4943 
+1422  const.4943 
+1423  const.4943 
+1424  const.4943 
+1425  const.4943 
+allocate iter_setup_dirvec_constants.3103
+1426  dirvec.3104 index.3105 
+1427  
+1428  Ta1511.4942 dirvec.3104 index.3105 
+1429  dirvec.3104 index.3105 m.4930 
+1430  dconst.4931 dirvec.3104 index.3105 m.4930 
+1431  dconst.4931 dirvec.3104 index.3105 m.4930 v.4932 
+1432  dconst.4931 dirvec.3104 index.3105 m.4930 m_shape.4933 v.4932 
+1433  dconst.4931 dirvec.3104 index.3105 m.4930 m_shape.4933 v.4932 
+1434  Ti1518.4935 dirvec.3104 
+1435  
+1436  dconst.4931 index.3105 m.4930 v.4932 
+1437  Ta1516.4939 dconst.4931 index.3105 
+1438  
+1439  Ta1515.4940 dconst.4931 index.3105 
+1440  
+1441  Ta1513.4941 dconst.4931 dirvec.3104 index.3105 
+1442  dirvec.3104 index.3105 
+allocate setup_dirvec_constants.3106
+1443  Ti1507.4925 dirvec.3107 
+1444  Ti1509.4924 dirvec.3107 
+1445  
+allocate setup_startp_constants.3108
+1446  index.3110 p.3109 
+1447  
+1448  Ta1466.4923 index.3110 p.3109 
+1449  index.3110 obj.4877 p.3109 
+1450  index.3110 obj.4877 p.3109 sconst.4878 
+1451  index.3110 m_shape.4879 obj.4877 p.3109 sconst.4878 
+1452  index.3110 m_shape.4879 obj.4877 p.3109 sconst.4878 
+1453  index.3110 m_shape.4879 obj.4877 p.3109 sconst.4878 
+1454  index.3110 m_shape.4879 obj.4877 p.3109 sconst.4878 
+1455  index.3110 m_shape.4879 obj.4877 p.3109 sconst.4878 
+1456  index.3110 m_shape.4879 obj.4877 p.3109 sconst.4878 
+1457  index.3110 m_shape.4879 obj.4877 p.3109 sconst.4878 
+1458  index.3110 m_shape.4879 obj.4877 p.3109 sconst.4878 
+1459  index.3110 m_shape.4879 obj.4877 p.3109 sconst.4878 
+1460  index.3110 m_shape.4879 obj.4877 p.3109 sconst.4878 
+1461  index.3110 m_shape.4879 obj.4877 p.3109 sconst.4878 
+1462  index.3110 m_shape.4879 obj.4877 p.3109 sconst.4878 
+1463  index.3110 m_shape.4879 obj.4877 p.3109 sconst.4878 
+1464  index.3110 m_shape.4879 obj.4877 p.3109 sconst.4878 
+1465  Ti1504.4884 p.3109 
+1466  
+1467  m_shape.4879 obj.4877 sconst.4878 
+1468  m_shape.4879 obj.4877 sconst.4878 
+1469  m_shape.4879 obj.4877 sconst.4878 
+1470  m_shape.4879 obj.4877 sconst.4878 
+1471  m_shape.4879 sconst.4878 
+1472  sconst.4878 
+1473  
+1474  sconst.4878 
+1475  sconst.4878 
+1476  sconst.4878 
+1477  
+1478  Ta1484.4901 index.3110 p.3109 sconst.4878 
+1479  Ta1484.4901 index.3110 p.3109 sconst.4878 
+1480  Ta1484.4901 index.3110 p.3109 sconst.4878 
+1481  Ta1484.4901 index.3110 p.3109 sconst.4878 
+1482  index.3110 p.3109 sconst.4878 
+1483  index.3110 p.3109 
+allocate setup_startp.3111
+1484  %r0 Ta1459.4875 p.3112 
+1485  %r0 p.3112 
+1486  Ti1462.4871 p.3112 
+1487  Ti1464.4870 p.3112 
+1488  
+allocate is_rect_outside.3113
+1489  m.3114 
+1490  m.3114 
+1491  Ti1455.4859 m.3114 
+1492  m.3114 
+1493  
+1494  Tb1457.4861 
+1495  
+1496  
+1497  
+1498  m.3114 
+1499  m.3114 
+1500  m.3114 
+1501  
+1502  
+1503  
+1504  
+1505  
+1506  
+1507  Ti1455.4859 m.3114 
+allocate is_plane_outside.3118
+1508  Ta1444.4858 m.3119 
+1509  m.3119 
+1510  Tb1445.4856 
+1511  Tb1445.4856 Tb1446.4857 
+1512  Tb1447.4854 
+1513  
+1514  
+1515  
+allocate is_second_outside.3123
+1516  m.3124 
+1517  Ti1437.4850 m.3124 
+1518  m.3124 
+1519  Tb1440.4848 
+1520  Tb1440.4848 Tb1441.4849 
+1521  Tb1442.4846 
+1522  
+1523  
+1524  
+1525  m.3124 
+1526  m.3124 
+1527  m.3124 
+allocate is_outside.3128
+1528  m.3129 
+1529  m.3129 
+1530  m.3129 
+1531  m.3129 
+1532  m.3129 
+1533  m.3129 
+1534  m.3129 m_shape.4838 
+1535  m.3129 m_shape.4838 
+1536  m.3129 
+1537  
+1538  
+1539  
+allocate check_all_inside.3133
+1540  head.4826 iand.3135 ofs.3134 
+1541  head.4826 iand.3135 ofs.3134 
+1542  Ta1426.4833 head.4826 iand.3135 ofs.3134 
+1543  Tt1427.4832 iand.3135 ofs.3134 
+1544  Tb1428.4828 iand.3135 ofs.3134 
+1545  iand.3135 ofs.3134 
+1546  
+1547  Ti1431.4830 iand.3135 
+1548  
+1549  
+allocate shadow_check_and_group.3139
+1550  %r0 Ti1380.4775 and_group.3141 iand_ofs.3140 
+1551  %r0 and_group.3141 iand_ofs.3140 
+1552  %r0 and_group.3141 iand_ofs.3140 obj.4777 
+1553  %r0 Tt1383.4823 and_group.3141 iand_ofs.3140 obj.4777 
+1554  %r0 Ta1384.4824 Tt1383.4823 and_group.3141 iand_ofs.3140 obj.4777 
+1555  %r0 and_group.3141 iand_ofs.3140 obj.4777 t0.4778 
+1556  %r0 and_group.3141 iand_ofs.3140 obj.4777 t0.4778 
+1557  %r0 Ti1389.4780 and_group.3141 iand_ofs.3140 obj.4777 
+1558  %r0 and_group.3141 iand_ofs.3140 obj.4777 
+1559  %r0 and_group.3141 iand_ofs.3140 
+1560  %r0 and_group.3141 iand_ofs.3140 
+1561  %r0 and_group.3141 iand_ofs.3140 
+1562  %r0 and_group.3141 iand_ofs.3140 
+1563  %r0 and_group.3141 iand_ofs.3140 
+1564  %r0 and_group.3141 iand_ofs.3140 
+1565  %r0 and_group.3141 iand_ofs.3140 
+1566  %r0 and_group.3141 iand_ofs.3140 
+1567  %r0 and_group.3141 iand_ofs.3140 
+1568  %r0 and_group.3141 iand_ofs.3140 
+1569  %r0 and_group.3141 iand_ofs.3140 
+1570  %r0 and_group.3141 iand_ofs.3140 
+1571  and_group.3141 iand_ofs.3140 
+1572  and_group.3141 iand_ofs.3140 
+1573  Ti1419.4790 and_group.3141 iand_ofs.3140 
+1574  Tb1420.4786 and_group.3141 iand_ofs.3140 
+1575  and_group.3141 iand_ofs.3140 
+1576  
+1577  Ti1423.4788 and_group.3141 
+1578  
+1579  Ta1391.4818 and_group.3141 iand_ofs.3140 obj.4777 
+1580  Tt1392.4817 and_group.3141 iand_ofs.3140 
+1581  Tb1393.4813 and_group.3141 iand_ofs.3140 
+1582  and_group.3141 iand_ofs.3140 
+1583  Ti1396.4815 and_group.3141 
+1584  
+1585  
+1586  
+1587  
+1588  
+1589  
+1590  %r0 Ti1389.4780 and_group.3141 iand_ofs.3140 obj.4777 
+1591  
+allocate shadow_check_one_or_group.3142
+1592  head.4765 ofs.3143 or_group.3144 
+1593  head.4765 ofs.3143 or_group.3144 
+1594  Ta1375.4773 head.4765 ofs.3143 or_group.3144 
+1595  and_group.4767 ofs.3143 or_group.3144 
+1596  Ti1376.4772 and_group.4767 ofs.3143 or_group.3144 
+1597  ofs.3143 or_group.3144 shadow_p.4768 
+1598  ofs.3143 or_group.3144 
+1599  
+1600  Ti1379.4770 or_group.3144 
+1601  
+1602  
+allocate shadow_check_one_or_matrix.3145
+1603  %r0 head.4739 ofs.3146 or_matrix.3147 
+1604  %r0 head.4739 ofs.3146 or_matrix.3147 range_primitive.4740 
+1605  %r0 head.4739 ofs.3146 or_matrix.3147 range_primitive.4740 
+1606  %r0 Ti1353.4751 head.4739 ofs.3146 or_matrix.3147 range_primitive.4740 
+1607  %r0 Ti1364.4742 head.4739 ofs.3146 or_matrix.3147 range_primitive.4740 
+1608  head.4739 ofs.3146 or_matrix.3147 
+1609  Ti1368.4748 head.4739 ofs.3146 or_matrix.3147 
+1610  Tb1369.4744 ofs.3146 or_matrix.3147 
+1611  ofs.3146 or_matrix.3147 
+1612  
+1613  Ti1372.4746 or_matrix.3147 
+1614  
+1615  Ti1367.4749 or_matrix.3147 
+1616  
+1617  %r0 Tt1354.4761 head.4739 range_primitive.4740 
+1618  %r0 Ta1355.4762 Tt1354.4761 head.4739 range_primitive.4740 
+1619  %r0 head.4739 t.4752 
+1620  %r0 head.4739 
+1621  %r0 head.4739 
+1622  head.4739 
+1623  head.4739 
+1624  Ti1361.4758 head.4739 
+1625  Tb1362.4756 
+1626  
+1627  
+1628  
+1629  
+1630  
+1631  Ti1364.4742 head.4739 ofs.3146 or_matrix.3147 
+1632  
+allocate solve_each_element.3148
+1633  %r0 and_group.3150 dirvec.3151 iand_ofs.3149 iobj.4681 
+1634  %r0 and_group.3150 dirvec.3151 iand_ofs.3149 iobj.4681 
+1635  %r0 Ta1305.4737 and_group.3150 dirvec.3151 iand_ofs.3149 iobj.4681 
+1636  %r0 and_group.3150 dirvec.3151 iand_ofs.3149 iobj.4681 t0.4683 
+1637  %r0 and_group.3150 dirvec.3151 iand_ofs.3149 iobj.4681 t0.4683 
+1638  %r0 and_group.3150 dirvec.3151 iand_ofs.3149 iobj.4681 t0.4683 
+1639  %r0 and_group.3150 dirvec.3151 iand_ofs.3149 iobj.4681 t0.4683 
+1640  Ti1349.4687 and_group.3150 dirvec.3151 
+1641  
+1642  %r0 and_group.3150 dirvec.3151 iobj.4681 t0.4683 
+1643  %r0 and_group.3150 dirvec.3151 iobj.4681 t0.4683 
+1644  %r0 and_group.3150 dirvec.3151 iobj.4681 t0.4683 
+1645  %r0 and_group.3150 dirvec.3151 iobj.4681 t0.4683 
+1646  %r0 and_group.3150 dirvec.3151 iobj.4681 t0.4683 
+1647  %r0 and_group.3150 dirvec.3151 iobj.4681 t0.4683 
+1648  %r0 and_group.3150 dirvec.3151 iobj.4681 t0.4683 
+1649  %r0 and_group.3150 dirvec.3151 iobj.4681 t0.4683 
+1650  %r0 and_group.3150 dirvec.3151 iobj.4681 t0.4683 
+1651  %r0 and_group.3150 dirvec.3151 iobj.4681 t0.4683 
+1652  %r0 and_group.3150 dirvec.3151 iobj.4681 t0.4683 
+1653  %r0 and_group.3150 dirvec.3151 iobj.4681 t0.4683 
+1654  %r0 and_group.3150 iobj.4681 t0.4683 
+1655  %r0 and_group.3150 iobj.4681 t0.4683 
+1656  %r0 and_group.3150 iobj.4681 t0.4683 
+1657  %r0 and_group.3150 iobj.4681 t0.4683 
+1658  %r0 Ti1338.4707 and_group.3150 iobj.4681 t0.4683 
+1659  %r0 Tb1339.4695 iobj.4681 t0.4683 
+1660  %r0 iobj.4681 t0.4683 
+1661  %r0 iobj.4681 t0.4683 
+1662  %r0 Ta1343.4704 iobj.4681 t0.4683 
+1663  %r0 iobj.4681 t0.4683 
+1664  %r0 t0.4683 
+1665  
+1666  
+1667  
+1668  and_group.3150 dirvec.3151 iand_ofs.3149 
+1669  Ta1307.4736 and_group.3150 dirvec.3151 iand_ofs.3149 iobj.4681 
+1670  Tt1308.4735 and_group.3150 dirvec.3151 iand_ofs.3149 
+1671  Tb1309.4731 and_group.3150 dirvec.3151 iand_ofs.3149 
+1672  and_group.3150 dirvec.3151 iand_ofs.3149 
+1673  Ti1312.4733 and_group.3150 dirvec.3151 
+1674  
+1675  
+1676  
+allocate solve_one_or_network.3152
+1677  dirvec.3155 head.4672 ofs.3153 or_group.3154 
+1678  dirvec.3155 head.4672 ofs.3153 or_group.3154 
+1679  Ta1299.4679 dirvec.3155 head.4672 ofs.3153 or_group.3154 
+1680  and_group.4674 dirvec.3155 ofs.3153 or_group.3154 
+1681  Ti1300.4678 and_group.4674 dirvec.3155 ofs.3153 or_group.3154 
+1682  dirvec.3155 ofs.3153 or_group.3154 
+1683  Ti1302.4676 dirvec.3155 or_group.3154 
+1684  
+1685  
+allocate trace_or_matrix.3156
+1686  %r0 dirvec.3159 head.4652 ofs.3157 or_network.3158 
+1687  %r0 dirvec.3159 head.4652 ofs.3157 or_network.3158 range_primitive.4653 
+1688  %r0 dirvec.3159 head.4652 ofs.3157 or_network.3158 range_primitive.4653 
+1689  %r0 Ti1285.4658 dirvec.3159 head.4652 ofs.3157 or_network.3158 range_primitive.4653 
+1690  %r0 dirvec.3159 head.4652 ofs.3157 or_network.3158 range_primitive.4653 
+1691  Ti1296.4656 dirvec.3159 or_network.3158 
+1692  
+1693  %r0 Ta1287.4668 dirvec.3159 head.4652 range_primitive.4653 
+1694  %r0 dirvec.3159 head.4652 t.4659 
+1695  %r0 dirvec.3159 head.4652 
+1696  %r0 dirvec.3159 head.4652 
+1697  dirvec.3159 head.4652 
+1698  dirvec.3159 head.4652 
+1699  Ti1294.4663 dirvec.3159 head.4652 
+1700  
+1701  
+1702  
+1703  Ti1286.4669 dirvec.3159 head.4652 ofs.3157 or_network.3158 
+1704  dirvec.3159 ofs.3157 or_network.3158 
+1705  
+allocate judge_intersection.3160
+1706  %r0 dirvec.3161 
+1707  %r0 dirvec.3161 
+1708  %r0 Ti1274.4645 dirvec.3161 
+1709  %r0 Ta1277.4646 Ti1274.4645 dirvec.3161 
+1710  %r0 
+1711  
+1712  
+1713  
+1714  
+1715  
+1716  
+1717  
+1718  
+allocate solve_each_element_fast.3162
+1719  %r0 and_group.3164 dirvec.3165 iand_ofs.3163 vec.4579 
+1720  %r0 and_group.3164 dirvec.3165 iand_ofs.3163 iobj.4580 vec.4579 
+1721  %r0 and_group.3164 dirvec.3165 iand_ofs.3163 iobj.4580 vec.4579 
+1722  %r0 and_group.3164 dirvec.3165 iand_ofs.3163 iobj.4580 t0.4582 vec.4579 
+1723  %r0 and_group.3164 dirvec.3165 iand_ofs.3163 iobj.4580 t0.4582 vec.4579 
+1724  %r0 and_group.3164 dirvec.3165 iand_ofs.3163 iobj.4580 t0.4582 vec.4579 
+1725  %r0 and_group.3164 dirvec.3165 iand_ofs.3163 iobj.4580 t0.4582 vec.4579 
+1726  Ti1270.4586 and_group.3164 dirvec.3165 
+1727  
+1728  %r0 and_group.3164 iobj.4580 t0.4582 vec.4579 
+1729  %r0 and_group.3164 iobj.4580 t0.4582 vec.4579 
+1730  %r0 and_group.3164 iobj.4580 t0.4582 vec.4579 
+1731  %r0 and_group.3164 iobj.4580 t0.4582 vec.4579 
+1732  %r0 and_group.3164 iobj.4580 t0.4582 vec.4579 
+1733  %r0 and_group.3164 iobj.4580 t0.4582 vec.4579 
+1734  %r0 and_group.3164 iobj.4580 t0.4582 vec.4579 
+1735  %r0 and_group.3164 iobj.4580 t0.4582 vec.4579 
+1736  %r0 and_group.3164 iobj.4580 t0.4582 vec.4579 
+1737  %r0 and_group.3164 iobj.4580 t0.4582 vec.4579 
+1738  %r0 and_group.3164 iobj.4580 t0.4582 vec.4579 
+1739  %r0 and_group.3164 iobj.4580 t0.4582 vec.4579 
+1740  %r0 and_group.3164 iobj.4580 t0.4582 
+1741  %r0 and_group.3164 iobj.4580 t0.4582 
+1742  %r0 and_group.3164 iobj.4580 t0.4582 
+1743  %r0 and_group.3164 iobj.4580 t0.4582 
+1744  %r0 Ti1259.4607 and_group.3164 iobj.4580 t0.4582 
+1745  %r0 Tb1260.4594 iobj.4580 t0.4582 
+1746  %r0 iobj.4580 t0.4582 
+1747  %r0 iobj.4580 t0.4582 
+1748  %r0 Ta1264.4604 iobj.4580 t0.4582 
+1749  %r0 iobj.4580 t0.4582 
+1750  %r0 t0.4582 
+1751  
+1752  
+1753  
+1754  
+1755  and_group.3164 dirvec.3165 iand_ofs.3163 
+1756  Ta1228.4636 and_group.3164 dirvec.3165 iand_ofs.3163 iobj.4580 
+1757  Tt1229.4635 and_group.3164 dirvec.3165 iand_ofs.3163 
+1758  Tb1230.4631 and_group.3164 dirvec.3165 iand_ofs.3163 
+1759  and_group.3164 dirvec.3165 iand_ofs.3163 
+1760  Ti1233.4633 and_group.3164 dirvec.3165 
+1761  
+1762  
+1763  
+allocate solve_one_or_network_fast.3166
+1764  dirvec.3169 head.4570 ofs.3167 or_group.3168 
+1765  dirvec.3169 head.4570 ofs.3167 or_group.3168 
+1766  Ta1221.4577 dirvec.3169 head.4570 ofs.3167 or_group.3168 
+1767  and_group.4572 dirvec.3169 ofs.3167 or_group.3168 
+1768  Ti1222.4576 and_group.4572 dirvec.3169 ofs.3167 or_group.3168 
+1769  dirvec.3169 ofs.3167 or_group.3168 
+1770  Ti1224.4574 dirvec.3169 or_group.3168 
+1771  
+1772  
+allocate trace_or_matrix_fast.3170
+1773  %r0 dirvec.3173 head.4551 ofs.3171 or_network.3172 
+1774  %r0 dirvec.3173 head.4551 ofs.3171 or_network.3172 range_primitive.4552 
+1775  %r0 dirvec.3173 head.4551 ofs.3171 or_network.3172 range_primitive.4552 
+1776  %r0 Ti1208.4557 dirvec.3173 head.4551 ofs.3171 or_network.3172 range_primitive.4552 
+1777  %r0 dirvec.3173 head.4551 ofs.3171 or_network.3172 range_primitive.4552 
+1778  Ti1218.4555 dirvec.3173 or_network.3172 
+1779  
+1780  %r0 dirvec.3173 head.4551 t.4558 
+1781  %r0 dirvec.3173 head.4551 
+1782  %r0 dirvec.3173 head.4551 
+1783  dirvec.3173 head.4551 
+1784  dirvec.3173 head.4551 
+1785  Ti1216.4562 dirvec.3173 head.4551 
+1786  
+1787  
+1788  
+1789  Ti1209.4567 dirvec.3173 head.4551 ofs.3171 or_network.3172 
+1790  dirvec.3173 ofs.3171 or_network.3172 
+1791  
+allocate judge_intersection_fast.3174
+1792  %r0 dirvec.3175 
+1793  %r0 dirvec.3175 
+1794  %r0 Ti1197.4544 dirvec.3175 
+1795  %r0 Ta1200.4545 Ti1197.4544 dirvec.3175 
+1796  %r0 
+1797  
+1798  
+1799  
+1800  
+1801  
+1802  
+1803  
+1804  
+allocate get_nvector_rect.3176
+1805  dirvec.3177 rectside.4524 
+1806  Ta1185.4534 dirvec.3177 rectside.4524 
+1807  dirvec.3177 rectside.4524 
+1808  Ta1186.4526 dirvec.3177 rectside.4524 
+1809  Ta1186.4526 Ti1188.4527 dirvec.3177 rectside.4524 
+1810  Ta1186.4526 Ti1188.4527 Ti1190.4531 dirvec.3177 
+1811  Ta1186.4526 Ti1188.4527 
+1812  Ta1186.4526 Ti1188.4527 
+1813  Ta1186.4526 Ti1188.4527 
+1814  
+allocate get_nvector_plane.3178
+1815  %r0 m.3179 
+1816  %r0 m.3179 
+1817  %r0 m.3179 
+1818  %r0 m.3179 
+1819  %r0 m.3179 
+1820  %r0 m.3179 
+1821  %r0 
+1822  %r0 
+1823  
+allocate get_nvector_second.3180
+1824  %r0 m.3181 
+1825  %r0 m.3181 
+1826  %r0 m.3181 
+1827  %r0 m.3181 
+1828  %r0 m.3181 
+1829  %r0 m.3181 
+1830  %r0 m.3181 
+1831  %r0 m.3181 
+1832  %r0 m.3181 
+1833  %r0 m.3181 
+1834  %r0 m.3181 
+1835  %r0 m.3181 
+1836  %r0 m.3181 
+1837  %r0 m.3181 
+1838  %r0 m.3181 
+1839  %r0 Ti1134.4456 m.3181 
+1840  %r0 m.3181 
+1841  Ta1169.4454 m.3181 
+1842  Ta1169.4454 Tb1170.4455 
+1843  
+1844  %r0 m.3181 
+1845  %r0 m.3181 
+1846  %r0 m.3181 
+1847  %r0 m.3181 
+1848  %r0 m.3181 
+1849  %r0 m.3181 
+1850  %r0 m.3181 
+1851  %r0 m.3181 
+1852  %r0 m.3181 
+1853  %r0 m.3181 
+1854  %r0 m.3181 
+1855  %r0 m.3181 
+1856  %r0 m.3181 
+1857  %r0 m.3181 
+1858  %r0 m.3181 
+1859  %r0 m.3181 
+1860  %r0 m.3181 
+1861  %r0 m.3181 
+1862  %r0 m.3181 
+1863  %r0 m.3181 
+1864  %r0 m.3181 
+1865  %r0 m.3181 
+1866  %r0 m.3181 
+1867  m.3181 
+1868  %r0 m.3181 
+1869  %r0 m.3181 
+1870  m.3181 
+allocate get_nvector.3182
+1871  dirvec.3184 m.3183 m_shape.4444 
+1872  dirvec.3184 m.3183 m_shape.4444 
+1873  m.3183 
+1874  
+1875  
+1876  
+allocate utexture.3185
+1877  %r0 m.3186 m_tex.4285 p.3187 
+1878  %r0 m.3186 m_tex.4285 p.3187 
+1879  %r0 m.3186 m_tex.4285 p.3187 
+1880  %r0 m.3186 m_tex.4285 p.3187 
+1881  %r0 m.3186 m_tex.4285 p.3187 
+1882  %r0 m.3186 m_tex.4285 p.3187 
+1883  %r0 m.3186 m_tex.4285 p.3187 
+1884  %r0 m.3186 m_tex.4285 p.3187 
+1885  %r0 m.3186 m_tex.4285 p.3187 
+1886  %r0 m.3186 m_tex.4285 p.3187 
+1887  %r0 m.3186 p.3187 
+1888  
+1889  %r0 m.3186 p.3187 
+1890  %r0 m.3186 p.3187 
+1891  %r0 m.3186 p.3187 
+1892  %r0 m.3186 p.3187 
+1893  %r0 m.3186 p.3187 
+1894  %r0 m.3186 p.3187 
+1895  %r0 m.3186 p.3187 
+1896  %r0 m.3186 p.3187 
+1897  %r0 m.3186 p.3187 
+1898  %r0 m.3186 p.3187 
+1899  %r0 m.3186 p.3187 
+1900  %r0 m.3186 p.3187 
+1901  %r0 m.3186 p.3187 
+1902  %r0 m.3186 p.3187 
+1903  %r0 m.3186 p.3187 
+1904  %r0 m.3186 p.3187 
+1905  %r0 m.3186 p.3187 
+1906  %r0 m.3186 p.3187 
+1907  %r0 m.3186 p.3187 
+1908  %r0 m.3186 p.3187 
+1909  %r0 m.3186 
+1910  %r0 m.3186 
+1911  %r0 m.3186 
+1912  %r0 
+1913  %r0 
+1914  %r0 
+1915  %r0 
+1916  %r0 
+1917  %r0 
+1918  %r0 
+1919  %r0 
+1920  %r0 
+1921  %r0 
+1922  %r0 
+1923  %r0 
+1924  %r0 
+1925  %r0 
+1926  %r0 
+1927  %r0 
+1928  %r0 
+1929  %r0 Tb1109.4309 
+1930  %r0 
+1931  %r0 
+1932  %r0 
+1933  %r0 
+1934  %r0 
+1935  
+1936  %r0 
+1937  %r0 
+1938  %r0 
+1939  %r0 
+1940  %r0 
+1941  %r0 
+1942  %r0 
+1943  %r0 
+1944  %r0 
+1945  %r0 
+1946  %r0 m.3186 p.3187 
+1947  %r0 m.3186 p.3187 
+1948  %r0 m.3186 p.3187 
+1949  %r0 m.3186 p.3187 
+1950  %r0 m.3186 p.3187 
+1951  %r0 m.3186 p.3187 
+1952  %r0 m.3186 p.3187 
+1953  %r0 m.3186 p.3187 
+1954  %r0 m.3186 p.3187 
+1955  %r0 m.3186 p.3187 
+1956  %r0 m.3186 p.3187 
+1957  %r0 m.3186 
+1958  %r0 
+1959  %r0 
+1960  %r0 
+1961  %r0 
+1962  %r0 
+1963  %r0 
+1964  %r0 
+1965  %r0 
+1966  %r0 
+1967  %r0 
+1968  %r0 
+1969  %r0 
+1970  %r0 
+1971  %r0 
+1972  %r0 
+1973  %r0 
+1974  %r0 
+1975  %r0 
+1976  %r0 
+1977  %r0 
+1978  %r0 
+1979  
+1980  %r0 
+1981  %r0 
+1982  %r0 
+1983  %r0 
+1984  %r0 
+1985  %r0 
+1986  %r0 
+1987  %r0 
+1988  %r0 
+1989  %r0 
+1990  %r0 
+1991  %r0 
+1992  
+1993  %r0 m.3186 p.3187 
+1994  %r0 m.3186 p.3187 
+1995  %r0 m.3186 p.3187 
+1996  %r0 m.3186 p.3187 
+1997  %r0 m.3186 p.3187 
+1998  %r0 m.3186 p.3187 
+1999  %r0 m.3186 p.3187 
+2000  %r0 m.3186 p.3187 
+2001  %r0 m.3186 p.3187 
+2002  %r0 m.3186 p.3187 
+2003  %r0 flag1.4406 m.3186 p.3187 
+2004  %r0 flag1.4406 m.3186 
+2005  %r0 flag1.4406 
+2006  %r0 flag1.4406 
+2007  %r0 flag1.4406 
+2008  %r0 flag1.4406 
+2009  %r0 flag1.4406 
+2010  %r0 flag1.4406 
+2011  %r0 flag1.4406 
+2012  %r0 flag1.4406 
+2013  %r0 flag1.4406 
+2014  %r0 flag1.4406 flag2.4408 
+2015  %r0 flag2.4408 
+2016  
+2017  
+2018  
+2019  
+2020  
+2021  
+2022  
+2023  %r0 flag1.4406 flag2.4408 
+2024  %r0 flag1.4406 flag2.4408 
+2025  %r0 flag1.4406 m.3186 p.3187 
+2026  %r0 flag1.4406 m.3186 p.3187 
+allocate add_light.3188
+2027  %r0 Tb962.4281 
+2028  %r0 
+2029  %r0 Tb966.4256 
+2030  %r0 
+2031  %r0 
+2032  %r0 
+2033  %r0 
+2034  %r0 
+2035  %r0 
+2036  %r0 
+2037  %r0 
+2038  %r0 
+2039  %r0 
+2040  %r0 
+2041  %r0 
+2042  
+2043  
+2044  %r0 Ta964.4283 
+2045  %r0 Ta964.4283 Ta965.4284 
+2046  %r0 
+2047  %r0 
+allocate trace_reflections.3192
+2048  %r0 dirvec.3196 index.3193 
+2049  
+2050  %r0 Ta937.4254 dirvec.3196 index.3193 
+2051  %r0 dirvec.3196 index.3193 rinfo.4222 
+2052  %r0 dirvec.3196 dvec.4223 index.3193 rinfo.4222 
+2053  %r0 Tb938.4227 dirvec.3196 dvec.4223 index.3193 rinfo.4222 
+2054  %r0 dirvec.3196 dvec.4223 index.3193 rinfo.4222 
+2055  Ti961.4225 dirvec.3196 
+2056  
+2057  %r0 Ti942.4250 dirvec.3196 dvec.4223 rinfo.4222 
+2058  %r0 Ti944.4246 dirvec.3196 dvec.4223 rinfo.4222 
+2059  %r0 Ti944.4246 Ti947.4247 dirvec.3196 dvec.4223 rinfo.4222 
+2060  %r0 dirvec.3196 dvec.4223 rinfo.4222 surface_id.4229 
+2061  %r0 Ti948.4230 dirvec.3196 dvec.4223 rinfo.4222 surface_id.4229 
+2062  %r0 dirvec.3196 dvec.4223 rinfo.4222 
+2063  
+2064  %r0 Ti949.4242 dirvec.3196 dvec.4223 rinfo.4222 
+2065  Ta952.4243 Ti949.4242 dirvec.3196 dvec.4223 rinfo.4222 
+2066  Tb953.4231 dirvec.3196 dvec.4223 rinfo.4222 
+2067  dirvec.3196 dvec.4223 rinfo.4222 
+2068  
+2069  Ta955.4240 dirvec.3196 dvec.4223 rinfo.4222 
+2070  Ta955.4240 Ta956.4241 dirvec.3196 dvec.4223 rinfo.4222 
+2071  dirvec.3196 dvec.4223 rinfo.4222 
+2072  dirvec.3196 dvec.4223 
+2073  dirvec.3196 dvec.4223 
+2074  dirvec.3196 dvec.4223 
+2075  Ta958.4238 dirvec.3196 
+2076  
+2077  
+2078  
+2079  dirvec.3196 index.3193 
+allocate trace_ray.3197
+2080  %r0 dirvec.3200 nref.3198 pixel.3201 
+2081  
+2082  %r0 dirvec.3200 nref.3198 pixel.3201 surface_ids.4086 
+2083  %r0 Tb836.4087 dirvec.3200 nref.3198 pixel.3201 surface_ids.4086 
+2084  %r0 dirvec.3200 nref.3198 pixel.3201 surface_ids.4086 
+2085  %r0 dirvec.3200 nref.3198 obj_id.4089 pixel.3201 surface_ids.4086 
+2086  %r0 Ta871.4182 dirvec.3200 nref.3198 obj_id.4089 pixel.3201 surface_ids.4086 
+2087  %r0 dirvec.3200 nref.3198 obj.4090 obj_id.4089 pixel.3201 surface_ids.4086 
+2088  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 obj_id.4089 pixel.3201 surface_ids.4086 
+2089  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 obj_id.4089 pixel.3201 surface_ids.4086 
+2090  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 obj_id.4089 pixel.3201 surface_ids.4086 
+2091  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 obj_id.4089 pixel.3201 surface_ids.4086 
+2092  %r0 Ta873.4179 dirvec.3200 m_surface.4091 nref.3198 obj.4090 obj_id.4089 pixel.3201 surface_ids.4086 
+2093  %r0 Ta873.4179 Ta874.4180 dirvec.3200 m_surface.4091 nref.3198 obj.4090 obj_id.4089 pixel.3201 surface_ids.4086 
+2094  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 obj_id.4089 pixel.3201 surface_ids.4086 
+2095  %r0 Ta875.4178 dirvec.3200 m_surface.4091 nref.3198 obj.4090 obj_id.4089 pixel.3201 surface_ids.4086 
+2096  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 obj_id.4089 pixel.3201 surface_ids.4086 
+2097  %r0 Ti877.4173 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2098  %r0 Ti877.4173 Ti880.4174 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2099  %r0 Ti881.4172 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2100  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2101  %r0 dirvec.3200 intersection_points.4097 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2102  %r0 Ta882.4170 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2103  %r0 Ta882.4170 Ta883.4171 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2104  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2105  %r0 calc_diffuse.4099 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2106  %r0 calc_diffuse.4099 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2107  %r0 calc_diffuse.4099 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2108  %r0 calc_diffuse.4099 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2109  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2110  %r0 Ta898.4150 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2111  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2112  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2113  %r0 Ta900.4147 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2114  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2115  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2116  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2117  %r0 Ti902.4142 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2118  %r0 Ta905.4143 Ti902.4142 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2119  %r0 Tb906.4132 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2120  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2121  %r0 Ta914.4131 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2122  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2123  %r0 Ti917.4127 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2124  %r0 Ti919.4126 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2125  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2126  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2127  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2128  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2129  %r0 dirvec.3200 nref.3198 obj.4090 pixel.3201 
+2130  
+2131  
+2132  %r0 dirvec.3200 nref.3198 obj.4090 pixel.3201 
+2133  %r0 dirvec.3200 nref.3198 pixel.3201 
+2134  %r0 dirvec.3200 nref.3198 pixel.3201 
+2135  %r0 dirvec.3200 nref.3198 pixel.3201 
+2136  %r0 Ti931.4112 dirvec.3200 pixel.3201 
+2137  Ti931.4112 dirvec.3200 pixel.3201 
+2138  Ti931.4112 dirvec.3200 pixel.3201 
+2139  
+2140  %r0 Ti923.4122 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2141  %r0 Ti923.4122 Ti925.4123 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2142  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 
+2143  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 
+2144  
+2145  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2146  %r0 Ta908.4140 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2147  %r0 Ta908.4140 Ta909.4141 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2148  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2149  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2150  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2151  %r0 Ta912.4137 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2152  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2153  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2154  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2155  %r0 Ti896.4153 calc_diffuse.4099 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2156  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2157  %r0 Ti886.4169 calc_diffuse.4099 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2158  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2159  %r0 dirvec.3200 energya.4155 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2160  %r0 Ta887.4167 dirvec.3200 energya.4155 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2161  %r0 Ta887.4167 Ta888.4168 dirvec.3200 energya.4155 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2162  %r0 dirvec.3200 energya.4155 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2163  %r0 Ta889.4162 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2164  %r0 Ta889.4162 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2165  %r0 Ta889.4162 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2166  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2167  %r0 dirvec.3200 m_surface.4091 nref.3198 nvectors.4158 obj.4090 pixel.3201 surface_ids.4086 
+2168  %r0 Ta894.4160 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2169  %r0 Ta894.4160 Ta895.4161 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2170  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2171  %r0 dirvec.3200 m_surface.4091 nref.3198 obj.4090 pixel.3201 surface_ids.4086 
+2172  %r0 Ti839.4219 dirvec.3200 nref.3198 surface_ids.4086 
+2173  %r0 dirvec.3200 nref.3198 
+2174  %r0 dirvec.3200 
+2175  %r0 Ta841.4218 dirvec.3200 
+2176  %r0 
+2177  %r0 
+2178  %r0 Tb843.4188 
+2179  %r0 
+2180  %r0 
+2181  %r0 
+2182  %r0 
+2183  %r0 
+2184  %r0 
+2185  %r0 
+2186  %r0 
+2187  %r0 
+2188  %r0 
+2189  %r0 
+2190  %r0 
+2191  %r0 
+2192  %r0 
+2193  
+2194  
+2195  
+allocate trace_diffuse_ray.3203
+2196  %r0 Tb811.4056 dirvec.3204 
+2197  %r0 dirvec.3204 
+2198  %r0 Ta813.4081 dirvec.3204 
+2199  %r0 Ta813.4081 Ti816.4082 dirvec.3204 
+2200  %r0 dirvec.3204 obj.4058 
+2201  %r0 Ta817.4080 obj.4058 
+2202  %r0 obj.4058 
+2203  %r0 Ta818.4079 obj.4058 
+2204  %r0 obj.4058 
+2205  %r0 Ti819.4075 obj.4058 
+2206  Ta822.4076 Ti819.4075 obj.4058 
+2207  Tb823.4061 obj.4058 
+2208  obj.4058 
+2209  
+2210  Ta825.4073 obj.4058 
+2211  Ta825.4073 Ta826.4074 obj.4058 
+2212  obj.4058 
+2213  obj.4058 
+2214  Tb828.4070 obj.4058 
+2215  obj.4058 
+2216  Ta830.4065 obj.4058 
+2217  Ta830.4065 obj.4058 
+2218  Ta830.4065 
+2219  Ta830.4065 
+2220  Ta830.4065 Ta834.4067 
+2221  
+2222  obj.4058 
+2223  obj.4058 
+2224  
+allocate iter_trace_diffuse_rays.3206
+2225  dirvec_group.3207 index.3210 nvector.3208 org.3209 
+2226  
+2227  Tt797.4055 dirvec_group.3207 index.3210 nvector.3208 org.3209 
+2228  Ta798.4054 dirvec_group.3207 index.3210 nvector.3208 org.3209 
+2229  dirvec_group.3207 index.3210 nvector.3208 org.3209 
+2230  Tb799.4044 dirvec_group.3207 index.3210 nvector.3208 org.3209 
+2231  dirvec_group.3207 index.3210 nvector.3208 org.3209 
+2232  Ti810.4042 dirvec_group.3207 nvector.3208 org.3209 
+2233  
+2234  Ti805.4049 dirvec_group.3207 index.3210 nvector.3208 org.3209 
+2235  Tt806.4046 dirvec_group.3207 index.3210 nvector.3208 org.3209 
+2236  Tt806.4046 dirvec_group.3207 index.3210 nvector.3208 org.3209 
+2237  Tt806.4046 dirvec_group.3207 index.3210 nvector.3208 org.3209 
+2238  dirvec_group.3207 index.3210 nvector.3208 org.3209 
+2239  Tt801.4051 dirvec_group.3207 index.3210 nvector.3208 org.3209 
+2240  Tt801.4051 dirvec_group.3207 index.3210 nvector.3208 org.3209 
+2241  Tt801.4051 dirvec_group.3207 index.3210 nvector.3208 org.3209 
+2242  dirvec_group.3207 index.3210 nvector.3208 org.3209 
+allocate trace_diffuse_rays.3211
+2243  dirvec_group.3212 nvector.3213 org.3214 
+2244  Ti795.4038 dirvec_group.3212 nvector.3213 org.3214 
+2245  
+allocate trace_diffuse_ray_80percent.3215
+2246  %r0 group_id.3216 nvector.3217 org.3218 
+2247  %r0 group_id.3216 nvector.3217 org.3218 
+2248  %r0 group_id.3216 nvector.3217 org.3218 
+2249  %r0 group_id.3216 nvector.3217 org.3218 
+2250  %r0 nvector.3217 org.3218 
+2251  Ta794.4018 nvector.3217 org.3218 
+2252  
+2253  
+2254  %r0 Ta790.4022 group_id.3216 nvector.3217 org.3218 
+2255  %r0 group_id.3216 nvector.3217 org.3218 
+2256  %r0 group_id.3216 nvector.3217 org.3218 
+2257  %r0 Ta786.4026 group_id.3216 nvector.3217 org.3218 
+2258  %r0 group_id.3216 nvector.3217 org.3218 
+2259  %r0 group_id.3216 nvector.3217 org.3218 
+2260  %r0 Ta782.4030 group_id.3216 nvector.3217 org.3218 
+2261  %r0 group_id.3216 nvector.3217 org.3218 
+2262  %r0 group_id.3216 nvector.3217 org.3218 
+2263  %r0 Ta778.4034 group_id.3216 nvector.3217 org.3218 
+2264  %r0 group_id.3216 nvector.3217 org.3218 
+2265  %r0 group_id.3216 nvector.3217 org.3218 
+allocate calc_diffuse_using_1point.3219
+2266  nref.3221 pixel.3220 ray20p.3999 
+2267  nref.3221 nvectors.4000 pixel.3220 ray20p.3999 
+2268  intersection_points.4001 nref.3221 nvectors.4000 pixel.3220 ray20p.3999 
+2269  energya.4002 intersection_points.4001 nref.3221 nvectors.4000 pixel.3220 ray20p.3999 
+2270  Ta767.4011 energya.4002 intersection_points.4001 nref.3221 nvectors.4000 pixel.3220 ray20p.3999 
+2271  Ta767.4011 Ta768.4012 energya.4002 intersection_points.4001 nref.3221 nvectors.4000 pixel.3220 
+2272  energya.4002 intersection_points.4001 nref.3221 nvectors.4000 pixel.3220 
+2273  Ti769.4008 energya.4002 intersection_points.4001 nref.3221 nvectors.4000 
+2274  Ta770.4009 Ti769.4008 energya.4002 intersection_points.4001 nref.3221 
+2275  Ta770.4009 Ta771.4010 Ti769.4008 energya.4002 nref.3221 
+2276  energya.4002 nref.3221 
+2277  Ta772.4005 energya.4002 nref.3221 
+2278  Ta772.4005 Ta773.4006 
+2279  Ta772.4005 Ta773.4006 Ta774.4007 
+2280  
+allocate calc_diffuse_using_5points.3222
+2281  Tt744.3998 cur.3225 next.3226 nref.3227 x.3223 
+2282  cur.3225 next.3226 nref.3227 r_up.3965 x.3223 
+2283  Ti746.3996 cur.3225 next.3226 nref.3227 r_up.3965 x.3223 
+2284  Tt747.3995 cur.3225 next.3226 nref.3227 r_up.3965 x.3223 
+2285  cur.3225 next.3226 nref.3227 r_left.3966 r_up.3965 x.3223 
+2286  Tt748.3994 cur.3225 next.3226 nref.3227 r_left.3966 r_up.3965 x.3223 
+2287  cur.3225 next.3226 nref.3227 r_center.3967 r_left.3966 r_up.3965 x.3223 
+2288  Ti750.3992 cur.3225 next.3226 nref.3227 r_center.3967 r_left.3966 r_up.3965 x.3223 
+2289  Tt751.3991 cur.3225 next.3226 nref.3227 r_center.3967 r_left.3966 r_up.3965 x.3223 
+2290  cur.3225 next.3226 nref.3227 r_center.3967 r_left.3966 r_right.3968 r_up.3965 x.3223 
+2291  Tt752.3990 cur.3225 nref.3227 r_center.3967 r_left.3966 r_right.3968 r_up.3965 x.3223 
+2292  cur.3225 nref.3227 r_center.3967 r_down.3969 r_left.3966 r_right.3968 r_up.3965 x.3223 
+2293  Ta753.3988 cur.3225 nref.3227 r_center.3967 r_down.3969 r_left.3966 r_right.3968 r_up.3965 x.3223 
+2294  Ta753.3988 Ta754.3989 cur.3225 nref.3227 r_center.3967 r_down.3969 r_left.3966 r_right.3968 x.3223 
+2295  cur.3225 nref.3227 r_center.3967 r_down.3969 r_left.3966 r_right.3968 x.3223 
+2296  Ta755.3986 cur.3225 nref.3227 r_center.3967 r_down.3969 r_left.3966 r_right.3968 x.3223 
+2297  Ta755.3986 Ta756.3987 cur.3225 nref.3227 r_center.3967 r_down.3969 r_right.3968 x.3223 
+2298  cur.3225 nref.3227 r_center.3967 r_down.3969 r_right.3968 x.3223 
+2299  Ta757.3984 cur.3225 nref.3227 r_center.3967 r_down.3969 r_right.3968 x.3223 
+2300  Ta757.3984 Ta758.3985 cur.3225 nref.3227 r_down.3969 r_right.3968 x.3223 
+2301  cur.3225 nref.3227 r_down.3969 r_right.3968 x.3223 
+2302  Ta759.3982 cur.3225 nref.3227 r_down.3969 r_right.3968 x.3223 
+2303  Ta759.3982 Ta760.3983 cur.3225 nref.3227 r_down.3969 x.3223 
+2304  cur.3225 nref.3227 r_down.3969 x.3223 
+2305  Ta761.3980 cur.3225 nref.3227 r_down.3969 x.3223 
+2306  Ta761.3980 Ta762.3981 cur.3225 nref.3227 x.3223 
+2307  cur.3225 nref.3227 x.3223 
+2308  Tt763.3979 nref.3227 
+2309  energya.3975 nref.3227 
+2310  Ta764.3976 energya.3975 nref.3227 
+2311  Ta764.3976 Ta765.3977 
+2312  Ta764.3976 Ta765.3977 Ta766.3978 
+2313  
+allocate do_without_neighbors.3228
+2314  nref.3230 pixel.3229 
+2315  
+2316  nref.3230 pixel.3229 surface_ids.3956 
+2317  Ti739.3958 nref.3230 pixel.3229 
+2318  nref.3230 pixel.3229 
+2319  
+2320  calc_diffuse.3959 nref.3230 pixel.3229 
+2321  Tb740.3963 nref.3230 pixel.3229 
+2322  nref.3230 pixel.3229 
+2323  Ti743.3961 pixel.3229 
+2324  
+2325  nref.3230 pixel.3229 
+2326  nref.3230 pixel.3229 
+allocate neighbors_exist.3231
+2327  %r0 Ti727.3943 x.3232 y.3233 
+2328  %r0 Ti727.3943 Ti729.3944 x.3232 y.3233 
+2329  %r0 x.3232 y.3233 
+2330  %r0 x.3232 
+2331  Ti733.3946 x.3232 
+2332  Ti733.3946 Ti735.3947 x.3232 
+2333  x.3232 
+2334  
+2335  
+2336  
+2337  
+2338  
+2339  
+allocate get_surface_id.3235
+2340  index.3237 surface_ids.3942 
+2341  
+allocate neighbors_are_available.3238
+2342  Tt712.3941 cur.3241 next.3242 nref.3243 prev.3240 x.3239 
+2343  cur.3241 next.3242 nref.3243 prev.3240 sid_center.3928 x.3239 
+2344  Tt713.3940 cur.3241 next.3242 nref.3243 sid_center.3928 x.3239 
+2345  Ti714.3929 cur.3241 next.3242 nref.3243 sid_center.3928 x.3239 
+2346  cur.3241 next.3242 nref.3243 sid_center.3928 x.3239 
+2347  
+2348  Tt715.3939 cur.3241 nref.3243 sid_center.3928 x.3239 
+2349  Ti716.3930 cur.3241 nref.3243 sid_center.3928 x.3239 
+2350  cur.3241 nref.3243 sid_center.3928 x.3239 
+2351  
+2352  Ti718.3937 cur.3241 nref.3243 sid_center.3928 x.3239 
+2353  Tt719.3936 cur.3241 nref.3243 sid_center.3928 x.3239 
+2354  Ti720.3931 cur.3241 nref.3243 sid_center.3928 x.3239 
+2355  cur.3241 nref.3243 sid_center.3928 x.3239 
+2356  
+2357  Ti722.3934 cur.3241 nref.3243 sid_center.3928 
+2358  Tt723.3933 nref.3243 sid_center.3928 
+2359  Ti724.3932 sid_center.3928 
+2360  
+2361  
+2362  
+allocate try_exploit_neighbors.3244
+2363  cur.3248 next.3249 nref.3250 pixel.3915 prev.3247 x.3245 y.3246 
+2364  cur.3248 next.3249 nref.3250 pixel.3915 prev.3247 x.3245 y.3246 
+2365  
+2366  Ti704.3918 cur.3248 next.3249 nref.3250 pixel.3915 prev.3247 x.3245 y.3246 
+2367  cur.3248 next.3249 nref.3250 pixel.3915 prev.3247 x.3245 y.3246 
+2368  
+2369  Tb705.3919 cur.3248 next.3249 nref.3250 pixel.3915 prev.3247 x.3245 y.3246 
+2370  cur.3248 next.3249 nref.3250 pixel.3915 prev.3247 x.3245 y.3246 
+2371  calc_diffuse.3921 cur.3248 next.3249 nref.3250 prev.3247 x.3245 y.3246 
+2372  Tb708.3925 cur.3248 next.3249 nref.3250 prev.3247 x.3245 y.3246 
+2373  cur.3248 next.3249 nref.3250 prev.3247 x.3245 y.3246 
+2374  Ti711.3923 cur.3248 next.3249 prev.3247 x.3245 y.3246 
+2375  
+2376  cur.3248 next.3249 nref.3250 prev.3247 x.3245 y.3246 
+2377  cur.3248 next.3249 nref.3250 prev.3247 x.3245 y.3246 
+2378  Tt707.3927 nref.3250 
+2379  
+allocate write_ppm_header.3251
+2380  %r0 Ti687.3914 
+2381  %r0 
+2382  %r0 Ti690.3911 
+2383  %r0 
+2384  %r0 Ti691.3910 
+2385  %r0 
+2386  %r0 Ti694.3907 
+2387  %r0 
+2388  %r0 Ti695.3906 
+2389  %r0 
+2390  Ti698.3903 
+2391  
+2392  Ti699.3902 
+2393  
+2394  Ti700.3901 
+2395  
+2396  Ti701.3900 
+2397  
+allocate write_rgb_element.3253
+2398  ix.3888 
+2399  Ti685.3890 ix.3888 
+2400  elem.3889 ix.3888 
+2401  
+2402  elem.3889 
+2403  ix.3888 
+2404  
+2405  
+hogeee
+allocate write_rgb.3255
+2406  %r0 
+2407  %r0 
+2408  %r0 Ti676.3884 
+2409  %r0 
+2410  %r0 
+2411  %r0 
+2412  %r0 Ti680.3880 
+2413  %r0 
+2414  
+2415  
+2416  Ti684.3876 
+2417  
+allocate pretrace_diffuse_rays.3257
+2418  nref.3259 pixel.3258 
+2419  
+2420  nref.3259 pixel.3258 sid.3850 
+2421  nref.3259 pixel.3258 
+2422  
+2423  calc_diffuse.3852 nref.3259 pixel.3258 
+2424  Tb662.3856 nref.3259 pixel.3258 
+2425  nref.3259 pixel.3258 
+2426  Ti672.3854 pixel.3258 
+2427  
+2428  group_id.3858 nref.3259 pixel.3258 
+2429  Ta664.3870 group_id.3858 nref.3259 pixel.3258 
+2430  group_id.3858 nref.3259 pixel.3258 
+2431  group_id.3858 nref.3259 nvectors.3860 pixel.3258 
+2432  group_id.3858 intersection_points.3861 nref.3259 nvectors.3860 pixel.3258 
+2433  Ta665.3869 group_id.3858 intersection_points.3861 nref.3259 nvectors.3860 pixel.3258 
+2434  Ta666.3866 intersection_points.3861 nref.3259 nvectors.3860 pixel.3258 
+2435  Ta666.3866 Ta667.3867 intersection_points.3861 nref.3259 pixel.3258 
+2436  Ta666.3866 Ta667.3867 Ta668.3868 nref.3259 pixel.3258 
+2437  nref.3259 pixel.3258 
+2438  nref.3259 pixel.3258 ray20p.3863 
+2439  Ta669.3864 nref.3259 pixel.3258 
+2440  Ta669.3864 Ta670.3865 nref.3259 pixel.3258 
+2441  nref.3259 pixel.3258 
+2442  nref.3259 pixel.3258 
+allocate pretrace_pixels.3260
+2443  %r0 group_id.3263 line.3261 x.3262 
+2444  
+2445  %r0 group_id.3263 line.3261 x.3262 
+2446  %r0 Ti616.3844 group_id.3263 line.3261 x.3262 
+2447  %r0 Ti617.3843 group_id.3263 line.3261 x.3262 
+2448  %r0 group_id.3263 line.3261 x.3262 
+2449  %r0 group_id.3263 line.3261 x.3262 
+2450  %r0 group_id.3263 line.3261 x.3262 
+2451  %r0 group_id.3263 line.3261 x.3262 
+2452  %r0 group_id.3263 line.3261 x.3262 
+2453  %r0 group_id.3263 line.3261 x.3262 
+2454  %r0 group_id.3263 line.3261 x.3262 
+2455  %r0 group_id.3263 line.3261 x.3262 
+2456  %r0 group_id.3263 line.3261 x.3262 
+2457  %r0 group_id.3263 line.3261 x.3262 
+2458  %r0 group_id.3263 line.3261 x.3262 
+2459  %r0 group_id.3263 line.3261 x.3262 
+2460  %r0 group_id.3263 line.3261 x.3262 
+2461  group_id.3263 line.3261 x.3262 
+2462  Ta640.3818 group_id.3263 line.3261 x.3262 
+2463  Ta640.3818 Ti641.3819 group_id.3263 line.3261 x.3262 
+2464  group_id.3263 line.3261 x.3262 
+2465  Ta642.3817 group_id.3263 line.3261 x.3262 
+2466  group_id.3263 line.3261 x.3262 
+2467  Ta643.3815 group_id.3263 line.3261 x.3262 
+2468  Ta643.3815 Ta644.3816 group_id.3263 line.3261 x.3262 
+2469  group_id.3263 line.3261 x.3262 
+2470  Ti645.3810 group_id.3263 line.3261 x.3262 
+2471  Ti645.3810 group_id.3263 line.3261 x.3262 
+2472  Ta647.3812 Ti645.3810 group_id.3263 line.3261 x.3262 
+2473  Ta647.3812 Ti645.3810 Tt648.3813 group_id.3263 line.3261 x.3262 
+2474  Ta647.3812 Ti645.3810 Tt648.3813 group_id.3263 line.3261 x.3262 
+2475  group_id.3263 line.3261 x.3262 
+2476  Tt650.3809 group_id.3263 line.3261 x.3262 
+2477  Ta651.3807 group_id.3263 line.3261 x.3262 
+2478  Ta651.3807 Ta652.3808 group_id.3263 line.3261 x.3262 
+2479  group_id.3263 line.3261 x.3262 
+2480  Tt653.3806 group_id.3263 line.3261 x.3262 
+2481  group_id.3263 line.3261 x.3262 
+2482  Tt654.3804 group_id.3263 line.3261 x.3262 
+2483  Ti655.3805 Tt654.3804 group_id.3263 line.3261 x.3262 
+2484  group_id.3263 line.3261 x.3262 
+2485  Ti657.3800 group_id.3263 line.3261 
+2486  Ti657.3800 Ti658.3802 group_id.3263 line.3261 
+2487  Ti657.3800 Ti659.3801 line.3261 
+2488  
+allocate pretrace_line.3267
+2489  %r0 group_id.3270 line.3268 y.3269 
+2490  %r0 Ti581.3783 group_id.3270 line.3268 y.3269 
+2491  %r0 Ti582.3782 group_id.3270 line.3268 
+2492  %r0 group_id.3270 line.3268 
+2493  %r0 group_id.3270 line.3268 
+2494  %r0 group_id.3270 line.3268 
+2495  %r0 group_id.3270 line.3268 
+2496  %r0 group_id.3270 line.3268 
+2497  %r0 group_id.3270 line.3268 
+2498  %r0 group_id.3270 line.3268 
+2499  %r0 group_id.3270 line.3268 
+2500  %r0 group_id.3270 line.3268 
+2501  %r0 group_id.3270 line.3268 
+2502  %r0 group_id.3270 line.3268 
+2503  %r0 group_id.3270 line.3268 
+2504  %r0 group_id.3270 line.3268 
+2505  %r0 group_id.3270 line.3268 
+2506  Ti607.3755 group_id.3270 line.3268 
+2507  Ti609.3754 group_id.3270 line.3268 
+2508  
+allocate scan_pixel.3271
+2509  Ti564.3733 cur.3275 next.3276 prev.3274 x.3272 y.3273 
+2510  cur.3275 next.3276 prev.3274 x.3272 y.3273 
+2511  Ta565.3745 cur.3275 next.3276 prev.3274 x.3272 y.3273 
+2512  Ta565.3745 Tt566.3747 cur.3275 next.3276 prev.3274 x.3272 y.3273 
+2513  Ta565.3745 Ta567.3746 cur.3275 next.3276 prev.3274 x.3272 y.3273 
+2514  cur.3275 next.3276 prev.3274 x.3272 y.3273 
+2515  Tb568.3740 cur.3275 next.3276 prev.3274 x.3272 y.3273 
+2516  cur.3275 next.3276 prev.3274 x.3272 y.3273 
+2517  cur.3275 next.3276 prev.3274 x.3272 y.3273 
+2518  cur.3275 next.3276 prev.3274 x.3272 y.3273 
+2519  Ti575.3737 cur.3275 next.3276 prev.3274 y.3273 
+2520  
+2521  Ti572.3742 cur.3275 next.3276 prev.3274 x.3272 y.3273 
+2522  cur.3275 next.3276 prev.3274 x.3272 y.3273 
+2523  Tt570.3743 cur.3275 next.3276 prev.3274 x.3272 y.3273 
+2524  Ti571.3744 Tt570.3743 cur.3275 next.3276 prev.3274 x.3272 y.3273 
+2525  cur.3275 next.3276 prev.3274 x.3272 y.3273 
+2526  
+allocate scan_line.3277
+2527  %r0 Ti549.3715 cur.3280 group_id.3282 next.3281 prev.3279 y.3278 
+2528  %r0 cur.3280 group_id.3282 next.3281 prev.3279 y.3278 
+2529  Ti552.3727 cur.3280 group_id.3282 next.3281 prev.3279 y.3278 
+2530  Ti554.3724 cur.3280 group_id.3282 next.3281 prev.3279 y.3278 
+2531  cur.3280 group_id.3282 next.3281 prev.3279 y.3278 
+2532  Ti557.3723 cur.3280 group_id.3282 next.3281 prev.3279 y.3278 
+2533  cur.3280 group_id.3282 next.3281 prev.3279 y.3278 
+2534  Ti559.3719 cur.3280 group_id.3282 next.3281 prev.3279 
+2535  Ti559.3719 Ti560.3721 cur.3280 group_id.3282 next.3281 prev.3279 
+2536  Ti559.3719 Ti561.3720 cur.3280 next.3281 prev.3279 
+2537  
+2538  
+2539  Ti556.3725 cur.3280 group_id.3282 next.3281 prev.3279 y.3278 
+2540  cur.3280 group_id.3282 next.3281 prev.3279 y.3278 
+2541  cur.3280 group_id.3282 next.3281 prev.3279 y.3278 
+2542  
+hogeee
+allocate create_float5x3array.3283
+2543  Ti528.3713 
+2544  Ti528.3713 
+2545  vec.3690 
+2546  Ti530.3712 vec.3690 
+2547  array.3691 
+2548  Ti532.3710 array.3691 
+2549  Ti532.3710 array.3691 
+2550  Ta534.3709 array.3691 
+2551  array.3691 
+2552  Ti536.3706 array.3691 
+2553  Ti536.3706 array.3691 
+2554  Ta538.3705 array.3691 
+2555  array.3691 
+2556  Ti540.3702 array.3691 
+2557  Ti540.3702 array.3691 
+2558  Ta542.3701 array.3691 
+2559  array.3691 
+2560  Ti544.3698 array.3691 
+2561  Ti544.3698 array.3691 
+2562  Ta546.3697 array.3691 
+2563  array.3691 
+2564  
+allocate create_pixel.3285
+2565  %r4 Ti516.3688 
+2566  %r4 Ti516.3688 
+2567  %r4 m_rgb.3670 
+2568  %r4 m_rgb.3670 
+2569  %r4 m_isect_ps.3671 m_rgb.3670 
+2570  %r4 Ti519.3685 m_isect_ps.3671 m_rgb.3670 
+2571  %r4 Ti519.3685 Ti520.3686 m_isect_ps.3671 m_rgb.3670 
+2572  %r4 m_isect_ps.3671 m_rgb.3670 m_sids.3672 
+2573  %r4 Ti521.3683 m_isect_ps.3671 m_rgb.3670 m_sids.3672 
+2574  %r4 Ti521.3683 Ti522.3684 m_isect_ps.3671 m_rgb.3670 m_sids.3672 
+2575  %r4 m_cdif.3673 m_isect_ps.3671 m_rgb.3670 m_sids.3672 
+2576  %r4 m_cdif.3673 m_isect_ps.3671 m_rgb.3670 m_sids.3672 
+2577  %r4 m_cdif.3673 m_engy.3674 m_isect_ps.3671 m_rgb.3670 m_sids.3672 
+2578  %r4 m_cdif.3673 m_engy.3674 m_isect_ps.3671 m_rgb.3670 m_sids.3672 
+2579  %r4 m_cdif.3673 m_engy.3674 m_isect_ps.3671 m_r20p.3675 m_rgb.3670 m_sids.3672 
+2580  %r4 Ti525.3679 m_cdif.3673 m_engy.3674 m_isect_ps.3671 m_r20p.3675 m_rgb.3670 m_sids.3672 
+2581  %r4 Ti525.3679 Ti526.3680 m_cdif.3673 m_engy.3674 m_isect_ps.3671 m_r20p.3675 m_rgb.3670 m_sids.3672 
+2582  %r4 m_cdif.3673 m_engy.3674 m_gid.3676 m_isect_ps.3671 m_r20p.3675 m_rgb.3670 m_sids.3672 
+2583  %r4 m_cdif.3673 m_engy.3674 m_gid.3676 m_isect_ps.3671 m_r20p.3675 m_rgb.3670 m_sids.3672 
+2584  %r4 m_cdif.3673 m_engy.3674 m_gid.3676 m_isect_ps.3671 m_nvectors.3677 m_r20p.3675 m_rgb.3670 m_sids.3672 
+2585  %r4 m_cdif.3673 m_engy.3674 m_gid.3676 m_isect_ps.3671 m_nvectors.3677 m_r20p.3675 m_rgb.3670 m_sids.3672 t.6799 
+2586  m_cdif.3673 m_engy.3674 m_gid.3676 m_isect_ps.3671 m_nvectors.3677 m_r20p.3675 m_rgb.3670 m_sids.3672 t.6799 
+2587  m_cdif.3673 m_engy.3674 m_gid.3676 m_isect_ps.3671 m_r20p.3675 m_rgb.3670 m_sids.3672 t.6799 
+2588  m_cdif.3673 m_engy.3674 m_isect_ps.3671 m_r20p.3675 m_rgb.3670 m_sids.3672 t.6799 
+2589  m_cdif.3673 m_engy.3674 m_isect_ps.3671 m_rgb.3670 m_sids.3672 t.6799 
+2590  m_cdif.3673 m_isect_ps.3671 m_rgb.3670 m_sids.3672 t.6799 
+2591  m_isect_ps.3671 m_rgb.3670 m_sids.3672 t.6799 
+2592  m_isect_ps.3671 m_rgb.3670 t.6799 
+2593  m_rgb.3670 t.6799 
+2594  t.6799 
+2595  
+allocate init_line_elements.3287
+2596  line.3288 n.3289 
+2597  
+2598  line.3288 n.3289 
+2599  Tt513.3668 line.3288 n.3289 
+2600  line.3288 n.3289 
+2601  Ti515.3666 line.3288 
+2602  
+allocate create_pixelline.3290
+2603  %r0 Ti503.3659 
+2604  %r0 Ti503.3659 
+2605  %r0 Ti503.3659 Tt505.3660 
+2606  %r0 line.3653 
+2607  Ti508.3655 line.3653 
+2608  Ti510.3654 line.3653 
+2609  
+allocate tan.3292
+2610  
+2611  
+2612  
+allocate adjust_position.3294
+2613  
+2614  
+2615  
+2616  
+2617  
+2618  
+2619  
+2620  
+2621  
+2622  
+allocate calc_dirvec.3297
+2623  group_id.3303 icount.3298 index.3304 
+2624  group_id.3303 icount.3298 index.3304 
+2625  Ti492.3591 group_id.3303 index.3304 
+2626  Ti492.3591 group_id.3303 index.3304 
+2627  
+2628  group_id.3303 index.3304 
+2629  group_id.3303 index.3304 
+2630  group_id.3303 index.3304 
+2631  group_id.3303 index.3304 
+2632  group_id.3303 index.3304 
+2633  group_id.3303 index.3304 
+2634  group_id.3303 index.3304 
+2635  group_id.3303 index.3304 
+2636  group_id.3303 index.3304 
+2637  group_id.3303 index.3304 
+2638  Ta459.3635 group_id.3303 index.3304 
+2639  dgroup.3598 index.3304 
+2640  Tt460.3634 dgroup.3598 index.3304 
+2641  Ta461.3633 dgroup.3598 index.3304 
+2642  dgroup.3598 index.3304 
+2643  Ti463.3631 dgroup.3598 index.3304 
+2644  Tt464.3630 dgroup.3598 index.3304 
+2645  Ta465.3628 dgroup.3598 index.3304 
+2646  Ta465.3628 dgroup.3598 index.3304 
+2647  dgroup.3598 index.3304 
+2648  Ti468.3626 dgroup.3598 index.3304 
+2649  Tt469.3625 dgroup.3598 index.3304 
+2650  Ta470.3622 dgroup.3598 index.3304 
+2651  Ta470.3622 dgroup.3598 index.3304 
+2652  dgroup.3598 index.3304 
+2653  Ti474.3620 dgroup.3598 index.3304 
+2654  Tt475.3619 dgroup.3598 index.3304 
+2655  Ta476.3615 dgroup.3598 index.3304 
+2656  Ta476.3615 dgroup.3598 index.3304 
+2657  dgroup.3598 index.3304 
+2658  Ti481.3613 dgroup.3598 index.3304 
+2659  Tt482.3612 dgroup.3598 index.3304 
+2660  Ta483.3609 dgroup.3598 index.3304 
+2661  dgroup.3598 index.3304 
+2662  Ti487.3607 dgroup.3598 
+2663  Tt488.3606 
+2664  Ta489.3604 
+2665  
+allocate calc_dirvecs.3305
+2666  col.3306 group_id.3308 index.3309 
+2667  
+2668  col.3306 group_id.3308 index.3309 
+2669  col.3306 group_id.3308 index.3309 
+2670  col.3306 group_id.3308 index.3309 
+2671  col.3306 group_id.3308 index.3309 
+2672  col.3306 group_id.3308 index.3309 
+2673  Ti436.3582 col.3306 group_id.3308 index.3309 
+2674  Ti436.3582 col.3306 group_id.3308 index.3309 
+2675  Ti436.3582 col.3306 group_id.3308 index.3309 
+2676  col.3306 group_id.3308 index.3309 
+2677  col.3306 group_id.3308 index.3309 
+2678  col.3306 group_id.3308 index.3309 
+2679  col.3306 group_id.3308 index.3309 
+2680  col.3306 group_id.3308 index.3309 
+2681  col.3306 group_id.3308 index.3309 
+2682  Ti443.3573 col.3306 group_id.3308 index.3309 
+2683  Ti443.3573 col.3306 group_id.3308 index.3309 
+2684  Ti443.3573 col.3306 group_id.3308 index.3309 
+2685  Ti443.3573 Ti447.3576 col.3306 group_id.3308 index.3309 
+2686  col.3306 group_id.3308 index.3309 
+2687  Ti449.3569 group_id.3308 index.3309 
+2688  Ti449.3569 Ti450.3571 group_id.3308 index.3309 
+2689  Ti449.3569 Ti451.3570 index.3309 
+2690  
+allocate calc_dirvec_rows.3310
+2691  group_id.3312 index.3313 row.3311 
+2692  
+2693  group_id.3312 index.3313 row.3311 
+2694  group_id.3312 index.3313 row.3311 
+2695  group_id.3312 index.3313 row.3311 
+2696  group_id.3312 index.3313 row.3311 
+2697  group_id.3312 index.3313 row.3311 
+2698  Ti424.3559 group_id.3312 index.3313 row.3311 
+2699  group_id.3312 index.3313 row.3311 
+2700  Ti426.3553 group_id.3312 index.3313 
+2701  Ti426.3553 Ti427.3557 group_id.3312 index.3313 
+2702  Ti426.3553 Ti428.3554 index.3313 
+2703  Ti426.3553 Ti428.3554 Ti430.3555 
+2704  
+allocate create_dirvec.3314
+2705  %r0 %r4 Ti414.3548 
+2706  %r0 %r4 Ti414.3548 
+2707  %r0 %r4 v3.3543 
+2708  %r4 Ti418.3545 v3.3543 
+2709  %r4 consts.3544 v3.3543 
+2710  %r4 consts.3544 t.6808 v3.3543 
+2711  consts.3544 t.6808 v3.3543 
+2712  t.6808 v3.3543 
+2713  t.6808 
+2714  
+allocate create_dirvec_elements.3316
+2715  d.3317 index.3318 
+2716  
+2717  d.3317 index.3318 
+2718  Tt411.3541 d.3317 index.3318 
+2719  d.3317 index.3318 
+2720  Ti413.3539 d.3317 
+2721  
+allocate create_dirvecs.3319
+2722  index.3320 
+2723  
+2724  Ta399.3532 index.3320 
+2725  Ta399.3532 Ti400.3534 index.3320 
+2726  Ta399.3532 Ti400.3534 index.3320 
+2727  Ta399.3532 Ti400.3534 Tt402.3535 index.3320 
+2728  Ta399.3532 Ta403.3533 index.3320 
+2729  index.3320 
+2730  Ta404.3531 index.3320 
+2731  Ta405.3529 index.3320 
+2732  Ta405.3529 Ti406.3530 index.3320 
+2733  index.3320 
+2734  Ti408.3527 
+2735  
+allocate init_dirvec_constants.3321
+2736  index.3323 vecset.3322 
+2737  
+2738  Tt395.3523 index.3323 vecset.3322 
+2739  index.3323 vecset.3322 
+2740  Ti397.3521 vecset.3322 
+2741  
+allocate init_vecset_constants.3324
+2742  index.3325 
+2743  
+2744  Ta389.3518 index.3325 
+2745  Ta390.3516 index.3325 
+2746  Ta390.3516 Ti391.3517 index.3325 
+2747  index.3325 
+2748  Ti393.3514 
+2749  
+allocate init_dirvecs.3326
+2750  Ti383.3511 
+2751  
+2752  Ti384.3508 
+2753  Ti384.3508 Ti385.3509 
+2754  Ti384.3508 Ti385.3509 Ti386.3510 
+2755  
+2756  Ti387.3507 
+2757  
+allocate add_reflection.3328
+2758  %r4 index.3329 surface_id.3330 
+2759  %r4 dvec.3498 index.3329 surface_id.3330 
+2760  %r4 Ta380.3503 dvec.3498 index.3329 surface_id.3330 
+2761  %r4 dvec.3498 index.3329 surface_id.3330 
+2762  %r4 dvec.3498 index.3329 surface_id.3330 
+2763  %r4 Ta381.3501 dvec.3498 index.3329 surface_id.3330 
+2764  %r4 Ta381.3501 dvec.3498 index.3329 surface_id.3330 t.6811 
+2765  Ta381.3501 dvec.3498 index.3329 surface_id.3330 t.6811 
+2766  Ta381.3501 dvec.3498 index.3329 surface_id.3330 t.6811 
+2767  Ta381.3501 index.3329 surface_id.3330 t.6811 
+2768  Ta381.3501 index.3329 t.6811 
+2769  Ta381.3501 Tt382.3502 index.3329 
+2770  
+allocate setup_rect_reflection.3335
+2771  %r0 obj.3337 sid.3452 
+2772  %r0 nr.3453 obj.3337 sid.3452 
+2773  %r0 nr.3453 obj.3337 sid.3452 
+2774  %r0 nr.3453 sid.3452 
+2775  %r0 nr.3453 sid.3452 
+2776  %r0 nr.3453 sid.3452 
+2777  %r0 nr.3453 sid.3452 
+2778  %r0 nr.3453 sid.3452 
+2779  %r0 nr.3453 sid.3452 
+2780  %r0 nr.3453 sid.3452 
+2781  %r0 nr.3453 sid.3452 
+2782  %r0 Ti357.3479 nr.3453 sid.3452 
+2783  %r0 Ti357.3479 nr.3453 sid.3452 
+2784  %r0 nr.3453 sid.3452 
+2785  %r0 Ti362.3472 nr.3453 sid.3452 
+2786  %r0 Ti362.3472 Ti364.3473 nr.3453 sid.3452 
+2787  %r0 Ti362.3472 Ti364.3473 nr.3453 sid.3452 
+2788  %r0 nr.3453 sid.3452 
+2789  %r0 Ti369.3465 nr.3453 sid.3452 
+2790  %r0 Ti369.3465 Ti371.3466 nr.3453 
+2791  %r0 Ti369.3465 Ti371.3466 nr.3453 
+2792  %r0 nr.3453 
+2793  %r0 Ti378.3463 
+2794  
+allocate setup_surface_reflection.3338
+2795  %r0 Ti306.3449 obj.3340 
+2796  %r0 obj.3340 sid.3410 
+2797  %r0 nr.3411 obj.3340 sid.3410 
+2798  %r0 nr.3411 obj.3340 sid.3410 
+2799  %r0 nr.3411 obj.3340 sid.3410 
+2800  %r0 nr.3411 obj.3340 sid.3410 
+2801  %r0 Ta312.3443 nr.3411 obj.3340 sid.3410 
+2802  %r0 Ta312.3443 Ta313.3444 nr.3411 obj.3340 sid.3410 
+2803  %r0 nr.3411 obj.3340 sid.3410 
+2804  %r0 nr.3411 obj.3340 sid.3410 
+2805  %r0 nr.3411 obj.3340 sid.3410 
+2806  %r0 nr.3411 obj.3340 sid.3410 
+2807  %r0 nr.3411 obj.3340 sid.3410 
+2808  %r0 nr.3411 obj.3340 sid.3410 
+2809  %r0 nr.3411 obj.3340 sid.3410 
+2810  %r0 nr.3411 obj.3340 sid.3410 
+2811  %r0 nr.3411 obj.3340 sid.3410 
+2812  %r0 nr.3411 obj.3340 sid.3410 
+2813  %r0 nr.3411 obj.3340 sid.3410 
+2814  %r0 nr.3411 obj.3340 sid.3410 
+2815  %r0 nr.3411 obj.3340 sid.3410 
+2816  %r0 nr.3411 obj.3340 sid.3410 
+2817  %r0 nr.3411 sid.3410 
+2818  %r0 nr.3411 sid.3410 
+2819  %r0 nr.3411 sid.3410 
+2820  %r0 nr.3411 sid.3410 
+2821  %r0 nr.3411 sid.3410 
+2822  %r0 nr.3411 
+2823  %r0 Ti341.3417 
+2824  
+allocate setup_reflections.3341
+2825  obj_id.3342 
+2826  
+2827  Ta298.3409 obj_id.3342 
+2828  obj.3401 obj_id.3342 
+2829  Ti299.3402 obj.3401 obj_id.3342 
+2830  obj.3401 obj_id.3342 
+2831  
+2832  obj.3401 obj_id.3342 
+2833  obj.3401 obj_id.3342 
+2834  obj.3401 obj_id.3342 
+2835  m_shape.3406 obj.3401 obj_id.3342 
+2836  m_shape.3406 obj.3401 obj_id.3342 
+2837  obj.3401 obj_id.3342 
+2838  
+2839  
+2840  
+2841  
+allocate rt.3343
+2842  %r0 size_x.3344 size_y.3345 
+2843  %r0 size_x.3344 size_y.3345 
+2844  %r0 Ti268.3394 size_x.3344 size_y.3345 
+2845  %r0 size_x.3344 size_y.3345 
+2846  %r0 Ti272.3390 size_x.3344 
+2847  %r0 size_x.3344 
+2848  %r0 size_x.3344 
+2849  %r0 
+2850  %r0 
+2851  %r0 
+2852  %r0 
+2853  %r0 prev.3354 
+2854  %r0 prev.3354 
+2855  %r0 cur.3355 prev.3354 
+2856  %r0 cur.3355 prev.3354 
+2857  %r0 cur.3355 next.3356 prev.3354 
+2858  %r0 cur.3355 next.3356 prev.3354 
+2859  %r0 cur.3355 next.3356 prev.3354 
+2860  %r0 cur.3355 next.3356 prev.3354 
+2861  %r0 cur.3355 next.3356 prev.3354 
+2862  %r0 cur.3355 next.3356 prev.3354 
+2863  %r0 cur.3355 next.3356 prev.3354 
+2864  %r0 Tt284.3376 cur.3355 next.3356 prev.3354 
+2865  %r0 Ta285.3374 cur.3355 next.3356 prev.3354 
+2866  %r0 Ta285.3374 Ta286.3375 cur.3355 next.3356 prev.3354 
+2867  %r0 cur.3355 next.3356 prev.3354 
+2868  %r0 Tt287.3373 cur.3355 next.3356 prev.3354 
+2869  %r0 cur.3355 next.3356 prev.3354 
+2870  Ti290.3369 cur.3355 next.3356 prev.3354 
+2871  Ti292.3368 cur.3355 next.3356 prev.3354 
+2872  cur.3355 next.3356 prev.3354 
+2873  Ti293.3366 cur.3355 next.3356 prev.3354 
+2874  Ti293.3366 Ti294.3367 cur.3355 next.3356 prev.3354 
+2875  cur.3355 next.3356 prev.3354 
+2876  Ti295.3364 cur.3355 next.3356 prev.3354 
+2877  Ti295.3364 Ti296.3365 cur.3355 next.3356 prev.3354 
+2878  
+%f1 x.2823
+%f1 x.2823
+%f1 x.2832
+%f2 pi.6766
+%f2 pi.6699
+%f3 f.6700
+%f2 pi.6699
+%f3 f.6700
+%f3 f.6720
+%f3 f.6720
+%f3 f.6720
+%f3 f.6720
+%f3 f.6700
+%f3 f.6700
+%f3 f.6700
+%f3 f.6700
+%f2 pi.6657
+%f3 f.6658
+%f2 pi.6657
+%f3 f.6658
+%f2 f.6689
+%f2 f.6689
+%f3 f.6679
+%f3 f.6679
+%f2 f.6669
+%f2 f.6669
+%f3 f.6658
+%f3 f.6658
+%f2 f.6606
+%f4 Td2652.6620
+%f2 f.6606
+%f5 Td2658.6611
+%f1 x.2863
+%f3 Td2522.6462
+%f3 Td2529.6455
+%f3 Td2492.6442
+%f2 Td2495.6449
+%f3 Td2492.6442
+%f2 Td2499.6445
+%f3 Td2492.6442
+%f2 Td2466.6421
+%f2 Td2470.6417
+%f1 l.6395
+%f1 v1.5837
+%f4 cos_v1.5838
+%f2 sin_v1.5839
+%f4 cos_v1.5838
+%f2 sin_v1.5839
+%f4 cos_v1.5838
+%f1 v2.5840
+%f2 sin_v1.5839
+%f4 cos_v1.5838
+%f2 sin_v1.5839
+%f3 cos_v2.5841
+%f4 cos_v1.5838
+%f3 l1.5807
+%f3 l1.5807
+%f3 l1.5807
+%f2 l2.5810
+%f2 l2.5810
+%f3 cl1.5811
+%f3 cl1.5811
+%f12 cos_x.5696
+%f3 sin_x.5697
+%f12 cos_x.5696
+%f3 sin_x.5697
+%f11 cos_y.5698
+%f12 cos_x.5696
+%f2 sin_y.5699
+%f3 sin_x.5697
+%f11 cos_y.5698
+%f12 cos_x.5696
+%f2 sin_y.5699
+%f3 sin_x.5697
+%f4 cos_z.5700
+%f11 cos_y.5698
+%f12 cos_x.5696
+%f1 m22.5710
+%f2 m21.5709
+%f4 m20.5708
+%f5 m12.5707
+%f6 m11.5706
+%f7 m10.5705
+%f8 m02.5704
+%f9 m01.5703
+%f10 m00.5702
+%f3 co.5713
+%f11 bo.5712
+%f12 ao.5711
+%f1 m22.5710
+%f2 m21.5709
+%f4 m20.5708
+%f5 m12.5707
+%f6 m11.5706
+%f7 m10.5705
+%f8 m02.5704
+%f9 m01.5703
+%f10 m00.5702
+%f3 co.5713
+%f11 bo.5712
+%f12 ao.5711
+%f14 Td2173.5775
+%f1 m22.5710
+%f2 m21.5709
+%f4 m20.5708
+%f5 m12.5707
+%f6 m11.5706
+%f7 m10.5705
+%f8 m02.5704
+%f9 m01.5703
+%f10 m00.5702
+%f3 co.5713
+%f11 bo.5712
+%f12 ao.5711
+%f14 Td2176.5772
+%f1 m22.5710
+%f2 m21.5709
+%f4 m20.5708
+%f5 m12.5707
+%f6 m11.5706
+%f7 m10.5705
+%f8 m02.5704
+%f9 m01.5703
+%f10 m00.5702
+%f3 co.5713
+%f11 bo.5712
+%f12 ao.5711
+%f1 m22.5710
+%f2 m21.5709
+%f4 m20.5708
+%f5 m12.5707
+%f6 m11.5706
+%f7 m10.5705
+%f8 m02.5704
+%f9 m01.5703
+%f10 m00.5702
+%f3 co.5713
+%f11 bo.5712
+%f12 ao.5711
+%f14 Td2182.5766
+%f1 m22.5710
+%f2 m21.5709
+%f4 m20.5708
+%f5 m12.5707
+%f6 m11.5706
+%f7 m10.5705
+%f8 m02.5704
+%f9 m01.5703
+%f10 m00.5702
+%f3 co.5713
+%f11 bo.5712
+%f12 ao.5711
+%f14 Td2185.5763
+%f1 m22.5710
+%f2 m21.5709
+%f4 m20.5708
+%f5 m12.5707
+%f6 m11.5706
+%f7 m10.5705
+%f8 m02.5704
+%f9 m01.5703
+%f10 m00.5702
+%f3 co.5713
+%f11 bo.5712
+%f12 ao.5711
+%f1 m22.5710
+%f2 m21.5709
+%f4 m20.5708
+%f5 m12.5707
+%f6 m11.5706
+%f7 m10.5705
+%f8 m02.5704
+%f9 m01.5703
+%f10 m00.5702
+%f3 co.5713
+%f11 bo.5712
+%f12 ao.5711
+%f14 Td2191.5757
+%f1 m22.5710
+%f2 m21.5709
+%f4 m20.5708
+%f5 m12.5707
+%f6 m11.5706
+%f7 m10.5705
+%f8 m02.5704
+%f9 m01.5703
+%f10 m00.5702
+%f3 co.5713
+%f11 bo.5712
+%f12 ao.5711
+%f14 Td2194.5754
+%f1 a.5601
+%f1 a.5601
+%f2 Td2123.5624
+%f1 b.5603
+%f1 b.5603
+%f2 Td2130.5617
+%f1 c.5605
+%f1 c.5605
+%f2 Td2137.5610
+%f3 b2.3015
+%f2 b1.3014
+%f1 b0.3013
+%f3 b2.3015
+%f2 b1.3014
+%f1 b0.3013
+%f3 b2.3015
+%f2 b1.3014
+%f1 b0.3013
+%f3 b2.3015
+%f2 b1.3014
+%f1 b0.3013
+%f3 b2.3015
+%f2 b1.3014
+%f1 b0.3013
+%f3 b2.3015
+%f2 b1.3014
+%f1 b0.3013
+%f1 d2.5491
+%f3 b2.3015
+%f5 Td1996.5492
+%f1 d2.5491
+%f4 Td2001.5494
+%f3 b2.3024
+%f2 b1.3023
+%f1 b0.3022
+%f3 b2.3024
+%f2 b1.3023
+%f1 b0.3022
+%f3 b2.3030
+%f2 b1.3029
+%f1 b0.3028
+%f3 b2.3030
+%f2 b1.3029
+%f1 b0.3028
+%f4 d.5463
+%f3 b2.3030
+%f2 b1.3029
+%f1 b0.3028
+%f4 d.5463
+%f3 v2.3035
+%f2 v1.3034
+%f1 v0.3033
+%f3 v2.3035
+%f2 v1.3034
+%f1 v0.3033
+%f5 Td1941.5460
+%f3 v2.3035
+%f2 v1.3034
+%f1 v0.3033
+%f6 Td1943.5456
+%f3 v2.3035
+%f2 v1.3034
+%f1 v0.3033
+%f5 Td1944.5458
+%f6 Td1943.5456
+%f3 v2.3035
+%f2 v1.3034
+%f1 v0.3033
+%f6 Td1947.5452
+%f3 v2.3035
+%f2 v1.3034
+%f1 v0.3033
+%f5 Td1948.5454
+%f6 Td1947.5452
+%f3 v2.3035
+%f2 v1.3034
+%f1 v0.3033
+%f4 diag_part.5438
+%f3 v2.3035
+%f2 v1.3034
+%f1 v0.3033
+%f4 diag_part.5438
+%f6 Td1953.5450
+%f2 v1.3034
+%f1 v0.3033
+%f4 Td1957.5447
+%f5 Td1956.5445
+%f2 Td1961.5443
+%f3 Td1960.5441
+%f6 w2.3043
+%f5 w1.3042
+%f4 w0.3041
+%f3 v2.3040
+%f2 v1.3039
+%f1 v0.3038
+%f8 Td1911.5436
+%f6 w2.3043
+%f5 w1.3042
+%f4 w0.3041
+%f3 v2.3040
+%f2 v1.3039
+%f1 v0.3038
+%f8 Td1914.5434
+%f9 Td1913.5432
+%f6 w2.3043
+%f5 w1.3042
+%f4 w0.3041
+%f3 v2.3040
+%f2 v1.3039
+%f1 v0.3038
+%f8 Td1918.5430
+%f9 Td1917.5428
+%f6 w2.3043
+%f5 w1.3042
+%f4 w0.3041
+%f3 v2.3040
+%f2 v1.3039
+%f1 v0.3038
+%f7 diag_part.5407
+%f6 w2.3043
+%f5 w1.3042
+%f4 w0.3041
+%f3 v2.3040
+%f2 v1.3039
+%f1 v0.3038
+%f7 diag_part.5407
+%f9 Td1925.5424
+%f5 w1.3042
+%f4 w0.3041
+%f2 v1.3039
+%f1 v0.3038
+%f7 diag_part.5407
+%f6 Td1930.5420
+%f8 Td1927.5418
+%f7 diag_part.5407
+%f2 Td1936.5414
+%f6 Td1933.5412
+%f7 diag_part.5407
+%f3 b2.3049
+%f2 b1.3048
+%f1 b0.3047
+%f3 b2.3049
+%f2 b1.3048
+%f1 b0.3047
+%f5 aa.5372
+%f3 b2.3049
+%f2 b1.3048
+%f1 b0.3047
+%f5 aa.5372
+%f4 bb.5375
+%f5 aa.5372
+%f1 cc0.5376
+%f4 bb.5375
+%f5 aa.5372
+%f2 cc.5377
+%f4 bb.5375
+%f5 aa.5372
+%f1 d.5378
+%f4 bb.5375
+%f5 aa.5372
+%f2 sd.5381
+%f4 bb.5375
+%f5 aa.5372
+%f2 Td1874.5368
+%f3 b0.5356
+%f2 Td1877.5365
+%f2 b1.5357
+%f3 b0.5356
+%f4 Td1880.5362
+%f1 b2.5358
+%f2 b1.5357
+%f3 b0.5356
+%f4 d0.5274
+%f3 b2.3060
+%f2 b1.3059
+%f1 b0.3058
+%f4 d0.5274
+%f3 b2.3060
+%f2 b1.3059
+%f1 b0.3058
+%f6 Td1802.5334
+%f4 d0.5274
+%f3 b2.3060
+%f2 Td1808.5336
+%f4 d1.5280
+%f3 b2.3060
+%f2 b1.3059
+%f1 b0.3058
+%f4 d1.5280
+%f3 b2.3060
+%f2 b1.3059
+%f1 b0.3058
+%f6 Td1825.5313
+%f4 d1.5280
+%f3 b2.3060
+%f2 Td1831.5315
+%f3 d2.5286
+%f2 b1.3059
+%f1 b0.3058
+%f3 d2.5286
+%f2 b1.3059
+%f5 Td1848.5292
+%f3 d2.5286
+%f2 b1.3059
+%f4 Td1854.5294
+%f3 b2.3066
+%f2 b1.3065
+%f1 b0.3064
+%f3 b2.3072
+%f2 b1.3071
+%f1 b0.3070
+%f5 aa.5214
+%f4 neg_bb.5217
+%f5 aa.5214
+%f4 neg_bb.5217
+%f1 cc0.5218
+%f5 aa.5214
+%f4 neg_bb.5217
+%f2 cc.5219
+%f5 aa.5214
+%f4 neg_bb.5217
+%f1 d.5220
+%f4 neg_bb.5217
+%f1 d.5220
+%f2 Td1733.5210
+%f3 b0.5195
+%f2 Td1736.5207
+%f2 b1.5196
+%f3 b0.5195
+%f4 Td1739.5204
+%f1 b2.5197
+%f2 b1.5196
+%f3 b0.5195
+%f1 b2.5197
+%f2 b1.5196
+%f3 b0.5195
+%f1 b2.5197
+%f2 b1.5196
+%f3 b0.5195
+%f3 b2.3090
+%f2 b1.3089
+%f1 b0.3088
+%f4 aa.5143
+%f1 neg_bb.5146
+%f2 cc.5147
+%f4 aa.5143
+%f1 neg_bb.5146
+%f2 d.5148
+%f1 neg_bb.5146
+%f2 d.5148
+%f1 b2.5132
+%f2 b1.5131
+%f3 b0.5130
+%f1 b2.5132
+%f2 b1.5131
+%f3 b0.5130
+%f1 b2.5132
+%f2 b1.5131
+%f3 b0.5130
+%f2 Td1589.5057
+%f2 Td1593.5054
+%f3 Td1591.5052
+%f2 Td1598.5049
+%f3 Td1596.5047
+%f1 d.5023
+%f1 d.5023
+%f1 d.5023
+%f1 d.5023
+%f4 aa.4944
+%f2 Td1528.5011
+%f3 c1.4945
+%f4 aa.4944
+%f2 Td1532.5007
+%f2 c2.4946
+%f3 c1.4945
+%f4 aa.4944
+%f5 Td1536.5003
+%f1 c3.4947
+%f2 c2.4946
+%f3 c1.4945
+%f4 aa.4944
+%f1 c3.4947
+%f2 c2.4946
+%f3 c1.4945
+%f4 aa.4944
+%f6 Td1547.4993
+%f1 c3.4947
+%f2 c2.4946
+%f3 c1.4945
+%f4 aa.4944
+%f6 Td1551.4990
+%f7 Td1549.4988
+%f1 c3.4947
+%f2 c2.4946
+%f3 c1.4945
+%f4 aa.4944
+%f1 c3.4947
+%f2 c2.4946
+%f4 aa.4944
+%f5 Td1559.4981
+%f1 c3.4947
+%f2 c2.4946
+%f4 aa.4944
+%f5 Td1563.4978
+%f6 Td1561.4976
+%f1 c3.4947
+%f2 c2.4946
+%f4 aa.4944
+%f1 c3.4947
+%f4 aa.4944
+%f3 Td1571.4969
+%f1 c3.4947
+%f4 aa.4944
+%f3 Td1575.4966
+%f5 Td1573.4964
+%f1 c3.4947
+%f4 aa.4944
+%f4 aa.4944
+%f2 Td1469.4920
+%f2 Td1474.4915
+%f2 Td1479.4910
+%f3 p2.3117
+%f2 p1.3116
+%f1 p0.3115
+%f3 p2.3117
+%f2 p1.3116
+%f4 Td1449.4863
+%f3 p2.3117
+%f2 p1.3116
+%f3 p2.3117
+%f4 Td1451.4865
+%f3 p2.3117
+%f2 Td1453.4867
+%f3 p2.3122
+%f2 p1.3121
+%f1 p0.3120
+%f1 w.4853
+%f2 w.4844
+%f1 w2.4845
+%f3 q2.3132
+%f2 q1.3131
+%f1 q0.3130
+%f3 q2.3132
+%f2 q1.3131
+%f4 p0.4835
+%f3 q2.3132
+%f2 p1.4836
+%f4 p0.4835
+%f1 p2.4837
+%f2 p1.4836
+%f4 p0.4835
+%f3 q2.3138
+%f2 q1.3137
+%f1 q0.3136
+%f1 t.4691
+%f2 q2.4694
+%f3 q1.4693
+%f4 q0.4692
+%f1 t.4590
+%f2 q2.4593
+%f3 q1.4592
+%f4 q0.4591
+%f2 Td1121.4506
+%f3 p0.4447
+%f2 Td1125.4502
+%f2 p1.4448
+%f3 p0.4447
+%f4 Td1129.4498
+%f1 p2.4449
+%f2 p1.4448
+%f3 p0.4447
+%f1 p2.4449
+%f2 p1.4448
+%f3 p0.4447
+%f6 d0.4450
+%f1 p2.4449
+%f2 p1.4448
+%f3 p0.4447
+%f5 d1.4451
+%f6 d0.4450
+%f1 p2.4449
+%f2 p1.4448
+%f3 p0.4447
+%f4 d2.4452
+%f5 d1.4451
+%f6 d0.4450
+%f1 p2.4449
+%f2 p1.4448
+%f3 p0.4447
+%f4 d2.4452
+%f5 d1.4451
+%f6 d0.4450
+%f1 p2.4449
+%f2 p1.4448
+%f3 p0.4447
+%f4 d2.4452
+%f5 d1.4451
+%f6 d0.4450
+%f8 Td1145.4483
+%f1 p2.4449
+%f2 p1.4448
+%f3 p0.4447
+%f4 d2.4452
+%f5 d1.4451
+%f6 d0.4450
+%f1 p2.4449
+%f2 p1.4448
+%f3 p0.4447
+%f4 d2.4452
+%f5 d1.4451
+%f1 p2.4449
+%f2 p1.4448
+%f3 p0.4447
+%f4 d2.4452
+%f5 d1.4451
+%f7 Td1154.4474
+%f2 p1.4448
+%f3 p0.4447
+%f4 d2.4452
+%f5 d1.4451
+%f2 p1.4448
+%f3 p0.4447
+%f4 d2.4452
+%f2 p1.4448
+%f4 d2.4452
+%f3 Td1163.4465
+%f4 d2.4452
+%f2 Td1066.4354
+%f2 Td1068.4351
+%f4 w1.4293
+%f2 Td1072.4348
+%f4 w1.4293
+%f2 Td1074.4345
+%f2 w3.4294
+%f4 w1.4293
+%f2 w3.4294
+%f4 w1.4293
+%f3 Td1077.4343
+%f3 w4.4295
+%f2 w3.4294
+%f4 w1.4293
+%f5 Td1079.4335
+%f3 w4.4295
+%f3 w4.4295
+%f1 w7.4296
+%f3 w4.4295
+%f1 w9.4297
+%f3 w4.4295
+%f4 Td1088.4331
+%f1 w9.4297
+%f3 w4.4295
+%f4 Td1090.4328
+%f1 w9.4297
+%f3 w4.4295
+%f4 w2.4298
+%f5 Td1093.4320
+%f1 w9.4297
+%f1 w9.4297
+%f1 w9.4297
+%f2 w8.4299
+%f2 w10.4300
+%f4 Td1101.4315
+%f3 Td1105.4311
+%f2 w11.4301
+%f2 Td1040.4385
+%f2 w1.4357
+%f3 Td1043.4382
+%f1 w3.4358
+%f2 Td1045.4380
+%f1 w2.4359
+%f1 Td999.4432
+%f1 w1.4405
+%f2 Td1008.4422
+%f1 w3.4407
+%f3 hilight_scale.3191
+%f2 hilight.3190
+%f1 bright.3189
+%f3 hilight_scale.3191
+%f2 hilight.3190
+%f3 hilight_scale.3191
+%f2 hilight.3190
+%f3 hilight_scale.3191
+%f3 hilight_scale.3191
+%f2 hilight_scale.3195
+%f1 diffuse.3194
+%f2 hilight_scale.3195
+%f1 diffuse.3194
+%f2 hilight_scale.3195
+%f1 diffuse.3194
+%f2 hilight_scale.3195
+%f1 diffuse.3194
+%f2 hilight_scale.3195
+%f1 diffuse.3194
+%f2 hilight_scale.3195
+%f1 diffuse.3194
+%f4 p.4233
+%f2 hilight_scale.3195
+%f1 diffuse.3194
+%f3 scale.4234
+%f2 hilight_scale.3195
+%f4 bright.4235
+%f3 scale.4234
+%f2 hilight_scale.3195
+%f4 bright.4235
+%f1 energy.3199
+%f2 dist.3202
+%f1 energy.3199
+%f2 dist.3202
+%f1 energy.3199
+%f2 dist.3202
+%f1 energy.3199
+%f2 dist.3202
+%f1 energy.3199
+%f2 dist.3202
+%f5 diffuse.4092
+%f1 energy.3199
+%f2 dist.3202
+%f5 diffuse.4092
+%f1 energy.3199
+%f2 dist.3202
+%f5 diffuse.4092
+%f1 energy.3199
+%f2 dist.3202
+%f5 diffuse.4092
+%f1 energy.3199
+%f2 dist.3202
+%f5 diffuse.4092
+%f1 energy.3199
+%f2 dist.3202
+%f5 diffuse.4092
+%f1 energy.3199
+%f2 dist.3202
+%f5 diffuse.4092
+%f4 Td884.4151
+%f1 energy.3199
+%f2 dist.3202
+%f5 diffuse.4092
+%f1 energy.3199
+%f2 dist.3202
+%f5 diffuse.4092
+%f1 energy.3199
+%f2 dist.3202
+%f5 diffuse.4092
+%f1 energy.3199
+%f2 dist.3202
+%f5 diffuse.4092
+%f1 energy.3199
+%f2 dist.3202
+%f5 diffuse.4092
+%f1 energy.3199
+%f2 dist.3202
+%f5 diffuse.4092
+%f4 Td897.4148
+%f1 energy.3199
+%f2 dist.3202
+%f5 diffuse.4092
+%f1 energy.3199
+%f2 dist.3202
+%f5 diffuse.4092
+%f3 hilight_scale.4103
+%f1 energy.3199
+%f2 dist.3202
+%f5 diffuse.4092
+%f3 hilight_scale.4103
+%f1 energy.3199
+%f2 dist.3202
+%f5 diffuse.4092
+%f3 hilight_scale.4103
+%f1 energy.3199
+%f2 dist.3202
+%f5 diffuse.4092
+%f6 bright.4134
+%f3 hilight_scale.4103
+%f1 energy.3199
+%f2 dist.3202
+%f5 diffuse.4092
+%f3 hilight_scale.4103
+%f1 energy.3199
+%f2 dist.3202
+%f5 diffuse.4092
+%f1 energy.3199
+%f2 dist.3202
+%f1 energy.3199
+%f2 dist.3202
+%f4 Td927.4119
+%f1 energy.3199
+%f2 hl.4187
+%f1 energy.3199
+%f2 hl.4187
+%f1 energy.3199
+%f1 energy.3205
+%f1 energy.3205
+%f1 energy.3205
+%f1 energy.3205
+%f1 energy.3205
+%f1 energy.3205
+%f1 energy.3205
+%f3 br.4063
+%f2 Td831.4068
+%f1 p.4040
+%f3 lc2.3266
+%f2 lc1.3265
+%f1 lc0.3264
+%f5 Td613.3841
+%f3 lc2.3266
+%f2 lc1.3265
+%f1 lc0.3264
+%f3 lc2.3266
+%f2 lc1.3265
+%f1 lc0.3264
+%f3 lc2.3266
+%f2 lc1.3265
+%f1 lc0.3264
+%f3 lc2.3266
+%f2 lc1.3265
+%f1 lc0.3264
+%f3 lc2.3266
+%f2 lc1.3265
+%f1 lc0.3264
+%f3 lc2.3266
+%f2 lc1.3265
+%f1 lc0.3264
+%f3 lc2.3266
+%f2 lc1.3265
+%f1 lc0.3264
+%f3 lc2.3266
+%f2 lc1.3265
+%f1 lc0.3264
+%f3 lc2.3266
+%f2 lc1.3265
+%f1 lc0.3264
+%f2 Td578.3780
+%f1 x.3293
+%f2 Td499.3651
+%f2 ratio.3296
+%f3 l.3642
+%f3 l.3642
+%f4 ry.3302
+%f3 rx.3301
+%f1 x2.3590
+%f4 ry.3302
+%f3 rx.3301
+%f2 y.3300
+%f1 x.3299
+%f2 y.3300
+%f1 x.3299
+%f4 Td453.3640
+%f1 vz.3597
+%f2 vy.3596
+%f3 vx.3595
+%f1 vz.3597
+%f2 vy.3596
+%f3 vx.3595
+%f1 vz.3597
+%f2 vy.3596
+%f3 vx.3595
+%f1 vz.3597
+%f2 vy.3596
+%f3 vx.3595
+%f5 Td466.3629
+%f1 vz.3597
+%f2 vy.3596
+%f3 vx.3595
+%f5 Td466.3629
+%f1 vz.3597
+%f2 vy.3596
+%f3 vx.3595
+%f4 Td471.3623
+%f5 Td466.3629
+%f1 vz.3597
+%f2 vy.3596
+%f3 vx.3595
+%f4 Td471.3623
+%f5 Td466.3629
+%f2 vy.3596
+%f3 vx.3595
+%f1 Td479.3618
+%f4 Td471.3623
+%f2 vy.3596
+%f3 vx.3595
+%f1 Td479.3618
+%f4 Td471.3623
+%f2 vy.3596
+%f3 vx.3595
+%f1 Td479.3618
+%f2 vy.3596
+%f3 vx.3595
+%f1 Td479.3618
+%f1 ry.3307
+%f1 ry.3307
+%f1 ry.3307
+%f1 ry.3307
+%f1 ry.3307
+%f4 v2.3334
+%f3 v1.3333
+%f2 v0.3332
+%f1 bright.3331
+%f4 v2.3334
+%f3 v1.3333
+%f2 v0.3332
+%f1 bright.3331
+%f1 bright.3331
+%f1 bright.3331
+%f2 Td345.3493
+%f1 n2.3457
+%f2 n1.3456
+%f3 n0.3455
+%f4 br.3454
+%f2 n1.3456
+%f3 n0.3455
+%f4 br.3454
+%f2 Td310.3445
+%f2 br.3412
+%f2 br.3412
+%f1 p.3413
+%f2 br.3412
+%f4 Td314.3441
+%f1 p.3413
+%f2 br.3412
+%f4 Td322.3434
+%f6 Td321.3419
+%f1 p.3413
+%f2 br.3412
+%f4 Td330.3427
+%f5 Td329.3420
+%f6 Td321.3419
+%f2 Td301.3404
+%f2 Td275.3386

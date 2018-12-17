@@ -166,7 +166,7 @@ let rec print_t i = function
         print_string "instruction number : "; print_int j; print_newline ();
         print_indent i;
         print_endline "LET";
-        print_indent (i + 1); Id.print_id x; print_endline " = ";
+        print_indent (i + 1); print_string "("; Id.print_id x; print_string ", "; Typing.print_type t; print_endline ") = ";
         print_exp (i + 1) exp;
         print_indent i; print_endline "IN";
         print_t (i + 1) e
@@ -231,6 +231,7 @@ and print_exp i exp = (* 一つ一つの命令に対応する式 (caml2html: spa
           print_indent (i + 1); print_id_or_imm y; print_newline ();
           print_indent i; print_endline "then";
           print_t (i + 1) e1;
+          print_indent i; print_endline "else";
           print_t (i + 1) e2
   | IfLE (x, y, e1, e2) ->
           print_endline "IfLE";

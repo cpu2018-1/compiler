@@ -2,4 +2,4 @@
 < 247
 \ ファイル末尾に改行がありません
 ---
-> make: *** [funcomp_mine.s] エラー 2
+> make: *** [bytecode.b] エラー 255

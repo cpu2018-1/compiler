@@ -1,3 +1,6 @@
+
+let rec rad x = x in
+
 let rec read_screen_settings _ =
 
   (* スクリーン中心の座標 *)
@@ -31,4 +34,4 @@ let rec read_screen_settings _ =
 in 
 viewpoint.(0) <- viewpoint.(1);
 
-read_screen_setting ()
+read_screen_settings ()
