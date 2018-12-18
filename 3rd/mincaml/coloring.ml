@@ -48,17 +48,10 @@ let rec update lives flives succ dest =
     | Ans(e, j) ->
       let def, fdef = 
         (match dest with
-        | x, Type.Unit -> (print_endline x; S.empty), S.empty
+        | x, Type.Unit -> S.empty, S.empty
         | x, Type.Float -> S.empty, S.singleton x
         | x, _ -> S.singleton x, S.empty
         ) in
-        (*
-      print_int j; print_newline ();
-      print_exp 1 e;
-      Printf.printf "def[%d] is " j;
-      S.iter (fun x -> print_string (x^" ")) def;
-      print_newline ();
-      *)
       let fv_g, fv_f = classify_fv_exp e in (* 汎用レジスタ用と浮動小数レジスタ用 *)
       let live_j = try Int_M.find j lives with Not_found -> S.empty in
       let flive_j = try Int_M.find j flives with Not_found -> S.empty in
@@ -105,45 +98,35 @@ let rec iter_analysis lives flives t =
     iter_analysis lives' flives' t
 
 
-let rec analysis_fun { name = Id.L(x); args = xs; fargs = ys; body = e; ret = t} =
-  let g, fg = iter_analysis Int_M.empty Int_M.empty e in
-  (*
-  print_endline ("analyze "^x);
-  print_endline "general purpose";
-  Int_M.iter (fun x l -> print_string ((string_of_int x)^"  ");
-                          S.iter (fun y -> print_string (y^" ")) l; print_newline ()) g;
-  print_endline "float point";
-  Int_M.iter (fun x l -> print_string ((string_of_int x)^"  ");
-                          S.iter (fun y -> print_string (y^" ")) l; print_newline ()) fg;
-  *)
-  { name = Id.L(x); args = xs; fargs = ys; body = e; ret = t}
-
-(* グラフを構成する *)
+(* 生存解析の情報から干渉グラフを構成する *)
 let rec make_graph g =
   Int_M.fold 
     (fun i live m -> 
-      S.fold (fun x s' -> M.add x (S.fold (fun y s'' -> if (x <> y) then S.add y s'' else s'') live (try M.find x s' with Not_found -> S.empty)) s') live m) g M.empty
+      S.fold (fun x m' -> M.add x (S.union (S.remove x live) (try M.find x m' with Not_found -> S.empty)) m') live m)
+    g
+    M.empty
 
-
+(* 楽観的彩色 *)
 let rec optimistic g stack spill t =
   if (M.cardinal g = 0) then
     stack, spill
   else
-    let rs = (match t with Float -> Asm.fregs | Gen -> Asm.regs) in
+    let length = Array.length (match t with Float -> Asm.fregs | Gen -> Asm.regs) in
     let r = M.fold 
               (fun x s r ->
                 match r with
                 | Some y -> Some y
                 | None ->
-                  if (S.cardinal s < Array.length rs) then
+                  if (S.cardinal s < length) then
                     Some x
                   else
                     None) g None in
-    match r with
-    | Some x -> optimistic (M.remove x (M.map (fun s -> (S.filter (fun a -> x <> a) s)) g)) (x :: stack) spill t
+    match r with (* 確実に塗れるものがあるか *)
+    | Some x -> optimistic (M.remove x (M.map (S.remove x) g)) (x :: stack) spill t
     | None -> 
-      let (x, _) = M.choose g in 
       print_endline "spillある...";
+      failwith "spillがあるのでとりあえずエラー";
+      let (x, _) = M.choose g in 
       optimistic (M.remove x (M.map (fun s -> (S.filter (fun a -> x <> a) s)) g)) (x :: stack) (x :: spill) t
 
 let rec find_can_use i used regs =
@@ -159,16 +142,14 @@ let rec alloc g stack spill env t =
     if List.mem x spill then
       env
     else
-      if (Asm.is_reg x) then (* レジスタの場合はそのまま *) (* [TODO]レジスタがspillの対象になりうるので変えるべき(そのうち変えます) *)
+      if (Asm.is_reg x) then (* レジスタの場合はそのまま *) (* [TODO]レジスタがspillの対象になりうるので変えるべき(そのうち変えます) *) (* <- 本当に? *)
         alloc g xs spill (M.add x x env) t 
       else
         if (M.mem x env) then
         alloc g xs spill env t
         else
-          let allocated = S.filter (fun y -> M.mem y env) (M.find x g) in
+          let allocated = S.filter (fun y -> M.mem y env) (M.find x g) in (* xと干渉できないもののうちすでに割り当てられているもの *)
           let used = S.fold (fun y s -> S.add (M.find y env) s) allocated S.empty in
- (*     print_string (x^" "); S.iter (fun y -> print_string (y^" ")) used;print_newline ();
- *)
           let i = find_can_use 0 used regs in
           alloc g xs spill (M.add x regs.(i) env) t
   | [] -> env
@@ -199,10 +180,10 @@ let rec replace_exp e map fmap =
   | Sra(x, y') -> Sra((if Asm.is_reg x then x else M.find x map), replace_id_or_imm y' map)
   | Sw(x, y, z') -> Sw((if Asm.is_reg x then x else M.find x map), (if Asm.is_reg y then y else M.find y map), replace_id_or_imm z' map)
   | FSw(x, y, z') -> FSw((if Asm.is_reg x then x else M.find x fmap), (if Asm.is_reg y then y else M.find y map), replace_id_or_imm z' map)
-  | FAdd(x, y) -> FAdd((if Asm.is_reg x then x else M.find x fmap), if Asm.is_reg x then x else M.find y fmap)
-  | FSub(x, y) -> FSub((if Asm.is_reg x then x else M.find x fmap), if Asm.is_reg x then x else M.find y fmap)
-  | FMul(x, y) -> FMul((if Asm.is_reg x then x else M.find x fmap), if Asm.is_reg x then x else M.find y fmap)
-  | FDiv(x, y) -> FDiv((if Asm.is_reg x then x else M.find x fmap), if Asm.is_reg x then x else M.find y fmap)
+  | FAdd(x, y) -> FAdd((if Asm.is_reg x then x else M.find x fmap), if Asm.is_reg y then y else M.find y fmap)
+  | FSub(x, y) -> FSub((if Asm.is_reg x then x else M.find x fmap), if Asm.is_reg y then y else M.find y fmap)
+  | FMul(x, y) -> FMul((if Asm.is_reg x then x else M.find x fmap), if Asm.is_reg y then y else M.find y fmap)
+  | FDiv(x, y) -> FDiv((if Asm.is_reg x then x else M.find x fmap), if Asm.is_reg y then y else M.find y fmap)
   | IfEq(x, y', e1, e2) -> IfEq((if Asm.is_reg x then x else M.find x map), replace_id_or_imm y' map, replace e1 map fmap, replace e2 map fmap)
   | IfLE(x, y', e1, e2) -> IfLE((if Asm.is_reg x then x else M.find x map), replace_id_or_imm y' map, replace e1 map fmap, replace e2 map fmap)
   | IfGE(x, y', e1, e2) -> IfGE((if Asm.is_reg x then x else M.find x map), replace_id_or_imm y' map, replace e1 map fmap, replace e2 map fmap)
