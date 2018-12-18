@@ -53,6 +53,7 @@ val fregs : Id.t array
 val allregs : Id.t list
 val allfregs : Id.t list
 val reg_zero : Id.t
+val reg_fzero : Id.t
 val reg_cl : Id.t
 val reg_sw : Id.t
 val reg_fsw : Id.t

@@ -35,7 +35,7 @@ let lexbuf outchan l = (* バッファをコンパイルしてチャンネルへ出力する (caml2htm
 (*  Syntax.print_syntax a; print_newline ();*)
   Emit.f outchan
     ((*RegAlloc.f*)
-    (Glbsimm.f
+    ((*Glbsimm.f*)
     (Num_asm.g
       (Coloring.f
       ((*Schedule.f*)
