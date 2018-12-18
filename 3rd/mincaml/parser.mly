@@ -110,6 +110,8 @@ exp: /* (* °ìÈÌ¤Î¼° (caml2html: parser_exp) *) */
       match $3 with
       | Int (2, d) -> 
       Sra($1, Int (1, d), { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)})
+      | Int (10, d) -> 
+      App(Var ("div10",{ lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)}),  [$1], { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)})
       | _ -> 
       App(Var ("div", { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)}), [$1; $3], { lnum = (Parsing.symbol_start_pos ()).Lexing.pos_lnum; bchar = ((Parsing.symbol_start_pos ()).Lexing.pos_cnum - (Parsing.symbol_start_pos ()).Lexing.pos_bol); echar = ((Parsing.symbol_end_pos ()).Lexing.pos_cnum - (Parsing.symbol_end_pos ()).Lexing.pos_bol)}) }
 | exp EQUAL exp

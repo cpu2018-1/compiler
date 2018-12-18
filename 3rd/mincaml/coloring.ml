@@ -32,29 +32,36 @@ let rec update lives flives succ dest =
     (
     match e with
     | Let((x, t), e, j, cont) ->
-      let fv_g, fv_f = classify_fv_exp e in (* 汎用レジスタ用と浮動小数レジスタ用 *)
-      let live_j = try Int_M.find j lives with Not_found -> S.empty in
-      let flive_j = try Int_M.find j flives with Not_found -> S.empty in
-      let lives', flives' = update lives flives es dest in
       let def, fdef = 
         (match t with
         | Type.Unit -> S.empty, S.empty
         | Type.Float -> S.empty, S.singleton x
         | _ -> S.singleton x, S.empty
         ) in
+      let fv_g, fv_f = classify_fv_exp e in (* 汎用レジスタ用と浮動小数レジスタ用 *)
+      let live_j = try Int_M.find j lives with Not_found -> S.empty in
+      let flive_j = try Int_M.find j flives with Not_found -> S.empty in
+      let lives', flives' = update lives flives es dest in
       let live_j' = S.union (S.union (S.diff (live_j) def) fv_g) lives' in
       let flive_j' = S.union (S.union (S.diff (flive_j) fdef) fv_f) flives' in
       (live_j', flive_j')
     | Ans(e, j) ->
       let def, fdef = 
         (match dest with
-        | x, Type.Unit -> S.empty, S.empty
+        | x, Type.Unit -> (print_endline x; S.empty), S.empty
         | x, Type.Float -> S.empty, S.singleton x
         | x, _ -> S.singleton x, S.empty
         ) in
+        (*
+      print_int j; print_newline ();
+      print_exp 1 e;
+      Printf.printf "def[%d] is " j;
+      S.iter (fun x -> print_string (x^" ")) def;
+      print_newline ();
+      *)
       let fv_g, fv_f = classify_fv_exp e in (* 汎用レジスタ用と浮動小数レジスタ用 *)
-      let live_j = if (Int_M.mem j lives) then Int_M.find j lives else S.empty in
-      let flive_j = if (Int_M.mem j flives) then Int_M.find j flives else S.empty in
+      let live_j = try Int_M.find j lives with Not_found -> S.empty in
+      let flive_j = try Int_M.find j flives with Not_found -> S.empty in
       let lives', flives' = update lives flives es dest in
       let live_j' = S.union (S.union (S.diff (live_j) def) fv_g) lives' in
       let flive_j' = S.union (S.union (S.diff (flive_j) fdef) fv_f) flives' in
@@ -67,10 +74,10 @@ let rec liveness_analysis_main lives flives t succ dest =
   | Let((x, t), e, i, cont) ->
     (match e with
     | IfEq(_, _, e1, e2) | IfLE(_, _, e1, e2) | IfGE(_, _, e1, e2)
-    | IfFEq(_, _, e1, e2) | IfFLE(_, _, e1, e2) -> (* ここの(x, t)に対応する命令は比較であることにする *)
+    | IfFEq(_, _, e1, e2) | IfFLE(_, _, e1, e2) -> (* ここのiに対応する命令は比較であることにする *)
       let lives1, flives1 = liveness_analysis_main lives flives e1 [cont] (x, t) in 
       let lives2, flives2 = liveness_analysis_main lives1 flives1 e2 [cont] (x, t) in 
-      let live_i, flive_i = update lives2 flives2 [e1; e2; cont] dest in (* live[i]を更新 *)
+      let live_i, flive_i = update lives2 flives2 [e1; e2] (x, t) in (* live[i]を更新 *)
       liveness_analysis_main (Int_M.add i live_i lives2) (Int_M.add i flive_i flives2) cont succ dest
     | _ -> 
       let live_i, flive_i = update lives flives [cont] dest in
@@ -92,7 +99,7 @@ let rec liveness_analysis_main lives flives t succ dest =
 
 let rec iter_analysis lives flives t =
   let lives', flives' = liveness_analysis_main lives flives t [] ("_R_0", Type.Unit) in
-  if (lives' = lives && flives = flives') then
+  if (lives' = lives && flives' = flives) then 
     lives, flives
   else
     iter_analysis lives' flives' t
@@ -351,7 +358,7 @@ let rec allocate_fun { name = Id.L(x); args = ys; fargs = zs; body = e; ret = t 
 
 
 let rec f (Prog(data, fundefs, e)) =
-  let graph, fgraph = iter_analysis Int_M.empty Int_M.empty e in
+  let graph, fgraph = iter_analysis Int_M.empty Int_M.empty e in (* 生存解析 *)
   Int_M.iter (fun i s -> Printf.printf "%d  " i; S.iter (fun x -> print_string (x^" ")) s; print_newline ()) graph;
   let g = make_graph graph in
   let fg = make_graph fgraph in
@@ -363,15 +370,6 @@ let rec f (Prog(data, fundefs, e)) =
   print_map map;
   print_endline "print fmap";
   print_map fmap;
-  (*
-  print_endline "general purpose";
-  Int_M.iter (fun x l -> print_string ((string_of_int x)^"  ");
-                          S.iter (fun y -> print_string (y^" ")) l; print_newline ()) g;
-  print_endline "float point";
-  Int_M.iter (fun x l -> print_string ((string_of_int x)^"  ");
-                          S.iter (fun y -> print_string (y^" ")) l; print_newline ()) fg;
-  let fundefs' = List.map analysis_fun fundefs in
-  *)
   let _, _, e = save_before_call e graph fgraph map fmap in
   let e = replace e map fmap in
   Prog(data, List.map allocate_fun fundefs, e)

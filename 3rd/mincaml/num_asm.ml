@@ -158,6 +158,7 @@ let rec print_id_or_imm = function
 
 let rec print_t i = function
   | Ans (e, j) ->
+        print_indent i; print_endline "ANS";
         print_indent i; print_string "instruction number : ";
         print_int j; print_newline ();
         print_exp i e
