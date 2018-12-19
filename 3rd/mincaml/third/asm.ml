@@ -68,12 +68,12 @@ let allfregs = Array.to_list fregs
 let reg_zero = "%r0"
 let reg_fzero = "%f0"
 let reg_cl = regs.(Array.length regs - 1) (* closure address (caml2html: sparcasm_regcl) *)
-let reg_sw = regs.(Array.length regs - 2) (* temporary for swap *)
-let reg_fsw = fregs.(Array.length fregs - 1) (* temporary for swap *)
+let reg_sw = "%r30"(*regs.(Array.length regs - 2)*) (* temporary for swap *)
+let reg_fsw = "%f31"(*fregs.(Array.length fregs - 1)*) (* temporary for swap *)
 let reg_sp = "%r3" (* stack pointer *)
 let reg_hp = "%r4" (* heap pointer (caml2html: sparcasm_reghp) *)
 let reg_tmp = "%r30" (* [XX] ad hoc *)
-let freg_tmp = "%f31" (* [XX] ad hoc *)
+let reg_ftmp = "%f31" (* [XX] ad hoc *)
 let reg_lr = "%r31"
 let is_reg x = (x.[0] = '%')
 

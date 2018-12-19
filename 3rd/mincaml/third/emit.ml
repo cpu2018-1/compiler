@@ -119,8 +119,8 @@ and g' oc = function (* 各命令のアセンブリ生成 (caml2html: emit_gprime) *)
   | NonTail(x), FAdd(y, z) -> Printf.fprintf oc "\tfadd\t%s, %s, %s\n" (reg x) (reg y) (reg z)
   | NonTail(x), FSub(y, z) -> Printf.fprintf oc "\tfsub\t%s, %s, %s\n" (reg x) (reg y) (reg z)
   | NonTail(x), FMul(y, z) -> Printf.fprintf oc "\tfmul\t%s, %s, %s\n" (reg x) (reg y) (reg z)
-  | NonTail(x), FDiv(y, z) -> Printf.fprintf oc "\tfinv\t%s, %s\n" (reg freg_tmp) (reg z);
-                              Printf.fprintf oc "\tfmul\t%s, %s, %s\n" (reg x) (reg y) (reg freg_tmp)
+  | NonTail(x), FDiv(y, z) -> Printf.fprintf oc "\tfinv\t%s, %s\n" (reg reg_ftmp) (reg z);
+                              Printf.fprintf oc "\tfmul\t%s, %s, %s\n" (reg x) (reg y) (reg reg_ftmp)
   | NonTail(x), FLw(y, V(z)) -> Printf.fprintf oc "\tadd\t%s, %s, %s\n" (reg reg_tmp) (reg y) (reg z);
                                 Printf.fprintf oc "\tflw\t%s, 0(%s)\n" (reg x) (reg reg_tmp)
   | NonTail(x), FLw(y, C(z)) -> Printf.fprintf oc "\tflw\t%s, %d(%s)\n" (reg x) z (reg y)
