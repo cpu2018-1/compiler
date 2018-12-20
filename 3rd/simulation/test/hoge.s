@@ -322,13 +322,13 @@ lib_fuga:
 	beq	r0, r30, _fle_else.742
 	fsub	f1, f1, f2
 	flup	f4, 3		# fli	f4, 2.000000
-	finv	f2, f4
-	fmul	f2, f2, f2
+	finv	f31, f4
+	fmul	f2, f2, f31
 	j lib_fuga
 _fle_else.742:
 	flup	f4, 3		# fli	f4, 2.000000
-	finv	f2, f4
-	fmul	f2, f2, f2
+	finv	f31, f4
+	fmul	f2, f2, f31
 	j lib_fuga
 _fle_else.741:
 	jr	r31				#
@@ -355,35 +355,35 @@ _fle_cont.744:
 	flw	f3, 0(r3)
 	j lib_fuga
 lib_sin_body:
-	flup	f2, 6		# fli	f2, 0.166667
-	flup	f3, 7		# fli	f3, 0.008333
-	flup	f4, 8		# fli	f4, 0.000196
-	fmul	f5, f1, f1
-	fmul	f2, f2, f1
-	fmul	f2, f2, f5
-	fsub	f2, f1, f2
+	fmul	f2, f1, f1
+	flup	f3, 6		# fli	f3, 0.166667
 	fmul	f3, f3, f1
-	fmul	f3, f3, f5
-	fmul	f3, f3, f5
-	fadd	f2, f2, f3
+	fmul	f3, f3, f2
+	fsub	f3, f1, f3
+	flup	f4, 7		# fli	f4, 0.008333
+	fmul	f4, f4, f1
+	fmul	f4, f4, f2
+	fmul	f4, f4, f2
+	fadd	f3, f3, f4
+	flup	f4, 8		# fli	f4, 0.000196
 	fmul	f1, f4, f1
-	fmul	f1, f1, f5
-	fmul	f1, f1, f5
-	fmul	f1, f1, f5
-	fsub	f1, f2, f1
+	fmul	f1, f1, f2
+	fmul	f1, f1, f2
+	fmul	f1, f1, f2
+	fsub	f1, f3, f1
 	jr	r31				#
 lib_cos_body:
 	fmul	f1, f1, f1
-	flup	f2, 10		# fli	f2, 0.001370
-	flup	f3, 9		# fli	f3, 0.041664
-	flup	f4, 1		# fli	f4, 0.500000
-	flup	f5, 2		# fli	f5, 1.000000
-	fmul	f2, f1, f2
-	fsub	f2, f3, f2
-	fmul	f2, f1, f2
-	fsub	f2, f4, f2
-	fmul	f1, f1, f2
-	fsub	f1, f5, f1
+	flup	f2, 2		# fli	f2, 1.000000
+	flup	f3, 1		# fli	f3, 0.500000
+	flup	f4, 9		# fli	f4, 0.041664
+	flup	f5, 10		# fli	f5, 0.001370
+	fmul	f5, f1, f5
+	fsub	f4, f4, f5
+	fmul	f4, f1, f4
+	fsub	f3, f3, f4
+	fmul	f1, f1, f3
+	fsub	f1, f2, f1
 	jr	r31				#
 lib_abs_float:
 	fle	r30, f0, f1
@@ -652,40 +652,39 @@ _fle_else.765:
 	fmul	f1, f1, f2
 	jr	r31				#
 lib_atan_body:
-	flup	f2, 22		# fli	f2, 0.060035
+	flup	f2, 17		# fli	f2, 0.333333
+	fmul	f2, f2, f1
+	fmul	f2, f2, f1
+	fmul	f2, f2, f1
+	fsub	f2, f1, f2
+	flup	f3, 18		# fli	f3, 0.200000
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fadd	f2, f2, f3
+	flup	f3, 19		# fli	f3, 0.142857
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fsub	f2, f2, f3
+	flup	f3, 20		# fli	f3, 0.111111
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fadd	f2, f2, f3
 	flup	f3, 21		# fli	f3, 0.089764
-	flup	f4, 20		# fli	f4, 0.111111
-	flup	f5, 19		# fli	f5, 0.142857
-	flup	f6, 18		# fli	f6, 0.200000
-	flup	f7, 17		# fli	f7, 0.333333
-	fmul	f7, f7, f1
-	fmul	f7, f7, f1
-	fmul	f7, f7, f1
-	fsub	f7, f1, f7
-	fmul	f6, f6, f1
-	fmul	f6, f6, f1
-	fmul	f6, f6, f1
-	fmul	f6, f6, f1
-	fmul	f6, f6, f1
-	fadd	f6, f7, f6
-	fmul	f5, f5, f1
-	fmul	f5, f5, f1
-	fmul	f5, f5, f1
-	fmul	f5, f5, f1
-	fmul	f5, f5, f1
-	fmul	f5, f5, f1
-	fmul	f5, f5, f1
-	fsub	f5, f6, f5
-	fmul	f4, f4, f1
-	fmul	f4, f4, f1
-	fmul	f4, f4, f1
-	fmul	f4, f4, f1
-	fmul	f4, f4, f1
-	fmul	f4, f4, f1
-	fmul	f4, f4, f1
-	fmul	f4, f4, f1
-	fmul	f4, f4, f1
-	fadd	f4, f5, f4
 	fmul	f3, f3, f1
 	fmul	f3, f3, f1
 	fmul	f3, f3, f1
@@ -697,21 +696,22 @@ lib_atan_body:
 	fmul	f3, f3, f1
 	fmul	f3, f3, f1
 	fmul	f3, f3, f1
-	fsub	f3, f4, f3
-	fmul	f2, f2, f1
-	fmul	f2, f2, f1
-	fmul	f2, f2, f1
-	fmul	f2, f2, f1
-	fmul	f2, f2, f1
-	fmul	f2, f2, f1
-	fmul	f2, f2, f1
-	fmul	f2, f2, f1
-	fmul	f2, f2, f1
-	fmul	f2, f2, f1
-	fmul	f2, f2, f1
-	fmul	f2, f2, f1
-	fmul	f1, f2, f1
-	fadd	f1, f3, f1
+	fsub	f2, f2, f3
+	flup	f3, 22		# fli	f3, 0.060035
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f3, f3, f1
+	fmul	f1, f3, f1
+	fadd	f1, f2, f1
 	jr	r31				#
 lib_atan:
 	fle	r30, f0, f1
@@ -728,12 +728,12 @@ _fle_cont.767:
 	flup	f3, 24		# fli	f3, 2.437500
 	fle	r30, f3, f1
 	beq	r0, r30, _fle_else.769
-	flup	f3, 2		# fli	f3, 1.000000
-	flup	f4, 15		# fli	f4, 1.570796
-	finv	f1, f1
-	fmul	f1, f3, f1
+	flup	f3, 15		# fli	f3, 1.570796
+	flup	f4, 2		# fli	f4, 1.000000
+	finv	f31, f1
+	fmul	f1, f4, f31
 	fsw	f2, 0(r3)
-	fsw	f4, 2(r3)
+	fsw	f3, 2(r3)
 	sw	r31, 4(r3)
 	addi	r3, r3, 5
 	jal lib_atan_body				
@@ -745,15 +745,15 @@ _fle_cont.767:
 	fmul	f1, f1, f2
 	jr	r31				#
 _fle_else.769:
-	flup	f3, 2		# fli	f3, 1.000000
+	flup	f3, 16		# fli	f3, 0.785398
 	flup	f4, 2		# fli	f4, 1.000000
-	flup	f5, 16		# fli	f5, 0.785398
-	fsub	f3, f1, f3
-	fadd	f1, f1, f4
-	finv	f1, f1
-	fmul	f1, f3, f1
+	fsub	f4, f1, f4
+	flup	f5, 2		# fli	f5, 1.000000
+	fadd	f1, f1, f5
+	finv	f31, f1
+	fmul	f1, f4, f31
 	fsw	f2, 0(r3)
-	fsw	f5, 4(r3)
+	fsw	f3, 4(r3)
 	sw	r31, 6(r3)
 	addi	r3, r3, 7
 	jal lib_atan_body				
@@ -2081,11 +2081,37 @@ _min_caml_start: # main entry point
   sw r0, 1023(r4)
   addi  r4, r4, 1024
 #	main program starts
-	addi	r30, r0, 52429
-	lui	r30, r30, 16076	# to load float		0.400000
-	fmvfr	f1, r30
+	addi	r1, r0, 205
 	sw	r31, 0(r3)
 	addi	r3, r3, 1
-	jal	lib_print_float				
+	jal	lib_div10				
 	addi	r3, r3, -1
 	lw	r31, 0(r3)
+	add	r2, r0, r1
+	bgei	3, r2, bge_then.15
+	addi	r1, r0, 10
+	sw	r1, 0(r3)
+	sw	r2, 1(r3)
+	sw	r31, 2(r3)
+	addi	r3, r3, 3
+	jal	lib_div10				
+	addi	r3, r3, -3
+	lw	r31, 2(r3)
+	j	bge_cont.16
+bge_then.15:
+	sw	r1, 0(r3)
+	sw	r2, 1(r3)
+	add	r1, r0, r2
+	sw	r31, 2(r3)
+	addi	r3, r3, 3
+	jal	lib_div10				
+	addi	r3, r3, -3
+	lw	r31, 2(r3)
+bge_cont.16:
+	lw	r2, 1(r3)
+	add	r1, r2, r1
+	sw	r31, 2(r3)
+	addi	r3, r3, 3
+	jal	lib_print_int				
+	addi	r3, r3, -3
+	lw	r31, 2(r3)

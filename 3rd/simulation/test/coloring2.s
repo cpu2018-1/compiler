@@ -1010,19 +1010,487 @@ _fle_else.783:
 	j lib_print_ufloat
 _R_0:
 # library ends
-sum.8:
-	blei	0, r2, ble_then.19
-	add	r5, r1, r2
-	addi	r1, r2, -1
-	add	r2, r0, r1
-	add	r1, r0, r5
-	sw	r31, 0(r3)
-	addi	r3, r3, 1
-	jal	sum.8				
-	addi	r3, r3, -1
-	lw	r31, 0(r3)
+utexture.137:
+	sw	r2, 0(r3)
+	sw	r1, 1(r3)
+	sw	r31, 2(r3)
+	addi	r3, r3, 3
+	jal	lib_o_texturetype				
+	addi	r3, r3, -3
+	lw	r31, 2(r3)
+	add	r5, r0, r1
+	lw	r2, 0(r3)
+	lw	r1, 1(r3)
+	sw	r5, 2(r3)
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	lib_o_color_red				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	lw	r2, 0(r3)
+	lw	r5, 2(r3)
+	lw	r1, 1(r3)
+	fsw	f1, 734(r0)
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	lib_o_color_green				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	lw	r2, 0(r3)
+	lw	r5, 2(r3)
+	lw	r1, 1(r3)
+	fsw	f1, 735(r0)
+	sw	r31, 3(r3)
+	addi	r3, r3, 4
+	jal	lib_o_color_blue				
+	addi	r3, r3, -4
+	lw	r31, 3(r3)
+	lw	r2, 0(r3)
+	lw	r5, 2(r3)
+	lw	r1, 1(r3)
+	fsw	f1, 736(r0)
+	beqi	1, r5, beq_then.388
+	beqi	2, r5, beq_then.389
+	beqi	3, r5, beq_then.390
+	beqi	4, r5, beq_then.391
 	jr	r31				#
-ble_then.19:
+beq_then.391:
+	flw	f2, 0(r2)
+	fsw	f2, 4(r3)
+	sw	r31, 6(r3)
+	addi	r3, r3, 7
+	jal	lib_o_param_x				
+	addi	r3, r3, -7
+	lw	r31, 6(r3)
+	flw	f2, 4(r3)
+	lw	r2, 0(r3)
+	lw	r1, 1(r3)
+	fsub	f2, f2, f1
+	fsw	f2, 6(r3)
+	sw	r31, 8(r3)
+	addi	r3, r3, 9
+	jal	lib_o_param_a				
+	addi	r3, r3, -9
+	lw	r31, 8(r3)
+	flw	f2, 6(r3)
+	lw	r2, 0(r3)
+	lw	r1, 1(r3)
+	fsqrt	f1, f1
+	fmul	f3, f2, f1
+	flw	f2, 2(r2)
+	fsw	f3, 8(r3)
+	fsw	f2, 10(r3)
+	sw	r31, 12(r3)
+	addi	r3, r3, 13
+	jal	lib_o_param_z				
+	addi	r3, r3, -13
+	lw	r31, 12(r3)
+	flw	f3, 8(r3)
+	flw	f2, 10(r3)
+	lw	r2, 0(r3)
+	lw	r1, 1(r3)
+	fsub	f2, f2, f1
+	fsw	f2, 12(r3)
+	sw	r31, 14(r3)
+	addi	r3, r3, 15
+	jal	lib_o_param_c				
+	addi	r3, r3, -15
+	lw	r31, 14(r3)
+	flw	f3, 8(r3)
+	flw	f2, 12(r3)
+	lw	r2, 0(r3)
+	lw	r1, 1(r3)
+	fsqrt	f1, f1
+	fmul	f1, f2, f1
+	fsw	f1, 14(r3)
+	fadd	f1, f0, f3
+	sw	r31, 16(r3)
+	addi	r3, r3, 17
+	jal	lib_fsqr				
+	addi	r3, r3, -17
+	lw	r31, 16(r3)
+	fadd	f4, f0, f1
+	flw	f1, 14(r3)
+	flw	f3, 8(r3)
+	lw	r2, 0(r3)
+	lw	r1, 1(r3)
+	fsw	f4, 16(r3)
+	sw	r31, 18(r3)
+	addi	r3, r3, 19
+	jal	lib_fsqr				
+	addi	r3, r3, -19
+	lw	r31, 18(r3)
+	fadd	f2, f0, f1
+	flw	f1, 14(r3)
+	flw	f3, 8(r3)
+	flw	f4, 16(r3)
+	lw	r2, 0(r3)
+	lw	r1, 1(r3)
+	fadd	f2, f4, f2
+	flup	f4, 33		# fli	f4, 0.000100
+	fsw	f2, 18(r3)
+	fsw	f4, 20(r3)
+	fadd	f1, f0, f3
+	sw	r31, 22(r3)
+	addi	r3, r3, 23
+	jal	lib_fabs				
+	addi	r3, r3, -23
+	lw	r31, 22(r3)
+	fadd	f5, f0, f1
+	flw	f2, 18(r3)
+	flw	f1, 14(r3)
+	flw	f3, 8(r3)
+	flw	f4, 20(r3)
+	lw	r2, 0(r3)
+	lw	r1, 1(r3)
+	fle	r30, f4, f5
+	beq	r0, r30, fle_else.394
+	finv	f31, f3
+	fmul	f1, f1, f31
+	sw	r31, 22(r3)
+	addi	r3, r3, 23
+	jal	lib_fabs				
+	addi	r3, r3, -23
+	lw	r31, 22(r3)
+	flw	f2, 18(r3)
+	lw	r2, 0(r3)
+	lw	r1, 1(r3)
+	sw	r31, 22(r3)
+	addi	r3, r3, 23
+	jal	lib_atan				
+	addi	r3, r3, -23
+	lw	r31, 22(r3)
+	fadd	f3, f0, f1
+	flw	f2, 18(r3)
+	lw	r2, 0(r3)
+	lw	r1, 1(r3)
+	flup	f1, 35		# fli	f1, 30.000000
+	fmul	f3, f3, f1
+	flup	f1, 14		# fli	f1, 3.141593
+	finv	f31, f1
+	fmul	f1, f3, f31
+	j	fle_cont.395
+fle_else.394:
+	flup	f1, 34		# fli	f1, 15.000000
+fle_cont.395:
+	fsw	f1, 22(r3)
+	sw	r31, 24(r3)
+	addi	r3, r3, 25
+	jal	lib_floor				
+	addi	r3, r3, -25
+	lw	r31, 24(r3)
+	fadd	f3, f0, f1
+	flw	f1, 22(r3)
+	flw	f2, 18(r3)
+	lw	r2, 0(r3)
+	lw	r1, 1(r3)
+	fsub	f1, f1, f3
+	flw	f4, 1(r2)
+	fsw	f1, 24(r3)
+	fsw	f4, 26(r3)
+	sw	r31, 28(r3)
+	addi	r3, r3, 29
+	jal	lib_o_param_y				
+	addi	r3, r3, -29
+	lw	r31, 28(r3)
+	fadd	f3, f0, f1
+	flw	f1, 24(r3)
+	flw	f2, 18(r3)
+	flw	f4, 26(r3)
+	lw	r1, 1(r3)
+	fsub	f4, f4, f3
+	fsw	f4, 28(r3)
+	sw	r31, 30(r3)
+	addi	r3, r3, 31
+	jal	lib_o_param_b				
+	addi	r3, r3, -31
+	lw	r31, 30(r3)
+	fadd	f3, f0, f1
+	flw	f1, 24(r3)
+	flw	f2, 18(r3)
+	flw	f4, 28(r3)
+	fsqrt	f3, f3
+	fmul	f3, f4, f3
+	flup	f5, 33		# fli	f5, 0.000100
+	fsw	f3, 30(r3)
+	fsw	f5, 32(r3)
+	fadd	f1, f0, f2
+	sw	r31, 34(r3)
+	addi	r3, r3, 35
+	jal	lib_fabs				
+	addi	r3, r3, -35
+	lw	r31, 34(r3)
+	fadd	f4, f0, f1
+	flw	f1, 24(r3)
+	flw	f2, 18(r3)
+	flw	f3, 30(r3)
+	flw	f5, 32(r3)
+	fle	r30, f5, f4
+	beq	r0, r30, fle_else.396
+	finv	f31, f2
+	fmul	f2, f3, f31
+	fadd	f1, f0, f2
+	sw	r31, 34(r3)
+	addi	r3, r3, 35
+	jal	lib_fabs				
+	addi	r3, r3, -35
+	lw	r31, 34(r3)
+	fadd	f2, f0, f1
+	flw	f1, 24(r3)
+	fadd	f1, f0, f2
+	sw	r31, 34(r3)
+	addi	r3, r3, 35
+	jal	lib_atan				
+	addi	r3, r3, -35
+	lw	r31, 34(r3)
+	fadd	f3, f0, f1
+	flw	f1, 24(r3)
+	flup	f2, 35		# fli	f2, 30.000000
+	fmul	f3, f3, f2
+	flup	f2, 14		# fli	f2, 3.141593
+	finv	f31, f2
+	fmul	f2, f3, f31
+	j	fle_cont.397
+fle_else.396:
+	flup	f2, 34		# fli	f2, 15.000000
+fle_cont.397:
+	fsw	f2, 34(r3)
+	fadd	f1, f0, f2
+	sw	r31, 36(r3)
+	addi	r3, r3, 37
+	jal	lib_floor				
+	addi	r3, r3, -37
+	lw	r31, 36(r3)
+	fadd	f3, f0, f1
+	flw	f1, 24(r3)
+	flw	f2, 34(r3)
+	fsub	f2, f2, f3
+	flup	f4, 36		# fli	f4, 0.150000
+	flup	f3, 1		# fli	f3, 0.500000
+	fsub	f1, f3, f1
+	fsw	f2, 36(r3)
+	fsw	f4, 38(r3)
+	sw	r31, 40(r3)
+	addi	r3, r3, 41
+	jal	lib_fsqr				
+	addi	r3, r3, -41
+	lw	r31, 40(r3)
+	flw	f2, 36(r3)
+	flw	f4, 38(r3)
+	fsub	f3, f4, f1
+	flup	f1, 1		# fli	f1, 0.500000
+	fsub	f1, f1, f2
+	fsw	f3, 40(r3)
+	sw	r31, 42(r3)
+	addi	r3, r3, 43
+	jal	lib_fsqr				
+	addi	r3, r3, -43
+	lw	r31, 42(r3)
+	flw	f3, 40(r3)
+	fsub	f1, f3, f1
+	fsw	f1, 42(r3)
+	sw	r31, 44(r3)
+	addi	r3, r3, 45
+	jal	lib_fisneg				
+	addi	r3, r3, -45
+	lw	r31, 44(r3)
+	flw	f1, 42(r3)
+	beqi	0, r1, beq_then.398
+	flup	f1, 0		# fli	f1, 0.000000
+	j	beq_cont.399
+beq_then.398:
+beq_cont.399:
+	flup	f2, 37		# fli	f2, 255.000000
+	fmul	f2, f2, f1
+	flup	f1, 38		# fli	f1, 0.300000
+	finv	f31, f1
+	fmul	f1, f2, f31
+	fsw	f1, 736(r0)
+	jr	r31				#
+beq_then.390:
+	flw	f2, 0(r2)
+	fsw	f2, 44(r3)
+	sw	r31, 46(r3)
+	addi	r3, r3, 47
+	jal	lib_o_param_x				
+	addi	r3, r3, -47
+	lw	r31, 46(r3)
+	flw	f2, 44(r3)
+	lw	r2, 0(r3)
+	lw	r1, 1(r3)
+	fsub	f2, f2, f1
+	flw	f3, 2(r2)
+	fsw	f2, 46(r3)
+	fsw	f3, 48(r3)
+	sw	r31, 50(r3)
+	addi	r3, r3, 51
+	jal	lib_o_param_z				
+	addi	r3, r3, -51
+	lw	r31, 50(r3)
+	flw	f2, 46(r3)
+	flw	f3, 48(r3)
+	fsub	f1, f3, f1
+	fsw	f1, 50(r3)
+	fadd	f1, f0, f2
+	sw	r31, 52(r3)
+	addi	r3, r3, 53
+	jal	lib_fsqr				
+	addi	r3, r3, -53
+	lw	r31, 52(r3)
+	fadd	f2, f0, f1
+	flw	f1, 50(r3)
+	fsw	f2, 52(r3)
+	sw	r31, 54(r3)
+	addi	r3, r3, 55
+	jal	lib_fsqr				
+	addi	r3, r3, -55
+	lw	r31, 54(r3)
+	flw	f2, 52(r3)
+	fadd	f1, f2, f1
+	fsqrt	f2, f1
+	flup	f1, 39		# fli	f1, 10.000000
+	finv	f31, f1
+	fmul	f1, f2, f31
+	fsw	f1, 54(r3)
+	sw	r31, 56(r3)
+	addi	r3, r3, 57
+	jal	lib_floor				
+	addi	r3, r3, -57
+	lw	r31, 56(r3)
+	fadd	f2, f0, f1
+	flw	f1, 54(r3)
+	fsub	f2, f1, f2
+	flup	f1, 14		# fli	f1, 3.141593
+	fmul	f1, f2, f1
+	sw	r31, 56(r3)
+	addi	r3, r3, 57
+	jal	lib_cos				
+	addi	r3, r3, -57
+	lw	r31, 56(r3)
+	sw	r31, 56(r3)
+	addi	r3, r3, 57
+	jal	lib_fsqr				
+	addi	r3, r3, -57
+	lw	r31, 56(r3)
+	flup	f2, 37		# fli	f2, 255.000000
+	fmul	f2, f1, f2
+	fsw	f2, 735(r0)
+	flup	f2, 2		# fli	f2, 1.000000
+	fsub	f2, f2, f1
+	flup	f1, 37		# fli	f1, 255.000000
+	fmul	f1, f2, f1
+	fsw	f1, 736(r0)
+	jr	r31				#
+beq_then.389:
+	flw	f2, 1(r2)
+	flup	f1, 40		# fli	f1, 0.250000
+	fmul	f1, f2, f1
+	sw	r31, 56(r3)
+	addi	r3, r3, 57
+	jal	lib_sin				
+	addi	r3, r3, -57
+	lw	r31, 56(r3)
+	sw	r31, 56(r3)
+	addi	r3, r3, 57
+	jal	lib_fsqr				
+	addi	r3, r3, -57
+	lw	r31, 56(r3)
+	flup	f2, 37		# fli	f2, 255.000000
+	fmul	f2, f2, f1
+	fsw	f2, 734(r0)
+	flup	f3, 37		# fli	f3, 255.000000
+	flup	f2, 2		# fli	f2, 1.000000
+	fsub	f1, f2, f1
+	fmul	f1, f3, f1
+	fsw	f1, 735(r0)
+	jr	r31				#
+beq_then.388:
+	flw	f2, 0(r2)
+	fsw	f2, 56(r3)
+	sw	r31, 58(r3)
+	addi	r3, r3, 59
+	jal	lib_o_param_x				
+	addi	r3, r3, -59
+	lw	r31, 58(r3)
+	flw	f2, 56(r3)
+	lw	r2, 0(r3)
+	lw	r1, 1(r3)
+	fsub	f1, f2, f1
+	flup	f2, 41		# fli	f2, 0.050000
+	fmul	f2, f1, f2
+	fsw	f1, 58(r3)
+	fadd	f1, f0, f2
+	sw	r31, 60(r3)
+	addi	r3, r3, 61
+	jal	lib_floor				
+	addi	r3, r3, -61
+	lw	r31, 60(r3)
+	fadd	f3, f0, f1
+	flw	f1, 58(r3)
+	lw	r2, 0(r3)
+	lw	r1, 1(r3)
+	flup	f2, 42		# fli	f2, 20.000000
+	fmul	f2, f3, f2
+	flup	f3, 39		# fli	f3, 10.000000
+	fsub	f1, f1, f2
+	fle	r30, f3, f1
+	beq	r0, r30, fle_else.403
+	addi	r5, r0, 0
+	j	fle_cont.404
+fle_else.403:
+	addi	r5, r0, 1
+fle_cont.404:
+	flw	f2, 2(r2)
+	fsw	f2, 60(r3)
+	sw	r5, 62(r3)
+	sw	r31, 63(r3)
+	addi	r3, r3, 64
+	jal	lib_o_param_z				
+	addi	r3, r3, -64
+	lw	r31, 63(r3)
+	flw	f2, 60(r3)
+	lw	r5, 62(r3)
+	fsub	f1, f2, f1
+	flup	f2, 41		# fli	f2, 0.050000
+	fmul	f2, f1, f2
+	fsw	f1, 64(r3)
+	fadd	f1, f0, f2
+	sw	r31, 66(r3)
+	addi	r3, r3, 67
+	jal	lib_floor				
+	addi	r3, r3, -67
+	lw	r31, 66(r3)
+	fadd	f3, f0, f1
+	flw	f1, 64(r3)
+	lw	r5, 62(r3)
+	flup	f2, 42		# fli	f2, 20.000000
+	fmul	f2, f3, f2
+	flup	f3, 39		# fli	f3, 10.000000
+	fsub	f1, f1, f2
+	fle	r30, f3, f1
+	beq	r0, r30, fle_else.406
+	addi	r1, r0, 0
+	j	fle_cont.407
+fle_else.406:
+	addi	r1, r0, 1
+fle_cont.407:
+	beqi	0, r5, beq_then.408
+	beqi	0, r1, beq_then.410
+	flup	f1, 37		# fli	f1, 255.000000
+	j	beq_cont.411
+beq_then.410:
+	flup	f1, 0		# fli	f1, 0.000000
+beq_cont.411:
+	j	beq_cont.409
+beq_then.408:
+	beqi	0, r1, beq_then.412
+	flup	f1, 0		# fli	f1, 0.000000
+	j	beq_cont.413
+beq_then.412:
+	flup	f1, 37		# fli	f1, 255.000000
+beq_cont.413:
+beq_cont.409:
+	fsw	f1, 735(r0)
 	jr	r31				#
 _R_0:
 _min_caml_start: # main entry point
@@ -2095,18 +2563,10 @@ _min_caml_start: # main entry point
   sw r0, 1023(r4)
   addi  r4, r4, 1024
 #	main program starts
-	addi	r2, r0, 0
-	addi	r1, r0, 10000
-	add	r30, r0, r2
-	add	r2, r0, r1
-	add	r1, r0, r30
+	addi	r1, r0, 3
+	addi	r2, r0, 740				# set min_caml_rgb
 	sw	r31, 0(r3)
 	addi	r3, r3, 1
-	jal	sum.8				
-	addi	r3, r3, -1
-	lw	r31, 0(r3)
-	sw	r31, 0(r3)
-	addi	r3, r3, 1
-	jal	lib_print_int				
+	jal	utexture.137				
 	addi	r3, r3, -1
 	lw	r31, 0(r3)

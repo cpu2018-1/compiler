@@ -1010,19 +1010,30 @@ _fle_else.783:
 	j lib_print_ufloat
 _R_0:
 # library ends
-sum.8:
-	blei	0, r2, ble_then.19
-	add	r5, r1, r2
-	addi	r1, r2, -1
+ack.15:
+	blei	0, r1, ble_then.33
+	blei	0, r2, ble_then.34
+	addi	r5, r1, -1
+	addi	r2, r2, -1
+	sw	r5, 0(r3)
+	sw	r31, 1(r3)
+	addi	r3, r3, 2
+	jal	ack.15				
+	addi	r3, r3, -2
+	lw	r31, 1(r3)
+	lw	r5, 0(r3)
 	add	r2, r0, r1
 	add	r1, r0, r5
-	sw	r31, 0(r3)
-	addi	r3, r3, 1
-	jal	sum.8				
-	addi	r3, r3, -1
-	lw	r31, 0(r3)
-	jr	r31				#
-ble_then.19:
+	j	ack.15
+ble_then.34:
+	addi	r2, r1, -1
+	addi	r1, r0, 1
+	add	r28, r0, r2
+	add	r2, r0, r1
+	add	r1, r0, r28
+	j	ack.15
+ble_then.33:
+	addi	r1, r2, 1
 	jr	r31				#
 _R_0:
 _min_caml_start: # main entry point
@@ -2095,14 +2106,14 @@ _min_caml_start: # main entry point
   sw r0, 1023(r4)
   addi  r4, r4, 1024
 #	main program starts
-	addi	r2, r0, 0
-	addi	r1, r0, 10000
-	add	r30, r0, r2
+	addi	r2, r0, 3
+	addi	r1, r0, 4
+	add	r28, r0, r2
 	add	r2, r0, r1
-	add	r1, r0, r30
+	add	r1, r0, r28
 	sw	r31, 0(r3)
 	addi	r3, r3, 1
-	jal	sum.8				
+	jal	ack.15				
 	addi	r3, r3, -1
 	lw	r31, 0(r3)
 	sw	r31, 0(r3)

@@ -138,13 +138,79 @@ let rec optimistic g stack spill t =
       let (x, _) = M.choose g in 
       optimistic (M.remove x (M.map (fun s -> (S.filter (fun a -> x <> a) s)) g)) (x :: stack) (x :: spill) t
 
-let rec find_can_use i used regs =
+let rec find_step_by_step i step used regs =
   if S.mem regs.(i) used then
-    find_can_use (i + 1) used regs
+    find_step_by_step (i + step) step used regs
   else
     i
 
-let rec alloc g stack spill env t =
+let rec find_can_use i used regs m =
+  let m' = 
+    (match m with
+    | None -> None 
+    | Some n -> Int_M.fold 
+            (fun i max maybe -> 
+                  if S.mem regs.(i) used then 
+                    maybe 
+                  else
+                    (match maybe with
+                    | None -> Some (i, max)
+                    | Some (j, max') -> if i > j then Some (i, max) else Some (j, max'))) n None 
+    ) in
+  match m' with
+  | Some (i, _) -> i
+  | None -> find_step_by_step 0 1 used regs
+  
+(* 引数をみてどのレジスタに割り当てるのが良さそうかのmapを返す *)
+let rec make_priority_map e =
+  match e with
+  | Let((x, t), e, i, cont) ->
+    (match e with
+    | CallDir(_, ys, zs) -> 
+      let m = make_priority_map cont in
+      let (_, m') = List.fold_left 
+                  (fun (i, m') y -> let l = try M.find y m' with Not_found -> Int_M.empty in
+                                   (i + 1, M.add y (Int_M.add i (try Int_M.find i l + 1 with Not_found -> 1) l) m')) (0, m) ys in
+      let (_, m'') = List.fold_left 
+                  (fun (i, m') y -> let l = try M.find y m' with Not_found -> Int_M.empty in
+                                   (i + 1, M.add y (Int_M.add i (try Int_M.find i l + 1 with Not_found -> 1) l) m')) (0, m') zs in
+      m''
+    | IfEq(_, _, e1, e2) | IfLE(_, _, e1, e2) | IfGE(_, _, e1, e2) 
+    | IfFEq(_, _, e1, e2) | IfFLE(_, _, e1, e2) -> 
+      let f = fun x a b -> 
+              match a, b with
+              | Some c, Some d -> Some (Int_M.fold (fun i j acc -> if Int_M.mem i d then Int_M.add i (j + Int_M.find i d) acc else Int_M.add i j acc) c d)
+              | Some c, None -> Some c
+              | None, Some d -> Some d
+              | None, None -> None in
+      M.merge f (M.merge f (make_priority_map e1) (make_priority_map e2)) (make_priority_map cont)
+    | _ -> make_priority_map cont
+    )
+  | Ans(e, i) ->
+    (match e with
+    | CallDir(_, ys, zs) -> 
+      let m = M.empty in
+      let (_, m') = List.fold_left 
+                  (fun (i, m') y -> let l = try M.find y m' with Not_found -> Int_M.empty in
+                                   (i + 1, M.add y (Int_M.add i (try Int_M.find i l + 1 with Not_found -> 1) l) m')) (0, m) ys in
+      let (_, m'') = List.fold_left 
+                  (fun (i, m') y -> let l = try M.find y m' with Not_found -> Int_M.empty in
+                                   (i + 1, M.add y (Int_M.add i (try Int_M.find i l + 1 with Not_found -> 1) l) m')) (0, m') zs in
+      m''
+    | IfEq(_, _, e1, e2) | IfLE(_, _, e1, e2) | IfGE(_, _, e1, e2) 
+    | IfFEq(_, _, e1, e2) | IfFLE(_, _, e1, e2) -> 
+      let f = fun x a b -> 
+              match a, b with
+              | Some c, Some d -> Some (Int_M.fold (fun i j acc -> if Int_M.mem i d then Int_M.add i (j + Int_M.find i d) acc else Int_M.add i j acc) c d)
+              | Some c, None -> Some c
+              | None, Some d -> Some d
+              | None, None -> None in
+      M.merge f (make_priority_map e1) (make_priority_map e2)
+    | _ -> M.empty
+    )
+      
+      
+let rec alloc g stack spill env t m =
   let regs = (match t with Float -> Asm.fregs |  Gen -> Asm.regs) in
   match stack with
   | x :: xs -> 
@@ -158,12 +224,12 @@ let rec alloc g stack spill env t =
         alloc g xs spill (M.add x x env) t 
       else
  *)       if (M.mem x env) then
-          alloc g xs spill env t
+          alloc g xs spill env t m
         else
           let allocated = S.filter (fun y -> M.mem y env) (M.find x g) in (* xと干渉するもののうちすでに割り当てられているもの *)
           let used = S.map (fun y -> M.find y env) allocated (*S.fold (fun y s -> S.add (M.find y env) s) allocated S.empty*) in
-          let i = find_can_use 0 used regs in
-          alloc g xs spill (M.add x regs.(i) env) t
+          let i = find_can_use 0 used regs (try Some (M.find x m) with Not_found -> None) in
+          alloc g xs spill (M.add x regs.(i) env) t m
   | [] -> env
 
 let rec replace_id_or_imm x' map =
@@ -229,9 +295,10 @@ let rec print_map map =
 
 (* 彩色 *)
 (* グラフと型(汎用レジスタか浮動小数レジスタか)を受け取って彩色を返す *)
-let rec coloring g t =
+let rec coloring g t e =
   let stack, spill = optimistic g [] [] t in
-  let map = alloc g stack spill M.empty t in map
+  let m = make_priority_map e in
+  let map = alloc g stack spill M.empty t m in map
 
 (* とりあえず挿入するだけ *)
 let rec insert_restore xs ty e map = 
@@ -347,8 +414,8 @@ let rec allocate e =
   let graph, fgraph = iter_analysis Int_M.empty Int_M.empty e in
   let g = make_graph graph in
   let fg = make_graph fgraph in
-  let map = coloring g Gen in
-  let fmap = coloring fg Float in
+  let map = coloring g Gen e in
+  let fmap = coloring fg Float e in
   let _, _, e = save_before_call e graph fgraph map fmap in
   replace e map fmap
 
@@ -362,7 +429,7 @@ let rec allocate_fun { name = Id.L(x); args = ys; fargs = zs; body = e; ret = t 
   print_endline "hoge";
   let stack, spill = optimistic g [] [] Gen in
   let (i, env) = List.fold_left (fun (i, env) y -> (i + 1, M.add y Asm.regs.(i) env)) (0, ((*M.add x Asm.reg_cl*) M.empty)) ys in (* reg_clに注意 *)
-  let map = alloc g stack spill env Gen in
+  let map = alloc g stack spill env Gen (make_priority_map e) in
   (* 浮動小数レジスタ *)
 
   Int_M.iter (fun i s -> print_int i; print_string "  "; S.iter (fun y -> print_string (y^" ")) s; print_newline ()) fgraph; 
@@ -370,7 +437,7 @@ let rec allocate_fun { name = Id.L(x); args = ys; fargs = zs; body = e; ret = t 
   let fg = make_graph fgraph in
   let stack, spill = optimistic fg [] [] Float in
   let (i, env) = List.fold_left (fun (i, env) y -> (i + 1, M.add y Asm.fregs.(i) env)) (0, M.empty) zs in
-  let fmap = alloc fg stack spill env Float in
+  let fmap = alloc fg stack spill env Float (make_priority_map e) in
 (*
   print_endline "print map";
   print_map map;
@@ -392,8 +459,8 @@ let rec f (Prog(data, fundefs, e)) =
   print_endline "print graph";
   print_graph g;
   *)
-  let map = coloring g Gen in
-  let fmap = coloring fg Float in
+  let map = coloring g Gen e in
+  let fmap = coloring fg Float e in
   (*
   print_endline "print map";
   print_map map;

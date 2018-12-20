@@ -1010,20 +1010,6 @@ _fle_else.783:
 	j lib_print_ufloat
 _R_0:
 # library ends
-sum.8:
-	blei	0, r2, ble_then.19
-	add	r5, r1, r2
-	addi	r1, r2, -1
-	add	r2, r0, r1
-	add	r1, r0, r5
-	sw	r31, 0(r3)
-	addi	r3, r3, 1
-	jal	sum.8				
-	addi	r3, r3, -1
-	lw	r31, 0(r3)
-	jr	r31				#
-ble_then.19:
-	jr	r31				#
 _R_0:
 _min_caml_start: # main entry point
   addi  r3, r0, 32500
@@ -2095,18 +2081,35 @@ _min_caml_start: # main entry point
   sw r0, 1023(r4)
   addi  r4, r4, 1024
 #	main program starts
-	addi	r2, r0, 0
-	addi	r1, r0, 10000
-	add	r30, r0, r2
+	addi	r1, r0, 1
+	sw	r31, 0(r3)
+	addi	r3, r3, 1
+	jal	lib_div10				
+	addi	r3, r3, -1
+	lw	r31, 0(r3)
 	add	r2, r0, r1
-	add	r1, r0, r30
-	sw	r31, 0(r3)
-	addi	r3, r3, 1
-	jal	sum.8				
-	addi	r3, r3, -1
-	lw	r31, 0(r3)
-	sw	r31, 0(r3)
-	addi	r3, r3, 1
-	jal	lib_print_int				
-	addi	r3, r3, -1
-	lw	r31, 0(r3)
+	addi	r1, r0, 100
+	sw	r2, 0(r3)
+	sw	r31, 1(r3)
+	addi	r3, r3, 2
+	jal	lib_div10				
+	addi	r3, r3, -2
+	lw	r31, 1(r3)
+	lw	r2, 0(r3)
+	beqi	0, r1, beq_then.20
+	beqi	0, r2, beq_then.22
+	flup	f1, 37		# fli	f1, 255.000000
+	j	beq_cont.23
+beq_then.22:
+	flup	f1, 0		# fli	f1, 0.000000
+beq_cont.23:
+	j	beq_cont.21
+beq_then.20:
+	beqi	0, r2, beq_then.24
+	flup	f1, 0		# fli	f1, 0.000000
+	j	beq_cont.25
+beq_then.24:
+	flup	f1, 37		# fli	f1, 255.000000
+beq_cont.25:
+beq_cont.21:
+	fsw	f1, 735(r0)

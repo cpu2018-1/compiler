@@ -12,7 +12,7 @@ assembler : $(ASMDIR)/lex.c
 	gcc -o $@ $< -lfl
 
 simulator : $(SIMDIR)/main.c $(SIMDIR)/float.c
-	gcc -w -O3 -o simulator $^ -lm
+	gcc -w -O3 -g -o simulator $^ -lm
 
 $(SOURCE).s : min-caml $(SOURCE).ml
 	./min-caml $(SOURCE) -inline 50 2> /dev/null

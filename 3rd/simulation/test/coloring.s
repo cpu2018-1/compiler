@@ -1010,20 +1010,6 @@ _fle_else.783:
 	j lib_print_ufloat
 _R_0:
 # library ends
-sum.8:
-	blei	0, r2, ble_then.19
-	add	r5, r1, r2
-	addi	r1, r2, -1
-	add	r2, r0, r1
-	add	r1, r0, r5
-	sw	r31, 0(r3)
-	addi	r3, r3, 1
-	jal	sum.8				
-	addi	r3, r3, -1
-	lw	r31, 0(r3)
-	jr	r31				#
-ble_then.19:
-	jr	r31				#
 _R_0:
 _min_caml_start: # main entry point
   addi  r3, r0, 32500
@@ -2095,16 +2081,19 @@ _min_caml_start: # main entry point
   sw r0, 1023(r4)
   addi  r4, r4, 1024
 #	main program starts
-	addi	r2, r0, 0
-	addi	r1, r0, 10000
-	add	r30, r0, r2
-	add	r2, r0, r1
-	add	r1, r0, r30
+	addi	r1, r0, 105
 	sw	r31, 0(r3)
 	addi	r3, r3, 1
-	jal	sum.8				
+	jal	lib_div10				
 	addi	r3, r3, -1
 	lw	r31, 0(r3)
+	blei	3, r1, ble_then.12
+	addi	r1, r1, 3
+	addi	r1, r1, 5
+	j	ble_cont.13
+ble_then.12:
+	addi	r1, r0, 1
+ble_cont.13:
 	sw	r31, 0(r3)
 	addi	r3, r3, 1
 	jal	lib_print_int				

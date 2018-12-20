@@ -41,6 +41,7 @@ let lexbuf outchan l = (* バッファをコンパイルしてチャンネルへ出力する (caml2htm
       ((*Avoid_ans_call.main*)
       ((*Schedule.f*)
       (Num_asm.f
+      (Glbsimm.f
        (Simm.f
           (Virtual.f
              (Closure.f
@@ -49,7 +50,7 @@ let lexbuf outchan l = (* バッファをコンパイルしてチャンネルへ出力する (caml2htm
                       (KNormal.f
                          (Typing.f
                             a))
-                      ))))))))))))
+                      )))))))))))))
 
 let string s = lexbuf stdout (Lexing.from_string s) (* 文字列をコンパイルして標準出力に表示する (caml2html: main_string) *)
 
