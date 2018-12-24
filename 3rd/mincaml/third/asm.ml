@@ -46,6 +46,7 @@ and exp = (* 一つ一つの命令に対応する式 (caml2html: sparcasm_exp) *)
   | FtoI of Id.t
   | ItoF of Id.t
   | SetGlb of Id.l
+  | Subst of (Id.t * Type.t) * exp (* 代入構文 *)
 type fundef = { name : Id.l; args : Id.t list; fargs : Id.t list; body : t; ret : Type.t }
 (* プログラム全体 = 浮動小数点数テーブル + トップレベル関数 + メインの式 (caml2html: sparcasm_prog) *)
 type prog = Prog of (Id.l * float) list * fundef list * t
@@ -95,6 +96,7 @@ let rec fv_exp = function
   | IfFEq(x, y', e1, e2) | IfFLE(x, y', e1, e2) -> fv_id_or_imm x @ fv_id_or_imm y' @ remove_and_uniq S.empty (fv e1 @ fv e2) (* uniq here just for efficiency *)
   | CallCls(x, ys, zs) -> x :: ys @ zs
   | CallDir(_, ys, zs) -> ys @ zs
+  | Subst ((x, t), e) -> x :: (fv_exp e)
 and fv = function
   | Ans(exp) -> fv_exp exp
   | Let((x, t), exp, e) ->
@@ -283,6 +285,11 @@ and print_exp i exp = (* 一つ一つの命令に対応する式 (caml2html: sparcasm_exp) *)
           print_endline "ItoF";
           print_indent (i + 1); Id.print_id x; print_newline ()
   | SetGlb (Id.L s) -> print_endline ("SetGlb "^s)
+  | Subst ((x, t), e) -> 
+          print_endline "Subst";
+          print_indent (i + 1); Id.print_id x; print_newline ();
+          print_exp (i + 1) e
+                    
 
 let rec print_fundef { name = Id.L(f); args = xs; fargs = ys; body = e; ret = ty } =
   print_endline ("function name : "^f);
@@ -290,3 +297,4 @@ let rec print_fundef { name = Id.L(f); args = xs; fargs = ys; body = e; ret = ty
   print_endline ("arguments : "^arguments);
   print_endline ("body : ");
   print_t 1 e
+

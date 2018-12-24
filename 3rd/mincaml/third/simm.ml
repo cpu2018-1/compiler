@@ -73,6 +73,7 @@ and g' env fenv aenv = function (* 各命令の16bit即値最適化 (caml2html: simm13_gp
   | Sra(x, V(y)) when M.mem y env -> Sra(x, C(M.find y env))
   | Mr(x) when M.mem x env && M.find x env = 0 -> Mr(Asm.reg_zero)
   | FMr(x) when M.mem x fenv && M.find x fenv = 0.0 -> FMr("%f0")
+  | Subst(xt, e) -> Subst(xt, g' env fenv aenv e)
   | e -> e
 
 let h { name = l; args = xs; fargs = ys; body = e; ret = t } = (* トップレベル関数の16bit即値最適化 *)

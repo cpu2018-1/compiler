@@ -13,7 +13,21 @@
 (*NOMINCAML open Globals;;*)
 
 (*
-let hoge = fuga in
+let rec asm_put n elm arr =
+  if (n < -1) then
+    ()
+  else (
+    arr.(n) <- elm;
+    asm_put (n - 1) elm arr
+  )
+in
+
+let rec asm_create_array n init =
+  let x = asm_heap_pointer in
+  asm_put n elm x;
+  add_heap_pointer n;
+  x
+in
 *)
 
 

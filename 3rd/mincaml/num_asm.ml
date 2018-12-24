@@ -48,6 +48,7 @@ and exp = (* 一つ一つの命令に対応する式 (caml2html: sparcasm_exp) *
   | FtoI of Id.t
   | ItoF of Id.t
   | SetGlb of Id.l
+  | Subst of (Id.t * Type.t) * exp (* 代入構文 *)
 type fundef = { name : Id.l; args : Id.t list; fargs : Id.t list; body : t; ret : Type.t }
 
 let seq (e1, e2) = incr counter; Let((Id.gentmp Type.Unit, Type.Unit), e1, !counter, e2) (** 順に実行 **)
@@ -68,6 +69,7 @@ let rec fv_exp = function
   | IfFEq(x, y', e1, e2) | IfFLE(x, y', e1, e2) -> fv_id_or_imm x @ fv_id_or_imm y' @ remove_and_uniq S.empty (fv e1 @ fv e2) (* uniq here just for efficiency *)
   | CallCls(x, ys, zs) -> x :: ys @ zs
   | CallDir(_, ys, zs) -> ys @ zs
+  | Subst ((x, t), e) -> List.filter (fun y -> x <> y) (fv_exp e)
 and fv = function
   | Ans(exp, i) -> fv_exp exp
   | Let((x, t), exp, i, e) ->
@@ -124,6 +126,7 @@ let rec convert_exp e =
   | Asm.FtoI(x) -> FtoI(x)
   | Asm.ItoF(x) -> ItoF(x)
   | Asm.SetGlb(x) -> SetGlb(x)
+  | Asm.Subst(xt, e') -> Subst(xt, convert_exp e')
 and convert_t t = 
   incr counter;
   let i = !counter in
@@ -312,6 +315,10 @@ and print_exp i exp = (* 一つ一つの命令に対応する式 (caml2html: spa
           print_endline "ItoF";
           print_indent (i + 1); Id.print_id x; print_newline ()
   | SetGlb (Id.L s) -> print_endline ("SetGlb "^s)
+  | Subst ((x, t), e') -> 
+          print_endline "Subst";
+          print_indent (i + 1); print_string "("; Id.print_id x; print_string ", "; Typing.print_type t; print_string ")"; print_newline ();
+          print_exp (i + 1) e'
 
 let rec print_fundef { name = Id.L(f); args = xs; fargs = ys; body = e; ret = ty } =
   print_endline ("function name : "^f);
@@ -366,6 +373,7 @@ let rec invert_exp e =
   | FtoI(x) -> Asm.FtoI(x)
   | ItoF(x) -> Asm.ItoF(x)
   | SetGlb(x) -> Asm.SetGlb(x)
+  | Subst(xt, e') -> Asm.Subst(xt, invert_exp e')
 and invert_t t =
   match t with
   | Let((x, t), e, i, cont) -> Asm.Let((x, t), invert_exp e, invert_t cont)

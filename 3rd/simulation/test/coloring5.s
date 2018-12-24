@@ -2088,22 +2088,22 @@ _min_caml_start: # main entry point
 	addi	r3, r3, -1
 	lw	r31, 0(r3)
 	add	r2, r0, r1
-	bgei	3, r2, bge_then.11
+	bgei	3, r2, bge_then.12
 	addi	r1, r0, 10
 	sw	r31, 0(r3)
 	addi	r3, r3, 1
 	jal	lib_div10				
 	addi	r3, r3, -1
 	lw	r31, 0(r3)
-	j	bge_cont.12
-bge_then.11:
+	j	bge_cont.13
+bge_then.12:
 	add	r1, r0, r2
 	sw	r31, 0(r3)
 	addi	r3, r3, 1
 	jal	lib_div10				
 	addi	r3, r3, -1
 	lw	r31, 0(r3)
-bge_cont.12:
+bge_cont.13:
 	add	r1, r2, r1
 	sw	r31, 0(r3)
 	addi	r3, r3, 1

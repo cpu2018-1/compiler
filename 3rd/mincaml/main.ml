@@ -41,6 +41,7 @@ let lexbuf outchan l = (* バッファをコンパイルしてチャンネルへ出力する (caml2htm
       ((*Avoid_ans_call.main*)
       ((*Schedule.f*)
       (Num_asm.f
+      (Convert_if.f
       (Glbsimm.f
        (Simm.f
           (Virtual.f
@@ -50,7 +51,7 @@ let lexbuf outchan l = (* バッファをコンパイルしてチャンネルへ出力する (caml2htm
                       (KNormal.f
                          (Typing.f
                             a))
-                      )))))))))))))
+                      ))))))))))))))
 
 let string s = lexbuf stdout (Lexing.from_string s) (* 文字列をコンパイルして標準出力に表示する (caml2html: main_string) *)
 
@@ -71,6 +72,7 @@ let () = (* ここからコンパイラの実行が開始される (caml2html: main_entry) *)
      ("-iter", Arg.Int(fun i -> limit := i), "maximum number of optimizations iterated");
      ("-asm", Arg.Set(Virtual.print), "print asm.t before register allocation");
      ("-simm", Arg.Set(Simm.print), "print asm.t after simm");
+     ("-if", Arg.Set(Convert_if.print), "print asm.t after convert_if");
      ("-nasm", Arg.Set(Num_asm.print_b), "print num_asm.t before register allocation");
      ("-breg", Arg.Set(Num_asm.print_a), "print num_asm.t before register allocation");
      ("-areg", Arg.Set(Emit.print), "print asm.t after register allocation")]

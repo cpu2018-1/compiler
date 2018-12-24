@@ -1,13 +1,13 @@
 open Num_asm
 
-type ty = Float | Gen
+type ty = Float | Gen | Unit
 
 let print_graph g =
   M.iter (fun x s -> print_string (x^"  ");
                 S.iter (fun y -> print_string (y^" ")) s; print_newline ()) g
 
 (* 汎用レジスタか浮動小数レジスタかを分ける *)
-let classify_fv_exp e = 
+let rec classify_fv_exp e = 
   match e with
   | Nop | Li _ | FLi _ | SetL _ | Comment _ | SetGlb _ -> S.empty, S.empty
   | Mr(x) | Neg(x) | In(x) | Out(x) | ItoF(x) -> S.singleton x, S.empty
@@ -20,11 +20,12 @@ let classify_fv_exp e =
   | IfFEq(x, y', e1, e2) | IfFLE(x, y', e1, e2) -> S.empty, S.of_list (fv_id_or_imm x @ fv_id_or_imm y')
   | CallCls(x, ys, zs) -> failwith "クロージャはとりあえずエラー" (*S.of_list (x :: ys), S.of_list zs*)
   | CallDir(_, ys, zs) -> S.of_list ys, S.of_list zs
+  | Subst((x, t), e) -> classify_fv_exp e
   | _ -> failwith ("something went wrong")
 
 
 (* live[i]の更新 *)
-let rec update lives flives succ dest =
+let rec update lives flives succ =
   match succ with
   | [] -> S.empty, S.empty
   | e :: es -> 
@@ -45,62 +46,57 @@ let rec update lives flives succ dest =
       let fv_g, fv_f = classify_fv_exp e in (* 汎用レジスタ用と浮動小数レジスタ用 *)
       let live_j = try Int_M.find j lives with Not_found -> S.empty in
       let flive_j = try Int_M.find j flives with Not_found -> S.empty in
-      let lives', flives' = update lives flives es dest in
+      let lives', flives' = update lives flives es in
       let live_j' = S.union (S.union (S.diff (live_j) def) fv_g) lives' in
       let flive_j' = S.union (S.union (S.diff (flive_j) fdef) fv_f) flives' in
       (live_j', flive_j')
     | Ans(e, j) ->
       let def, fdef = 
         (match e with
-        | IfEq _ | IfLE _ | IfGE _ | IfFLE _ | IfFEq _ -> S.empty, S.empty
-        | _ -> 
-          (match dest with
-          | x, Type.Unit -> S.empty, S.empty
-          | x, Type.Float -> S.empty, S.singleton x
-          | x, _ -> S.singleton x, S.empty
-          ) 
+        | Subst((x, t), e) -> (match t with | Type.Float -> S.empty, S.singleton x | Type.Unit -> S.empty, S.empty | _ -> S.singleton x, S.empty)
+        | _ -> S.empty, S.empty
         )
       in
       let fv_g, fv_f = classify_fv_exp e in (* 汎用レジスタ用と浮動小数レジスタ用 *)
       let live_j = try Int_M.find j lives with Not_found -> S.empty in
       let flive_j = try Int_M.find j flives with Not_found -> S.empty in
-      let lives', flives' = update lives flives es dest in
+      let lives', flives' = update lives flives es in
       let live_j' = S.union (S.union (S.diff (live_j) def) fv_g) lives' in
       let flive_j' = S.union (S.union (S.diff (flive_j) fdef) fv_f) flives' in
       (live_j', flive_j')
     )
 
 (* eを走査する部分 *)
-let rec liveness_analysis_main lives flives t succ dest =
+let rec liveness_analysis_main lives flives t succ =
   match t with
   | Let((x, t), e, i, cont) ->
     (match e with
     | IfEq(_, _, e1, e2) | IfLE(_, _, e1, e2) | IfGE(_, _, e1, e2)
     | IfFEq(_, _, e1, e2) | IfFLE(_, _, e1, e2) -> (* ここのiに対応する命令は比較であることにする *)
-      let lives1, flives1 = liveness_analysis_main lives flives e1 [cont] (x, t) in 
-      let lives2, flives2 = liveness_analysis_main lives1 flives1 e2 [cont] (x, t) in 
-      let live_i, flive_i = update lives2 flives2 [e1; e2] (x, t) in (* live[i]を更新 *)
-      liveness_analysis_main (Int_M.add i live_i lives2) (Int_M.add i flive_i flives2) cont succ dest
+      let lives1, flives1 = liveness_analysis_main lives flives e1 [cont] in 
+      let lives2, flives2 = liveness_analysis_main lives1 flives1 e2 [cont] in 
+      let live_i, flive_i = update lives2 flives2 [e1; e2] in (* live[i]を更新 *)
+      liveness_analysis_main (Int_M.add i live_i lives2) (Int_M.add i flive_i flives2) cont succ
     | _ -> 
-      let live_i, flive_i = update lives flives [cont] dest in
-      liveness_analysis_main (Int_M.add i live_i lives) (Int_M.add i flive_i flives) cont succ dest
+      let live_i, flive_i = update lives flives [cont] in
+      liveness_analysis_main (Int_M.add i live_i lives) (Int_M.add i flive_i flives) cont succ
     )
   | Ans(e, i) -> 
     (match e with
     | IfEq(_, _, e1, e2) | IfLE(_, _, e1, e2) | IfGE(_, _, e1, e2)
     | IfFEq(_, _, e1, e2) | IfFLE(_, _, e1, e2) -> (* ここの(x, t)に対応する命令は比較であることにする *)
-      let lives1, flives1 = liveness_analysis_main lives flives e1 succ dest in 
-      let lives2, flives2 = liveness_analysis_main lives1 flives1 e2 succ dest in 
-      let live_i, flive_i = update lives2 flives2 [e1; e2] dest in (* live[i]を更新 *)
+      let lives1, flives1 = liveness_analysis_main lives flives e1 succ in 
+      let lives2, flives2 = liveness_analysis_main lives1 flives1 e2 succ in 
+      let live_i, flive_i = update lives2 flives2 [e1; e2] in (* live[i]を更新 *)
       Int_M.add i live_i lives2, Int_M.add i flive_i flives2
     | _ -> 
-      let live_i, flive_i = update lives flives succ dest in
+      let live_i, flive_i = update lives flives succ in
       Int_M.add i live_i lives, Int_M.add i flive_i flives
     )
 
 
 let rec iter_analysis lives flives t =
-  let lives', flives' = liveness_analysis_main lives flives t [] ("_R_0", Type.Unit) in
+  let lives', flives' = liveness_analysis_main lives flives t [] in
   if (lives' = lives && flives' = flives) then 
     lives, flives
   else
@@ -232,43 +228,59 @@ let rec alloc g stack spill env t m =
           alloc g xs spill (M.add x regs.(i) env) t m
   | [] -> env
 
-let rec replace_id_or_imm x' map =
+
+let find x t map fmap = 
+  print_endline ("attempt to find "^x);
+  if Asm.is_reg x then
+    x
+  else
+  (
+  match t with
+  | Float -> M.find x fmap
+  | Gen -> M.find x map
+  | Unit -> "%r0"
+  )
+
+let rec replace_id_or_imm x' t map fmap =
   match x' with
-  | V(x) -> V(if Asm.is_reg x then x else M.find x map)
+  | V(x) -> V(find x t map fmap)
   | c -> c
 
 let rec replace_exp e map fmap =
   match e with
   | Nop | Li _ | FLi _ | SetL _ | Comment _ | SetGlb _ -> e
-  | Mr(x) -> Mr(if Asm.is_reg x then x else M.find x map)
-  | Neg(x) -> Neg(if Asm.is_reg x then x else M.find x map)
-  | In(x) -> In(if Asm.is_reg x then x else M.find x map)
-  | Out(x) -> Out(if Asm.is_reg x then x else M.find x map)
-  | ItoF(x) -> ItoF(if Asm.is_reg x then x else M.find x map)
-  | FMr(x) -> FMr(if Asm.is_reg x then x else M.find x fmap)
-  | FNeg(x) -> FNeg(if Asm.is_reg x then x else M.find x fmap)
-  | FSqrt(x) -> FSqrt(if Asm.is_reg x then x else M.find x fmap)
-  | FtoI(x) -> FtoI(if Asm.is_reg x then x else M.find x fmap)
-  | Add(x, y') -> Add((if Asm.is_reg x then x else M.find x map), replace_id_or_imm y' map)
-  | Sub(x, y') -> Sub((if Asm.is_reg x then x else M.find x map), replace_id_or_imm y' map)
-  | Lw(x, y') -> Lw((if Asm.is_reg x then x else M.find x map), replace_id_or_imm y' map)
-  | FLw(x, y') -> FLw((if Asm.is_reg x then x else M.find x map), replace_id_or_imm y' map)
-  | Sll(x, y') -> Sll((if Asm.is_reg x then x else M.find x map), replace_id_or_imm y' map)
-  | Srl(x, y') -> Srl((if Asm.is_reg x then x else M.find x map), replace_id_or_imm y' map)
-  | Sra(x, y') -> Sra((if Asm.is_reg x then x else M.find x map), replace_id_or_imm y' map)
-  | Sw(x, y, z') -> Sw((if Asm.is_reg x then x else M.find x map), (if Asm.is_reg y then y else M.find y map), replace_id_or_imm z' map)
-  | FSw(x, y, z') -> FSw((if Asm.is_reg x then x else M.find x fmap), (if Asm.is_reg y then y else M.find y map), replace_id_or_imm z' map)
-  | FAdd(x, y) -> FAdd((if Asm.is_reg x then x else M.find x fmap), if Asm.is_reg y then y else M.find y fmap)
-  | FSub(x, y) -> FSub((if Asm.is_reg x then x else M.find x fmap), if Asm.is_reg y then y else M.find y fmap)
-  | FMul(x, y) -> FMul((if Asm.is_reg x then x else M.find x fmap), if Asm.is_reg y then y else M.find y fmap)
-  | FDiv(x, y) -> FDiv((if Asm.is_reg x then x else M.find x fmap), if Asm.is_reg y then y else M.find y fmap)
-  | IfEq(x, y', e1, e2) -> IfEq((if Asm.is_reg x then x else M.find x map), replace_id_or_imm y' map, replace e1 map fmap, replace e2 map fmap)
-  | IfLE(x, y', e1, e2) -> IfLE((if Asm.is_reg x then x else M.find x map), replace_id_or_imm y' map, replace e1 map fmap, replace e2 map fmap)
-  | IfGE(x, y', e1, e2) -> IfGE((if Asm.is_reg x then x else M.find x map), replace_id_or_imm y' map, replace e1 map fmap, replace e2 map fmap)
-  | IfFEq(x', y', e1, e2) -> IfFEq(replace_id_or_imm x' fmap, replace_id_or_imm y' fmap, replace e1 map fmap, replace e2 map fmap)
-  | IfFLE(x', y', e1, e2) -> IfFLE(replace_id_or_imm x' fmap, replace_id_or_imm y' fmap, replace e1 map fmap, replace e2 map fmap)
-  | CallCls(x, ys, zs) -> CallCls(x, List.map (fun x -> if Asm.is_reg x then x else M.find x map) ys, List.map (fun x -> if Asm.is_reg x then x else M.find x fmap) zs)
-  | CallDir(x, ys, zs) -> CallDir(x, List.map (fun x -> if Asm.is_reg x then x else M.find x map) ys, List.map (fun x -> if Asm.is_reg x then x else M.find x fmap) zs)
+  | Mr(x) -> Mr(find x Gen map fmap)
+  | Neg(x) -> Neg(find x Gen map fmap)
+  | In(x) -> In(find x Gen map fmap)
+  | Out(x) -> Out(find x Gen map fmap)
+  | ItoF(x) -> ItoF(find x Gen map fmap)
+  | FMr(x) -> FMr(find x Float map fmap)
+  | FNeg(x) -> FNeg(find x Float map fmap)
+  | FSqrt(x) -> FSqrt(find x Float map fmap)
+  | FtoI(x) -> FtoI(find x Float map fmap)
+  | Add(x, y') -> Add((find x Gen map fmap), replace_id_or_imm y' Gen map fmap)
+  | Sub(x, y') -> Sub((find x Gen map fmap), replace_id_or_imm y' Gen map fmap)
+  | Lw(x, y') -> Lw((find x Gen map fmap), replace_id_or_imm y' Gen map fmap)
+  | FLw(x, y') -> FLw((find x Gen map fmap), replace_id_or_imm y' Gen map fmap)
+  | Sll(x, y') -> Sll((find x Gen map fmap), replace_id_or_imm y' Gen map fmap)
+  | Srl(x, y') -> Srl((find x Gen map fmap), replace_id_or_imm y' Gen map fmap)
+  | Sra(x, y') -> Sra((find x Gen map fmap), replace_id_or_imm y' Gen map fmap)
+  | Sw(x, y, z') -> Sw((find x Gen map fmap), find y Gen map fmap, replace_id_or_imm z' Gen map fmap)
+  | FSw(x, y, z') -> FSw((find x Float map fmap), find y Gen map fmap, replace_id_or_imm z' Gen map fmap)
+  | FAdd(x, y) -> FAdd((find x Float map fmap), find y Float map fmap)
+  | FSub(x, y) -> FSub((find x Float map fmap), find y Float map fmap)
+  | FMul(x, y) -> FMul((find x Float map fmap), find y Float map fmap)
+  | FDiv(x, y) -> FDiv((find x Float map fmap), find y Float map fmap)
+  | IfEq(x, y', e1, e2) -> IfEq((find x Gen map fmap), replace_id_or_imm y' Gen map fmap, replace e1 map fmap, replace e2 map fmap)
+  | IfLE(x, y', e1, e2) -> IfLE((find x Gen map fmap), replace_id_or_imm y' Gen map fmap, replace e1 map fmap, replace e2 map fmap)
+  | IfGE(x, y', e1, e2) -> IfGE((find x Gen map fmap), replace_id_or_imm y' Gen map fmap, replace e1 map fmap, replace e2 map fmap)
+  | IfFEq(x', y', e1, e2) -> IfFEq(replace_id_or_imm x' Float map fmap, replace_id_or_imm y' Float map fmap, replace e1 map fmap, replace e2 map fmap)
+  | IfFLE(x', y', e1, e2) -> IfFLE(replace_id_or_imm x' Float map fmap, replace_id_or_imm y' Float map fmap, replace e1 map fmap, replace e2 map fmap)
+  | CallCls(x, ys, zs) -> CallCls(x, List.map (fun x -> find x Gen map fmap) ys, List.map (fun x -> find x Float map fmap) zs)
+  | CallDir(x, ys, zs) -> CallDir(x, List.map (fun x -> find x Gen map fmap) ys, List.map (fun x -> find x Float map fmap) zs)
+  | Subst((x, t), e) -> 
+    let t' = (match t with | Type.Float -> Float | Type.Unit -> Unit | _ -> Gen) in
+    Subst((find x t' map fmap, t), replace_exp e map fmap)
   | Save(x, y) -> Save(x, y)
   | Restore(x) -> Restore(x)
   | _ -> assert(false)
@@ -312,70 +324,38 @@ let rec save_before_call e g fg map fmap =
     | CallDir(name, ys, zs) ->
       let cont = insert_restore ((*S.filter (fun x -> not (Asm.is_reg x))*) (S.remove x (Int_M.find i g))) Type.Int cont map in
       let cont = insert_restore ((*S.filter (fun x -> not (Asm.is_reg x))*) (S.remove x (Int_M.find i fg))) Type.Float cont fmap in
-      let restores, frestores, cont = save_before_call cont g fg map fmap in (* restoresは，ifの中で末尾に呼び出しがある際にifを出てからrestoreするやつを取り出す *)
+      let cont = save_before_call cont g fg map fmap in (* restoresは，ifの中で末尾に呼び出しがある際にifを出てからrestoreするやつを取り出す *)
       let e = S.fold (fun y e -> seq (Save(M.find y map, y), e)) (S.filter (fun x -> not (Asm.is_reg x)) (S.remove x (Int_M.find i g))) (Let((x, t), e', i, cont)) in
       let e = S.fold (fun y e -> seq (Save(M.find y fmap, y), e)) (S.filter (fun x -> not (Asm.is_reg x)) (S.remove x (Int_M.find i fg))) e in
-      restores, frestores, e
+      e
     | IfEq(a, b, e1, e2) -> 
-      let restores1, frestores1, e1' = save_before_call e1 g fg map fmap in
-      let restores2, frestores2, e2' = save_before_call e2 g fg map fmap in
-      let z, w, cont' = save_before_call cont g fg map fmap in
-      let cont' = insert_restore (S.remove x (S.union restores1 restores2)) Type.Int cont' map in
-      let cont' = insert_restore (S.remove x (S.union frestores1 frestores2)) Type.Float cont' fmap in
-      let e = S.fold (fun y e -> if Asm.is_reg y then e else seq (Save(M.find y map, y), e)) (S.remove x (S.union restores1 restores2)) (Let((x, t), IfEq(a, b, e1', e2'), i, cont')) (*(Ans(e', i))*) in
-      let e = S.fold (fun y e -> if Asm.is_reg y then e else seq (Save(M.find y fmap, y), e)) (S.remove x (S.union frestores1 frestores2)) e in
-      z, w,(*S.empty, S.empty,*)(*S.remove x (S.union restores1 restores2), S.remove x (S.union frestores1 frestores2), *)e (*Let((x, t), IfGE(a, b, e1', e2'), i, cont')*)
-      (*
-      z, w,(*S.remove x (S.union restores1 restores2), S.remove x (S.union frestores1 frestores2), *)Let((x, t), IfEq(a, b, e1', e2'), i, cont')
-      *)
+      let e1' = save_before_call e1 g fg map fmap in
+      let e2' = save_before_call e2 g fg map fmap in
+      let cont' = save_before_call cont g fg map fmap in
+      Let((x, t), IfEq(a, b, e1', e2'), i, cont')
     | IfGE(a, b, e1, e2) -> 
-      let restores1, frestores1, e1' = save_before_call e1 g fg map fmap in
-      let restores2, frestores2, e2' = save_before_call e2 g fg map fmap in
-      let z, w, cont' = save_before_call cont g fg map fmap in
-      let cont' = insert_restore (S.remove x (S.union restores1 restores2)) Type.Int cont' map in
-      let cont' = insert_restore (S.remove x (S.union frestores1 frestores2)) Type.Float cont' fmap in
-      let e = S.fold (fun y e -> if Asm.is_reg y then e else seq (Save(M.find y map, y), e)) (S.remove x (S.union restores1 restores2)) (Let((x, t), IfGE(a, b, e1', e2'), i, cont')) (*(Ans(e', i))*) in
-      let e = S.fold (fun y e -> if Asm.is_reg y then e else seq (Save(M.find y fmap, y), e)) (S.remove x (S.union frestores1 frestores2)) e in
-      z, w,(*S.empty, S.empty,*)(*S.remove x (S.union restores1 restores2), S.remove x (S.union frestores1 frestores2), *)e (*Let((x, t), IfGE(a, b, e1', e2'), i, cont')*)
+      let e1' = save_before_call e1 g fg map fmap in
+      let e2' = save_before_call e2 g fg map fmap in
+      let cont' = save_before_call cont g fg map fmap in
+      Let((x, t), IfGE(a, b, e1', e2'), i, cont')
     | IfLE(a, b, e1, e2) -> 
-      let restores1, frestores1, e1' = save_before_call e1 g fg map fmap in
-      let restores2, frestores2, e2' = save_before_call e2 g fg map fmap in
-      let z, w, cont' = save_before_call cont g fg map fmap in
-      let cont' = insert_restore (S.remove x (S.union restores1 restores2)) Type.Int cont' map in
-      let cont' = insert_restore (S.remove x (S.union frestores1 frestores2)) Type.Float cont' fmap in
-      let e = S.fold (fun y e -> if Asm.is_reg y then e else seq (Save(M.find y map, y), e)) (S.remove x (S.union restores1 restores2)) (Let((x, t), IfLE(a, b, e1', e2'), i, cont')) (*(Ans(e', i))*) in
-      let e = S.fold (fun y e -> if Asm.is_reg y then e else seq (Save(M.find y fmap, y), e)) (S.remove x (S.union frestores1 frestores2)) e in
-      z, w,(*S.empty, S.empty,*)(*S.remove x (S.union restores1 restores2), S.remove x (S.union frestores1 frestores2), *)e (*Let((x, t), IfGE(a, b, e1', e2'), i, cont')*)
-      (*
-      z, w,(*S.empty, S.empty,*)(*S.remove x (S.union restores1 restores2), S.remove x (S.union frestores1 frestores2), *)Let((x, t), IfLE(a, b, e1', e2'), i, cont')
-      *)
+      let e1' = save_before_call e1 g fg map fmap in
+      let e2' = save_before_call e2 g fg map fmap in
+      let cont' = save_before_call cont g fg map fmap in
+      Let((x, t), IfLE(a, b, e1', e2'), i, cont')
     | IfFEq(a, b, e1, e2) -> 
-      let restores1, frestores1, e1' = save_before_call e1 g fg map fmap in
-      let restores2, frestores2, e2' = save_before_call e2 g fg map fmap in
-      let z, w, cont' = save_before_call cont g fg map fmap in
-      let cont' = insert_restore (S.remove x (S.union restores1 restores2)) Type.Int cont' map in
-      let cont' = insert_restore (S.remove x (S.union frestores1 frestores2)) Type.Float cont' fmap in
-      let e = S.fold (fun y e -> if Asm.is_reg y then e else seq (Save(M.find y map, y), e)) (S.remove x (S.union restores1 restores2)) (Let((x, t), IfFEq(a, b, e1', e2'), i, cont')) (*(Ans(e', i))*) in
-      let e = S.fold (fun y e -> if Asm.is_reg y then e else seq (Save(M.find y fmap, y), e)) (S.remove x (S.union frestores1 frestores2)) e in
-      z, w,(*S.empty, S.empty,*)(*S.remove x (S.union restores1 restores2), S.remove x (S.union frestores1 frestores2), *)e (*Let((x, t), IfGE(a, b, e1', e2'), i, cont')*)
-      (*
-      z, w,(*S.empty, S.empty,*)(*S.remove x (S.union restores1 restores2), S.remove x (S.union frestores1 frestores2), *)Let((x, t), IfFEq(a, b, e1', e2'), i, cont')
-      *)
+      let e1' = save_before_call e1 g fg map fmap in
+      let e2' = save_before_call e2 g fg map fmap in
+      let cont' = save_before_call cont g fg map fmap in
+      Let((x, t), IfFEq(a, b, e1', e2'), i, cont')
     | IfFLE(a, b, e1, e2) ->
-      let restores1, frestores1, e1' = save_before_call e1 g fg map fmap in
-      let restores2, frestores2, e2' = save_before_call e2 g fg map fmap in
-      let z, w, cont' = save_before_call cont g fg map fmap in
-      let cont' = insert_restore (S.remove x (S.union restores1 restores2)) Type.Int cont' map in
-      let cont' = insert_restore (S.remove x (S.union frestores1 frestores2)) Type.Float cont' fmap in
-      let e = S.fold (fun y e -> if Asm.is_reg y then e else seq (Save(M.find y map, y), e)) (S.remove x (S.union restores1 restores2)) (Let((x, t), IfFLE(a, b, e1', e2'), i, cont')) (*(Ans(e', i))*) in
-      let e = S.fold (fun y e -> if Asm.is_reg y then e else seq (Save(M.find y fmap, y), e)) (S.remove x (S.union frestores1 frestores2)) e in
-      z, w,(*S.empty, S.empty,*)(*S.remove x (S.union restores1 restores2), S.remove x (S.union frestores1 frestores2), *)e (*Let((x, t), IfGE(a, b, e1', e2'), i, cont')*)
-      (*
-      z, w,(*S.empty, S.empty,*)(*S.remove x (S.union restores1 restores2), S.remove x (S.union frestores1 frestores2), *)Let((x, t), IfFLE(a, b, e1', e2'), i, cont')
-      *)
+      let e1' = save_before_call e1 g fg map fmap in
+      let e2' = save_before_call e2 g fg map fmap in
+      let cont' = save_before_call cont g fg map fmap in
+      Let((x, t), IfFLE(a, b, e1', e2'), i, cont')
     | e' -> 
-      let restores, frestores, cont' = save_before_call cont g fg map fmap in
-      restores, frestores, Let((x, t), e', i, cont')
+      let cont' = save_before_call cont g fg map fmap in
+      Let((x, t), e', i, cont')
     )
   | Ans(e', i) ->
     (match e' with
@@ -385,28 +365,39 @@ let rec save_before_call e g fg map fmap =
       let e = S.fold (fun y e -> seq (Save(M.find y map, y), e)) (S.filter (fun x -> not (Asm.is_reg x)) (Int_M.find i g)) (Ans(e', i)) in
       let e = S.fold (fun y e -> seq (Save(M.find y fmap, y), e)) (S.filter (fun x -> not (Asm.is_reg x)) (Int_M.find i fg)) e in
       *)
-      Int_M.find i g, Int_M.find i fg, e
+      e
     | IfEq(a, b, e1, e2) -> 
-      let restores1, frestores1, e1' = save_before_call e1 g fg map fmap in
-      let restores2, frestores2, e2' = save_before_call e2 g fg map fmap in
-      S.union restores1 restores2, S.union frestores1 frestores2, Ans(IfEq(a, b, e1', e2'), i)
+      let e1' = save_before_call e1 g fg map fmap in
+      let e2' = save_before_call e2 g fg map fmap in
+      Ans(IfEq(a, b, e1', e2'), i)
     | IfGE(a, b, e1, e2) ->
-      let restores1, frestores1, e1' = save_before_call e1 g fg map fmap in
-      let restores2, frestores2, e2' = save_before_call e2 g fg map fmap in
-      S.union restores1 restores2, S.union frestores1 frestores2, Ans(IfGE(a, b, e1', e2'), i)
+      let e1' = save_before_call e1 g fg map fmap in
+      let e2' = save_before_call e2 g fg map fmap in
+      Ans(IfGE(a, b, e1', e2'), i)
     | IfLE(a, b, e1, e2) ->
-      let restores1, frestores1, e1' = save_before_call e1 g fg map fmap in
-      let restores2, frestores2, e2' = save_before_call e2 g fg map fmap in
-      S.union restores1 restores2, S.union frestores1 frestores2, Ans(IfLE(a, b, e1', e2'), i)
+      let e1' = save_before_call e1 g fg map fmap in
+      let e2' = save_before_call e2 g fg map fmap in
+      Ans(IfLE(a, b, e1', e2'), i)
     | IfFEq(a, b, e1, e2) ->
-      let restores1, frestores1, e1' = save_before_call e1 g fg map fmap in
-      let restores2, frestores2, e2' = save_before_call e2 g fg map fmap in
-      S.union restores1 restores2, S.union frestores1 frestores2, Ans(IfFEq(a, b, e1', e2'), i)
+      let e1' = save_before_call e1 g fg map fmap in
+      let e2' = save_before_call e2 g fg map fmap in
+      Ans(IfFEq(a, b, e1', e2'), i)
     | IfFLE(a, b, e1, e2) ->
-      let restores1, frestores1, e1' = save_before_call e1 g fg map fmap in
-      let restores2, frestores2, e2' = save_before_call e2 g fg map fmap in
-      S.union restores1 restores2, S.union frestores1 frestores2, Ans(IfFLE(a, b, e1', e2'), i)
-    | e' -> S.empty, S.empty, Ans(e', i)
+      let e1' = save_before_call e1 g fg map fmap in
+      let e2' = save_before_call e2 g fg map fmap in
+      Ans(IfFLE(a, b, e1', e2'), i)
+    | Subst((x, t), exp)->
+      (match exp with 
+      | CallDir(name, ys, zs) ->
+        incr counter;
+        let res = insert_restore (S.remove x (Int_M.find i g)) Type.Int (Ans(Nop, !counter)) map in
+        let res = insert_restore (S.remove x (Int_M.find i fg)) Type.Float res fmap in
+        let e = S.fold (fun y e -> seq (Save(M.find y map, y), e)) (S.filter (fun x -> not (Asm.is_reg x)) (Int_M.find i g)) (Let((x, t), e', i, res)) in
+        let e = S.fold (fun y e -> seq (Save(M.find y fmap, y), e)) (S.filter (fun x -> not (Asm.is_reg x)) (Int_M.find i fg)) e in
+        e
+      | _ -> Ans(e', i)
+      )
+    | e' -> Ans(e', i)
     )
 
 
@@ -416,7 +407,7 @@ let rec allocate e =
   let fg = make_graph fgraph in
   let map = coloring g Gen e in
   let fmap = coloring fg Float e in
-  let _, _, e = save_before_call e graph fgraph map fmap in
+  let e = save_before_call e graph fgraph map fmap in
   replace e map fmap
 
 
@@ -426,14 +417,12 @@ let rec allocate_fun { name = Id.L(x); args = ys; fargs = zs; body = e; ret = t 
   Int_M.iter (fun i s -> print_int i; print_string "  "; S.iter (fun y -> print_string (y^" ")) s; print_newline ()) graph; 
   (* まずは汎用レジスタから *)
   let g = make_graph graph in
-  print_endline "hoge";
   let stack, spill = optimistic g [] [] Gen in
   let (i, env) = List.fold_left (fun (i, env) y -> (i + 1, M.add y Asm.regs.(i) env)) (0, ((*M.add x Asm.reg_cl*) M.empty)) ys in (* reg_clに注意 *)
   let map = alloc g stack spill env Gen (make_priority_map e) in
   (* 浮動小数レジスタ *)
 
   Int_M.iter (fun i s -> print_int i; print_string "  "; S.iter (fun y -> print_string (y^" ")) s; print_newline ()) fgraph; 
-  print_endline "fuga";
   let fg = make_graph fgraph in
   let stack, spill = optimistic fg [] [] Float in
   let (i, env) = List.fold_left (fun (i, env) y -> (i + 1, M.add y Asm.fregs.(i) env)) (0, M.empty) zs in
@@ -445,7 +434,7 @@ let rec allocate_fun { name = Id.L(x); args = ys; fargs = zs; body = e; ret = t 
   print_map fmap;
 *)
 
-  let _, _, e = save_before_call e graph fgraph map fmap in
+  let e = save_before_call e graph fgraph map fmap in
   { name = Id.L(x); args = ys; fargs = zs; body = replace e map fmap; ret = t }
   
 
@@ -461,12 +450,10 @@ let rec f (Prog(data, fundefs, e)) =
   *)
   let map = coloring g Gen e in
   let fmap = coloring fg Float e in
-  (*
   print_endline "print map";
   print_map map;
   print_endline "print fmap";
   print_map fmap;
-  *)
-  let _, _, e = save_before_call e graph fgraph map fmap in
+  let e = save_before_call e graph fgraph map fmap in
   let e = replace e map fmap in
   Prog(data, List.map allocate_fun fundefs, e)

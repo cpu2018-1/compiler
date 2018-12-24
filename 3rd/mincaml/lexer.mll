@@ -109,6 +109,12 @@ rule token = parse
     { ASM_OUT }
 | "fless"
     { FLESS }
+(*
+| "asm_heap_pointer"
+    { HEAP_POINTER }
+| "add_heap_pointer"
+    { ADD_HEAP_POINTER }
+*)
 | eof
     { EOF }
 | lower (digit|lower|upper|'_')* (* 他の「予約語」より後でないといけない *)

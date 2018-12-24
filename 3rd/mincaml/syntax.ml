@@ -35,6 +35,10 @@ type t = (* MinCamlの構文を表現するデータ型 (caml2html: syntax_t) *)
   | FSqrt of t * debug
   | FtoI of t * debug
   | ItoF of t * debug
+(*
+  | HP of debug
+  | Add_HP of t * debug
+*)
 and fundef = { name : Id.t * Type.t; args : (Id.t * Type.t) list; body : t;
                deb : debug }
 

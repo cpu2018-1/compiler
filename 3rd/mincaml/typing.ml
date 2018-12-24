@@ -59,6 +59,9 @@ let rec deref_term = function
   | FSqrt(e, d) -> FSqrt(deref_term e, d)
   | FtoI(e, d) -> FtoI(deref_term e, d)
   | ItoF(e, d) -> ItoF(deref_term e, d)
+(*
+  | Add_HP(e, d) -> Add_HP(deref_term e, d)
+*)
   | e -> e
 
 let rec occur r1 = function (* occur check (caml2html: typing_occur) *)
@@ -212,6 +215,12 @@ let rec g env e = (* 型推論ルーチン (caml2html: typing_g) *)
     | ItoF(e, d) ->
         unify Type.Int (g env e) d;
         Type.Float
+(*
+    | HP(d) -> Type.Int
+    | Add_HP(e, d) ->
+        unify Type.Int (g env e) d;
+        Type.Unit
+*)
 
   with Unify(t1, t2, d) -> 
         Printf.printf "Typing error!! line %d near character %d-%d\n" d.lnum d.bchar d.echar; 

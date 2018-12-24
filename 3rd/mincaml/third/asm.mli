@@ -42,6 +42,7 @@ and exp =
   | FtoI of Id.t
   | ItoF of Id.t
   | SetGlb of Id.l
+  | Subst of (Id.t * Type.t) * exp
 type fundef = { name : Id.l; args : Id.t list; fargs : Id.t list; body : t; ret : Type.t }
 type prog = Prog of (Id.l * float) list * fundef list * t
 
@@ -71,4 +72,5 @@ val concat : t -> Id.t * Type.t -> t -> t
 val align : int -> int
 
 val print_t : int -> t -> unit
+val print_exp : int -> exp -> unit
 val print_fundef : fundef -> unit

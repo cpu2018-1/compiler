@@ -2095,7 +2095,7 @@ _min_caml_start: # main entry point
 	jal	f.10				
 	addi	r3, r3, -1
 	lw	r31, 0(r3)
-	blei	0, r1, ble_then.27
+	blei	0, r1, ble_then.28
 	sw	r1, 0(r3)
 	sw	r2, 1(r3)
 	sw	r31, 2(r3)
@@ -2104,8 +2104,9 @@ _min_caml_start: # main entry point
 	addi	r3, r3, -3
 	lw	r31, 2(r3)
 	add	r2, r0, r1
-	j	ble_cont.28
-ble_then.27:
+	lw	r1, 0(r3)
+	j	ble_cont.29
+ble_then.28:
 	sw	r1, 0(r3)
 	sw	r2, 1(r3)
 	sw	r31, 2(r3)
@@ -2114,9 +2115,8 @@ ble_then.27:
 	addi	r3, r3, -3
 	lw	r31, 2(r3)
 	add	r2, r0, r1
-ble_cont.28:
 	lw	r1, 0(r3)
-	lw	r2, 1(r3)
+ble_cont.29:
 	add	r1, r2, r1
 	sw	r31, 2(r3)
 	addi	r3, r3, 3
