@@ -2,6 +2,7 @@ open Asm
 
 let print = ref false
 
+(* for Subst *)
 let rec insert a = function
   | Let((x, t), e, cont) ->
     Let((x, t), e, insert a cont)
@@ -14,8 +15,6 @@ let rec insert a = function
     | IfFLE(b, c, e1, e2) -> Ans(IfFLE(b, c, insert a e1, insert a e2))
     | _ -> Ans(Subst(a, e))
     )
-
-
 
 
 let rec convert = function
@@ -45,6 +44,7 @@ let rec convert = function
     | exp -> exp
     )
     in Ans(e')
+
 
 
 let rec convert_fun { name = Id.L(x); args = ys; fargs = zs; body = e; ret = t } =

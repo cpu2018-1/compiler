@@ -2081,24 +2081,25 @@ _min_caml_start: # main entry point
   sw r0, 1023(r4)
   addi  r4, r4, 1024
 #	main program starts
-	addi	r1, r0, 100
-	fsw	f1, 0(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
+	addi	r2, r0, 100
+	sw	r1, 0(r3)
+	add	r1, r0, r2
+	sw	r31, 1(r3)
+	addi	r3, r3, 2
 	jal	lib_div10				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
+	addi	r3, r3, -2
+	lw	r31, 1(r3)
 	add	r2, r0, r1
-	flw	f1, 0(r3)
-	blei	3, r2, ble_then.11
+	blei	3, r2, ble_then.10
 	addi	r1, r0, 1
-	j	ble_cont.12
-ble_then.11:
+	j	ble_cont.11
+ble_then.10:
 	addi	r1, r0, 0
-ble_cont.12:
+ble_cont.11:
+	lw	r1, 0(r3)
 	add	r1, r2, r1
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
+	sw	r31, 1(r3)
+	addi	r3, r3, 2
 	jal	lib_print_int				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
+	addi	r3, r3, -2
+	lw	r31, 1(r3)

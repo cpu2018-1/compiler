@@ -206,6 +206,7 @@ and print_exp i exp = (* 一つ一つの命令に対応する式 (caml2html: sparcasm_exp) *)
           print_indent (i + 1); print_id_or_imm y; print_newline ();
           print_indent i; print_endline "then";
           print_t (i + 1) e1;
+          print_indent i; print_endline "else";
           print_t (i + 1) e2
   | IfLE (x, y, e1, e2) ->
           print_endline "IfLE";

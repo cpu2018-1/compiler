@@ -69,7 +69,7 @@ let rec fv_exp = function
   | IfFEq(x, y', e1, e2) | IfFLE(x, y', e1, e2) -> fv_id_or_imm x @ fv_id_or_imm y' @ remove_and_uniq S.empty (fv e1 @ fv e2) (* uniq here just for efficiency *)
   | CallCls(x, ys, zs) -> x :: ys @ zs
   | CallDir(_, ys, zs) -> ys @ zs
-  | Subst ((x, t), e) -> List.filter (fun y -> x <> y) (fv_exp e)
+  | Subst ((x, t), e) -> fv_exp e
 and fv = function
   | Ans(exp, i) -> fv_exp exp
   | Let((x, t), exp, i, e) ->

@@ -2082,38 +2082,36 @@ _min_caml_start: # main entry point
   addi  r4, r4, 1024
 #	main program starts
 	addi	r1, r0, 1
-	sw	r5, 0(r3)
+	sw	r31, 0(r3)
+	addi	r3, r3, 1
+	jal	lib_div10				
+	addi	r3, r3, -1
+	lw	r31, 0(r3)
+	add	r2, r0, r1
+	addi	r1, r0, 100
+	sw	r2, 0(r3)
 	sw	r31, 1(r3)
 	addi	r3, r3, 2
 	jal	lib_div10				
 	addi	r3, r3, -2
 	lw	r31, 1(r3)
-	add	r2, r0, r1
-	lw	r5, 0(r3)
-	addi	r1, r0, 100
-	sw	r2, 1(r3)
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
-	jal	lib_div10				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	lw	r2, 1(r3)
-	lw	r5, 0(r3)
-	addi	r6, r0, 734				# set min_caml_texture_color
-	beqi	0, r1, beq_then.23
-	beqi	0, r2, beq_then.25
+	addi	r5, r0, 734				# set min_caml_texture_color
+	beqi	0, r1, beq_then.21
+	lw	r2, 0(r3)
+	beqi	0, r2, beq_then.23
 	flup	f1, 37		# fli	f1, 255.000000
-	j	beq_cont.26
-beq_then.25:
-	flup	f1, 0		# fli	f1, 0.000000
-beq_cont.26:
 	j	beq_cont.24
 beq_then.23:
-	beqi	0, r2, beq_then.27
 	flup	f1, 0		# fli	f1, 0.000000
-	j	beq_cont.28
-beq_then.27:
-	flup	f1, 37		# fli	f1, 255.000000
-beq_cont.28:
 beq_cont.24:
-	fsw	f1, 1(r6)
+	j	beq_cont.22
+beq_then.21:
+	lw	r2, 0(r3)
+	beqi	0, r2, beq_then.25
+	flup	f1, 0		# fli	f1, 0.000000
+	j	beq_cont.26
+beq_then.25:
+	flup	f1, 37		# fli	f1, 255.000000
+beq_cont.26:
+beq_cont.22:
+	fsw	f1, 1(r5)

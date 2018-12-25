@@ -1,7 +1,5 @@
 open Num_asm
 
-let table = ref M.empty
-
 type ty = Float | Gen | Unit
 
 let print_graph g =
@@ -314,125 +312,9 @@ let rec coloring g t e =
   let m = make_priority_map e in
   let map = alloc g stack spill M.empty t m in map
 
-
 (* とりあえず挿入するだけ *)
-let rec insert_restore xs ty cont map = 
-  if (xs = S.empty) then
-    cont
-  else
-    match cont with
-    | Let((x, t), e, i, cont') ->
-      (match e with
-      | IfEq(a, b, e1, e2) -> 
-        let s = S.inter xs (S.of_list (a :: fv_id_or_imm b)) in
-        S.fold 
-          (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc)))
-          s
-          (Let((x, t), 
-            IfEq(a, b, 
-              insert_restore (S.inter (S.diff xs s) (S.of_list (fv e1))) ty e1 map, 
-              insert_restore (S.inter (S.diff xs s) (S.of_list (fv e2))) ty e2 map), 
-            i, 
-            insert_restore (S.inter (S.diff xs s) (S.of_list (fv cont'))) ty cont' map))   (* 両方でrestoreされたものはcont'でrestoreする必要がないなど，改善の余地あり *)
-      | IfLE(a, b, e1, e2) -> 
-        let s = S.inter xs (S.of_list (a :: fv_id_or_imm b)) in
-        S.fold
-          (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc)))
-          s
-          (Let((x, t), 
-            IfLE(a, b, 
-              insert_restore (S.inter (S.diff xs s) (S.of_list (fv e1))) ty e1 map, 
-              insert_restore (S.inter (S.diff xs s) (S.of_list (fv e2))) ty e2 map), 
-            i, 
-            insert_restore (S.inter (S.diff xs s) (S.of_list (fv cont'))) ty cont' map))
-      | IfGE(a, b, e1, e2) -> 
-        let s = S.inter xs (S.of_list (a :: fv_id_or_imm b)) in
-        S.fold
-          (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc)))
-          s
-          (Let((x, t), 
-            IfGE(a, b, 
-              insert_restore (S.inter (S.diff xs s) (S.of_list (fv e1))) ty e1 map, 
-              insert_restore (S.inter (S.diff xs s) (S.of_list (fv e2))) ty e2 map), 
-            i, 
-            insert_restore (S.inter (S.diff xs s) (S.of_list (fv cont'))) ty cont' map))
-      | IfFEq(a, b, e1, e2) -> 
-        let s = S.inter xs (S.of_list (fv_id_or_imm a @ fv_id_or_imm b)) in
-        S.fold
-          (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc)))
-          s
-          (Let((x, t), 
-            IfFEq(a, b, 
-              insert_restore (S.inter (S.diff xs s) (S.of_list (fv e1))) ty e1 map, 
-              insert_restore (S.inter (S.diff xs s) (S.of_list (fv e2))) ty e2 map), 
-            i, 
-            insert_restore (S.inter (S.diff xs s) (S.of_list (fv cont'))) ty cont' map))
-      | IfFLE(a, b, e1, e2) -> 
-        let s = S.inter xs (S.of_list (fv_id_or_imm a @ fv_id_or_imm b)) in
-        S.fold
-          (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc)))
-          s
-          (Let((x, t), 
-            IfFLE(a, b, 
-              insert_restore (S.inter (S.diff xs s) (S.of_list (fv e1))) ty e1 map, 
-              insert_restore (S.inter (S.diff xs s) (S.of_list (fv e2))) ty e2 map), 
-            i, 
-            insert_restore (S.inter (S.diff xs s) (S.of_list (fv cont'))) ty cont' map))
-      | Restore(y) ->
-        Let((x, t), e, i, insert_restore (S.remove y xs) ty cont' map)
-      | _ -> 
-        let s = S.inter xs (S.of_list (fv_exp e)) in
-        let cont = S.fold 
-                    (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc)))
-                    s
-                    (Let((x, t), e, i, insert_restore (S.diff xs s) ty cont' map)) in
-        cont
-      )
-    | Ans(e, i) ->
-      (match e with
-      | Restore(y) ->
-        Ans(e, i)
-      | IfEq(a, b, e1, e2) ->
-        let s = S.inter xs (S.of_list (a :: fv_id_or_imm b)) in
-        S.fold 
-          (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc)))
-          s
-          (Ans(IfEq(a, b, insert_restore (S.inter (S.diff xs s) (S.of_list (fv e1))) ty e1 map, insert_restore (S.inter (S.diff xs s) (S.of_list (fv e2))) ty e2 map), i))   (* 両方でrestoreされたものはcont'でする必要がないなど，改善の余地あり *)
-      | IfLE(a, b, e1, e2) -> 
-        let s = S.inter xs (S.of_list (a :: fv_id_or_imm b)) in
-        S.fold
-          (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc)))
-          s
-          (Ans(IfLE(a, b, insert_restore (S.inter (S.diff xs s) (S.of_list (fv e1))) ty e1 map, insert_restore (S.inter (S.diff xs s) (S.of_list (fv e2))) ty e2 map), i))
-      | IfGE(a, b, e1, e2) -> 
-        let s = S.inter xs (S.of_list (a :: fv_id_or_imm b)) in
-        S.fold
-          (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc)))
-          s
-          (Ans(IfGE(a, b, insert_restore (S.inter (S.diff xs s) (S.of_list (fv e1))) ty e1 map, insert_restore (S.inter (S.diff xs s) (S.of_list (fv e2))) ty e2 map), i))
-      | IfFEq(a, b, e1, e2) ->
-        let s = S.inter xs (S.of_list (fv_id_or_imm a @ fv_id_or_imm b)) in
-        S.fold
-          (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc)))
-          s
-          (Ans(IfFEq(a, b, insert_restore (S.inter (S.diff xs s) (S.of_list (fv e1))) ty e1 map, insert_restore (S.inter (S.diff xs s) (S.of_list (fv e2))) ty e2 map), i))
-      | IfFLE(a, b, e1, e2) ->
-        let s = S.inter xs (S.of_list (fv_id_or_imm a @ fv_id_or_imm b)) in
-        S.fold
-          (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc)))
-          s
-          (Ans(IfFLE(a, b, insert_restore (S.inter (S.diff xs s) (S.of_list (fv e1))) ty e1 map, insert_restore (S.inter (S.diff xs s) (S.of_list (fv e2))) ty e2 map), i))
-      | _ ->
-        let s = (* S.inter xs (S.of_list (fv_exp e)) *) xs in
-        (*
-        let cont'' = S.fold
-                     (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc))) (S.diff xs s) (incr counter; Ans(Nop, !counter)) in
-                     *)
-        let cont = S.fold
-                     (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc))) s cont in
-        cont
-      )
-    
+let rec insert_restore xs ty e map = 
+  S.fold (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc))) xs e
 
 
 let rec save_before_call e g fg map fmap saved =
@@ -443,37 +325,37 @@ let rec save_before_call e g fg map fmap saved =
       let cont = insert_restore ((*S.filter (fun x -> not (Asm.is_reg x))*) (S.remove x (Int_M.find i g))) Type.Int cont map in
       let cont = insert_restore ((*S.filter (fun x -> not (Asm.is_reg x))*) (S.remove x (Int_M.find i fg))) Type.Float cont fmap in
       let cont = save_before_call cont g fg map fmap 
-          (S.union saved (S.union (S.filter (fun x -> not (Asm.is_reg x)) (S.remove x (Int_M.find i g))) (S.filter (fun x -> not (Asm.is_reg x)) (S.remove x (Int_M.find i fg))))) in (* restoresは，ifの中で末尾に呼び出しがある際にifを出てからrestoreするやつを取り出す *)
-      let e = S.fold (fun y e -> seq (Save(M.find y map, y), e)) (S.filter (fun x -> not (Asm.is_reg x) && not (S.mem x saved)) (S.remove x (Int_M.find i g))) (Let((x, t), e', i, cont)) in
-      let e = S.fold (fun y e -> seq (Save(M.find y fmap, y), e)) (S.filter (fun x -> not (Asm.is_reg x) && not (S.mem x saved)) (S.remove x (Int_M.find i fg))) e in
+          (S.union saved (S.union (S.filter (fun x -> not (Asm.is_reg x)) (S.remove x (Int_M.find i g))) (fun x -> not (Asm.is_reg x)) (S.remove x (Int_M.find i g))) in (* restoresは，ifの中で末尾に呼び出しがある際にifを出てからrestoreするやつを取り出す *)
+      let e = S.fold (fun y e -> seq (Save(M.find y map, y), e)) (S.filter (fun x -> not (Asm.is_reg x)) (S.remove x (Int_M.find i g))) (Let((x, t), e', i, cont)) in
+      let e = S.fold (fun y e -> seq (Save(M.find y fmap, y), e)) (S.filter (fun x -> not (Asm.is_reg x)) (S.remove x (Int_M.find i fg))) e in
       e
     | IfEq(a, b, e1, e2) -> 
-      let e1' = save_before_call e1 g fg map fmap saved in
-      let e2' = save_before_call e2 g fg map fmap saved in
-      let cont' = save_before_call cont g fg map fmap saved in
+      let e1' = save_before_call e1 g fg map fmap in
+      let e2' = save_before_call e2 g fg map fmap in
+      let cont' = save_before_call cont g fg map fmap in
       Let((x, t), IfEq(a, b, e1', e2'), i, cont')
     | IfGE(a, b, e1, e2) -> 
-      let e1' = save_before_call e1 g fg map fmap saved in
-      let e2' = save_before_call e2 g fg map fmap saved in
-      let cont' = save_before_call cont g fg map fmap saved in
+      let e1' = save_before_call e1 g fg map fmap in
+      let e2' = save_before_call e2 g fg map fmap in
+      let cont' = save_before_call cont g fg map fmap in
       Let((x, t), IfGE(a, b, e1', e2'), i, cont')
     | IfLE(a, b, e1, e2) -> 
-      let e1' = save_before_call e1 g fg map fmap saved in
-      let e2' = save_before_call e2 g fg map fmap saved in
-      let cont' = save_before_call cont g fg map fmap saved in
+      let e1' = save_before_call e1 g fg map fmap in
+      let e2' = save_before_call e2 g fg map fmap in
+      let cont' = save_before_call cont g fg map fmap in
       Let((x, t), IfLE(a, b, e1', e2'), i, cont')
     | IfFEq(a, b, e1, e2) -> 
-      let e1' = save_before_call e1 g fg map fmap saved in
-      let e2' = save_before_call e2 g fg map fmap saved in
-      let cont' = save_before_call cont g fg map fmap saved in
+      let e1' = save_before_call e1 g fg map fmap in
+      let e2' = save_before_call e2 g fg map fmap in
+      let cont' = save_before_call cont g fg map fmap in
       Let((x, t), IfFEq(a, b, e1', e2'), i, cont')
     | IfFLE(a, b, e1, e2) ->
-      let e1' = save_before_call e1 g fg map fmap saved in
-      let e2' = save_before_call e2 g fg map fmap saved in
-      let cont' = save_before_call cont g fg map fmap saved in
+      let e1' = save_before_call e1 g fg map fmap in
+      let e2' = save_before_call e2 g fg map fmap in
+      let cont' = save_before_call cont g fg map fmap in
       Let((x, t), IfFLE(a, b, e1', e2'), i, cont')
     | e' -> 
-      let cont' = save_before_call cont g fg map fmap saved in
+      let cont' = save_before_call cont g fg map fmap in
       Let((x, t), e', i, cont')
     )
   | Ans(e', i) ->
@@ -486,24 +368,24 @@ let rec save_before_call e g fg map fmap saved =
       *)
       e
     | IfEq(a, b, e1, e2) -> 
-      let e1' = save_before_call e1 g fg map fmap saved in
-      let e2' = save_before_call e2 g fg map fmap saved in
+      let e1' = save_before_call e1 g fg map fmap in
+      let e2' = save_before_call e2 g fg map fmap in
       Ans(IfEq(a, b, e1', e2'), i)
     | IfGE(a, b, e1, e2) ->
-      let e1' = save_before_call e1 g fg map fmap saved in
-      let e2' = save_before_call e2 g fg map fmap saved in
+      let e1' = save_before_call e1 g fg map fmap in
+      let e2' = save_before_call e2 g fg map fmap in
       Ans(IfGE(a, b, e1', e2'), i)
     | IfLE(a, b, e1, e2) ->
-      let e1' = save_before_call e1 g fg map fmap saved in
-      let e2' = save_before_call e2 g fg map fmap saved in
+      let e1' = save_before_call e1 g fg map fmap in
+      let e2' = save_before_call e2 g fg map fmap in
       Ans(IfLE(a, b, e1', e2'), i)
     | IfFEq(a, b, e1, e2) ->
-      let e1' = save_before_call e1 g fg map fmap saved in
-      let e2' = save_before_call e2 g fg map fmap saved in
+      let e1' = save_before_call e1 g fg map fmap in
+      let e2' = save_before_call e2 g fg map fmap in
       Ans(IfFEq(a, b, e1', e2'), i)
     | IfFLE(a, b, e1, e2) ->
-      let e1' = save_before_call e1 g fg map fmap saved in
-      let e2' = save_before_call e2 g fg map fmap saved in
+      let e1' = save_before_call e1 g fg map fmap in
+      let e2' = save_before_call e2 g fg map fmap in
       Ans(IfFLE(a, b, e1', e2'), i)
     | Subst((x, t), exp)->
       (match exp with 
@@ -511,8 +393,8 @@ let rec save_before_call e g fg map fmap saved =
         incr counter;
         let res = insert_restore (S.remove x (Int_M.find i g)) Type.Int (Ans(Nop, !counter)) map in
         let res = insert_restore (S.remove x (Int_M.find i fg)) Type.Float res fmap in
-        let e = S.fold (fun y e -> seq (Save(M.find y map, y), e)) (S.filter (fun x -> not (Asm.is_reg x) && not (S.mem x saved)) (Int_M.find i g)) (Let((x, t), e', i, res)) in
-        let e = S.fold (fun y e -> seq (Save(M.find y fmap, y), e)) (S.filter (fun x -> not (Asm.is_reg x) && not (S.mem x saved)) (Int_M.find i fg)) e in
+        let e = S.fold (fun y e -> seq (Save(M.find y map, y), e)) (S.filter (fun x -> not (Asm.is_reg x)) (Int_M.find i g)) (Let((x, t), e', i, res)) in
+        let e = S.fold (fun y e -> seq (Save(M.find y fmap, y), e)) (S.filter (fun x -> not (Asm.is_reg x)) (Int_M.find i fg)) e in
         e
       | _ -> Ans(e', i)
       )
@@ -526,7 +408,7 @@ let rec allocate e =
   let fg = make_graph fgraph in
   let map = coloring g Gen e in
   let fmap = coloring fg Float e in
-  let e = save_before_call e graph fgraph map fmap S.empty in
+  let e = save_before_call e graph fgraph map fmap in
   replace e map fmap
 
 
@@ -553,13 +435,12 @@ let rec allocate_fun { name = Id.L(x); args = ys; fargs = zs; body = e; ret = t 
   print_map fmap;
 *)
 
-  let e = save_before_call e graph fgraph map fmap S.empty in
+  let e = save_before_call e graph fgraph map fmap in
   { name = Id.L(x); args = ys; fargs = zs; body = replace e map fmap; ret = t }
   
 
 
 let rec f (Prog(data, fundefs, e)) =
-  table := List.fold_left (fun m { name = Id.L(x); args = ys; fargs = zs; body = e; ret = t } -> M.add x t m) M.empty fundefs;
   let graph, fgraph = iter_analysis Int_M.empty Int_M.empty e in (* 生存解析 *)
   Int_M.iter (fun i s -> Printf.printf "%d  " i; S.iter (fun x -> print_string (x^" ")) s; print_newline ()) graph;
   let g = make_graph graph in
@@ -576,6 +457,6 @@ let rec f (Prog(data, fundefs, e)) =
   print_endline "print fmap";
   print_map fmap;
   *)
-  let e = save_before_call e graph fgraph map fmap S.empty in
+  let e = save_before_call e graph fgraph map fmap in
   let e = replace e map fmap in
   Prog(data, List.map allocate_fun fundefs, e)

@@ -1014,7 +1014,7 @@ dbl.42:
 	fadd	f1, f1, f1
 	jr	r31				#
 iloop.61:
-	beqi	0, r1, beq_then.125
+	beqi	0, r1, beq_then.115
 	fsub	f3, f3, f4
 	fadd	f7, f3, f5
 	fsw	f2, 0(r3)
@@ -1028,12 +1028,10 @@ iloop.61:
 	addi	r3, r3, -10
 	lw	r31, 9(r3)
 	flw	f2, 0(r3)
-	flw	f7, 2(r3)
-	flw	f5, 4(r3)
-	flw	f6, 6(r3)
-	lw	r1, 8(r3)
 	fmul	f1, f1, f2
+	flw	f6, 6(r3)
 	fadd	f2, f1, f6
+	flw	f7, 2(r3)
 	fmul	f3, f7, f7
 	fmul	f4, f2, f2
 	fadd	f8, f3, f4
@@ -1041,19 +1039,23 @@ iloop.61:
 	lui	r30, r30, 16512	# to load float		4.000000
 	fmvfr	f1, r30
 	fle	r30, f8, f1
-	beq	r0, r30, fle_else.126
+	beq	r0, r30, fle_else.116
+	lw	r1, 8(r3)
 	addi	r1, r1, -1
+	flw	f5, 4(r3)
 	fadd	f1, f0, f7
 	j	iloop.61
-fle_else.126:
+fle_else.116:
 	addi	r1, r0, 0
+	lw	r1, 8(r3)
+	flw	f5, 4(r3)
 	j	lib_print_int
-beq_then.125:
+beq_then.115:
 	addi	r1, r0, 1
 	j	lib_print_int
 xloop.51:
 	addi	r5, r0, 100
-	ble	r5, r1, ble_then.127
+	ble	r5, r1, ble_then.117
 	sw	r2, 0(r3)
 	sw	r1, 1(r3)
 	sw	r31, 2(r3)
@@ -1061,16 +1063,12 @@ xloop.51:
 	jal	lib_float_of_int				
 	addi	r3, r3, -3
 	lw	r31, 2(r3)
-	lw	r2, 0(r3)
-	lw	r1, 1(r3)
 	sw	r31, 2(r3)
 	addi	r3, r3, 3
 	jal	dbl.42				
 	addi	r3, r3, -3
 	lw	r31, 2(r3)
 	fadd	f2, f0, f1
-	lw	r2, 0(r3)
-	lw	r1, 1(r3)
 	addi	r30, r0, 0
 	lui	r30, r30, 17096	# to load float		100.000000
 	fmvfr	f1, r30
@@ -1080,6 +1078,7 @@ xloop.51:
 	lui	r30, r30, 16320	# to load float		1.500000
 	fmvfr	f1, r30
 	fsub	f5, f2, f1
+	lw	r2, 0(r3)
 	fsw	f5, 2(r3)
 	add	r1, r0, r2
 	sw	r31, 4(r3)
@@ -1087,18 +1086,12 @@ xloop.51:
 	jal	lib_float_of_int				
 	addi	r3, r3, -5
 	lw	r31, 4(r3)
-	flw	f5, 2(r3)
-	lw	r2, 0(r3)
-	lw	r1, 1(r3)
 	sw	r31, 4(r3)
 	addi	r3, r3, 5
 	jal	dbl.42				
 	addi	r3, r3, -5
 	lw	r31, 4(r3)
 	fadd	f2, f0, f1
-	flw	f5, 2(r3)
-	lw	r2, 0(r3)
-	lw	r1, 1(r3)
 	addi	r30, r0, 0
 	lui	r30, r30, 17096	# to load float		100.000000
 	fmvfr	f1, r30
@@ -1111,29 +1104,30 @@ xloop.51:
 	flup	f2, 0		# fli	f2, 0.000000
 	flup	f3, 0		# fli	f3, 0.000000
 	flup	f4, 0		# fli	f4, 0.000000
+	flw	f5, 2(r3)
 	add	r1, r0, r5
 	sw	r31, 4(r3)
 	addi	r3, r3, 5
 	jal	iloop.61				
 	addi	r3, r3, -5
 	lw	r31, 4(r3)
-	lw	r2, 0(r3)
 	lw	r1, 1(r3)
 	addi	r1, r1, 1
+	lw	r2, 0(r3)
 	j	xloop.51
-ble_then.127:
+ble_then.117:
 	jr	r31				#
 yloop.44:
 	addi	r2, r0, 100
-	ble	r2, r1, ble_then.129
+	ble	r2, r1, ble_then.119
 	sw	r1, 0(r3)
 	sw	r31, 1(r3)
 	addi	r3, r3, 2
 	jal	lib_print_newline				
 	addi	r3, r3, -2
 	lw	r31, 1(r3)
-	lw	r1, 0(r3)
 	addi	r2, r0, 0
+	lw	r1, 0(r3)
 	add	r28, r0, r2
 	add	r2, r0, r1
 	add	r1, r0, r28
@@ -1145,7 +1139,7 @@ yloop.44:
 	lw	r1, 0(r3)
 	addi	r1, r1, 1
 	j	yloop.44
-ble_then.129:
+ble_then.119:
 	jr	r31				#
 _R_0:
 _min_caml_start: # main entry point
