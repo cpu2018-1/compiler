@@ -1011,11 +1011,14 @@ _fle_else.783:
 _R_0:
 # library ends
 ack.15:
-	blei	0, r1, ble_then.33
-	blei	0, r2, ble_then.34
-	addi	r5, r1, -1
-	addi	r2, r2, -1
+	blei	0, r2, ble_then.33
+	blei	0, r1, ble_then.34
+	addi	r5, r2, -1
+	addi	r1, r1, -1
 	sw	r5, 0(r3)
+	add	r28, r0, r2
+	add	r2, r0, r1
+	add	r1, r0, r28
 	sw	r31, 1(r3)
 	addi	r3, r3, 2
 	jal	ack.15				
@@ -1026,11 +1029,11 @@ ack.15:
 	add	r1, r0, r5
 	j	ack.15
 ble_then.34:
-	addi	r1, r1, -1
+	addi	r1, r2, -1
 	addi	r2, r0, 1
 	j	ack.15
 ble_then.33:
-	addi	r1, r2, 1
+	addi	r1, r1, 1
 	jr	r31				#
 _R_0:
 _min_caml_start: # main entry point

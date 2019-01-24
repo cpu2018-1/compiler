@@ -2087,11 +2087,8 @@ _min_caml_start: # main entry point
   sw r0, 1023(r4)
   addi  r4, r4, 1024
 #	main program starts
-	addi	r2, r0, 10
-	addi	r1, r0, 1
-	add	r28, r0, r2
-	add	r2, r0, r1
-	add	r1, r0, r28
+	addi	r1, r0, 10
+	addi	r2, r0, 1
 	sw	r31, 0(r3)
 	addi	r3, r3, 1
 	jal	lib_create_array				
@@ -2141,21 +2138,18 @@ _min_caml_start: # main entry point
 	add	r1, r1, r13
 	add	r1, r1, r12
 	add	r1, r1, r11
-	add	r19, r1, r21
+	add	r1, r1, r21
 	j	beq_cont.76
 beq_then.75:
-	sw	r19, 1(r3)
 	add	r1, r0, r20
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
+	sw	r31, 1(r3)
+	addi	r3, r3, 2
 	jal	g.28				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
-	add	r19, r0, r1
+	addi	r3, r3, -2
+	lw	r31, 1(r3)
 beq_cont.76:
-	add	r1, r0, r19
-	sw	r31, 2(r3)
-	addi	r3, r3, 3
+	sw	r31, 1(r3)
+	addi	r3, r3, 2
 	jal	lib_print_int				
-	addi	r3, r3, -3
-	lw	r31, 2(r3)
+	addi	r3, r3, -2
+	lw	r31, 1(r3)
