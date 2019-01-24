@@ -8,6 +8,10 @@ let print_graph g =
   M.iter (fun x s -> print_string (x^"  ");
                 S.iter (fun y -> print_string (y^" ")) s; print_newline ()) g
 
+(******************************)
+(* 生存解析 *)
+
+
 (* 汎用レジスタか浮動小数レジスタかを分ける *)
 let rec classify_fv_exp e = 
   match e with
@@ -20,7 +24,7 @@ let rec classify_fv_exp e =
   | FAdd(x, y) | FSub(x, y) | FMul(x, y) | FDiv(x, y) -> S.empty, S.of_list [x; y]
   | IfEq(x, y', e1, e2) | IfLE(x, y', e1, e2) | IfGE(x, y', e1, e2) -> S.of_list (x :: fv_id_or_imm y'), S.empty
   | IfFEq(x, y', e1, e2) | IfFLE(x, y', e1, e2) -> S.empty, S.of_list (fv_id_or_imm x @ fv_id_or_imm y')
-  | CallCls(x, ys, zs) -> failwith "クロージャはとりあえずエラー" (*S.of_list (x :: ys), S.of_list zs*)
+  | CallCls(x, ys, zs) -> S.of_list (x :: ys), S.of_list zs
   | CallDir(_, ys, zs) -> S.of_list ys, S.of_list zs
   | Subst((x, t), e) -> classify_fv_exp e
   | _ -> failwith ("something went wrong")
@@ -103,7 +107,8 @@ let rec iter_analysis lives flives t =
     lives, flives
   else
     iter_analysis lives' flives' t
-
+(* ここまで生存解析 *)
+(******************************)
 
 (* 生存解析の情報から干渉グラフを構成する *)
 let rec make_graph g =
@@ -113,35 +118,79 @@ let rec make_graph g =
     g
     M.empty
 
+(* 各変数が何回使われるか/spillの選択のため *)
+let rec get_freq e =
+  let merge_m = fun key a b ->
+    match a, b with
+    | None, None -> None
+    | Some x, None -> Some x
+    | None, Some y -> Some y
+    | Some x, Some y -> Some (x + y)
+  in
+  let update_m = function
+    | None -> Some 1
+    | Some n -> Some (n + 1)
+  in
+  match e with
+  | Let(xt, e, i, cont) ->
+    (match e with 
+    | IfEq(a, b', e1, e2) | IfLE(a, b', e1, e2) | IfGE(a, b', e1, e2) ->
+      let l = a :: fv_id_or_imm b' in
+      List.fold_left (fun m x -> M.update x update_m m) (M.merge merge_m (M.merge merge_m (get_freq e1) (get_freq e2)) (get_freq cont)) l
+    | IfFEq(a', b', e1, e2) | IfFLE(a', b', e1, e2) ->
+      let l = fv_id_or_imm a' @ fv_id_or_imm b' in
+      List.fold_left (fun m x -> M.update x update_m m) (M.merge merge_m (M.merge merge_m (get_freq e1) (get_freq e2)) (get_freq cont)) l
+    | _ -> 
+      let l = fv_exp e in
+      List.fold_left (fun m x -> M.update x update_m m) (get_freq cont) l
+    )
+  | Ans(e, i) ->
+    (match e with 
+    | IfEq(a, b', e1, e2) | IfLE(a, b', e1, e2) | IfGE(a, b', e1, e2) ->
+      let l = a :: fv_id_or_imm b' in
+      List.fold_left (fun m x -> M.update x update_m m) (M.merge merge_m (get_freq e1) (get_freq e2)) l
+    | IfFEq(a', b', e1, e2) | IfFLE(a', b', e1, e2) ->
+      let l = fv_id_or_imm a' @ fv_id_or_imm b' in
+      List.fold_left (fun m x -> M.update x update_m m) (M.merge merge_m (get_freq e1) (get_freq e2)) l
+    | _ -> 
+      let l = fv_exp e in
+      List.fold_left (fun m x -> M.update x update_m m) (M.empty) l
+    )
+ 
+
+      
 (* 楽観的彩色 *)
-let rec optimistic g stack spill t =
+let rec optimistic g freq stack spill t =
   if (M.cardinal g = 0) then
     stack, spill
   else
-    let length = Array.length (match t with Float -> Asm.fregs | Gen -> Asm.regs) in
+    let length = Array.length (match t with Float -> Asm.fregs | Gen -> Asm.regs | Unit -> assert(false)) in
     let r = M.fold 
               (fun x s r ->
                 match r with
                 | Some y -> Some y
                 | None ->
-                  if (S.cardinal s < length) then
+                  if (S.cardinal s < length - 1) then
                     Some x
                   else
                     None) g None in
     match r with (* 確実に塗れるものがあるか *)
-    | Some x -> optimistic (M.remove x (M.map (S.remove x) g)) (x :: stack) spill t
+    | Some x -> optimistic (M.remove x (M.map (S.remove x) g)) freq (x :: stack) spill t
     | None -> 
-      print_endline "spillある...";
-      failwith "spillがあるのでとりあえずエラー";
+      (* 選択 *)
       let (x, _) = M.choose g in 
-      optimistic (M.remove x (M.map (fun s -> (S.filter (fun a -> x <> a) s)) g)) (x :: stack) (x :: spill) t
+      optimistic (M.remove x (M.map (S.remove x) g)) freq (x :: stack) (x :: spill) t
 
+
+(* 割り当てるレジスタを探す *)
+(* 無理なら前から見ていって割り当てられるものを割り当てる *)
 let rec find_step_by_step i step used regs =
   if S.mem regs.(i) used then
     find_step_by_step (i + step) step used regs
   else
     i
 
+(* まずはレジスタのスワップが少なくなるように割り当ててみる *)
 let rec find_can_use i used regs m =
   let m' = 
     (match m with
@@ -206,17 +255,14 @@ let rec make_priority_map e =
       M.merge f (make_priority_map e1) (make_priority_map e2)
     | _ -> M.empty
     )
-      
-      
+
+
 let rec alloc g stack spill env t m =
   let regs = (match t with Float -> Asm.fregs |  Gen -> Asm.regs) in
   match stack with
   | x :: xs -> 
-    if List.mem x spill then
-      failwith ("hoge")
-      (*
-      env
-      *)
+    if List.mem x spill then (* とりあえず放置 *)
+      alloc g xs spill env t m
     else
 (*      if (Asm.is_reg x) then (* レジスタの場合はそのまま *) (* [TODO]レジスタがspillの対象になりうるので変えるべき(そのうち変えます) *) (* <- 本当になりうる? *)
         alloc g xs spill (M.add x x env) t 
@@ -228,9 +274,10 @@ let rec alloc g stack spill env t m =
           let used = S.map (fun y -> M.find y env) allocated (*S.fold (fun y s -> S.add (M.find y env) s) allocated S.empty*) in
           let i = find_can_use 0 used regs (try Some (M.find x m) with Not_found -> None) in
           alloc g xs spill (M.add x regs.(i) env) t m
-  | [] -> env
+  | [] -> (* spillは割り当ててないが，とりあえずenvを返す *)
+    env
 
-
+(* map or fmapから取り出す *)
 let find x t map fmap = 
   print_endline ("attempt to find "^x);
   if Asm.is_reg x then
@@ -242,6 +289,112 @@ let find x t map fmap =
   | Gen -> M.find x map
   | Unit -> "%r0"
   )
+
+(*
+let rec insert_restore_spill x t reg_spl e =
+  match e with
+  | Let((y, yt), exp, i, cont) ->
+    (match exp with
+    | IfEq(a, b', e1, e2) ->
+      let l = a :: fv_id_or_imm b' in
+      if (List.mem x l) then
+      (
+        incr counter;
+        Let((reg_spl, t), Restore(x), !counter, Let((y, yt), IfEq(a, b', insert_restore_spill x t reg_spl e1, insert_restore_spill x t reg_spl e2), i, insert_restore_spill x t reg_spl cont))
+      ) else
+        Let((y, yt), IfEq(a, b', insert_restore_spill x t reg_spl e1, insert_restore_spill x t reg_spl e2), i, insert_restore_spill x t reg_spl cont)
+    | IfLE(a, b', e1, e2) ->
+      let l = a :: fv_id_or_imm b' in
+      if (List.mem x l) then
+      (
+        incr counter;
+        Let((reg_spl, t), Restore(x), !counter, Let((y, yt), IfLE(a, b', insert_restore_spill x t reg_spl e1, insert_restore_spill x t reg_spl e2), i, insert_restore_spill x t reg_spl cont))
+      ) else
+        Let((y, yt), IfLE(a, b', insert_restore_spill x t reg_spl e1, insert_restore_spill x t reg_spl e2), i, insert_restore_spill x t reg_spl cont)
+    | IfGE(a, b', e1, e2) ->
+      let l = a :: fv_id_or_imm b' in
+      if (List.mem x l) then
+      (
+        incr counter;
+        Let((reg_spl, t), Restore(x), !counter, Let((y, yt), IfGE(a, b', insert_restore_spill x t reg_spl e1, insert_restore_spill x t reg_spl e2), i, insert_restore_spill x t reg_spl cont))
+      ) else
+        Let((y, yt), IfGE(a, b', insert_restore_spill x t reg_spl e1, insert_restore_spill x t reg_spl e2), i, insert_restore_spill x t reg_spl cont)
+    | IfFEq(a', b', e1, e2) ->
+      let l = fv_id_or_imm a' @ fv_id_or_imm b' in
+      if (List.mem x l) then
+      (
+        incr counter;
+        Let((reg_spl, t), Restore(x), !counter, Let((y, yt), IfFEq(a', b', insert_restore_spill x t reg_spl e1, insert_restore_spill x t reg_spl e2), i, insert_restore_spill x t reg_spl cont))
+      ) else
+        Let((y, yt), IfFEq(a', b', insert_restore_spill x t reg_spl e1, insert_restore_spill x t reg_spl e2), i, insert_restore_spill x t reg_spl cont)
+    | IfFLE(a', b', e1, e2) ->
+      let l = fv_id_or_imm a' @ fv_id_or_imm b' in
+      if (List.mem x l) then
+      (
+        incr counter;
+        Let((reg_spl, t), Restore(x), !counter, Let((y, yt), IfFLE(a', b', insert_restore_spill x t reg_spl e1, insert_restore_spill x t reg_spl e2), i, insert_restore_spill x t reg_spl cont))
+      ) else
+        Let((y, yt), IfFLE(a', b', insert_restore_spill x t reg_spl e1, insert_restore_spill x t reg_spl e2), i, insert_restore_spill x t reg_spl cont)
+    | _ -> 
+      if (List.mem x (fv_exp exp)) then
+      (
+        incr counter;
+        Let((reg_spl, t), Restore(x), !counter, Let((y, yt), exp, i, insert_restore_spill x t reg_spl cont))
+      ) else
+        Let((y, yt), exp, i, insert_restore_spill x t reg_spl cont)
+    )
+  | Ans(exp, i) ->
+    (match exp with
+    | IfEq(a, b', e1, e2) ->
+      let l = a :: fv_id_or_imm b' in
+      if (List.mem x l) then
+      (
+        incr counter;
+        Let((reg_spl, t), Restore(x), !counter, Ans(IfEq(a, b', insert_restore_spill x t reg_spl e1, insert_restore_spill x t reg_spl e2), i))
+      ) else
+        Ans(IfEq(a, b', insert_restore_spill x t reg_spl e1, insert_restore_spill x t reg_spl e2), i)
+    | IfLE(a, b', e1, e2) ->
+      let l = a :: fv_id_or_imm b' in
+      if (List.mem x l) then
+      (
+        incr counter;
+        Let((reg_spl, t), Restore(x), !counter, Ans(IfLE(a, b', insert_restore_spill x t reg_spl e1, insert_restore_spill x t reg_spl e2), i))
+      ) else
+        Ans(IfLE(a, b', insert_restore_spill x t reg_spl e1, insert_restore_spill x t reg_spl e2), i)
+    | IfGE(a, b', e1, e2) ->
+      let l = a :: fv_id_or_imm b' in
+      if (List.mem x l) then
+      (
+        incr counter;
+        Let((reg_spl, t), Restore(x), !counter, Ans(IfGE(a, b', insert_restore_spill x t reg_spl e1, insert_restore_spill x t reg_spl e2), i))
+      ) else
+        Ans(IfGE(a, b', insert_restore_spill x t reg_spl e1, insert_restore_spill x t reg_spl e2), i)
+    | IfFEq(a', b', e1, e2) ->
+      let l = fv_id_or_imm a' @ fv_id_or_imm b' in
+      if (List.mem x l) then
+      (
+        incr counter;
+        Let((reg_spl, t), Restore(x), !counter, Ans(IfFEq(a', b', insert_restore_spill x t reg_spl e1, insert_restore_spill x t reg_spl e2), i))
+      ) else
+        Ans(IfFEq(a', b', insert_restore_spill x t reg_spl e1, insert_restore_spill x t reg_spl e2), i)
+    | IfFLE(a', b', e1, e2) ->
+      let l = fv_id_or_imm a' @ fv_id_or_imm b' in
+      if (List.mem x l) then
+      (
+        incr counter;
+        Let((reg_spl, t), Restore(x), !counter, Ans(IfFLE(a', b', insert_restore_spill x t reg_spl e1, insert_restore_spill x t reg_spl e2), i))
+      ) else
+        Ans(IfFLE(a', b', insert_restore_spill x t reg_spl e1, insert_restore_spill x t reg_spl e2), i)
+    | _ -> 
+      if (List.mem x (fv_exp exp)) then
+      (
+        incr counter;
+        Let((reg_spl, t), Restore(x), !counter, Ans(exp, i))
+      ) else
+        Ans(exp, i)
+    )
+*)
+
 
 let rec replace_id_or_imm x' t map fmap =
   match x' with
@@ -278,7 +431,7 @@ let rec replace_exp e map fmap =
   | IfGE(x, y', e1, e2) -> IfGE((find x Gen map fmap), replace_id_or_imm y' Gen map fmap, replace e1 map fmap, replace e2 map fmap)
   | IfFEq(x', y', e1, e2) -> IfFEq(replace_id_or_imm x' Float map fmap, replace_id_or_imm y' Float map fmap, replace e1 map fmap, replace e2 map fmap)
   | IfFLE(x', y', e1, e2) -> IfFLE(replace_id_or_imm x' Float map fmap, replace_id_or_imm y' Float map fmap, replace e1 map fmap, replace e2 map fmap)
-  | CallCls(x, ys, zs) -> CallCls(x, List.map (fun x -> find x Gen map fmap) ys, List.map (fun x -> find x Float map fmap) zs)
+  | CallCls(x, ys, zs) -> CallCls(find x Gen map fmap, List.map (fun x -> find x Gen map fmap) ys, List.map (fun x -> find x Float map fmap) zs)
   | CallDir(x, ys, zs) -> CallDir(x, List.map (fun x -> find x Gen map fmap) ys, List.map (fun x -> find x Float map fmap) zs)
   | Subst((x, t), e) -> 
     let t' = (match t with | Type.Float -> Float | Type.Unit -> Unit | _ -> Gen) in
@@ -292,12 +445,12 @@ and
   match e with
   | Let((x, t), e, i, cont) ->
     (match e with
-    | Save _ | Restore _ ->  Let((x, t), e, i, replace cont map fmap) (* Restoreはすでに適切になっている *)
+    | Save _ | Restore _ ->  Let((x, t), e, i, replace cont map fmap) (* Save/Restoreはすでに適切にreplaceされている *)
     | _ ->
       let x' =
       (match t with
       | Type.Float -> if Asm.is_reg x then x else (try M.find x fmap with Not_found -> Asm.reg_fzero) (* Not_foundのものはすぐに捨てられる変数などなのでなんでもよい *)
-      | Type.Unit -> "%r0" (* 適当に *)
+      | Type.Unit -> Asm.reg_zero (* 適当に *)
       | _ -> if Asm.is_reg x then x else (try M.find x map with Not_found -> Asm.reg_zero)
       ) in
       Let((x', t), replace_exp e map fmap, i, replace cont map fmap)
@@ -310,17 +463,39 @@ let rec print_map map =
 (* 彩色 *)
 (* グラフと型(汎用レジスタか浮動小数レジスタか)を受け取って彩色を返す *)
 let rec coloring g t e =
-  let stack, spill = optimistic g [] [] t in
+  let regs = (match t with Gen -> Asm.regs | Float -> Asm.fregs | Unit -> assert(false)) in
+  let stack, spill = optimistic g (get_freq e) [] [] t in
   let m = make_priority_map e in
-  let map = alloc g stack spill M.empty t m in map
+  let map = alloc g stack spill M.empty t m in (* spillなく塗れるものの塗り方 *)
+  (* spillが実は塗れるかもしれない *)
+  let b, map' = List.fold_left 
+            (fun (b', m) x -> 
+              if b' then
+                (* g'はxと接している点の色の集合 *)
+                let g' = S.map (fun y -> if M.mem y map then M.find y map else y) (M.find x g) in
+                let b2, reg = Array.fold_left (fun (b', r) x -> if b' then (b', r) else if not (S.mem x g') then (true, x) else (false, r)) (false, "false") regs in
+                if b2 then
+                  b2, M.add x reg m
+                else
+                  b2, m
+              else
+                b', m
+            )
+            (true, map)
+            spill in
+  b, map'
 
 
-(* とりあえず挿入するだけ *)
+(* 初めて使われるタイミングで挿入する *)
 let rec insert_restore xs ty cont map = 
   if (xs = S.empty) then
     cont
   else
     match cont with
+    | _ -> (* とりあえずすぐにrestore / 要改善 *)
+        let cont = S.fold
+                     (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc))) xs cont in
+        cont
     | Let((x, t), e, i, cont') ->
       (match e with
       | IfEq(a, b, e1, e2) -> 
@@ -392,12 +567,16 @@ let rec insert_restore xs ty cont map =
       (match e with
       | Restore(y) ->
         Ans(e, i)
+      | _ ->
+        let cont = S.fold
+                     (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc))) xs cont in
+        cont
       | IfEq(a, b, e1, e2) ->
         let s = S.inter xs (S.of_list (a :: fv_id_or_imm b)) in
         S.fold 
           (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc)))
           s
-          (Ans(IfEq(a, b, insert_restore (S.inter (S.diff xs s) (S.of_list (fv e1))) ty e1 map, insert_restore (S.inter (S.diff xs s) (S.of_list (fv e2))) ty e2 map), i))   (* 両方でrestoreされたものはcont'でする必要がないなど，改善の余地あり *)
+          (Ans(IfEq(a, b, insert_restore (S.inter (S.diff xs s) (S.of_list (fv e1))) ty e1 map, insert_restore (S.inter (S.diff xs s) (S.of_list (fv e2))) ty e2 map), i))
       | IfLE(a, b, e1, e2) -> 
         let s = S.inter xs (S.of_list (a :: fv_id_or_imm b)) in
         S.fold
@@ -423,18 +602,26 @@ let rec insert_restore xs ty cont map =
           s
           (Ans(IfFLE(a, b, insert_restore (S.inter (S.diff xs s) (S.of_list (fv e1))) ty e1 map, insert_restore (S.inter (S.diff xs s) (S.of_list (fv e2))) ty e2 map), i))
       | _ ->
-        let s = (* S.inter xs (S.of_list (fv_exp e)) *) xs in
+      (*
+        let v = S.of_list (fv_exp e) in
+        print_int i; print_newline ();
+        print_exp 1 e;
+        S.iter (fun x -> print_string (x^" ")) v; print_newline ();
+        S.iter (fun x -> print_string (x^" ")) xs; print_newline ();
+        S.iter (fun x -> assert(S.mem x v)) xs;
+        *)
         (*
         let cont'' = S.fold
                      (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc))) (S.diff xs s) (incr counter; Ans(Nop, !counter)) in
                      *)
         let cont = S.fold
-                     (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc))) s cont in
+                     (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc))) xs cont in
         cont
       )
     
 
 
+(* 呼び出し前の退避 *)
 let rec save_before_call e g fg map fmap saved =
   match e with
   | Let((x, t), e', i, cont) ->
@@ -443,9 +630,9 @@ let rec save_before_call e g fg map fmap saved =
       let cont = insert_restore ((*S.filter (fun x -> not (Asm.is_reg x))*) (S.remove x (Int_M.find i g))) Type.Int cont map in
       let cont = insert_restore ((*S.filter (fun x -> not (Asm.is_reg x))*) (S.remove x (Int_M.find i fg))) Type.Float cont fmap in
       let cont = save_before_call cont g fg map fmap 
-          (S.union saved (S.union (S.filter (fun x -> not (Asm.is_reg x)) (S.remove x (Int_M.find i g))) (S.filter (fun x -> not (Asm.is_reg x)) (S.remove x (Int_M.find i fg))))) in (* restoresは，ifの中で末尾に呼び出しがある際にifを出てからrestoreするやつを取り出す *)
-      let e = S.fold (fun y e -> seq (Save(M.find y map, y), e)) (S.filter (fun x -> not (Asm.is_reg x) && not (S.mem x saved)) (S.remove x (Int_M.find i g))) (Let((x, t), e', i, cont)) in
-      let e = S.fold (fun y e -> seq (Save(M.find y fmap, y), e)) (S.filter (fun x -> not (Asm.is_reg x) && not (S.mem x saved)) (S.remove x (Int_M.find i fg))) e in
+          (S.union saved (S.union (S.filter (fun x -> not (Asm.is_reg x)) (S.remove x (Int_M.find i g))) (S.filter (fun x -> not (Asm.is_reg x)) (S.remove x (Int_M.find i fg))))) in 
+      let e = S.fold (fun y e -> seq (Save(M.find y map, y), e)) (S.filter (fun x -> not (Asm.is_reg x)(* && not (S.mem x saved)*)) (S.remove x (Int_M.find i g))) (Let((x, t), e', i, cont)) in
+      let e = S.fold (fun y e -> seq (Save(M.find y fmap, y), e)) (S.filter (fun x -> not (Asm.is_reg x)(* && not (S.mem x saved)*)) (S.remove x (Int_M.find i fg))) e in
       e
     | IfEq(a, b, e1, e2) -> 
       let e1' = save_before_call e1 g fg map fmap saved in
@@ -505,14 +692,14 @@ let rec save_before_call e g fg map fmap saved =
       let e1' = save_before_call e1 g fg map fmap saved in
       let e2' = save_before_call e2 g fg map fmap saved in
       Ans(IfFLE(a, b, e1', e2'), i)
-    | Subst((x, t), exp)->
+    | Subst((x, t), exp) ->
       (match exp with 
       | CallDir(name, ys, zs) ->
         incr counter;
         let res = insert_restore (S.remove x (Int_M.find i g)) Type.Int (Ans(Nop, !counter)) map in
         let res = insert_restore (S.remove x (Int_M.find i fg)) Type.Float res fmap in
-        let e = S.fold (fun y e -> seq (Save(M.find y map, y), e)) (S.filter (fun x -> not (Asm.is_reg x) && not (S.mem x saved)) (Int_M.find i g)) (Let((x, t), e', i, res)) in
-        let e = S.fold (fun y e -> seq (Save(M.find y fmap, y), e)) (S.filter (fun x -> not (Asm.is_reg x) && not (S.mem x saved)) (Int_M.find i fg)) e in
+        let e = S.fold (fun y e -> seq (Save(M.find y map, y), e)) (S.filter (fun x -> not (Asm.is_reg x) (*&& not (S.mem x saved)*)) (S.remove x (Int_M.find i g))) (Let((x, t), exp, i, res)) in
+        let e = S.fold (fun y e -> seq (Save(M.find y fmap, y), e)) (S.filter (fun x -> not (Asm.is_reg x) (*&& not (S.mem x saved)*)) (S.remove x (Int_M.find i fg))) e in
         e
       | _ -> Ans(e', i)
       )
@@ -520,62 +707,30 @@ let rec save_before_call e g fg map fmap saved =
     )
 
 
+
 let rec allocate e =
   let graph, fgraph = iter_analysis Int_M.empty Int_M.empty e in
   let g = make_graph graph in
   let fg = make_graph fgraph in
-  let map = coloring g Gen e in
-  let fmap = coloring fg Float e in
-  let e = save_before_call e graph fgraph map fmap S.empty in
-  replace e map fmap
+  let b, map = coloring g Gen e in
+  let fb, fmap = coloring fg Float e in
+  if (b && fb) then
+    let e = save_before_call e graph fgraph map fmap S.empty in
+    replace e map fmap
+  else
+    let e = save_before_call e graph fgraph map fmap S.empty in
+    replace e map fmap
+
 
 
 let rec allocate_fun { name = Id.L(x); args = ys; fargs = zs; body = e; ret = t } =
   print_endline ("allocate "^x);
-  let graph, fgraph = iter_analysis Int_M.empty Int_M.empty e in
-  Int_M.iter (fun i s -> print_int i; print_string "  "; S.iter (fun y -> print_string (y^" ")) s; print_newline ()) graph; 
-  (* まずは汎用レジスタから *)
-  let g = make_graph graph in
-  let stack, spill = optimistic g [] [] Gen in
-  let (i, env) = List.fold_left (fun (i, env) y -> (i + 1, M.add y Asm.regs.(i) env)) (0, ((*M.add x Asm.reg_cl*) M.empty)) ys in (* reg_clに注意 *)
-  let map = alloc g stack spill env Gen (make_priority_map e) in
-  (* 浮動小数レジスタ *)
-
-  Int_M.iter (fun i s -> print_int i; print_string "  "; S.iter (fun y -> print_string (y^" ")) s; print_newline ()) fgraph; 
-  let fg = make_graph fgraph in
-  let stack, spill = optimistic fg [] [] Float in
-  let (i, env) = List.fold_left (fun (i, env) y -> (i + 1, M.add y Asm.fregs.(i) env)) (0, M.empty) zs in
-  let fmap = alloc fg stack spill env Float (make_priority_map e) in
-(*
-  print_endline "print map";
-  print_map map;
-  print_endline "print fmap";
-  print_map fmap;
-*)
-
-  let e = save_before_call e graph fgraph map fmap S.empty in
-  { name = Id.L(x); args = ys; fargs = zs; body = replace e map fmap; ret = t }
+  let e = allocate e in
+  { name = Id.L(x); args = ys; fargs = zs; body = e; ret = t }
   
 
 
 let rec f (Prog(data, fundefs, e)) =
   table := List.fold_left (fun m { name = Id.L(x); args = ys; fargs = zs; body = e; ret = t } -> M.add x t m) M.empty fundefs;
-  let graph, fgraph = iter_analysis Int_M.empty Int_M.empty e in (* 生存解析 *)
-  Int_M.iter (fun i s -> Printf.printf "%d  " i; S.iter (fun x -> print_string (x^" ")) s; print_newline ()) graph;
-  let g = make_graph graph in
-  let fg = make_graph fgraph in
-  (*
-  print_endline "print graph";
-  print_graph g;
-  *)
-  let map = coloring g Gen e in
-  let fmap = coloring fg Float e in
-  (*
-  print_endline "print map";
-  print_map map;
-  print_endline "print fmap";
-  print_map fmap;
-  *)
-  let e = save_before_call e graph fgraph map fmap S.empty in
-  let e = replace e map fmap in
+  let e = allocate e in
   Prog(data, List.map allocate_fun fundefs, e)
