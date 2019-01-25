@@ -2,6 +2,9 @@ open Num_asm
 
 let table = ref M.empty
 
+let count = ref 0
+let a = ref false
+
 type ty = Float | Gen | Unit
 
 let print_graph g =
@@ -13,7 +16,7 @@ let print_graph g =
 
 
 (* 汎用レジスタか浮動小数レジスタかを分ける *)
-let rec classify_fv_exp e = 
+let rec classify_fv_exp e t = 
   match e with
   | Nop | Li _ | FLi _ | SetL _ | Comment _ | SetGlb _ | Restore _ -> S.empty, S.empty
   | Mr(x) | Neg(x) | In(x) | Out(x) | ItoF(x) -> S.singleton x, S.empty
@@ -26,8 +29,8 @@ let rec classify_fv_exp e =
   | IfFEq(x, y', e1, e2) | IfFLE(x, y', e1, e2) -> S.empty, S.of_list (fv_id_or_imm x @ fv_id_or_imm y')
   | CallCls(x, ys, zs) -> S.of_list (x :: ys), S.of_list zs
   | CallDir(_, ys, zs) -> S.of_list ys, S.of_list zs
-  | Subst((x, t), e) -> classify_fv_exp e
-  | Save (x, y) -> (*S.empty, S.empty*) S.singleton y, S.singleton y (* 特殊な場合(spillが発生してSaveが挿入された場合)でしか起こりえないのでこれでok *)
+  | Subst((x, t), e) -> classify_fv_exp e t
+  | Save (x, y) -> (match t with Type.Float -> S.empty, S.singleton y | _ -> S.singleton y, S.empty) (* 特殊な場合(spillが発生してSaveが挿入された場合)でしか起こりえないのでこれでok *)
 
 
 (* live[i]の更新 *)
@@ -49,7 +52,7 @@ let rec update lives flives succ =
           )
         )
       in
-      let fv_g, fv_f = classify_fv_exp e in (* 汎用レジスタ用と浮動小数レジスタ用 *)
+      let fv_g, fv_f = classify_fv_exp e t in (* 汎用レジスタ用と浮動小数レジスタ用 *)
       let live_j = try Int_M.find j lives with Not_found -> S.empty in
       let flive_j = try Int_M.find j flives with Not_found -> S.empty in
       let lives', flives' = update lives flives es in
@@ -63,7 +66,12 @@ let rec update lives flives succ =
         | _ -> S.empty, S.empty
         )
       in
-      let fv_g, fv_f = classify_fv_exp e in (* 汎用レジスタ用と浮動小数レジスタ用 *)
+      let fv_g, fv_f =
+        (match e with
+        | Subst((x, t), e) -> classify_fv_exp e t 
+        | _ -> classify_fv_exp e Type.Int (* Intは適当 *) (* 汎用レジスタ用と浮動小数レジスタ用 *)
+        )
+      in
       let live_j = try Int_M.find j lives with Not_found -> S.empty in
       let flive_j = try Int_M.find j flives with Not_found -> S.empty in
       let lives', flives' = update lives flives es in
@@ -103,10 +111,55 @@ let rec liveness_analysis_main lives flives t succ =
 
 let rec iter_analysis lives flives t =
   let lives', flives' = liveness_analysis_main lives flives t [] in
-  if (lives' = lives && flives' = flives) then 
-    lives, flives
+  (* 差分を出力/デバッグ用 *)
+  (*
+  let lives'' = Int_M.merge 
+                (fun x s1 s2 -> match s1, s2 with | None, None -> None | Some s1, None -> Some s1 | Some s1, Some s2 -> if S.diff s1 s2 = S.empty then None else ((*assert(S.diff s2 s1 <> S.empty);*) Some (S.diff s1 s2)) | _ -> assert(false)) lives' lives in
+  incr count; 
+  print_string "lives' differed by lives "; print_int !count; print_newline ();
+  Int_M.iter (fun x s -> print_string ((string_of_int x)^"  "); S.iter (fun y -> print_string (y^" ")) s; print_newline ()) lives'';
+  let lives'' = Int_M.merge 
+                (fun x s1 s2 -> match s1, s2 with | None, None -> None | Some s1, None -> Some s1 | Some s1, Some s2 -> if S.diff s1 s2 = S.empty then None else ((*assert(S.diff s2 s1 <> S.empty);*) Some (S.diff s1 s2)) | None, Some s1 -> None) lives lives' in
+  incr count; 
+  print_string "lives differed by lives' "; print_int !count; print_newline ();
+  Int_M.iter (fun x s -> print_string ((string_of_int x)^"  "); S.iter (fun y -> print_string (y^" ")) s; print_newline ()) lives'';
+  (if lives' = lives then
+  (
+    print_endline "hoge"
+  )
   else
+    print_endline "fuga"
+  );
+  *)
+  (*
+  a := false;
+  incr count;
+  print_endline "fuga "; print_int !count; print_newline ();
+  Int_M.iter (fun i s -> S.iter (fun x -> if int_M.mem i lives then if S.mem x (Int_M.find i lives) then () else (a := true; print_string (x^" "))) s; (if !a then print_newline () else ())) lives';
+  (*
+  Int_M.iter (fun i s -> S.iter (fun x -> if Int_M.mem i lives then if S.mem x (Int_M.find i lives) then () else (a := true; print_string (x^" ")) else ()) s; (if !a then print_newline () else ())) lives';
+  *)
+  Int_M.iter (fun i s -> S.iter (fun x -> if S.mem x (Int_M.find i flives) then () else (a := true; print_string (x^" "))) s; (if !a then print_newline () else ())) flives';
+  *)
+  let a = Int_M.fold (fun i s acc -> acc + S.cardinal s) lives' 0 in
+  let b = Int_M.fold (fun i s acc -> acc + S.cardinal s) lives 0 in
+  let c = Int_M.fold (fun i s acc -> acc + S.cardinal s) flives' 0 in
+  let d = Int_M.fold (fun i s acc -> acc + S.cardinal s) flives 0 in
+  print_int a; print_newline ();
+  print_int b; print_newline ();
+  print_int c; print_newline ();
+  print_int d; print_newline ();
+ 
+  if (lives' = lives && flives' = flives) then 
+  (
+    print_endline "hoge";
+    lives, flives
+  )
+  else
+  (
+    print_endline "fuga";
     iter_analysis lives' flives' t
+  )
 (* ここまで生存解析 *)
 (******************************)
 
@@ -389,12 +442,17 @@ let rec insert_restore xs ty cont map =
     cont
   else
     match cont with
+    (*
     | _ -> (* とりあえずすぐにrestore / 要改善 *)
         let cont = S.fold
                      (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc))) xs cont in
         cont
+        *)
     | Let((x, t), e, i, cont') ->
       (match e with
+      | CallDir(a, ys, zs) ->
+        let s = S.inter xs (S.of_list (ys @ zs)) in
+        S.fold (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc))) s (Let((x, t), e, i, cont'))
       | IfEq(a, b, e1, e2) -> 
         let s = S.inter xs (S.of_list (a :: fv_id_or_imm b)) in
         S.fold 
@@ -405,7 +463,7 @@ let rec insert_restore xs ty cont map =
               insert_restore (S.inter (S.diff xs s) (S.of_list (fv e1))) ty e1 map, 
               insert_restore (S.inter (S.diff xs s) (S.of_list (fv e2))) ty e2 map), 
             i, 
-            insert_restore (S.inter (S.diff xs s) (S.of_list (fv cont'))) ty cont' map))   (* 両方でrestoreされたものはcont'でrestoreする必要がないなど，改善の余地あり *)
+            insert_restore (S.diff (S.diff xs s) (S.inter (S.of_list (fv e1)) (S.of_list (fv e2)))) ty cont' map))   (* 両方でrestoreされたものはcont'でrestoreする必要がないなど，改善の余地あり *)
       | IfLE(a, b, e1, e2) -> 
         let s = S.inter xs (S.of_list (a :: fv_id_or_imm b)) in
         S.fold
@@ -416,7 +474,7 @@ let rec insert_restore xs ty cont map =
               insert_restore (S.inter (S.diff xs s) (S.of_list (fv e1))) ty e1 map, 
               insert_restore (S.inter (S.diff xs s) (S.of_list (fv e2))) ty e2 map), 
             i, 
-            insert_restore (S.inter (S.diff xs s) (S.of_list (fv cont'))) ty cont' map))
+            insert_restore (S.diff (S.diff xs s) (S.inter (S.of_list (fv e1)) (S.of_list (fv e2)))) ty cont' map))
       | IfGE(a, b, e1, e2) -> 
         let s = S.inter xs (S.of_list (a :: fv_id_or_imm b)) in
         S.fold
@@ -427,7 +485,7 @@ let rec insert_restore xs ty cont map =
               insert_restore (S.inter (S.diff xs s) (S.of_list (fv e1))) ty e1 map, 
               insert_restore (S.inter (S.diff xs s) (S.of_list (fv e2))) ty e2 map), 
             i, 
-            insert_restore (S.inter (S.diff xs s) (S.of_list (fv cont'))) ty cont' map))
+            insert_restore (S.diff (S.diff xs s) (S.inter (S.of_list (fv e1)) (S.of_list (fv e2)))) ty cont' map))
       | IfFEq(a, b, e1, e2) -> 
         let s = S.inter xs (S.of_list (fv_id_or_imm a @ fv_id_or_imm b)) in
         S.fold
@@ -438,7 +496,7 @@ let rec insert_restore xs ty cont map =
               insert_restore (S.inter (S.diff xs s) (S.of_list (fv e1))) ty e1 map, 
               insert_restore (S.inter (S.diff xs s) (S.of_list (fv e2))) ty e2 map), 
             i, 
-            insert_restore (S.inter (S.diff xs s) (S.of_list (fv cont'))) ty cont' map))
+            insert_restore (S.diff (S.diff xs s) (S.inter (S.of_list (fv e1)) (S.of_list (fv e2)))) ty cont' map))
       | IfFLE(a, b, e1, e2) -> 
         let s = S.inter xs (S.of_list (fv_id_or_imm a @ fv_id_or_imm b)) in
         S.fold
@@ -449,9 +507,18 @@ let rec insert_restore xs ty cont map =
               insert_restore (S.inter (S.diff xs s) (S.of_list (fv e1))) ty e1 map, 
               insert_restore (S.inter (S.diff xs s) (S.of_list (fv e2))) ty e2 map), 
             i, 
-            insert_restore (S.inter (S.diff xs s) (S.of_list (fv cont'))) ty cont' map))
+            insert_restore (S.diff (S.diff xs s) (S.inter (S.of_list (fv e1)) (S.of_list (fv e2)))) ty cont' map))
       | Restore(y) ->
         Let((x, t), e, i, insert_restore (S.remove y xs) ty cont' map)
+        (*
+      | _ ->
+        let cont = S.fold
+                     (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc))) xs cont in
+        cont
+        *)
+      | Save(x, y) ->
+        let s = S.inter xs (S.of_list (fv_exp e)) in
+                    (Let((x, t), e, i, insert_restore (S.diff xs s) ty cont' map))
       | _ -> 
         let s = S.inter xs (S.of_list (fv_exp e)) in
         let cont = S.fold 
@@ -462,8 +529,14 @@ let rec insert_restore xs ty cont map =
       )
     | Ans(e, i) ->
       (match e with
+      | _ ->
+        let cont = S.fold
+                     (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc))) xs cont in
+        cont
       | Restore(y) ->
-        Ans(e, i)
+        let cont = S.fold
+                     (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc))) (S.remove y xs) cont in
+        cont
       | _ ->
         let cont = S.fold
                      (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc))) xs cont in
@@ -523,13 +596,13 @@ let rec save_before_call e g fg map fmap saved =
   match e with
   | Let((x, t), e', i, cont) ->
     (match e' with
-    | CallDir(name, ys, zs) ->
+    | CallDir(Id.L(name), ys, zs) | CallCls(name, ys, zs) ->
       let cont = insert_restore ((*S.filter (fun x -> not (Asm.is_reg x))*) (S.remove x (Int_M.find i g))) Type.Int cont map in
       let cont = insert_restore ((*S.filter (fun x -> not (Asm.is_reg x))*) (S.remove x (Int_M.find i fg))) Type.Float cont fmap in
       let cont = save_before_call cont g fg map fmap 
           (S.union saved (S.union (S.filter (fun x -> not (Asm.is_reg x)) (S.remove x (Int_M.find i g))) (S.filter (fun x -> not (Asm.is_reg x)) (S.remove x (Int_M.find i fg))))) in 
-      let e = S.fold (fun y e -> seq (Save(M.find y map, y), e)) (S.filter (fun x -> not (Asm.is_reg x)(* && not (S.mem x saved)*)) (S.remove x (Int_M.find i g))) (Let((x, t), e', i, cont)) in
-      let e = S.fold (fun y e -> seq (Save(M.find y fmap, y), e)) (S.filter (fun x -> not (Asm.is_reg x)(* && not (S.mem x saved)*)) (S.remove x (Int_M.find i fg))) e in
+      let e = S.fold (fun y e -> seq (Save(M.find y map, y), e)) (S.filter (fun x -> not (Asm.is_reg x)) (S.remove x (Int_M.find i g))) (Let((x, t), e', i, cont)) in
+      let e = S.fold (fun y e -> seq (Save(M.find y fmap, y), e)) (S.filter (fun x -> not (Asm.is_reg x)) (S.remove x (Int_M.find i fg))) e in
       e
     | IfEq(a, b, e1, e2) -> 
       let e1' = save_before_call e1 g fg map fmap saved in
@@ -556,7 +629,7 @@ let rec save_before_call e g fg map fmap saved =
       let e2' = save_before_call e2 g fg map fmap saved in
       let cont' = save_before_call cont g fg map fmap saved in
       Let((x, t), IfFLE(a, b, e1', e2'), i, cont')
-    | e' -> 
+    | _ -> 
       let cont' = save_before_call cont g fg map fmap saved in
       Let((x, t), e', i, cont')
     )
@@ -591,7 +664,7 @@ let rec save_before_call e g fg map fmap saved =
       Ans(IfFLE(a, b, e1', e2'), i)
     | Subst((x, t), exp) ->
       (match exp with 
-      | CallDir(name, ys, zs) ->
+      | CallDir(Id.L(name), ys, zs) | CallCls(name, ys, zs) ->
         incr counter;
         let res = insert_restore (S.remove x (Int_M.find i g)) Type.Int (Ans(Nop, !counter)) map in
         let res = insert_restore (S.remove x (Int_M.find i fg)) Type.Float res fmap in
