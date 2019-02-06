@@ -81,7 +81,6 @@ COPY_MINCAML=../../cpuex2018/raytracer ../simulation/test \
 
 
 piyo : min-caml
-	./my-min-caml -inline 10 genlib
 	./combinelib.sh 
 	for i in $(COPY_MINCAML); do\
 		cp min-caml $${i} ;\

@@ -2,17 +2,6 @@ open KNormal
 
 
 
-let comp_formula e1 e2 = 
-  match e1, e2 with
-  | Add(a, b), Add(c, d) -> (a = c) && (b = d)
-  | Sub(a, b), Sub(c, d) -> (a = c) && (b = d)
-  | Neg a, Neg b -> a = b
-  | FNeg f, FNeg g -> f = g
-  | FAdd(f, g), FAdd(h, i) -> (f = h) && (g = i)
-  | FSub(f, g), FSub(h, i) -> (f = h) && (g = i)
-  | FMul(f, g), FMul(h, i) -> (f = h) && (g = i)
-  | FDiv(f, g), FDiv(h, i) -> (f = h) && (g = i)
-  | _ -> false
 
 let is_small e =
   match e with
@@ -20,6 +9,8 @@ let is_small e =
   | FAdd(_, _) | FSub(_, _) | FMul(_, _) | FDiv(_, _) | FNeg _ -> true
   | _ -> false
 
+let comp_formula e ex =
+  e = ex
 
 let rec search e l =
   match l with

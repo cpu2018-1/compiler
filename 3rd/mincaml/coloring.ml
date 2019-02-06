@@ -582,14 +582,11 @@ let rec print_map map =
   M.iter (fun x y -> print_endline (x ^ " " ^ y)) map
 
 
-(*
-(* 初めて使われるタイミングで挿入する *)
 let rec insert_restore xs ty cont map = 
   if (xs = S.empty) then
     cont
   else
     match cont with
-    | _ -> cont
     | _ -> (* とりあえずすぐにrestore / 要改善 *) (* バグを取りきれなかったのでとりあえずこれで提出します *)
         let cont = S.fold
                      (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc))) xs cont in
@@ -730,70 +727,71 @@ let rec insert_restore xs ty cont map =
                      (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, ty), Restore(y), !counter, acc))) xs cont in
         cont
       )
-*)    
 
-let rec insert_restore e graph fgraph map fmap ans whenever =
+(*
+(* 返り値は(restoreすべき残り, 現在レジスタにあるもの, restoreを挿入したe) *)
+let rec insert_restore e graph fgraph map fmap ans fans whenever fwhenever registered = (* ansはAnsでrestoreすべきもの/wheneverは使われるタイミングでrestoreすべきもの *)
   match e with
   | Let((x, t), exp, i, cont) ->
     (match exp with
     | CallDir(name, ys, zs) ->
       let s = S.diff (S.of_list ys) registered in
       let fs = S.diff (S.of_list zs) registered in
-      let registered', cont' = insert_restore cont graph fgraph map fmap (S.singleton x) in
+      let whenever', fwhenever', registered', cont' = insert_restore cont graph fgraph map fmap (S.remove x (S.union ans (M.find i graph))) (S.remove x (S.union fans (M.find i fgraph)))  whenever fwhenever (S.singleton x) in
       let e' = S.fold (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, Type.Int), Restore(y), !counter, acc))) s (Let((x, t), exp, i, cont')) in
       let e' = S.fold (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y fmap, Type.Float), Restore(y), !counter, acc))) fs e' in
-      registered', e'
+      whenever', fwhenever', registered', e'
     | CallCls(name, ys, zs) ->
       let s = S.diff (S.add name (S.of_list ys)) registered in
       let fs = S.diff (S.of_list zs) registered in
-      let registered', cont' = insert_restore cont graph fgraph map fmap (S.singleton x) in
+      let whenever', fwhenever', registered', cont' = insert_restore cont graph fgraph map fmap (S.remove x (S.union ans (M.find i graph))) (S.remove x (S.union fans (M.find i fgraph)))  whenever fwhenever (S.singleton x) in
       let e' = S.fold (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, Type.Int), Restore(y), !counter, acc))) s (Let((x, t), exp, i, cont')) in
       let e' = S.fold (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y fmap, Type.Float), Restore(y), !counter, acc))) fs e' in
-      registered', e'
+      whenever', fwhenever', registered', e'
     | IfEq(a, b', e1, e2) ->
       let s = S.diff (S.of_list (a :: fv_id_or_imm b')) registered in
-      let registered1, e1' = insert_restore e1 graph fgraph map fmap (S.union s registered) in
-      let registered2, e2' = insert_restore e2 graph fgraph map fmap (S.union s registered) in
-      let registered', cont' = insert_restore cont graph fgraph map fmap (S.inter registered1 registered2) in
-      registered', S.fold (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, Type.Int), Restore(y), !counter, acc))) s (Let((x, t), IfEq(a, b', e1', e2'), i, cont'))
+      let whenever1, fwhenever1, registered1, e1' = insert_restore e1 graph fgraph map fmap S.empty S.empty (S.diff (S.union ans whenever) s) (S.union fans fwhenever) (S.union s registered) in
+      let whenever2, fwhenever2, registered2, e2' = insert_restore e2 graph fgraph map fmap S.empty S.empty (S.diff (S.union ans whenever) s) (S.union fans fwhenever) (S.union s registered) in
+      let whenever', fwhenever', registered', cont' = insert_restore cont graph fgraph map fmap ans fans (S.union whenever1 whenever2) (S.union fwhenever1 fwhenever2) (S.inter registered1 registered2) in
+      whenever', fwhenever', registered', S.fold (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, Type.Int), Restore(y), !counter, acc))) s (Let((x, t), IfEq(a, b', e1', e2'), i, cont'))
     | IfLE(a, b', e1, e2) ->
       let s = S.diff (S.of_list (a :: fv_id_or_imm b')) registered in
-      let registered1, e1' = insert_restore e1 graph fgraph map fmap (S.union s registered) in
-      let registered2, e2' = insert_restore e2 graph fgraph map fmap (S.union s registered) in
-      let registered', cont' = insert_restore cont graph fgraph map fmap (S.inter registered1 registered2) in
-      registered', S.fold (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, Type.Int), Restore(y), !counter, acc))) s (Let((x, t), IfLE(a, b', e1', e2'), i, cont'))
+      let whenever1, registered1, e1' = insert_restore e1 graph fgraph map fmap S.empty (S.diff (S.union ans whenever) s) (S.union s registered) in
+      let whenever2, registered2, e2' = insert_restore e2 graph fgraph map fmap S.empty (S.diff (S.union ans whenever) s) (S.union s registered) in
+      let whenever', registered', cont' = insert_restore cont graph fgraph map fmap ans (S.union whenever1 whenever2) (S.inter registered1 registered2) in
+      whenever', registered', S.fold (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, Type.Int), Restore(y), !counter, acc))) s (Let((x, t), IfLE(a, b', e1', e2'), i, cont'))
     | IfGE(a, b', e1, e2) ->
       let s = S.diff (S.of_list (a :: fv_id_or_imm b')) registered in
-      let registered1, e1' = insert_restore e1 graph fgraph map fmap (S.union s registered) in
-      let registered2, e2' = insert_restore e2 graph fgraph map fmap (S.union s registered) in
-      let registered', cont' = insert_restore cont graph fgraph map fmap (S.inter registered1 registered2) in
-      registered', S.fold (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, Type.Int), Restore(y), !counter, acc))) s (Let((x, t), IfGE(a, b', e1', e2'), i, cont'))
+      let whenever1, registered1, e1' = insert_restore e1 graph fgraph map fmap S.empty (S.diff (S.union ans whenever) s) (S.union s registered) in
+      let whenever2, registered2, e2' = insert_restore e2 graph fgraph map fmap S.empty (S.diff (S.union ans whenever) s) (S.union s registered) in
+      let whenever', registered', cont' = insert_restore cont graph fgraph map fmap ans (S.union whenever1 whenever2) (S.inter registered1 registered2) in
+      whenever', registered', S.fold (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, Type.Int), Restore(y), !counter, acc))) s (Let((x, t), IfGE(a, b', e1', e2'), i, cont'))
     | IfFEq(a, b', e1, e2) ->
       let s = S.diff (S.of_list (fv_id_or_imm a @ fv_id_or_imm b')) registered in
-      let registered1, e1' = insert_restore e1 graph fgraph map fmap (S.union s registered) in
-      let registered2, e2' = insert_restore e2 graph fgraph map fmap (S.union s registered) in
-      let registered', cont' = insert_restore cont graph fgraph map fmap (S.inter registered1 registered2) in
-      registered', S.fold (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y fmap, Type.Float), Restore(y), !counter, acc))) s (Let((x, t), IfFEq(a, b', e1', e2'), i, cont'))
+      let whenever1, registered1, e1' = insert_restore e1 graph fgraph map fmap S.empty (S.diff (S.union ans whenever) s) (S.union s registered) in
+      let whenever2, registered2, e2' = insert_restore e2 graph fgraph map fmap S.empty (S.diff (S.union ans whenever) s) (S.union s registered) in
+      let whenever', registered', cont' = insert_restore cont graph fgraph map fmap ans (S.union whenever1 whenever2) (S.inter registered1 registered2) in
+      whenever', registered', S.fold (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y fmap, Type.Float), Restore(y), !counter, acc))) s (Let((x, t), IfFEq(a, b', e1', e2'), i, cont'))
     | IfFLE(a, b', e1, e2) ->
       let s = S.diff (S.of_list (fv_id_or_imm a @ fv_id_or_imm b')) registered in
-      let registered1, e1' = insert_restore e1 graph fgraph map fmap (S.union s registered) in
-      let registered2, e2' = insert_restore e2 graph fgraph map fmap (S.union s registered) in
-      let registered', cont' = insert_restore cont graph fgraph map fmap (S.inter registered1 registered2) in
-      registered', S.fold (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y fmap, Type.Float), Restore(y), !counter, acc))) s (Let((x, t), IfFLE(a, b', e1', e2'), i, cont'))
+      let whenever1, registered1, e1' = insert_restore e1 graph fgraph map fmap S.empty (S.diff (S.union ans whenever) s) (S.union s registered) in
+      let whenever2, registered2, e2' = insert_restore e2 graph fgraph map fmap S.empty (S.diff (S.union ans whenever) s) (S.union s registered) in
+      let whenever', registered', cont' = insert_restore cont graph fgraph map fmap ans (S.union whenever1 whenever2) (S.inter registered1 registered2) in
+      whenever', registered', S.fold (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y fmap, Type.Float), Restore(y), !counter, acc))) s (Let((x, t), IfFLE(a, b', e1', e2'), i, cont'))
     | Restore(y) ->
-      let registered', cont' = insert_restore cont graph fgraph map fmap (S.add y registered) in
+      let whenever registered', cont' = insert_restore cont graph fgraph map fmap (S.remove y ans) (S.remove y whenever) (S.add y registered) in
       registered', Let((x, t), exp, i, cont')
     | Save(y, z) ->
-      let registered', cont' = insert_restore cont graph fgraph map fmap registered in
+      let registered', cont' = insert_restore cont graph fgraph map fmap ans whenever registered in
       registered', Let((x, t), exp, i, cont')
     | _ -> 
       let fv, ffv = classify_fv_exp exp t in
       let s = S.diff fv registered in
       let fs = S.diff ffv registered in
-      let registered', cont' = insert_restore cont graph fgraph map fmap (S.add x (S.union s (S.union fs registered))) in
+      let whenever', registered', cont' = insert_restore cont graph fgraph map fmap (S.diff ans (S.union s fs)) (S.diff whenever (S.union s fs)) (S.add x (S.union s (S.union fs registered))) in
       let e' = S.fold (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y map, Type.Int), Restore(y), !counter, acc))) s (Let((x, t), exp, i, cont')) in
       let e' = S.fold (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y fmap, Type.Float), Restore(y), !counter, acc))) fs e' in
-      registered', e'
+      whenever', registered', e'
     )
   | Ans(exp, i) ->
     (match exp with
@@ -858,7 +856,7 @@ let rec insert_restore e graph fgraph map fmap ans whenever =
       let e' = S.fold (fun y acc -> if Asm.is_reg y then acc else (incr counter; Let((M.find y fmap, Type.Float), Restore(y), !counter, acc))) fs e' in
       S.union s (S.union fs registered), e'
     )
- 
+*)
     
 
 (* 呼び出し前の退避 *)
@@ -867,10 +865,8 @@ let rec save_before_call e g fg map fmap =
   | Let((x, t), e', i, cont) ->
     (match e' with
     | CallDir(Id.L(name), ys, zs) | CallCls(name, ys, zs) ->
-    (*
       let cont = insert_restore ((*S.filter (fun x -> not (Asm.is_reg x))*) (S.remove x (Int_M.find i g))) Type.Int cont map in
       let cont = insert_restore ((*S.filter (fun x -> not (Asm.is_reg x))*) (S.remove x (Int_M.find i fg))) Type.Float cont fmap in
-      *)
       let cont = save_before_call cont g fg map fmap in
       let e = S.fold (fun y e -> seq (Save(M.find y map, y), e)) (S.filter (fun x -> not (Asm.is_reg x)) (S.remove x (Int_M.find i g))) (Let((x, t), e', i, cont)) in
       let e = S.fold (fun y e -> seq (Save(M.find y fmap, y), e)) (S.filter (fun x -> not (Asm.is_reg x)) (S.remove x (Int_M.find i fg))) e in
@@ -904,11 +900,9 @@ let rec save_before_call e g fg map fmap =
       (match exp with 
       | CallDir(Id.L(name), ys, zs) | CallCls(name, ys, zs) ->
         incr counter;
-        (*
         let res = insert_restore (S.remove x (Int_M.find i g)) Type.Int (Ans(Nop, !counter)) map in
         let res = insert_restore (S.remove x (Int_M.find i fg)) Type.Float res fmap in
-        *)
-        let e = S.fold (fun y e -> seq (Save(M.find y map, y), e)) (S.filter (fun x -> not (Asm.is_reg x)) (S.remove x (Int_M.find i g))) (Ans(Subst((x, t), exp), i)) in
+        let e = S.fold (fun y e -> seq (Save(M.find y map, y), e)) (S.filter (fun x -> not (Asm.is_reg x)) (S.remove x (Int_M.find i g))) (Let((x, t), exp, i, res)) in
         let e = S.fold (fun y e -> seq (Save(M.find y fmap, y), e)) (S.filter (fun x -> not (Asm.is_reg x)) (S.remove x (Int_M.find i fg))) e in
         e
       | _ -> Ans(e', i)
@@ -1032,7 +1026,6 @@ let rec allocate e =
   let fspill, fmap = coloring fg Float e in
   if (spill = [] && fspill = []) then
     let e = save_before_call e graph fgraph map fmap in
-    let _, e = insert_restore e graph fgraph map fmap S.empty in
     replace e map fmap
   else if (spill = []) then
     let e = List.fold_left (fun e' x -> save x (Type.Float) (restore x (Type.Float) e')) e fspill in
@@ -1119,7 +1112,6 @@ let rec allocate_fun { name = Id.L(x); args = ys; fargs = zs; body = e; ret = t 
   in
   if (spill = [] && fspill = []) then
     let e = save_before_call e graph fgraph map fmap in
-    let _, e = insert_restore e graph fgraph map fmap (S.add x (S.union (S.of_list ys) (S.of_list zs))) in
     { name = Id.L(x); args = ys; fargs = zs; body = replace e map fmap; ret = t }
   else if (spill = []) then
     let e = List.fold_left (fun e' x -> save x (Type.Float) (restore x (Type.Float) e')) e fspill in

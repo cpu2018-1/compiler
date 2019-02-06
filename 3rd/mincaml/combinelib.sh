@@ -26,23 +26,3 @@ done
 sed "s/__/_/g" genlib.s > ___hoge; mv ___hoge genlib.s
 
 IFS=$TEMP
-
-f=0
-cat genlib.s | while IFS= read line
-do
-  if [ "${line}" = "_min_caml_start: # main entry point" ]; then
-    f=$((f + 1))
-  fi
-
-  if [ ${f} -eq 2 ]; then
-    break
-  fi
-
-  if [ ${f} -eq 1 ]; then
-    echo "${line}" >> lib.s
-  fi
-
-  if [ "${line}" = "# library ends" ]; then
-    f=$((f + 1))
-  fi
-done

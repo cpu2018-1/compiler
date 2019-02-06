@@ -174,3 +174,21 @@ print_syntax_sub_list tl i =
 let print_syntax t =
   print_syntax_sub t 0
 
+
+let get_deb t =
+  match t with
+  | Unit(d) | Bool(_, d) | Int(_, d) | Float(_, d) | Not(_, d)
+  | Neg(_, d) | Add(_, _, d) | Sub(_, _, d)
+  | FNeg(_, d) | FAdd(_, _, d) | FSub(_, _, d) | FMul(_,  _, d) | FDiv(_, _, d)
+  | Eq(_, _, d) | LE(_, _, d) | If(_, _, _, d) | Let(_, _, _, d) | Var(_, d) 
+  | App(_, _, d) | Tuple(_, d) | LetTuple(_, _, _, d)
+  | Array(_, _, d) | Get(_, _, d) | Put(_, _, _, d)
+  | Sll(_, _, d) | Srl(_, _, d) | Sra(_, _, d) | In(_, d) | Out(_, d)
+  | FSqrt(_, d) | FtoI(_, d) | ItoF(_, d) -> d
+
+let rec concat t1 t2 = 
+  match t1 with 
+  | Let((x, t), exp, e, d) -> Let((x, t), exp, concat e t2, d)
+  | LetTuple(l, y, e, d) -> LetTuple(l, y, concat e t2, d)
+  | LetRec(f, e, d) -> LetRec(f, concat e t2, d)
+  | _ as exp -> Let((Id.gentmp Type.Unit, Type.Unit), exp, t2, get_deb exp)

@@ -1,5 +1,9 @@
 let limit = ref 1000
 
+
+let library_file = "/home/tansei/mydir/lecture/cpuex/3rd/mincaml/genlib.ml"
+
+
 let rec sprint_binary_sub b n =
   if n < 0 then
     ""
@@ -32,26 +36,29 @@ let lexbuf outchan l = (* バッファをコンパイルしてチャンネルへ出力する (caml2htm
   Id.counter := 0;
   Typing.extenv := M.empty;
   let a = Parser.exp Lexer.token l in
+  let lib_chan = open_in library_file in 
+  let lib = Parser.exp Lexer.token (Lexing.from_channel lib_chan) in
+  close_in lib_chan;
 (*  Syntax.print_syntax a; print_newline ();*)
   Emit.f outchan
-    ((*RegAlloc.f*)
+    (RegAlloc.f
     ((*Glbsimm.f*)
     (Num_asm.g
-      (Coloring.f
+      ((*Coloring.f*)
       ((*Avoid_ans_call.main*)
       ((*Schedule.f*)
       (Num_asm.f
-      (Convert_if.f
+      ((*Convert_if.f*)
       (Glbsimm.f
        (Simm.f
           (Virtual.f
              (Closure.f
                 (iter !limit
                    (Alpha.f 
-                      (KNormal.f
-                         (Typing.f
-                            a))
-                      ))))))))))))))
+                     (KNormal.f
+                       (Typing.f
+                     (Syntax.concat lib a)
+                      ))))))))))))))))
 
 let string s = lexbuf stdout (Lexing.from_string s) (* 文字列をコンパイルして標準出力に表示する (caml2html: main_string) *)
 
