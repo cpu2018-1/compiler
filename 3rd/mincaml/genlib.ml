@@ -209,9 +209,41 @@ let rec atan x =
 in
 
 (* create_array -> 直接アセンブリ書いた *)
+(*
+let rec create_array_sub iter init heap =
+  if iter = 0 then
+    heap
+  else (
+    store_hp init;
+    incr_hp ();
+    create_array_sub (iter - 1) init heap
+  )
+in
+
+
+let rec my_create_array iter init =
+  create_array_sub iter init asm_hp
+in
+  
+let rec create_float_array_sub iter init heap =
+  if iter = 0 then
+    heap
+  else (
+    fstore_hp init;
+    incr_hp ();
+    create_array_sub (iter - 1) init heap
+  )
+in
+
+let rec my_create_float_array iter init =
+  create_float_array_sub iter init asm_hp
+in
+*)
+
 
 
 (* I/O *)
+
 let rec print_char x = out x in
 
 let rec print_num n =

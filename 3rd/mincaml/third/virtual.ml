@@ -187,7 +187,10 @@ let rec g env = function (* 式の仮想マシンコード生成 (caml2html: virtual_g) *)
               Ans(Lw(x, V(y)))
       | _ -> assert false)
   | Closure.Put(x, y, z) ->
-      (match M.find x env with
+      print_endline x;
+      let t =  M.find x env in
+      Typing.print_type t; print_newline ();
+      (match t with
       | Type.Array(Type.Unit) -> Ans(Nop)
       | Type.Array(Type.Float) ->
               Ans(FSw(z, x, V(y)))
@@ -203,9 +206,15 @@ let rec g env = function (* 式の仮想マシンコード生成 (caml2html: virtual_g) *)
   | Closure.FSqrt(x) -> Ans(FSqrt(x))
   | Closure.FtoI(x) -> Ans(FtoI(x))
   | Closure.ItoF(x) -> Ans(ItoF(x))
+  | Closure.HP -> Ans(Mr(reg_hp))
+  | Closure.Incr_hp -> Ans(Incr_hp)
+  | Closure.Store_hp(x) -> Ans(Store_hp(x))
+  | Closure.FStore_hp(x) -> Ans(FStore_hp(x))
 
 (* 関数の仮想マシンコード生成 (caml2html: virtual_h) *)
 let h { Closure.name = (Id.L(x), t); Closure.args = yts; Closure.formal_fv = zts; Closure.body = e } =
+  print_endline x;
+  Closure.print_closure e;
   let (int, float) = separate yts in
   let (offset, load) =
     expand
@@ -223,6 +232,7 @@ let f (Closure.Prog(fundefs, e)) =
  data := [];
   set_ftable ();
   let fundefs = List.map h fundefs in
+  Closure.print_closure e;
   let e = g M.empty e in
   (if (!print) then (
     Printf.printf ("Prog before register allocation\n");

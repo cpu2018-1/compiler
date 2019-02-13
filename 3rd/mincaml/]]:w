@@ -216,14 +216,14 @@ let insert_let (e, t) k = (* let¤òÁÞÆþ¤¹¤ëÊä½õ´Ø¿ô (caml2html: knormal_insert) *
   | Syntax.ItoF(e, d) ->
       insert_let (g env e)
         (fun x -> ItoF(x), Type.Float)
-  | Syntax.HP(_) -> (HP, Type.Int)
-  | Syntax.Incr_hp(_) -> (Incr_hp, Type.Unit)
-  | Syntax.Store_hp(e, _) ->
+  | Syntax.HP -> (fun x -> HP, Type.Int)
+  | Syntax.Incr_hp -> (fun x -> Incr_hp, Type.Int)
+  | Syntax.Store_hp(e) ->
       insert_let (g env e)
-        (fun x -> Store_hp(x), Type.Unit)
-  | Syntax.FStore_hp(e, _) ->
+        (fun x -> Store_hp(x), Type.Int)
+  | Syntax.FStore_hp(e) ->
       insert_let (g env e)
-        (fun x -> FStore_hp(x), Type.Unit)
+        (fun x -> FStore_hp(x), Type.Int)
 let f e = 
   fst (g M.empty e)
 

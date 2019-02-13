@@ -49,6 +49,9 @@ and exp = (* 一つ一つの命令に対応する式 (caml2html: sparcasm_exp) *
   | ItoF of Id.t
   | SetGlb of Id.l
   | Subst of (Id.t * Type.t) * exp (* 代入構文 *)
+  | Incr_hp 
+  | Store_hp of Id.t
+  | FStore_hp of Id.t
 type fundef = { name : Id.l; args : Id.t list; fargs : Id.t list; body : t; ret : Type.t }
 
 let seq (e1, e2) = incr counter; Let((Id.gentmp Type.Unit, Type.Unit), e1, !counter, e2) (** 順に実行 **)
@@ -127,6 +130,9 @@ let rec convert_exp e =
   | Asm.ItoF(x) -> ItoF(x)
   | Asm.SetGlb(x) -> SetGlb(x)
   | Asm.Subst(xt, e') -> Subst(xt, convert_exp e')
+  | Asm.Incr_hp -> Incr_hp
+  | Asm.Store_hp(x) -> Store_hp(x)
+  | Asm.FStore_hp(x) -> FStore_hp(x)
 and convert_t t = 
   incr counter;
   let i = !counter in
@@ -319,6 +325,14 @@ and print_exp i exp = (* 一つ一つの命令に対応する式 (caml2html: spa
           print_endline "Subst";
           print_indent (i + 1); print_string "("; Id.print_id x; print_string ", "; Typing.print_type t; print_string ")"; print_newline ();
           print_exp (i + 1) e'
+  | Incr_hp ->
+          print_endline "Incr_hp"
+  | Store_hp(x) ->
+          print_endline "Store_hp";
+          print_indent (i + 1); Id.print_id x; print_newline ()
+  | FStore_hp(x) ->
+          print_endline "FStore_hp";
+          print_indent (i + 1); Id.print_id x; print_newline ()
 
 let rec print_fundef { name = Id.L(f); args = xs; fargs = ys; body = e; ret = ty } =
   print_endline ("function name : "^f);
@@ -374,6 +388,9 @@ let rec invert_exp e =
   | ItoF(x) -> Asm.ItoF(x)
   | SetGlb(x) -> Asm.SetGlb(x)
   | Subst(xt, e') -> Asm.Subst(xt, invert_exp e')
+  | Incr_hp -> Asm.Incr_hp
+  | Store_hp(x) -> Asm.Store_hp(x)
+  | FStore_hp(x) -> Asm.FStore_hp(x)
 and invert_t t =
   match t with
   | Let((x, t), e, i, cont) -> Asm.Let((x, t), invert_exp e, invert_t cont)

@@ -42,5 +42,9 @@ let rec g env = function (* β簡約ルーチン本体 (caml2html: beta_g) *)
   | FSqrt(x) -> FSqrt(find x env)
   | FtoI(x) -> FtoI(find x env)
   | ItoF(x) -> ItoF(find x env)
+  | HP -> HP
+  | Incr_hp -> Incr_hp
+  | Store_hp(x) -> Store_hp(find x env)
+  | FStore_hp(x) -> FStore_hp(find x env)
 
 let f = g M.empty

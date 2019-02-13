@@ -43,6 +43,9 @@ and exp =
   | ItoF of Id.t
   | SetGlb of Id.l
   | Subst of (Id.t * Type.t) * exp
+  | Incr_hp 
+  | Store_hp of Id.t
+  | FStore_hp of Id.t
 type fundef = { name : Id.l; args : Id.t list; fargs : Id.t list; body : t; ret : Type.t }
 type prog = Prog of (Id.l * float) list * fundef list * t
 

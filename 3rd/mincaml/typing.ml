@@ -215,12 +215,17 @@ let rec g env e = (* 型推論ルーチン (caml2html: typing_g) *)
     | ItoF(e, d) ->
         unify Type.Int (g env e) d;
         Type.Float
-(*
-    | HP(d) -> Type.Int
-    | Add_HP(e, d) ->
-        unify Type.Int (g env e) d;
+    | HP(d) ->
+        Type.Int
+    | Incr_hp(e, d) ->
+        unify Type.Unit (g env e);
         Type.Unit
-*)
+    | Store_hp(e, d) ->
+        unify Type.Int (g env e);
+        Type.Unit
+    | FStore_hp(e, d) ->
+        unify Type.Float (g env e);
+        Type.Unit
 
   with Unify(t1, t2, d) -> 
         Printf.printf "Typing error!! line %d near character %d-%d\n" d.lnum d.bchar d.echar; 

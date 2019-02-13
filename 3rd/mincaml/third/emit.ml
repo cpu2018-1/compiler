@@ -143,7 +143,7 @@ and g' oc = function (* 各命令のアセンブリ生成 (caml2html: emit_gprime) *)
       assert (List.mem x allfregs);
       Printf.fprintf oc "\tflw\t%s, %d(%s)\n" (reg x) (offset y) (reg reg_sp)
   (* 末尾だったら計算結果を第一レジスタにセットしてリターン (caml2html: emit_tailret) *)
-  | Tail, (Nop | Sw _ | FSw _ | Comment _ | Save _ | Subst _ as exp) ->
+  | Tail, (Nop | Sw _ | FSw _ | Comment _ | Save _ | Subst _ | Incr_hp | Store_hp(_) | FStore_hp(_) as exp) ->
       g' oc (NonTail(Id.gentmp Type.Unit), exp);
       Printf.fprintf oc "\tjr\t%s\t\t\t\t#\n" (reg reg_lr);
   | Tail, (Li _ | SetL _ | Mr _ | Neg _ | Add _ | Sub _ | Lw _ | Sra _ | Sll _ | Srl _ | In _ | Out _ | ItoF _ as exp) ->
@@ -262,6 +262,9 @@ and g' oc = function (* 各命令のアセンブリ生成 (caml2html: emit_gprime) *)
   | NonTail(x), FtoI(y) -> Printf.fprintf oc "\tftoi\t%s, %s\n" (reg x) (reg y)    (**)
   | NonTail(x), ItoF(y) -> Printf.fprintf oc "\titof\t%s, %s\n" (reg x) (reg y)    (**)
   | NonTail(_), Subst((x, t), e) -> g' oc (NonTail(x), e)
+  | NonTail(_), Incr_hp -> Printf.fprintf oc "\taddi\t%s, %s, 1\n" (reg reg_hp) (reg reg_hp)
+  | NonTail(_), Store_hp(x) -> Printf.fprintf oc "\tsw\t%s, 0(%s)\n" (reg x) (reg reg_hp)
+  | NonTail(_), FStore_hp(x) -> Printf.fprintf oc "\tfsw\t%s, 0(%s)\n" (reg x) (reg reg_hp)
   | _ -> failwith("something went wrong")
 and g'_tail_if oc e1 e2 b x y =
   let b_then = Id.genid (b ^ "_then") in

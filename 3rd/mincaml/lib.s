@@ -1,15 +1,3 @@
-lib_itof:
-  itof  f1, r1
-  jr  r31
-lib_ftoi:
-  ftoi  r1, f1
-  jr  r31
-lib_fneg:
-  fneg  f1, f1
-  jr  r31
-lib_sqrt:
-  fsqrt  f1, f1
-  jr  r31
 lib_create_array:
   addi  r30, r1, 0
   addi  r1, r4, 0

@@ -30,6 +30,10 @@ type t =
   | FSqrt of Id.t
   | FtoI of Id.t
   | ItoF of Id.t
+  | HP 
+  | Incr_hp
+  | Store_hp of Id.t
+  | FStore_hp of Id.t
 and fundef = { name : Id.t * Type.t; args : (Id.t * Type.t) list; body : t }
 
 val fv : t -> S.t

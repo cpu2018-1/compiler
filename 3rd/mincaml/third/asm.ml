@@ -47,6 +47,9 @@ and exp = (* 一つ一つの命令に対応する式 (caml2html: sparcasm_exp) *)
   | ItoF of Id.t
   | SetGlb of Id.l
   | Subst of (Id.t * Type.t) * exp (* 代入構文 *)
+  | Incr_hp 
+  | Store_hp of Id.t
+  | FStore_hp of Id.t
 type fundef = { name : Id.l; args : Id.t list; fargs : Id.t list; body : t; ret : Type.t }
 (* プログラム全体 = 浮動小数点数テーブル + トップレベル関数 + メインの式 (caml2html: sparcasm_prog) *)
 type prog = Prog of (Id.l * float) list * fundef list * t
@@ -87,8 +90,8 @@ let rec remove_and_uniq xs = function
 (* free variables in the order of use (for spilling) (caml2html: sparcasm_fv) *)
 let fv_id_or_imm = function V(x) -> [x] | _ -> []
 let rec fv_exp = function
-  | Nop | Li(_) | FLi(_) | SetL(_) | Comment(_) | Restore(_) | SetGlb(_) -> []
-  | Mr(x) | Neg(x) | FMr(x) | FNeg(x) | Save(x, _) | In(x) | Out(x) | FSqrt(x) | FtoI(x) | ItoF(x) -> [x]
+  | Nop | Li(_) | FLi(_) | SetL(_) | Comment(_) | Restore(_) | SetGlb(_) | Incr_hp -> []
+  | Mr(x) | Neg(x) | FMr(x) | FNeg(x) | Save(x, _) | In(x) | Out(x) | FSqrt(x) | FtoI(x) | ItoF(x) | Store_hp(x) | FStore_hp(x) -> [x]
   | Add(x, y') | Sub(x, y') | FLw(x, y') | Lw(x, y') | Sll(x, y') | Srl(x, y') | Sra(x, y') -> x :: fv_id_or_imm y'
   | Sw(x, y, z') | FSw(x, y, z') -> x :: y :: fv_id_or_imm z'
   | FAdd(x, y) | FSub(x, y) | FMul(x, y) | FDiv(x, y) -> [x; y]
@@ -290,6 +293,14 @@ and print_exp i exp = (* 一つ一つの命令に対応する式 (caml2html: sparcasm_exp) *)
           print_endline "Subst";
           print_indent (i + 1); Id.print_id x; print_newline ();
           print_exp (i + 1) e
+  | Incr_hp ->
+          print_endline "Incr_hp"
+  | Store_hp(x) ->
+          print_endline "Store_hp";
+          print_indent (i + 1); Id.print_id x; print_newline ()
+  | FStore_hp(x) ->
+          print_endline "FStore_hp";
+          print_indent (i + 1); Id.print_id x; print_newline ()
                     
 
 let rec print_fundef { name = Id.L(f); args = xs; fargs = ys; body = e; ret = ty } =

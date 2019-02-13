@@ -31,23 +31,14 @@ and g' env fenv aenv = function (* 各命令の16bit即値最適化 (caml2html: simm13_gp
   | Add(x, V(y)) when M.mem x env -> Add(y, C(M.find x env))
   | Sub(x, V(y)) when M.mem x env && M.find x env = 0 && M.mem y env -> Sub(Asm.reg_zero, C(M.find y env))
   | Sub(x, V(y)) when M.mem y env && M.find y env != -32768 -> Sub(x, C(M.find y env))
-  (*
   | Lw(x, V(y)) when M.mem x aenv && M.mem y env -> Lw(Asm.reg_zero, C(M.find (M.find x aenv) Glbarray.table + M.find y env))
-  *)
   | Lw(x, V(y)) when M.mem y env -> Lw(x, C(M.find y env))
-  (*
   | Sw(x, y, V(z)) when M.mem y aenv && M.mem z env -> Sw(x, Asm.reg_zero, C(M.find (M.find y aenv) Glbarray.table + M.find z env))
-  *)
   | Sw(x, y, V(z)) when M.mem z env -> Sw(x, y, C(M.find z env))
-  (*
   | FLw(x, V(y)) when M.mem x aenv && M.mem y env -> FLw(Asm.reg_zero, C(M.find (M.find x aenv) Glbarray.table + M.find y env))
-  *)
   | FLw(x, V(y)) when M.mem y env -> FLw(x, C(M.find y env))
-  (*
   | FSw(x, y, V(z)) when M.mem x fenv && M.find x fenv = 0.0 && M.mem y aenv && M.mem z env -> FSw("%f0", Asm.reg_zero, C(M.find (M.find y aenv) Glbarray.table + M.find z env))
-  *)
-(*  | FSw(x, y, V(z)) when M.mem y aenv && M.mem z env -> FSw(x, Asm.reg_zero, C(M.find (M.find y aenv) Glbarray.table + M.find z env))
-*)
+  | FSw(x, y, V(z)) when M.mem y aenv && M.mem z env -> FSw(x, Asm.reg_zero, C(M.find (M.find y aenv) Glbarray.table + M.find z env))
   | FSw(x, y, V(z)) when M.mem x fenv && M.find x fenv = 0.0 && M.mem z env -> FSw("%f0", y, C(M.find z env))
   | FSw(x, y, V(z)) when M.mem z env -> FSw(x, y, C(M.find z env))
   | FSw(x, y, V(z)) when M.mem x fenv && M.find x fenv = 0.0 -> FSw("%f0", y, V(z))

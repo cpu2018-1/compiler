@@ -31,6 +31,10 @@ type t = (* クロージャ変換後の式 (caml2html: closure_t) *)
   | FSqrt of Id.t
   | FtoI of Id.t
   | ItoF of Id.t
+  | HP 
+  | Incr_hp
+  | Store_hp of Id.t
+  | FStore_hp of Id.t
 type fundef = { name : Id.l * Type.t;
                 args : (Id.t * Type.t) list;
                 formal_fv : (Id.t * Type.t) list;
@@ -38,8 +42,8 @@ type fundef = { name : Id.l * Type.t;
 type prog = Prog of fundef list * t
 
 let rec fv = function
-  | Unit | Int(_) | Float(_) | ExtArray(_) -> S.empty
-  | Neg(x) | FNeg(x) | In(x) | Out(x) | FSqrt(x) | FtoI(x) | ItoF(x) -> S.singleton x
+  | Unit | Int(_) | Float(_) | ExtArray(_) | HP | Incr_hp -> S.empty
+  | Neg(x) | FNeg(x) | In(x) | Out(x) | FSqrt(x) | FtoI(x) | ItoF(x) | Store_hp(x) | FStore_hp(x) -> S.singleton x
   | Add(x, y) | Sub(x, y) | FAdd(x, y) | FSub(x, y) | FMul(x, y) | FDiv(x, y) | Get(x, y) | Sll(x, y) | Srl(x, y) | Sra(x, y) -> S.of_list [x; y]
   | IfEq(x, y, e1, e2)| IfLE(x, y, e1, e2) -> S.add x (S.add y (S.union (fv e1) (fv e2)))
   | Let((x, t), e1, e2) -> S.union (fv e1) (S.remove x (fv e2))
@@ -116,9 +120,109 @@ let rec g env known = function (* クロージャ変換ルーチン本体 (caml2html: closure
   | KNormal.FSqrt(x) -> FSqrt(x)
   | KNormal.FtoI(x) -> FtoI(x)
   | KNormal.ItoF(x) -> ItoF(x)
+  | KNormal.HP -> HP
+  | KNormal.Incr_hp -> Incr_hp
+  | KNormal.Store_hp(x) -> Store_hp(x)
+  | KNormal.FStore_hp(x) -> FStore_hp(x)
+
+let rec print_indent n =
+  if n = 0 then
+    ()
+  else (
+    print_string ". "; print_indent (n - 1)
+  )
+
+
+
+let print_space () = print_string " "
+
+
+let rec print_closure_sub t i =
+  print_indent i;
+  match t with
+  | Unit -> print_string "()"; print_newline ()
+  | Int n -> print_string "INT"; print_space (); print_int n; print_newline ()
+  | Float f -> print_string "FLOAT"; print_space (); print_float f; print_newline ()
+  | Neg n -> print_string "NEG"; Id.print_id n; print_newline ()
+  | Add (n, m) -> print_string "ADD"; print_space (); Id.print_id n; print_space (); Id.print_id m; print_newline ()
+  | Sub (n, m) -> print_string "SUB"; print_space (); Id.print_id n; print_space (); Id.print_id m; print_newline ()
+  | FNeg f -> print_string "FNEG"; print_space (); Id.print_id f; print_newline ()
+  | FAdd (f, g) -> print_string "FADD"; print_space (); Id.print_id f; print_space (); Id.print_id g; print_newline ()
+  | FSub (f, g) -> print_string "FSUB"; print_space (); Id.print_id f; print_space (); Id.print_id g; print_newline ()
+  | FMul (f, g) -> print_string "FMUL"; print_space (); Id.print_id f; print_space (); Id.print_id g; print_newline ()
+  | FDiv (f, g) -> print_string "FDIV"; print_space (); Id.print_id f; print_space (); Id.print_id g; print_newline ()
+  | IfEq (x, y, a, b) -> print_endline "IFEQ"; 
+                print_indent (i + 1); Id.print_id x; print_newline ();
+                print_indent (i + 1); Id.print_id y; print_newline ();
+                print_indent i; print_endline "THEN";
+                print_closure_sub a (i + 1);
+                print_indent i; print_endline "ELSE";
+                print_closure_sub b (i + 1)
+  | IfLE (x, y, a, b) -> print_endline "IFLE"; 
+                print_indent (i + 1); Id.print_id x; print_newline ();
+                print_indent (i + 1); Id.print_id y; print_newline ();
+                print_indent i; print_endline "THEN";
+                print_closure_sub a (i + 1);
+                print_indent i; print_endline "ELSE";
+                print_closure_sub b (i + 1)
+  | Let ((x, a), t1, t2) -> print_endline "LET";
+                            print_indent (i + 1); print_endline (x ^ " =");
+                            print_closure_sub t1 (i + 2);
+                            print_indent (i); print_endline "IN";
+                            print_closure_sub t2 (i + 1)
+  | Var x -> print_string "VAR"; print_space (); print_string x; print_newline ()
+  | MakeCls((x, t), c, e) -> print_endline "MAKECLS";
+                            print_indent (i + 1); Id.print_id x; print_newline ()
+  | AppCls (t, tl) -> print_endline "APPCLS";
+                   print_indent (i + 1);
+                   Id.print_id t; print_space ();
+                   Id.print_id_list tl " ";
+                   print_newline ()
+  | AppDir (Id.L(t), tl) -> print_endline "APPDIR";
+                   print_indent (i + 1);
+                   Id.print_id t; print_space ();
+                   Id.print_id_list tl " ";
+                   print_newline ()
+  | Tuple tl -> print_endline "TUPLE";
+                print_indent (i + 1);
+                Id.print_id_list tl " ";
+                print_newline ()
+  | LetTuple (idtyl, t1, t2) -> print_endline "LETTUPLE";
+                                print_closure_sub_list (List.map (fun x -> Var (fst x)) idtyl) (i + 1);
+                                print_indent (i + 2); Id.print_id t1;
+                                print_closure_sub t2 (i + 2)
+  | Get (t1, t2) -> print_endline "GET";
+                    print_indent (i + 1); Id.print_id t1; print_newline ();
+                    print_indent (i + 1); Id.print_id t2; print_newline ()
+  | Put (t1, t2, t3) -> print_endline "PUT";
+                    print_indent (i + 1); Id.print_id t1; print_newline ();
+                    print_indent (i + 1); Id.print_id t2; print_newline ();
+                    print_indent (i + 1); Id.print_id t3; print_newline ()
+  | ExtArray Id.L(t) -> print_endline "EXTARRAY";
+                  Id.print_id t; print_newline ()
+  | Sll (n, m) -> print_string "SLL"; print_space (); Id.print_id n; print_space (); Id.print_id m; print_newline ()
+  | Srl (n, m) -> print_string "SRL"; print_space (); Id.print_id n; print_space (); Id.print_id m; print_newline ()
+  | Sra (n, m) -> print_string "SRA"; print_space (); Id.print_id n; print_space (); Id.print_id m; print_newline ()
+  | In n -> print_string "IN"; print_space (); Id.print_id n; print_newline ()
+  | Out n -> print_string "OUT"; print_space (); Id.print_id n; print_newline ()
+  | FSqrt f -> print_string "FSQRT"; print_space (); Id.print_id f; print_newline ()
+  | FtoI f -> print_string "FTOI"; print_space (); Id.print_id f; print_newline ()
+  | ItoF n -> print_string "ITOF"; print_space (); Id.print_id n; print_newline ()
+  | HP -> print_endline "HP"
+  | Incr_hp -> print_endline "INCR_HP"
+  | Store_hp(x) -> print_string "STORE_HP"; print_space (); Id.print_id x; print_newline ()
+  | FStore_hp(x) -> print_string "FSTORE_HP"; print_space (); Id.print_id x; print_newline ()
+and 
+print_closure_sub_list tl i = 
+  List.iter ((fun j x -> print_closure_sub x j) i) tl
+
+
+let print_closure t =
+  print_closure_sub t 0
 
 
 let f e =
   toplevel := [];
   let e' = g M.empty S.empty e in
+  print_endline "closure.ml was done";
   Prog(List.rev !toplevel, e')

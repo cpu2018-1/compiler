@@ -123,7 +123,7 @@ and g'_and_restore dest cont regenv exp = (* »ÈÍÑ¤µ¤ì¤ëÊÑ¿ô¤ò¥¹¥¿¥Ã¥¯¤«¤é¥ì¥¸¥¹¥
     ((* Format.eprintf "restoring %s@." x; *)
      g dest cont regenv (Let((x, t), Restore(x), Ans(exp))))
 and g' dest cont regenv = function (* ³ÆÌ¿Îá¤Î¥ì¥¸¥¹¥¿³ä¤êÅö¤Æ (caml2html: regalloc_gprime) *)
-  | Nop | Li _ | SetL _ | Comment _ | Restore _ | FLi _ | SetGlb _ as exp -> (Ans(exp), regenv)
+  | Nop | Li _ | SetL _ | Comment _ | Restore _ | FLi _ | SetGlb _ | Incr_hp as exp -> (Ans(exp), regenv)
   | Mr(x) -> (Ans(Mr(find x Type.Int regenv)), regenv)
   | Neg(x) -> (Ans(Neg(find x Type.Int regenv)), regenv)
   | Add(x, y') -> (Ans(Add(find x Type.Int regenv, find' y' regenv)), regenv)
@@ -162,6 +162,8 @@ and g' dest cont regenv = function (* ³ÆÌ¿Îá¤Î¥ì¥¸¥¹¥¿³ä¤êÅö¤Æ (caml2html: regal
   | FSqrt(x) -> (Ans(FSqrt(find x Type.Float regenv)), regenv)
   | FtoI(x) -> (Ans(FtoI(find x Type.Int regenv)), regenv)
   | ItoF(x) -> (Ans(ItoF(find x Type.Int regenv)), regenv)
+  | Store_hp(x) -> (Ans(Store_hp(find x Type.Int regenv)), regenv)
+  | FStore_hp(x) -> (Ans(FStore_hp(find x Type.Float regenv)), regenv)
 and g'_if dest cont regenv exp constr e1 e2 = (* if¤Î¥ì¥¸¥¹¥¿³ä¤êÅö¤Æ (caml2html: regalloc_if) *)
   let (e1', regenv1) = g dest cont regenv e1 in
   let (e2', regenv2) = g dest cont regenv e2 in
