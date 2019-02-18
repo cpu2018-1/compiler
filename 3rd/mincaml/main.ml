@@ -54,11 +54,13 @@ let lexbuf outchan l = (* バッファをコンパイルしてチャンネルへ出力する (caml2htm
           (Virtual.f
              (Closure.f
                 (iter !limit
+                   (Builtin.f
                    (Alpha.f 
                      (KNormal.f
                        (Typing.f
+											   (Convert_fless.f
                      (Syntax.concat lib a)
-                      ))))))))))))))))
+                      ))))))))))))))))))
 
 let string s = lexbuf stdout (Lexing.from_string s) (* 文字列をコンパイルして標準出力に表示する (caml2html: main_string) *)
 

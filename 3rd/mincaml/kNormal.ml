@@ -33,13 +33,14 @@ type t = (* K正規化後の式 (caml2html: knormal_t) *)
   | FtoI of Id.t
   | ItoF of Id.t
   | HP 
+  | FHP 
   | Incr_hp
   | Store_hp of Id.t
   | FStore_hp of Id.t
 and fundef = { name : Id.t * Type.t; args : (Id.t * Type.t) list; body : t }
 
 let rec fv = function (* 式に出現する（自由な）変数 (caml2html: knormal_fv) *)
-  | Unit | Int(_) | Float(_) | ExtArray(_) | HP | Incr_hp -> S.empty
+  | Unit | Int(_) | Float(_) | ExtArray(_) | HP | FHP | Incr_hp -> S.empty
   | Neg(x) | FNeg(x) | In(x) | Out(x) | FSqrt(x) | FtoI(x) | ItoF(x) | Store_hp(x) | FStore_hp(x) -> S.singleton x
   | Add(x, y) | Sub(x, y) | FAdd(x, y) | FSub(x, y) | FMul(x, y) | FDiv(x, y) | Get(x, y) | Sll(x, y) | Srl(x, y) | Sra(x, y) -> S.of_list [x; y]
   | IfEq(x, y, e1, e2) | IfLE(x, y, e1, e2) -> S.add x (S.add y (S.union (fv e1) (fv e2)))
@@ -217,6 +218,7 @@ let insert_let (e, t) k = (* letを挿入する補助関数 (caml2html: knormal_insert) *
       insert_let (g env e)
         (fun x -> ItoF(x), Type.Float)
   | Syntax.HP(_) -> (HP, Type.Int)
+  | Syntax.FHP(_) -> (FHP, Type.Int)
   | Syntax.Incr_hp(_) -> (Incr_hp, Type.Unit)
   | Syntax.Store_hp(e, _) ->
       insert_let (g env e)

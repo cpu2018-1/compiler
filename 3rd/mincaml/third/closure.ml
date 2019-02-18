@@ -32,6 +32,7 @@ type t = (* クロージャ変換後の式 (caml2html: closure_t) *)
   | FtoI of Id.t
   | ItoF of Id.t
   | HP 
+  | FHP 
   | Incr_hp
   | Store_hp of Id.t
   | FStore_hp of Id.t
@@ -42,7 +43,7 @@ type fundef = { name : Id.l * Type.t;
 type prog = Prog of fundef list * t
 
 let rec fv = function
-  | Unit | Int(_) | Float(_) | ExtArray(_) | HP | Incr_hp -> S.empty
+  | Unit | Int(_) | Float(_) | ExtArray(_) | HP | FHP | Incr_hp -> S.empty
   | Neg(x) | FNeg(x) | In(x) | Out(x) | FSqrt(x) | FtoI(x) | ItoF(x) | Store_hp(x) | FStore_hp(x) -> S.singleton x
   | Add(x, y) | Sub(x, y) | FAdd(x, y) | FSub(x, y) | FMul(x, y) | FDiv(x, y) | Get(x, y) | Sll(x, y) | Srl(x, y) | Sra(x, y) -> S.of_list [x; y]
   | IfEq(x, y, e1, e2)| IfLE(x, y, e1, e2) -> S.add x (S.add y (S.union (fv e1) (fv e2)))
@@ -121,6 +122,7 @@ let rec g env known = function (* クロージャ変換ルーチン本体 (caml2html: closure
   | KNormal.FtoI(x) -> FtoI(x)
   | KNormal.ItoF(x) -> ItoF(x)
   | KNormal.HP -> HP
+  | KNormal.FHP -> FHP
   | KNormal.Incr_hp -> Incr_hp
   | KNormal.Store_hp(x) -> Store_hp(x)
   | KNormal.FStore_hp(x) -> FStore_hp(x)
@@ -166,7 +168,7 @@ let rec print_closure_sub t i =
                 print_indent i; print_endline "ELSE";
                 print_closure_sub b (i + 1)
   | Let ((x, a), t1, t2) -> print_endline "LET";
-                            print_indent (i + 1); print_endline (x ^ " =");
+                            print_indent (i + 1); print_endline ("(" ^ x ^ ", " ^ (Typing.sprint_type a) ^ ") = ");
                             print_closure_sub t1 (i + 2);
                             print_indent (i); print_endline "IN";
                             print_closure_sub t2 (i + 1)
@@ -209,6 +211,7 @@ let rec print_closure_sub t i =
   | FtoI f -> print_string "FTOI"; print_space (); Id.print_id f; print_newline ()
   | ItoF n -> print_string "ITOF"; print_space (); Id.print_id n; print_newline ()
   | HP -> print_endline "HP"
+  | FHP -> print_endline "FHP"
   | Incr_hp -> print_endline "INCR_HP"
   | Store_hp(x) -> print_string "STORE_HP"; print_space (); Id.print_id x; print_newline ()
   | FStore_hp(x) -> print_string "FSTORE_HP"; print_space (); Id.print_id x; print_newline ()

@@ -36,12 +36,17 @@ type t = (* MinCamlの構文を表現するデータ型 (caml2html: syntax_t) *)
   | FtoI of t * debug
   | ItoF of t * debug
   | HP of debug
+  | FHP of debug
   | Incr_hp of t * debug
   | Store_hp of t * debug
   | FStore_hp of t * debug
 and fundef = { name : Id.t * Type.t; args : (Id.t * Type.t) list; body : t;
                deb : debug }
 
+let varname t =
+  match t with
+  | Var(str, d) -> Some str
+  | _ -> None
 
 (* インデント幅 *)
 let indent = 2
@@ -165,6 +170,8 @@ let rec print_syntax_sub t i =
   | ItoF (t, _) ->  print_endline "ITOF";
                   print_syntax_sub t (i + 1)
   | HP _ -> print_endline "HP"
+  | FHP _ -> print_endline "FHP"
+  | Incr_hp _ -> print_endline "INCR_HP"
   | Incr_hp _ -> print_endline "INCR_HP"
   | Store_hp (t, _) -> print_endline "STORE_HP";
                        print_syntax_sub t (i + 1)
@@ -190,7 +197,7 @@ let get_deb t =
   | App(_, _, d) | Tuple(_, d) | LetTuple(_, _, _, d)
   | Array(_, _, d) | Get(_, _, d) | Put(_, _, _, d)
   | Sll(_, _, d) | Srl(_, _, d) | Sra(_, _, d) | In(_, d) | Out(_, d)
-  | FSqrt(_, d) | FtoI(_, d) | ItoF(_, d) | HP (d) | Incr_hp(_, d) | Store_hp(_, d) | FStore_hp(_, d) -> d
+  | FSqrt(_, d) | FtoI(_, d) | ItoF(_, d) | HP (d) | FHP(d) | Incr_hp(_, d) | Store_hp(_, d) | FStore_hp(_, d) -> d
 
 let rec concat t1 t2 = 
   match t1 with 

@@ -81,7 +81,7 @@ rule token = parse
     { COMMA }
 | '_'
     { IDENT(Id.gentmp Type.Unit) }
-| "Array.create" | "Array.make" | "create_array" (* [XX] ad hoc *)
+| "Array.create" | "Array.make" (* [XX] ad hoc *)
     { ARRAY_CREATE }
 | '.'
     { DOT }
@@ -95,28 +95,6 @@ rule token = parse
     { SRL }
 | ">>>"
     { SRA }
-| "fneg"
-    { MINUS_DOT }
-| "sqrt" 
-    { SQRT }
-| "asm_ftoi" | "ftoi" 
-    { FTOI }
-| "asm_itof" | "itof"
-    { ITOF }
-| "asm_in" 
-    { ASM_IN }
-| "asm_out" | "out"
-    { ASM_OUT }
-| "fless"
-    { FLESS }
-| "asm_hp"
-    { HP }
-| "incr_hp"
-    { INCR_HP }
-| "store_hp"
-    { STORE_HP }
-| "fstore_hp"
-    { FSTORE_HP }
 | eof
     { EOF }
 | lower (digit|lower|upper|'_')* (* 他の「予約語」より後でないといけない *)

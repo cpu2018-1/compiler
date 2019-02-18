@@ -31,6 +31,7 @@ type t =
   | FtoI of Id.t
   | ItoF of Id.t
   | HP 
+  | FHP 
   | Incr_hp
   | Store_hp of Id.t
   | FStore_hp of Id.t

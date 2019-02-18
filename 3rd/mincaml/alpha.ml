@@ -51,6 +51,7 @@ let rec g env = function (* α変換ルーチン本体 (caml2html: alpha_g) *)
   | FtoI(x) -> FtoI(find x env)
   | ItoF(x) -> ItoF(find x env)
   | HP -> HP
+  | FHP -> FHP
   | Incr_hp -> Incr_hp
   | Store_hp(x) -> Store_hp(find x env)
   | FStore_hp(x) -> FStore_hp(find x env)

@@ -187,9 +187,7 @@ let rec g env = function (* 式の仮想マシンコード生成 (caml2html: virtual_g) *)
               Ans(Lw(x, V(y)))
       | _ -> assert false)
   | Closure.Put(x, y, z) ->
-      print_endline x;
       let t =  M.find x env in
-      Typing.print_type t; print_newline ();
       (match t with
       | Type.Array(Type.Unit) -> Ans(Nop)
       | Type.Array(Type.Float) ->
@@ -207,6 +205,7 @@ let rec g env = function (* 式の仮想マシンコード生成 (caml2html: virtual_g) *)
   | Closure.FtoI(x) -> Ans(FtoI(x))
   | Closure.ItoF(x) -> Ans(ItoF(x))
   | Closure.HP -> Ans(Mr(reg_hp))
+  | Closure.FHP -> Ans(Mr(reg_hp))
   | Closure.Incr_hp -> Ans(Incr_hp)
   | Closure.Store_hp(x) -> Ans(Store_hp(x))
   | Closure.FStore_hp(x) -> Ans(FStore_hp(x))

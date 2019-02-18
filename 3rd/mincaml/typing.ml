@@ -109,6 +109,16 @@ let rec unify t1 t2 d = (* 型が合うように、型変数への代入をする (caml2html: typi
       r2 := Some(t1)
   | _, _ -> raise (Unify(t1, t2, d))
 
+let rec unify_create_array t1 t2 d =
+  match t1, t2 with 
+  | Type.Var({ contents = Some(Type.Fun([ta; tb], tc)) }), Type.Fun([ta'; tb'], tc') -> 
+    unify ta ta' d
+  | Type.Var({ contents = None } as r1), Type.Fun([ta'; tb'], tc') ->
+  (
+    (if occur r1 t2 then raise (Unify(t1, t2, d)));
+    r1 := Some(t2)
+  )
+
 
 let rec sprint_type_list = function
   | [] -> ""
@@ -179,9 +189,14 @@ let rec g env e = (* 型推論ルーチン (caml2html: typing_g) *)
         unify t (Type.Fun(List.map snd yts, g (M.add_list yts env) e1)) d;
         g env e2
     | App(e, es, d) -> (* 関数適用の型推論 (caml2html: typing_app) *)
-        let t = Type.gentyp () in
-        unify (g env e) (Type.Fun(List.map (g env) es, t)) d;
-        t
+        if (Some "create_array" <> varname (e)) then
+          let t = Type.gentyp () in
+          unify (g env e) (Type.Fun(List.map (g env) es, t)) d;
+          t
+        else
+          let t = Type.gentyp () in
+          unify_create_array (g env e) (Type.Fun(List.map (g env) es, t)) d;
+          t
     | Tuple(es, d) -> Type.Tuple(List.map (g env) es)
     | LetTuple(xts, e1, e2, d) ->
         unify (Type.Tuple(List.map snd xts)) (g env e1) d;
@@ -216,7 +231,9 @@ let rec g env e = (* 型推論ルーチン (caml2html: typing_g) *)
         unify Type.Int (g env e) d;
         Type.Float
     | HP(d) ->
-        Type.Int
+        Type.Array (Type.Int)
+    | FHP(d) ->
+        Type.Array (Type.Float)
     | Incr_hp(e, d) ->
         unify Type.Unit (g env e);
         Type.Unit

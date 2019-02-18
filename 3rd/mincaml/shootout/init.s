@@ -1,3 +1,5 @@
+  addi  r1, r0, 170
+  out r1
   addi  r3, r0, 32500
   slli   r3, r3, 2
   addi  r4, r0, 0
